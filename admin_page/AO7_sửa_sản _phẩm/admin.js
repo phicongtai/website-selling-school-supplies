@@ -7,20 +7,25 @@ const fileSize = document.querySelector("#file-size");
 const cancelButton = document.querySelector("#cancel-button");
 const mobileMenu = document.querySelector(".mobile-menu");
 const sidebar = document.querySelector(".admin-sidebar");
+const originalFileName = fileName.textContent;
+const originalFileSize = fileSize.textContent;
 
 imageUpload.addEventListener("change", () => {
   const file = imageUpload.files?.[0];
   if (!file) return;
 
-  if (!file.type.startsWith("image/")) {
-    formMessage.textContent = "Vui lòng chọn một tệp hình ảnh hợp lệ.";
+  if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+    formMessage.textContent = "Vui lòng chọn ảnh JPG, PNG hoặc WebP.";
     imageUpload.value = "";
     return;
   }
 
   const imageUrl = URL.createObjectURL(file);
   const oldPreview = imagePreview.querySelector(".uploaded-preview");
-  if (oldPreview) URL.revokeObjectURL(oldPreview.src);
+  if (oldPreview) {
+    URL.revokeObjectURL(oldPreview.src);
+    oldPreview.remove();
+  }
 
   const preview = document.createElement("img");
   preview.className = "uploaded-preview";
@@ -43,6 +48,14 @@ productForm.addEventListener("submit", (event) => {
 
 cancelButton.addEventListener("click", () => {
   productForm.reset();
+  const preview = imagePreview.querySelector(".uploaded-preview");
+  if (preview) {
+    URL.revokeObjectURL(preview.src);
+    preview.remove();
+  }
+  imagePreview.querySelector(".backpack-illustration").hidden = false;
+  fileName.textContent = originalFileName;
+  fileSize.textContent = originalFileSize;
   formMessage.textContent = "Đã hủy các thay đổi trong biểu mẫu.";
 });
 
