@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Bút Chì Bấm Kim Công Thái Học Kèm Hộp Ruột 2B",
       price: 45000,
       oldPrice: 60000,
-      image: "https://images.unsplash.com/photo-1595166297380-60b5ce3d6a9f?auto=format&fit=crop&w=500&q=80",
+      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m35yac2brgyj39",
       description: "Bút chì bấm kim thân kim loại nhôm siêu nhẹ, đệm cao su êm ái chống mỏi tay khi học tập lâu. Kèm hộp 100 ruột chì 2B đậm nét."
     },
     {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Bút Máy Pilot Kakuno Ngòi F Nhật Bản Chính Hãng",
       price: 195000,
       oldPrice: 230000,
-      image: "https://images.unsplash.com/photo-1585336261026-77cc7c97f49c?auto=format&fit=crop&w=500&q=80",
+      image: "https://down-vn.img.susercontent.com/file/e1d32d504e8bb3568ca14d404f30e82a",
       description: "Bút máy Pilot Kakuno nổi tiếng của Nhật Bản, ngòi thép không gỉ khắc hình mặt cười thân thiện, thân lục giác chống lăn rơi."
     },
     {
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Bộ Bút Dạ Quang Highlight Kaco Pastel 6 Màu",
       price: 52000,
       oldPrice: 70000,
-      image: "https://images.unsplash.com/photo-1569683795645-b62e50fbf103?auto=format&fit=crop&w=500&q=80",
+      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lqqbdtvkdck2d0",
       description: "Bộ 6 cây bút dạ quang tone pastel êm dịu bảo vệ mắt, mực gốc nước cao cấp không thấm sang mặt sau của trang sách giáo khoa."
     },
 
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Bộ Giấy Ghi Chú Sticky Notes Gradient 4 Xấp Sắc Màu",
       price: 28000,
       oldPrice: 40000,
-      image: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=500&q=80",
+      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lfky1i8mezd0ae",
       description: "Giấy ghi chú dán tường và tài liệu với tone chuyển sắc đẹp mắt, keo dán bám chắc và dễ bóc tách không làm rách sách vở."
     },
     {
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Cặp Tài Liệu Nhiều Ngăn Xếp Tầng Khóa Cài Chắc Chắn",
       price: 78000,
       oldPrice: 95000,
-      image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=500&q=80",
+      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lxtfoout9wplfa",
       description: "Cặp phân loại đề cương và bài kiểm tra với 12 ngăn có nhãn ghi chú tiện lợi, chất liệu nhựa PP chống nước bền chắc."
     },
 
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Hộp Bút Vải Canvas Đa Năng Mở Rộng 3 Tầng Ngăn Lớn",
       price: 68000,
       oldPrice: 85000,
-      image: "https://images.unsplash.com/photo-1585336261026-77cc7c97f49c?auto=format&fit=crop&w=500&q=80",
+      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lr75wcf0547tad",
       description: "Hộp bút sức chứa lớn chứa hơn 40 cây bút cùng thước kẻ 20cm và máy tính bỏ túi. Khóa kéo trơn tru dễ vệ sinh."
     },
     {
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Túi Đựng Bút Trong Suốt TPU Phong Cách Hàn Quốc",
       price: 38000,
       oldPrice: 50000,
-      image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=500&q=80",
+      image: "https://down-vn.img.susercontent.com/file/cn-11134207-7r98o-lx23e6p9pxcz64",
       description: "Túi bút chất liệu TPU trong suốt mờ chống nước, phong cách tối giản thanh lịch giúp tìm kiếm bút viết nhanh chóng."
     },
     {
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Ống Cắm Bút Để Bàn Xoay 360 Độ Chia 5 Ngăn Trắng",
       price: 85000,
       oldPrice: 110000,
-      image: "https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?auto=format&fit=crop&w=500&q=80",
+      image: "https://down-vn.img.susercontent.com/file/vn-11134208-7ras8-mata31w5rgjwb1",
       description: "Ống cắm bút xoay 360 độ tiện dụng để bàn học, chia 5 ngăn cao thấp giúp sắp xếp bút, thước, kéo gọn gàng."
     },
     {
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Túi Đựng Bút Vải Canvas Phong Cách Tối Giản Học Sinh",
       price: 42000,
       oldPrice: 50000,
-      image: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80",
+      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2q478o1kptm33",
       description: "Túi đựng bút nhỏ gọn tiện lợi mang theo, may từ vải bố canvas bền bỉ với khóa kéo kim loại cao cấp."
     },
 
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Bộ Màu Nước 36 Màu Kèm Cọ Bút Nước & Khay Pha",
       price: 185000,
       oldPrice: 240000,
-      image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=500&q=80",
+      image: "https://tse2.mm.bing.net/th/id/OIP.VTjDllEC4wzo8Tdum9wjBAHaHa?r=0&pid=Api&h=220&P=0",
       description: "Bột màu nén cao cấp hạt siêu mịn, độ loang màu tự nhiên, kèm cọ vẽ chứa nước và khay pha màu trong hộp thiếc."
     },
     {
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Hộp Bút Chì Màu Gốc Dầu 36 Màu Cao Cấp Hộp Thiếc",
       price: 145000,
       oldPrice: 180000,
-      image: "https://images.unsplash.com/photo-1569683795645-b62e50fbf103?auto=format&fit=crop&w=500&q=80",
+      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-m09ztjwgl37zf1",
       description: "Chì màu gốc dầu màu sắc tươi sáng, ruột chì mềm mượt dễ phối màu và không dễ gãy khi gọt chuốt."
     },
     {
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Bộ Gôm Tẩy Bút Bấm Không Bụi Kèm 2 Lõi Thay Thế",
       price: 22000,
       oldPrice: 30000,
-      image: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=500&q=80",
+      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzrh1ilellcdc8",
       description: "Gôm tẩy dạng bút bấm tiện lợi, tẩy sạch êm ái không làm mòn rách giấy vở, không để lại bụi vụn khó chịu."
     },
     {
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Bảng Lót Cắt Kỹ Thuật Cutting Mat A4 & Thước Nhôm",
       price: 68000,
       oldPrice: 80000,
-      image: "https://images.unsplash.com/photo-1595166297380-60b5ce3d6a9f?auto=format&fit=crop&w=500&q=80",
+      image: "https://down-vn.img.susercontent.com/file/vn-11134201-7ras8-m2weekkllfxs0d",
       description: "Tấm lót cắt tự phục hồi bề mặt 3 lớp PVC dày dặn, có vạch chia kích thước chuẩn xác bảo vệ mặt bàn học."
     },
 
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Khay Đựng Tài Liệu Văn Phòng Phẩm 3 Tầng Lắp Ghép",
       price: 125000,
       oldPrice: 155000,
-      image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=500&q=80",
+      image: "https://bizweb.dktcdn.net/thumb/1024x1024/100/422/388/products/8-khay-tai-lieu-3-tang-deli-9209.jpg?v=1660700537033",
       description: "Khay chứa tài liệu A4 3 tầng lưới kim loại sơn tĩnh điện chống rỉ sét, chịu lực tốt giúp bàn học ngăn nắp."
     },
     {
@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Máy Tính Khoa Học Bỏ Túi Học Sinh Sinh Viên",
       price: 450000,
       oldPrice: 520000,
-      image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=500&q=80",
+      image: "https://tse4.mm.bing.net/th/id/OIP.k4z2DXudGc7NDm6h7fLP7QHaHa?r=0&pid=Api&h=220&P=0",
       description: "Máy tính khoa học đầy đủ chức năng giải toán đại học và trung học, màn hình hiển thị trực quan, phím bấm nhạy."
     },
     {
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Đồng Hồ Bấm Giờ Học Tập Pomodoro Để Bàn Học",
       price: 95000,
       oldPrice: 115000,
-      image: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=500&q=80",
+      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m8o4lxkgno78fd",
       description: "Hỗ trợ học tập tập trung theo phương pháp Pomodoro 25 phút, màn hình số lớn có chuông báo hoặc chế độ rung êm dịu."
     }
   ];
