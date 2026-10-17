@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#202124">
+  <title>Ẩn sản phẩm đã bán - Học Đường Store Admin</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../A08_xóa_sản _phẩm_chưa_bán/admin.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-page">
+  <aside class="admin-sidebar">
+    <a class="sidebar-brand" href="#" aria-label="Học Đường Store Admin">
+      <span class="brand-mark" aria-hidden="true">HĐ</span>
+      <span class="brand-copy"><strong>Học Đường Store Admin</strong><small>Hệ thống quản trị nội bộ</small></span>
+    </a>
+    <nav class="sidebar-nav" aria-label="Điều hướng quản trị">
+      <a href="#"><span aria-hidden="true">▤</span>Người dùng</a>
+      <a class="active" href="#"><span aria-hidden="true">▣</span>Sản phẩm</a>
+      <a href="#"><span aria-hidden="true">▧</span>Đơn hàng</a>
+      <a href="#"><span aria-hidden="true">▥</span>Thống kê</a>
+    </nav>
+    <div class="sidebar-account">
+      <span class="account-avatar" aria-hidden="true">A</span>
+      <span><strong>Quản trị viên hệ thống</strong><small>admin@hocduong.vn</small></span>
+    </div>
+    <a class="sidebar-logout" href="#"><span aria-hidden="true">↪</span>Đăng xuất</a>
+  </aside>
+
+  <div class="admin-shell">
+    <header class="admin-topbar">
+      <button class="mobile-menu" type="button" aria-label="Mở điều hướng" aria-expanded="false">☰</button>
+      <div class="topbar-links">
+        <a href="#"><span class="topbar-icon" aria-hidden="true">▤</span>Bảng điều khiển</a>
+        <a class="topbar-current" href="#"><span class="topbar-icon" aria-hidden="true">▣</span>Sản phẩm</a>
+      </div>
+      <div class="store-status"><span></span>HỆ THỐNG TRỰC TUYẾN</div>
+      <div class="topbar-date"><span aria-hidden="true">▣</span>Hôm nay, 24/10/2024</div>
+      <a class="storefront-link" href="../../page/homepage/main.html"><span aria-hidden="true">▱</span>Xem trang Storefront</a>
+      <button class="topbar-icon-button" type="button" aria-label="Thông báo">♧</button>
+      <span class="topbar-avatar" aria-label="Quản trị viên">A</span>
+    </header>
+
+    <main class="admin-main">
+      <div class="page-heading">
+        <div class="heading-copy">
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="#">Bảng điều khiển</a><span>/</span><a href="#">Quản trị</a><span>/</span><strong>Sản phẩm</strong>
+          </nav>
+          <h1>Danh sách sản phẩm</h1>
+          <p class="page-subtitle">Quản lý danh mục hàng hóa và theo dõi tình trạng sản phẩm.</p>
+        </div>
+        <button class="btn btn-primary-vibrant btn-sm" type="button">＋ Thêm sản phẩm mới</button>
+      </div>
+
+      <section class="product-list card" aria-label="Danh sách sản phẩm">
+        <div class="list-toolbar">
+          <label class="search-box"><span aria-hidden="true">⌕</span><input type="search" placeholder="Tìm kiếm sản phẩm"></label>
+          <button class="filter-button" type="button">Danh mục: Tất cả danh mục⌄</button>
+          <span class="total-count">Tổng cộng <strong>1,248</strong> sản phẩm</span>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th><input type="checkbox" aria-label="Chọn tất cả"></th><th>MÃ SẢN PHẨM</th><th>TÊN SẢN PHẨM</th><th>GIÁ BÁN</th><th>TRẠNG THÁI</th><th>ĐÃ BÁN</th><th>THAO TÁC</th></tr>
+            </thead>
+            <tbody>
+              <tr class="product-row" id="product-row">
+                <td><input type="checkbox" aria-label="Chọn Bút gel đen 0.5mm"></td>
+                <td><span class="table-product-code">SP01</span></td>
+                <td><span class="table-product-name">Bút gel đen 0.5mm</span><small>Bút viết</small></td>
+                <td>12.000₫</td>
+                <td><span class="product-status"><i></i><span id="product-status">Đang bán</span></span></td>
+                <td>342</td>
+                <td><button class="row-delete" id="open-delete" type="button" aria-label="Ẩn sản phẩm SP01"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M6.5 7l1 13h9l1-13M9 7V4h6v3" /></svg></button></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" aria-label="Chọn sản phẩm"></td><td>SP02</td><td><span class="table-product-name">Bút chì gỗ HB</span><small>Bút viết</small></td><td>5.000₫</td><td><span class="product-status"><i></i>Đang bán</span></td><td>890</td><td><button class="row-delete row-delete-disabled" type="button" aria-label="Sản phẩm đã có đơn hàng" title="Sản phẩm đã có đơn hàng" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M6.5 7l1 13h9l1-13M9 7V4h6v3" /></svg></button></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" aria-label="Chọn sản phẩm"></td><td>SP03</td><td><span class="table-product-name">Vở ô ly 200 trang</span><small>Sổ &amp; vở</small></td><td>25.000₫</td><td><span class="product-status"><i></i>Đang bán</span></td><td>174</td><td><button class="row-delete row-delete-disabled" type="button" aria-label="Sản phẩm đã có đơn hàng" title="Sản phẩm đã có đơn hàng" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M6.5 7l1 13h9l1-13M9 7V4h6v3" /></svg></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <footer class="product-pagination">
+          <p id="pagination-summary" aria-live="polite">Hiển thị 1 - 4 trên tổng số 1.248 sản phẩm</p>
+          <nav class="pagination-controls" id="pagination-controls" aria-label="Phân trang danh sách sản phẩm">
+          </nav>
+        </footer>
+      </section>
+      <p class="page-message" id="page-message" role="status" aria-live="polite"></p>
+    </main>
+  </div>
+
+  <aside class="hide-toast" id="hide-toast" role="status" aria-live="polite">
+    <span class="toast-icon" aria-hidden="true">✓</span>
+    <div>
+      <div class="toast-title-row"><strong>Đã ẩn sản phẩm khỏi website</strong><button id="dismiss-toast" type="button" aria-label="Đóng thông báo">×</button></div>
+      <p>Mã SP01 đã được chuyển sang trạng thái Đã ẩn.<br>Dữ liệu lịch sử mua hàng được bảo toàn.</p>
+    </div>
+  </aside>
+
+  <div class="modal-backdrop" id="delete-backdrop">
+    <section class="delete-dialog sold-dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+      <div class="dialog-heading">
+        <span class="sold-product-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false"><path d="M12 2 4 5v6c0 5.2 3.4 9.1 8 11 4.6-1.9 8-5.8 8-11V5l-8-3Zm0 4 4 1.5v3.6c0 3.3-1.7 5.9-4 7.3-2.3-1.4-4-4-4-7.3V7.5L12 6Z" /></svg>
+        </span>
+        <div class="dialog-copy">
+          <div class="title-row">
+            <div class="sold-title">
+              <h2 id="dialog-title">Sản phẩm đã được bán ra</h2>
+              <span class="order-protection">Bảo vệ đơn hàng</span>
+            </div>
+            <button class="close-dialog" id="close-dialog" type="button" aria-label="Đóng hộp thoại">×</button>
+          </div>
+          <p id="dialog-description">Mã định danh: <strong>SP01</strong> • Bút gel đen 0.5mm</p>
+        </div>
+      </div>
+
+      <div class="sold-alert">
+        <div class="sold-alert-copy">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 8v5m0 3v.1" /></svg>
+          <p><strong>Không thể xoá.</strong> Sản phẩm này đã tồn tại trong lịch sử đơn hàng (DH1001, DH1024, v.v.). Sản phẩm sẽ được ẩn khỏi website và vẫn được giữ trong các đơn hàng cũ.</p>
+        </div>
+        <div class="order-count-row">
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5zM16 3v4h4M8 11h8M8 15h8M8 18h5" /></svg>Ràng buộc kế toán &amp; đối soát:</span>
+          <strong>42 đơn hàng liên quan</strong>
+        </div>
+      </div>
+
+      <ul class="protection-notes">
+        <li>Khách hàng không thể tìm kiếm hay đặt mua sản phẩm mới trên storefront</li>
+        <li>Người mua cũ vẫn xem được thông tin hóa đơn và phiếu giao hàng chính xác</li>
+      </ul>
+
+      <div class="dialog-actions">
+        <button class="btn btn-secondary cancel-button" id="cancel-delete" type="button">Hủy</button>
+        <button class="btn hide-button" id="confirm-hide" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.9 5.2A10.8 10.8 0 0 1 12 5c5 0 8.7 4 10 7-.5 1.2-1.3 2.3-2.3 3.3M6.2 6.2C4.1 7.5 2.6 9.4 2 12c1.3 3 5 7 10 7 1.3 0 2.5-.3 3.6-.8" /></svg>
+          Ẩn sản phẩm
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
