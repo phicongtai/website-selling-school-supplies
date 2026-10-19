@@ -1,476 +1,236 @@
 /**
- * ==========================================================================
- * VIBRANT ACADEMIC MINIMAL - HOMEPAGE INTERACTIVE ENGINE
- * File: page/main.js
- * ==========================================================================
+ * VIBRANT ACADEMIC MINIMAL - FULL SPA ENGINE
  */
-
 document.addEventListener('DOMContentLoaded', () => {
-  // ------------------------------------------------------------------------
-  // 1. DỮ LIỆU 24 SẢN PHẨM TRÊN HOMEPAGE (6 HÀNG CHUẨN FIGMA)
-  // ------------------------------------------------------------------------
+  // 1. DỮ LIỆU SẢN PHẨM MẪU
   const products = [
-    // HÀNG 1: BÚT VIẾT
-    {
-      id: 4,
-      title: "Bút Chì Bấm Kim Công Thái Học Kèm Hộp Ruột 2B",
-      price: 45000,
-      oldPrice: 60000,
-      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m35yac2brgyj39",
-      description: "Bút chì bấm kim thân kim loại nhôm siêu nhẹ, đệm cao su êm ái chống mỏi tay khi học tập lâu. Kèm hộp 100 ruột chì 2B đậm nét."
-    },
-    {
-      id: 1,
-      title: "Set 10 Bút Gel Morandi Vintage Tone Pastel 0.5mm",
-      price: 65000,
-      oldPrice: 85000,
-      image: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80",
-      description: "Set bút gel tone màu Morandi thanh lịch, ngòi 0.5mm viết trơn êm, mực đều mau khô không lem giấy vở học sinh."
-    },
-    {
-      id: 2,
-      title: "Bút Máy Pilot Kakuno Ngòi F Nhật Bản Chính Hãng",
-      price: 195000,
-      oldPrice: 230000,
-      image: "https://down-vn.img.susercontent.com/file/e1d32d504e8bb3568ca14d404f30e82a",
-      description: "Bút máy Pilot Kakuno nổi tiếng của Nhật Bản, ngòi thép không gỉ khắc hình mặt cười thân thiện, thân lục giác chống lăn rơi."
-    },
-    {
-      id: 3,
-      title: "Bộ Bút Dạ Quang Highlight Kaco Pastel 6 Màu",
-      price: 52000,
-      oldPrice: 70000,
-      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lqqbdtvkdck2d0",
-      description: "Bộ 6 cây bút dạ quang tone pastel êm dịu bảo vệ mắt, mực gốc nước cao cấp không thấm sang mặt sau của trang sách giáo khoa."
-    },
-
-    // HÀNG 2: SỔ TAY & GIẤY VỞ
-    {
-      id: 5,
-      title: "Sổ Còng Binder A5 Bìa Da Pastel Kèm Ruột Caro",
-      price: 89000,
-      oldPrice: 120000,
-      image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=500&q=80",
-      description: "Sổ còng 6 lỗ tiện lợi dễ dàng thay thế và thêm giấy. Giấy định lượng 100gsm dày dặn, kẻ ô vuông caro 5x5mm tiêu chuẩn."
-    },
-    {
-      id: 6,
-      title: "Tập 5 Vở Kẻ Ngang B5 Campus 200 Trang Chống Lóa",
-      price: 75000,
-      oldPrice: 90000,
-      image: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&w=500&q=80",
-      description: "Vở Campus gáy dán thông minh mở phẳng 180 độ. Giấy viết trắng tự nhiên chống lóa, định lượng tiêu chuẩn bảo vệ mắt."
-    },
-    {
-      id: 7,
-      title: "Bộ Giấy Ghi Chú Sticky Notes Gradient 4 Xấp Sắc Màu",
-      price: 28000,
-      oldPrice: 40000,
-      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lfky1i8mezd0ae",
-      description: "Giấy ghi chú dán tường và tài liệu với tone chuyển sắc đẹp mắt, keo dán bám chắc và dễ bóc tách không làm rách sách vở."
-    },
-    {
-      id: 8,
-      title: "Sổ Tay Lập Kế Hoạch Weekly Planner Bìa Cứng",
-      price: 115000,
-      oldPrice: 145000,
-      image: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=500&q=80",
-      description: "Sổ lập kế hoạch quản lý thời gian, theo dõi bài tập và mục tiêu học tập theo từng tuần, bìa cứng bọc vải bền đẹp."
-    },
-
-    // HÀNG 3: BALO & CẶP SÁCH
-    {
-      id: 9,
-      title: "Balo Chống Gù Lưng Học Sinh Thiết Kế Công Thái Học",
-      price: 360000,
-      oldPrice: 480000,
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=500&q=80",
-      description: "Đệm lưng thoáng khí dạng rãnh công thái học trợ lực cột sống, vải Oxford chống thấm nước và quai đeo êm ái."
-    },
-    {
-      id: 10,
-      title: "Balo Laptop Sinh Viên Dáng Vuông Phong Cách Tối Giản",
-      price: 395000,
-      oldPrice: 490000,
-      image: "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=500&q=80",
-      description: "Balo phong cách Minimalist đựng vừa laptop 15.6 inch chống sốc dày, tích hợp nhiều ngăn phân chia vật dụng cá nhân."
-    },
-    {
-      id: 11,
-      title: "Túi Đeo Chéo Canvas Đựng Vừa Sách Vở A4 Phong Cách Hàn",
-      price: 135000,
-      oldPrice: 170000,
-      image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=500&q=80",
-      description: "Túi vải Canvas tự nhiên dày dặn, có khóa kéo chính và ngăn phụ đựng vừa sổ A4, bút viết và đồ dùng cá nhân."
-    },
-    {
-      id: 12,
-      title: "Cặp Tài Liệu Nhiều Ngăn Xếp Tầng Khóa Cài Chắc Chắn",
-      price: 78000,
-      oldPrice: 95000,
-      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lxtfoout9wplfa",
-      description: "Cặp phân loại đề cương và bài kiểm tra với 12 ngăn có nhãn ghi chú tiện lợi, chất liệu nhựa PP chống nước bền chắc."
-    },
-
-    // HÀNG 4: HỘP BÚT & PHỤ KIỆN
-    {
-      id: 13,
-      title: "Hộp Bút Vải Canvas Đa Năng Mở Rộng 3 Tầng Ngăn Lớn",
-      price: 68000,
-      oldPrice: 85000,
-      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lr75wcf0547tad",
-      description: "Hộp bút sức chứa lớn chứa hơn 40 cây bút cùng thước kẻ 20cm và máy tính bỏ túi. Khóa kéo trơn tru dễ vệ sinh."
-    },
-    {
-      id: 14,
-      title: "Túi Đựng Bút Trong Suốt TPU Phong Cách Hàn Quốc",
-      price: 38000,
-      oldPrice: 50000,
-      image: "https://down-vn.img.susercontent.com/file/cn-11134207-7r98o-lx23e6p9pxcz64",
-      description: "Túi bút chất liệu TPU trong suốt mờ chống nước, phong cách tối giản thanh lịch giúp tìm kiếm bút viết nhanh chóng."
-    },
-    {
-      id: 15,
-      title: "Ống Cắm Bút Để Bàn Xoay 360 Độ Chia 5 Ngăn Trắng",
-      price: 85000,
-      oldPrice: 110000,
-      image: "https://down-vn.img.susercontent.com/file/vn-11134208-7ras8-mata31w5rgjwb1",
-      description: "Ống cắm bút xoay 360 độ tiện dụng để bàn học, chia 5 ngăn cao thấp giúp sắp xếp bút, thước, kéo gọn gàng."
-    },
-    {
-      id: 16,
-      title: "Túi Đựng Bút Vải Canvas Phong Cách Tối Giản Học Sinh",
-      price: 42000,
-      oldPrice: 50000,
-      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m2q478o1kptm33",
-      description: "Túi đựng bút nhỏ gọn tiện lợi mang theo, may từ vải bố canvas bền bỉ với khóa kéo kim loại cao cấp."
-    },
-
-    // HÀNG 5: MỸ THUẬT & SÁNG TẠO
-    {
-      id: 17,
-      title: "Bộ Màu Nước 36 Màu Kèm Cọ Bút Nước & Khay Pha",
-      price: 185000,
-      oldPrice: 240000,
-      image: "https://tse2.mm.bing.net/th/id/OIP.VTjDllEC4wzo8Tdum9wjBAHaHa?r=0&pid=Api&h=220&P=0",
-      description: "Bột màu nén cao cấp hạt siêu mịn, độ loang màu tự nhiên, kèm cọ vẽ chứa nước và khay pha màu trong hộp thiếc."
-    },
-    {
-      id: 18,
-      title: "Hộp Bút Chì Màu Gốc Dầu 36 Màu Cao Cấp Hộp Thiếc",
-      price: 145000,
-      oldPrice: 180000,
-      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-m09ztjwgl37zf1",
-      description: "Chì màu gốc dầu màu sắc tươi sáng, ruột chì mềm mượt dễ phối màu và không dễ gãy khi gọt chuốt."
-    },
-    {
-      id: 19,
-      title: "Bộ Gôm Tẩy Bút Bấm Không Bụi Kèm 2 Lõi Thay Thế",
-      price: 22000,
-      oldPrice: 30000,
-      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lzrh1ilellcdc8",
-      description: "Gôm tẩy dạng bút bấm tiện lợi, tẩy sạch êm ái không làm mòn rách giấy vở, không để lại bụi vụn khó chịu."
-    },
-    {
-      id: 20,
-      title: "Bảng Lót Cắt Kỹ Thuật Cutting Mat A4 & Thước Nhôm",
-      price: 68000,
-      oldPrice: 80000,
-      image: "https://down-vn.img.susercontent.com/file/vn-11134201-7ras8-m2weekkllfxs0d",
-      description: "Tấm lót cắt tự phục hồi bề mặt 3 lớp PVC dày dặn, có vạch chia kích thước chuẩn xác bảo vệ mặt bàn học."
-    },
-
-    // HÀNG 6: GÓC BÀN HỌC & TIỆN ÍCH
-    {
-      id: 21,
-      title: "Khay Đựng Tài Liệu Văn Phòng Phẩm 3 Tầng Lắp Ghép",
-      price: 125000,
-      oldPrice: 155000,
-      image: "https://bizweb.dktcdn.net/thumb/1024x1024/100/422/388/products/8-khay-tai-lieu-3-tang-deli-9209.jpg?v=1660700537033",
-      description: "Khay chứa tài liệu A4 3 tầng lưới kim loại sơn tĩnh điện chống rỉ sét, chịu lực tốt giúp bàn học ngăn nắp."
-    },
-    {
-      id: 22,
-      title: "Đèn Bàn Học LED Chống Cận Thị Cảm Ứng 3 Chế Độ",
-      price: 275000,
-      oldPrice: 350000,
-      image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=500&q=80",
-      description: "Ánh sáng tự nhiên bảo vệ thị lực, 3 nhiệt độ màu (trắng, vàng, trung tính) tùy chỉnh độ sáng mượt mà bằng cảm ứng."
-    },
-    {
-      id: 23,
-      title: "Máy Tính Khoa Học Bỏ Túi Học Sinh Sinh Viên",
-      price: 450000,
-      oldPrice: 520000,
-      image: "https://tse4.mm.bing.net/th/id/OIP.k4z2DXudGc7NDm6h7fLP7QHaHa?r=0&pid=Api&h=220&P=0",
-      description: "Máy tính khoa học đầy đủ chức năng giải toán đại học và trung học, màn hình hiển thị trực quan, phím bấm nhạy."
-    },
-    {
-      id: 24,
-      title: "Đồng Hồ Bấm Giờ Học Tập Pomodoro Để Bàn Học",
-      price: 95000,
-      oldPrice: 115000,
-      image: "https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m8o4lxkgno78fd",
-      description: "Hỗ trợ học tập tập trung theo phương pháp Pomodoro 25 phút, màn hình số lớn có chuông báo hoặc chế độ rung êm dịu."
-    }
+    { id: 1, title: "Set 10 Bút Gel Morandi Vintage Tone Pastel 0.5mm", price: 65000, oldPrice: 85000, category: "pens", image: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80", description: "Bút gel màu Morandi thanh lịch, ngòi 0.5mm êm ái, mau khô không lem giấy." },
+    { id: 2, title: "Bút Máy Pilot Kakuno Ngòi F Nhật Bản", price: 195000, oldPrice: 230000, category: "pens", image: "https://down-vn.img.susercontent.com/file/e1d32d504e8bb3568ca14d404f30e82a", description: "Bút máy học sinh Nhật Bản ngòi thép định hình tay cầm chuẩn." },
+    { id: 3, title: "Sổ Còng Binder A5 Bìa Da Pastel Kèm Ruột Caro", price: 89000, oldPrice: 120000, category: "notebooks", image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=500&q=80", description: "Sổ còng 6 lỗ tháo lắp dễ dàng, giấy 100gsm chống thấm mực." },
+    { id: 4, title: "Balo Chống Gù Lưng Học Sinh Công Thái Học", price: 360000, oldPrice: 480000, category: "backpacks", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=500&q=80", description: "Đệm lưng thoáng khí chống gù, vải Oxford trượt nước." },
+    { id: 5, title: "Hộp Bút Vải Canvas Mở Rộng 3 Tầng Ngăn Lớn", price: 68000, oldPrice: 85000, category: "cases", image: "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lr75wcf0547tad", description: "Sức chứa hơn 40 cây bút cùng thước kẻ và máy tính bỏ túi." },
+    { id: 6, title: "Bộ Màu Nước 36 Màu Kèm Cọ Bút Nước & Khay Pha", price: 185000, oldPrice: 240000, category: "art", image: "https://tse2.mm.bing.net/th/id/OIP.VTjDllEC4wzo8Tdum9wjBAHaHa?r=0&pid=Api&h=220&P=0", description: "Bột màu nén cao cấp hạt siêu mịn trong hộp thiếc cao cấp." },
+    { id: 7, title: "Bàn học công thái học", price: 385000, oldPrice: 640000, category: "cases", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLeUM0p5TFnMOzgySTkFZ9i9kKTb8cR5cBnO3AaLFTSw&s=10", description: "Bàn học giúp bé điểu chỉnh tư thế sao cho phụ hợp." }
   ];
 
-  // ------------------------------------------------------------------------
-  // 2. GIỎ HÀNG (SHOPPING CART ENGINE)
-  // ------------------------------------------------------------------------
-  let cart = [
-    { id: 1, quantity: 1 },
-    { id: 4, quantity: 2 }
-  ];
+  let cart = [{ id: 1, quantity: 1 }, { id: 3, quantity: 2 }];
+  let wishlist = [1, 4];
 
-  let wishlist = [1, 9];
+  const formatMoney = (amount) => new Intl.NumberFormat('vi-VN').format(amount) + ' ₫';
 
-  const formatMoney = (num) => {
-    return new Intl.NumberFormat('vi-VN').format(num) + ' ₫';
-  };
+  // 2. CHUYỂN ĐỔI MÀN HÌNH (SPA NAVIGATION)
+  window.navigateToView = (viewId, param = null) => {
+    document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
 
-  const updateBadges = () => {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    document.querySelectorAll('.cart-count-badge').forEach(b => b.textContent = totalItems);
-    document.querySelectorAll('.wishlist-count-badge').forEach(b => b.textContent = wishlist.length);
-  };
-
-  const renderCartDrawer = () => {
-    const cartBody = document.getElementById('cartDrawerBody');
-    const cartTotalEl = document.getElementById('cartDrawerTotal');
-    if (!cartBody) return;
-
-    if (cart.length === 0) {
-      cartBody.innerHTML = `
-        <div class="cart-empty-state">
-          <svg width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #cbd5e1; margin-bottom: 8px;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-          </svg>
-          <p style="font-size: 0.85rem; color: #64748b;">Giỏ hàng của bạn đang trống</p>
-          <button class="btn btn-primary btn-sm" onclick="closeCartDrawer()" style="margin-top: 10px;">Khám phá sản phẩm</button>
-        </div>
-      `;
-      if (cartTotalEl) cartTotalEl.textContent = '0 ₫';
-      return;
+    const targetView = document.getElementById(viewId);
+    if (targetView) {
+      targetView.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    let totalPrice = 0;
-    let html = '';
+    if (viewId === 'view-detail' && param) {
+      renderProductDetail(param);
+    } else if (viewId === 'view-category') {
+      renderCategoryProducts();
+    }
+  };
 
-    cart.forEach(cartItem => {
-      const product = products.find(p => p.id === cartItem.id);
-      if (!product) return;
+  // 3. RENDER LIVE SEARCH (TÌM KIẾM CƠ BẢN)
+  const headerSearchInput = document.getElementById('headerSearchInput');
+  const liveSearchDropdown = document.getElementById('liveSearchDropdown');
 
-      const itemTotal = product.price * cartItem.quantity;
-      totalPrice += itemTotal;
+  if (headerSearchInput) {
+    headerSearchInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase().trim();
+      if (!term) {
+        liveSearchDropdown.classList.remove('open');
+        return;
+      }
 
-      html += `
-        <div class="cart-item">
-          <img src="${product.image}" alt="${product.title}" class="cart-item-img">
-          <div class="cart-item-info">
-            <h4 class="cart-item-title">${product.title}</h4>
-            <div class="cart-item-price">${formatMoney(product.price)}</div>
-            <div class="cart-item-actions">
-              <button class="qty-btn" onclick="changeQuantity(${product.id}, -1)">-</button>
-              <span class="qty-val">${cartItem.quantity}</span>
-              <button class="qty-btn" onclick="changeQuantity(${product.id}, 1)">+</button>
-              <button class="cart-item-remove" onclick="removeFromCart(${product.id})" title="Xóa">
-                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-              </button>
+      const matches = products.filter(p => p.title.toLowerCase().includes(term)).slice(0, 4);
+      if (matches.length > 0) {
+        liveSearchDropdown.innerHTML = matches.map(p => `
+          <div class="live-search-item" onclick="navigateToView('view-detail', ${p.id}); liveSearchDropdown.classList.remove('open');">
+            <img src="${p.image}" alt="${p.title}">
+            <div>
+              <div style="font-size:0.8rem; font-weight:600;">${p.title}</div>
+              <div style="font-size:0.75rem; color:#8A3500; font-weight:700;">${formatMoney(p.price)}</div>
             </div>
           </div>
-        </div>
-      `;
-    });
-
-    cartBody.innerHTML = html;
-    if (cartTotalEl) cartTotalEl.textContent = formatMoney(totalPrice);
-  };
-
-  window.addToCart = (productId, qty = 1) => {
-    const existing = cart.find(item => item.id === productId);
-    if (existing) {
-      existing.quantity += qty;
-    } else {
-      cart.push({ id: productId, quantity: qty });
-    }
-
-    updateBadges();
-    renderCartDrawer();
-    const product = products.find(p => p.id === productId);
-    showToast(`Đã thêm "${product ? product.title.slice(0, 25) + '...' : 'Sản phẩm'}" vào giỏ hàng!`);
-  };
-
-  window.changeQuantity = (productId, delta) => {
-    const item = cart.find(i => i.id === productId);
-    if (!item) return;
-
-    item.quantity += delta;
-    if (item.quantity <= 0) {
-      cart = cart.filter(i => i.id !== productId);
-    }
-    updateBadges();
-    renderCartDrawer();
-  };
-
-  window.removeFromCart = (productId) => {
-    cart = cart.filter(i => i.id !== productId);
-    updateBadges();
-    renderCartDrawer();
-    showToast('Đã xóa sản phẩm khỏi giỏ hàng.');
-  };
-
-  const cartDrawerOverlay = document.getElementById('cartDrawerOverlay');
-  window.openCartDrawer = () => {
-    renderCartDrawer();
-    if (cartDrawerOverlay) cartDrawerOverlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  };
-
-  window.closeCartDrawer = () => {
-    if (cartDrawerOverlay) cartDrawerOverlay.classList.remove('open');
-    document.body.style.overflow = '';
-  };
-
-  if (cartDrawerOverlay) {
-    cartDrawerOverlay.addEventListener('click', (e) => {
-      if (e.target === cartDrawerOverlay) closeCartDrawer();
+        `).join('');
+        liveSearchDropdown.classList.add('open');
+      } else {
+        liveSearchDropdown.innerHTML = `<div style="padding:8px; font-size:0.8rem; color:#757575;">Không tìm thấy sản phẩm</div>`;
+        liveSearchDropdown.classList.add('open');
+      }
     });
   }
 
-  // ------------------------------------------------------------------------
-  // 3. DANH SÁCH YÊU THÍCH (WISHLIST)
-  // ------------------------------------------------------------------------
-  window.toggleWishlist = (productId, btnEl) => {
-    const index = wishlist.indexOf(productId);
-    if (index > -1) {
-      wishlist.splice(index, 1);
-      if (btnEl) btnEl.classList.remove('active');
-      showToast('Đã xóa khỏi danh sách yêu thích.');
-    } else {
-      wishlist.push(productId);
-      if (btnEl) btnEl.classList.add('active');
-      showToast('Đã lưu vào danh sách yêu thích!');
-    }
-    updateBadges();
+  // Lọc sản phẩm theo checkbox danh mục bên trái (chỉ hiện khi được tick)
+  window.filterCategoryProducts = () => {
+    const checkboxes = document.querySelectorAll('.filter-sidebar input[type="checkbox"]');
+    const selectedCategories = [];
+    
+    // Ánh xạ tên hiển thị tiếng Việt sang mã category trong mảng products
+    const categoryMap = {
+      "Bút Viết": "pens",
+      "Sổ Vở": "notebooks",
+      "Balo & Cặp": "backpacks",
+      "Mỹ Thuật": "art",
+      "Bàn Học": "cases"
+    };
+
+    checkboxes.forEach(cb => {
+      if (cb.checked) {
+        const labelText = cb.parentElement.textContent.trim().split(' (')[0];
+        if (categoryMap[labelText]) {
+          selectedCategories.push(categoryMap[labelText]);
+        }
+      }
+    });
+
+    // Nếu không tick ô nào thì trả về mảng rỗng (không hiện sản phẩm nào)
+    const filtered = products.filter(p => {
+      if (selectedCategories.length === 0) return false;
+      return selectedCategories.includes(p.category);
+    });
+
+    renderProductList('categoryProductsGrid', filtered);
+  };
+  // 4. BỘ LỌC TÌM KIẾM NÂNG CAO & CATEGORY
+  window.applyAdvancedSearch = () => {
+    const keyword = document.getElementById('advKeyword')?.value.toLowerCase().trim() || '';
+    const category = document.getElementById('advCategory')?.value || 'all';
+    const minPrice = parseInt(document.getElementById('advMinPrice')?.value) || 0;
+    const maxPrice = parseInt(document.getElementById('advMaxPrice')?.value) || 1000000;
+
+    const filtered = products.filter(p => {
+      const matchKey = !keyword || p.title.toLowerCase().includes(keyword);
+      const matchCat = category === 'all' || p.category === category;
+      const matchPrice = p.price >= minPrice && p.price <= maxPrice;
+      return matchKey && matchCat && matchPrice;
+    });
+
+    renderProductList('advResultGrid', filtered);
+    navigateToView('view-advanced-search');
   };
 
-  // ------------------------------------------------------------------------
-  // 4. QUICK VIEW MODAL
-  // ------------------------------------------------------------------------
-  const quickViewModal = document.getElementById('quickViewModal');
-  const modalContainer = document.getElementById('quickViewContainer');
-
-  window.openQuickView = (productId) => {
+  // 5. RENDER DETAIL PAGE
+  const renderProductDetail = (productId) => {
     const product = products.find(p => p.id === productId);
-    if (!product || !modalContainer) return;
+    const container = document.getElementById('detailContainer');
+    if (!product || !container) return;
 
-    modalContainer.innerHTML = `
-      <div class="modal-content-grid">
-        <div class="modal-image-box">
-          <img src="${product.image}" alt="${product.title}">
+    container.innerHTML = `
+      <div class="detail-layout">
+        <div>
+          <div class="detail-main-img"><img src="${product.image}" alt="${product.title}"></div>
+          <div class="detail-thumbs">
+            <img src="${product.image}">
+            <img src="${product.image}">
+          </div>
         </div>
-        <div class="modal-info-box">
-          <h2 style="font-size: 1.25rem; font-weight: 700; line-height: 1.35; color: #212121;">${product.title}</h2>
-          
-          <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #FBBF24;">
-            <span>★★★★★</span>
-            <span style="color: #6b7280; font-size: 0.75rem;">(Đánh giá chất lượng cao)</span>
-          </div>
-
-          <div style="margin: 4px 0;">
-            <div style="font-size: 1.35rem; font-weight: 800; color: #FF6900;">${formatMoney(product.price)}</div>
-            ${product.oldPrice ? `<div style="font-size: 0.8rem; color: #9ca3af; text-decoration: line-through;">Giá gốc: ${formatMoney(product.oldPrice)}</div>` : ''}
-          </div>
-
-          <p style="font-size: 0.85rem; color: #4b5563; line-height: 1.6;">${product.description}</p>
-
-          <div style="display: flex; gap: 10px; margin-top: 10px;">
-            <button class="btn btn-primary" style="flex: 1;" onclick="addToCart(${product.id}); closeQuickView();">
-              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-              </svg>
-              Thêm Vào Giỏ Hàng
-            </button>
-            <button class="btn btn-outlined" onclick="toggleWishlist(${product.id});">
-              ♥ Lưu
-            </button>
+        <div>
+          <span class="tag-label" style="margin-bottom:8px;">${product.brand}</span>
+          <h1 style="font-size:1.5rem; font-weight:800; margin-bottom:12px;">${product.title}</h1>
+          <div style="font-size:1.5rem; font-weight:800; color:#8A3500; margin-bottom:12px;">${formatMoney(product.price)}</div>
+          <p style="font-size:0.9rem; color:#4a4542; margin-bottom:20px;">${product.description}</p>
+          <div style="display:flex; gap:12px;">
+            <button class="btn btn-primary" style="flex:1;" onclick="addToCart(${product.id})">Thêm Vào Giỏ Hàng</button>
+            <button class="btn btn-outlined" onclick="navigateToView('view-category')">Quay Lại</button>
           </div>
         </div>
       </div>
     `;
-
-    if (quickViewModal) quickViewModal.classList.add('open');
-    document.body.style.overflow = 'hidden';
   };
 
-  window.closeQuickView = () => {
-    if (quickViewModal) quickViewModal.classList.remove('open');
-    document.body.style.overflow = '';
+  // 6. GIỎ HÀNG & MODAL XEM NHANH
+  const updateBadges = () => {
+    const count = cart.reduce((s, i) => s + i.quantity, 0);
+    document.querySelectorAll('.cart-count-badge').forEach(b => b.textContent = count);
   };
 
-  if (quickViewModal) {
-    quickViewModal.addEventListener('click', (e) => {
-      if (e.target === quickViewModal) closeQuickView();
-    });
-  }
-
-  // ------------------------------------------------------------------------
-  // 5. TOAST NOTIFICATION
-  // ------------------------------------------------------------------------
-  const toastContainer = document.getElementById('toastContainer');
-  window.showToast = (message) => {
-    if (!toastContainer) return;
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.innerHTML = `
-      <svg width="16" height="16" fill="none" stroke="#FF6900" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-      </svg>
-      <span>${message}</span>
-    `;
-    toastContainer.appendChild(toast);
-
-    setTimeout(() => {
-      toast.classList.add('hide');
-      setTimeout(() => toast.remove(), 300);
-    }, 2400);
+  window.addToCart = (id) => {
+    const item = cart.find(i => i.id === id);
+    if (item) item.quantity++;
+    else cart.push({ id, quantity: 1 });
+    updateBadges();
+    renderCartDrawer();
+    showToast("Đã thêm sản phẩm vào giỏ hàng!");
   };
 
-  // ------------------------------------------------------------------------
-  // 6. TÌM KIẾM SẢN PHẨM REAL-TIME
-  // ------------------------------------------------------------------------
-  const searchInput = document.getElementById('searchInput');
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      const term = e.target.value.toLowerCase().trim();
-      const allCards = document.querySelectorAll('.product-card');
+  const renderCartDrawer = () => {
+    const body = document.getElementById('cartDrawerBody');
+    const totalEl = document.getElementById('cartDrawerTotal');
+    if (!body) return;
 
-      allCards.forEach(card => {
-        const title = card.querySelector('.product-title')?.textContent.toLowerCase() || '';
-        if (!term || title.includes(term)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
-  }
-
-  // Cuộn lên đầu trang
-  window.scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    let total = 0;
+    body.innerHTML = cart.map(item => {
+      const p = products.find(prod => prod.id === item.id);
+      if (!p) return '';
+      total += p.price * item.quantity;
+      return `
+        <div style="display:flex; gap:10px; margin-bottom:12px; align-items:center;">
+          <img src="${p.image}" style="width:50px; height:50px; border-radius:6px; object-fit:cover;">
+          <div style="flex:1;">
+            <div style="font-size:0.8rem; font-weight:600;">${p.title}</div>
+            <div style="font-size:0.8rem; color:#8A3500; font-weight:700;">${formatMoney(p.price)} x ${item.quantity}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+    if (totalEl) totalEl.textContent = formatMoney(total);
   };
 
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeCartDrawer();
-      closeQuickView();
-    }
-  });
+  window.openCartDrawer = () => {
+    renderCartDrawer();
+    document.getElementById('cartDrawerOverlay')?.classList.add('open');
+  };
+  window.closeCartDrawer = () => {
+    document.getElementById('cartDrawerOverlay')?.classList.remove('open');
+  };
 
+  window.showToast = (msg) => {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.textContent = msg;
+    container.appendChild(t);
+    setTimeout(() => t.remove(), 2500);
+  };
+
+  const renderProductList = (containerId, list) => {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = list.map(p => `
+      <article class="product-card">
+        <div class="product-thumb">
+          <img src="${p.image}" alt="${p.title}">
+          <div class="product-badges"><span class="badge badge-sale">-20%</span></div>
+          <button class="product-quickview-btn" onclick="navigateToView('view-detail', ${p.id})">Xem Chi Tiết</button>
+        </div>
+        <div class="product-body">
+          <h3 class="product-title" onclick="navigateToView('view-detail', ${p.id})">${p.title}</h3>
+          <div class="product-footer">
+            <span class="product-price-current">${formatMoney(p.price)}</span>
+            <button class="btn btn-primary" style="padding:6px 10px;" onclick="addToCart(${p.id})">+</button>
+          </div>
+        </div>
+      </article>
+    `).join('');
+  };
+
+  const renderCategoryProducts = () => renderProductList('categoryProductsGrid', products);
+
+  // Khởi tạo trang chủ và danh mục
+  renderProductList('homeProductsGrid', products);
+  renderCategoryProducts();
   updateBadges();
-  renderCartDrawer();
+
+  // Lắng nghe sự kiện thay đổi cho toàn bộ checkbox bộ lọc bên trái
+  document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', filterCategoryProducts);
+  });
 });
