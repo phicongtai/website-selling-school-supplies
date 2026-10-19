@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FF6900">
+  <title>Đăng nhập quản trị - Học Đường Store Admin</title>
+  
+  <!-- Kế thừa Design System & Tokens dùng chung của toàn dự án -->
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  
+  <!-- CSS riêng biệt dành cho trang Đăng nhập Quản trị -->
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-login-page">
+
+  <div class="login-wrapper">
+    <main class="login-card" role="main">
+      <!-- Thanh vạch trang trí phía trên theo thiết kế Figma -->
+      <div class="card-accent-bar" aria-hidden="true"></div>
+      
+      <!-- Hào quang mờ góc phải trên -->
+      <div class="ambient-glow" aria-hidden="true"></div>
+
+      <!-- Header: Logo, Tên hệ thống, Phân hệ & Tiêu đề -->
+      <header class="login-header">
+        <div class="brand-row">
+          <div class="brand-logo-box" aria-hidden="true">HĐ</div>
+          <div class="brand-text-col">
+            <span class="brand-title">Học Đường</span>
+            <span class="brand-subtitle">ADMIN SYSTEM</span>
+          </div>
+        </div>
+
+        <!-- Badge phân hệ -->
+        <div class="subsystem-badge">
+          <span class="badge-icon" aria-hidden="true">
+            <svg width="11" height="14" viewBox="0 0 11 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5.5 13.75C3.91 13.35 2.59 12.44 1.56 11.01C0.52 9.58 0 8 0 6.26V2.06L5.5 0L11 2.06V6.26C11 8 10.48 9.58 9.44 11.01C8.41 12.44 7.09 13.35 5.5 13.75ZM5.5 12.31C6.61 11.96 7.54 11.28 8.28 10.27C9.03 9.26 9.46 8.12 9.59 6.87H5.5V1.46L1.38 3.01V6.26C1.38 6.38 1.38 6.49 1.38 6.57C1.38 6.65 1.39 6.75 1.41 6.87H5.5V12.31Z" fill="#FF6900"/>
+            </svg>
+          </span>
+          <span>Phân hệ Quản trị Vận hành</span>
+        </div>
+
+        <h1 class="login-heading">Đăng nhập quản trị</h1>
+        <p class="login-subheading">Hệ thống quản lý nội bộ dành riêng cho Quản trị viên &amp; Điều phối viên</p>
+      </header>
+
+      <!-- Hộp thông báo phản hồi (Ẩn mặc định, hiển thị khi JS xử lý) -->
+      <div id="form-alert" class="form-alert" role="alert" aria-live="polite"></div>
+
+      <!-- Form đăng nhập -->
+      <form id="admin-login-form" class="login-form" autocomplete="on" novalidate>
+        
+        <!-- Trường Tên đăng nhập / Mã nhân sự -->
+        <div class="form-field">
+          <div class="field-label-row">
+            <label for="username" class="field-label">Tên đăng nhập</label>
+            <span class="field-hint">Mã nhân sự / Email ID</span>
+          </div>
+          <div class="input-control-wrap">
+            <span class="input-icon-left" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.7 17C1.23 17 0.83 16.83 0.5 16.5C0.17 16.17 0 15.77 0 15.3V5.95C0 5.48 0.17 5.08 0.5 4.75C0.83 4.42 1.23 4.25 1.7 4.25H5.95V1.7C5.95 1.23 6.12 0.83 6.45 0.5C6.78 0.17 7.18 0 7.65 0H9.35C9.82 0 10.22 0.17 10.55 0.5C10.88 0.83 11.05 1.23 11.05 1.7V4.25H15.3C15.77 4.25 16.17 4.42 16.5 4.75C16.83 5.08 17 5.48 17 5.95V15.3C17 15.77 16.83 16.17 16.5 16.5C16.17 16.83 15.77 17 15.3 17H1.7ZM1.7 15.3H15.3V5.95H11.05C11.05 6.42 10.88 6.82 10.55 7.15C10.22 7.48 9.82 7.65 9.35 7.65H7.65C7.18 7.65 6.78 7.48 6.45 7.15C6.12 6.82 5.95 6.42 5.95 5.95H1.7V15.3ZM3.4 13.6H8.5V13.22C8.5 12.98 8.43 12.75 8.3 12.55C8.16 12.34 7.98 12.18 7.73 12.07C7.45 11.94 7.16 11.85 6.87 11.78C6.58 11.72 6.28 11.69 5.95 11.69C5.62 11.69 5.32 11.72 5.03 11.78C4.74 11.85 4.45 11.94 4.17 12.07C3.92 12.18 3.74 12.34 3.6 12.55C3.47 12.75 3.4 12.98 3.4 13.22V13.6ZM10.2 12.33H13.6V11.05H10.2V12.33ZM5.95 11.05C6.3 11.05 6.61 10.93 6.85 10.68C7.1 10.43 7.22 10.13 7.22 9.77C7.22 9.42 7.1 9.12 6.85 8.87C6.61 8.62 6.3 8.5 5.95 8.5C5.6 8.5 5.29 8.62 5.05 8.87C4.8 9.12 4.67 9.42 4.67 9.77C4.67 10.13 4.8 10.43 5.05 10.68C5.29 10.93 5.6 11.05 5.95 11.05ZM10.2 9.77H13.6V8.5H10.2V9.77ZM7.65 5.95H9.35V1.7H7.65V5.95Z" fill="#5F5E5E"/>
+              </svg>
+            </span>
+            <input 
+              type="text" 
+              id="username" 
+              name="username" 
+              class="login-input" 
+              placeholder="Nhập tên đăng nhập hoặc mã quản trị" 
+              autocomplete="username"
+              autofocus
+            >
+          </div>
+        </div>
+
+        <!-- Trường Mật khẩu bảo mật -->
+        <div class="form-field">
+          <div class="field-label-row">
+            <label for="password" class="field-label">Mật khẩu bảo mật</label>
+          </div>
+          <div class="input-control-wrap">
+            <span class="input-icon-left" aria-hidden="true">
+              <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.71 18C1.24 18 0.84 17.83 0.5 17.5C0.17 17.16 0 16.76 0 16.29V7.71C0 7.24 0.17 6.84 0.5 6.5C0.84 6.17 1.24 6 1.71 6H2.57V4.29C2.57 3.1 2.99 2.09 3.83 1.25C4.66 0.42 5.67 0 6.86 0C8.04 0 9.05 0.42 9.89 1.25C10.73 2.09 11.14 3.1 11.14 4.29V6H12C12.47 6 12.88 6.17 13.21 6.5C13.55 6.84 13.71 7.24 13.71 7.71V16.29C13.71 16.76 13.55 17.16 13.21 17.5C12.88 17.83 12.47 18 12 18H1.71ZM1.71 16.29H12V7.71H1.71V16.29ZM6.86 13.71C7.33 13.71 7.73 13.55 8.07 13.21C8.4 12.88 8.57 12.47 8.57 12C8.57 11.53 8.4 11.13 8.07 10.79C7.73 10.45 7.33 10.29 6.86 10.29C6.39 10.29 5.98 10.45 5.65 10.79C5.31 11.13 5.14 11.53 5.14 12C5.14 12.47 5.31 12.88 5.65 13.21C5.98 13.55 6.39 13.71 6.86 13.71ZM4.29 6H9.43V4.29C9.43 3.57 9.18 2.96 8.68 2.46C8.18 1.96 7.57 1.71 6.86 1.71C6.14 1.71 5.54 1.96 5.04 2.46C4.54 2.96 4.29 3.57 4.29 4.29V6Z" fill="#5F5E5E"/>
+              </svg>
+            </span>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              class="login-input has-toggle" 
+              placeholder="••••••••" 
+              autocomplete="current-password"
+            >
+            <button 
+              type="button" 
+              id="toggle-password" 
+              class="toggle-password-btn" 
+              aria-label="Hiển thị mật khẩu" 
+              title="Hiển thị mật khẩu"
+            >
+              <svg id="eye-icon" width="19" height="13" viewBox="0 0 19 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.5 10.36C10.58 10.36 11.5 9.99 12.25 9.23C13.01 8.47 13.39 7.56 13.39 6.48C13.39 5.4 13.01 4.48 12.25 3.72C11.5 2.97 10.58 2.59 9.5 2.59C8.42 2.59 7.5 2.97 6.75 3.72C5.99 4.48 5.61 5.4 5.61 6.48C5.61 7.56 5.99 8.47 6.75 9.23C7.5 9.99 8.42 10.36 9.5 10.36ZM9.5 8.81C8.85 8.81 8.3 8.58 7.85 8.13C7.39 7.68 7.17 7.13 7.17 6.48C7.17 5.83 7.39 5.28 7.85 4.83C8.3 4.37 8.85 4.15 9.5 4.15C10.15 4.15 10.7 4.37 11.15 4.83C11.61 5.28 11.83 5.83 11.83 6.48C11.83 7.13 11.61 7.68 11.15 8.13C10.7 8.58 10.15 8.81 9.5 8.81ZM9.5 12.95C7.4 12.95 5.48 12.37 3.76 11.19C2.03 10.02 0.78 8.45 0 6.48C0.78 4.51 2.03 2.93 3.76 1.76C5.48 0.59 7.4 0 9.5 0C11.6 0 13.52 0.59 15.24 1.76C16.97 2.93 18.22 4.51 19 6.48C18.22 8.45 16.97 10.02 15.24 11.19C13.52 12.37 11.6 12.95 9.5 12.95ZM9.5 11.23C11.13 11.23 12.62 10.8 13.98 9.94C15.34 9.09 16.38 7.93 17.1 6.48C16.38 5.02 15.34 3.87 13.98 3.01C12.62 2.16 11.13 1.73 9.5 1.73C7.87 1.73 6.38 2.16 5.02 3.01C3.66 3.87 2.62 5.02 1.9 6.48C2.62 7.93 3.66 9.09 5.02 9.94C6.38 10.8 7.87 11.23 9.5 11.23Z" fill="#5F5E5E"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Checkbox Ghi nhớ phiên đăng nhập -->
+        <label class="remember-row">
+          <input type="checkbox" id="remember-me" name="remember" class="custom-checkbox" checked>
+          <span class="remember-label">Ghi nhớ phiên đăng nhập trên thiết bị này</span>
+        </label>
+
+        <!-- Nút Đăng nhập hệ thống -->
+        <button type="submit" id="submit-btn" class="submit-btn">
+          <span id="submit-text">Đăng nhập hệ thống</span>
+          <span class="btn-arrow-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10.65 7.87H0V6.12H10.65L5.75 1.22L7 0L14 7L7 14L5.75 12.77L10.65 7.87Z" fill="white"/>
+            </svg>
+          </span>
+        </button>
+
+      </form>
+    </main>
+
+    <!-- Liên kết nhanh quay về Storefront ngay dưới card -->
+    <a class="back-storefront" href="../../page/homepage/main.html">
+      <span aria-hidden="true">←</span> Quay lại Cửa hàng Học Đường Store
+    </a>
+  </div>
+
+  <!-- Script xử lý tương tác đăng nhập -->
+  <script src="admin.js"></script>
+</body>
+</html>
