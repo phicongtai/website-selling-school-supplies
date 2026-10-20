@@ -2,16 +2,8 @@
  * VIBRANT ACADEMIC MINIMAL - FULL SPA ENGINE
  */
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. DỮ LIỆU SẢN PHẨM MẪU
-  const products = [
-    { id: 1, title: "Set 10 Bút Gel Morandi Vintage Tone Pastel 0.5mm", price: 65000, oldPrice: 85000, category: "pens", image: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=500&q=80", description: "Bút gel màu Morandi thanh lịch, ngòi 0.5mm êm ái, mau khô không lem giấy." },
-    { id: 2, title: "Bút Máy Pilot Kakuno Ngòi F Nhật Bản", price: 195000, oldPrice: 230000, category: "pens", image: "https://down-vn.img.susercontent.com/file/e1d32d504e8bb3568ca14d404f30e82a", description: "Bút máy học sinh Nhật Bản ngòi thép định hình tay cầm chuẩn." },
-    { id: 3, title: "Sổ Còng Binder A5 Bìa Da Pastel Kèm Ruột Caro", price: 89000, oldPrice: 120000, category: "notebooks", image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=500&q=80", description: "Sổ còng 6 lỗ tháo lắp dễ dàng, giấy 100gsm chống thấm mực." },
-    { id: 4, title: "Balo Chống Gù Lưng Học Sinh Công Thái Học", price: 360000, oldPrice: 480000, category: "backpacks", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=500&q=80", description: "Đệm lưng thoáng khí chống gù, vải Oxford trượt nước." },
-    { id: 5, title: "Hộp Bút Vải Canvas Mở Rộng 3 Tầng Ngăn Lớn", price: 68000, oldPrice: 85000, category: "cases", image: "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lr75wcf0547tad", description: "Sức chứa hơn 40 cây bút cùng thước kẻ và máy tính bỏ túi." },
-    { id: 6, title: "Bộ Màu Nước 36 Màu Kèm Cọ Bút Nước & Khay Pha", price: 185000, oldPrice: 240000, category: "art", image: "https://tse2.mm.bing.net/th/id/OIP.VTjDllEC4wzo8Tdum9wjBAHaHa?r=0&pid=Api&h=220&P=0", description: "Bột màu nén cao cấp hạt siêu mịn trong hộp thiếc cao cấp." },
-    { id: 7, title: "Bàn học công thái học", price: 385000, oldPrice: 640000, category: "cases", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLeUM0p5TFnMOzgySTkFZ9i9kKTb8cR5cBnO3AaLFTSw&s=10", description: "Bàn học giúp bé điểu chỉnh tư thế sao cho phụ hợp." }
-  ];
+  const products = window.StoreCatalog.products;
+  const featuredProducts = products.filter(product => product.featured);
 
   let cart = [{ id: 1, quantity: 1 }, { id: 3, quantity: 2 }];
   let wishlist = [1, 4];
@@ -20,14 +12,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 2. CHUYỂN ĐỔI MÀN HÌNH (SPA NAVIGATION)
   window.navigateToView = (viewId, param = null) => {
-    document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
-    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-
     const targetView = document.getElementById(viewId);
-    if (targetView) {
-      targetView.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    if (!targetView) return;
+
+    document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+    targetView.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    const activeNavTarget = viewId === 'view-home' ? 'view-home' : 'view-category';
+    document.querySelectorAll('.main-nav .nav-link[data-target]').forEach(link => {
+      const isActive = link.dataset.target === activeNavTarget;
+      link.classList.toggle('active', isActive);
+      if (isActive) {
+        link.setAttribute('aria-current', 'page');
+        link.scrollIntoView({
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+          block: 'nearest',
+          inline: 'center'
+        });
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
 
     if (viewId === 'view-detail' && param) {
       renderProductDetail(param);
@@ -48,16 +54,18 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const matches = products.filter(p => p.title.toLowerCase().includes(term)).slice(0, 4);
+      const matches = products.filter(p =>
+        `${p.code} ${p.title}`.toLowerCase().includes(term)
+      ).slice(0, 4);
       if (matches.length > 0) {
         liveSearchDropdown.innerHTML = matches.map(p => `
-          <div class="live-search-item" onclick="navigateToView('view-detail', ${p.id}); liveSearchDropdown.classList.remove('open');">
+          <a class="live-search-item" href="../products/product-detail.html?id=${encodeURIComponent(p.code)}">
             <img src="${p.image}" alt="${p.title}">
             <div>
               <div style="font-size:0.8rem; font-weight:600;">${p.title}</div>
               <div style="font-size:0.75rem; color:#8A3500; font-weight:700;">${formatMoney(p.price)}</div>
             </div>
-          </div>
+          </a>
         `).join('');
         liveSearchDropdown.classList.add('open');
       } else {
@@ -77,8 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
       "Bút Viết": "pens",
       "Sổ Vở": "notebooks",
       "Balo & Cặp": "backpacks",
+      "Hộp Bút": "cases",
       "Mỹ Thuật": "art",
-      "Bàn Học": "cases"
+      "Dụng cụ học tập": "school-supplies"
     };
 
     checkboxes.forEach(cb => {
@@ -97,6 +106,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     renderProductList('categoryProductsGrid', filtered);
+  };
+
+  window.showHomeCategory = category => {
+    const categoryLabels = {
+      pens: "Bút Viết",
+      notebooks: "Sổ Vở",
+      backpacks: "Balo & Cặp",
+      cases: "Hộp Bút",
+      "school-supplies": "Dụng cụ học tập",
+      art: "Mỹ Thuật"
+    };
+    const selectedLabel = categoryLabels[category];
+    if (!selectedLabel) return;
+
+    document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(checkbox => {
+      const label = checkbox.parentElement.textContent.trim().split(' (')[0];
+      checkbox.checked = label === selectedLabel;
+    });
+    navigateToView('view-category');
+    window.filterCategoryProducts();
   };
   // 4. BỘ LỌC TÌM KIẾM NÂNG CAO & CATEGORY
   window.applyAdvancedSearch = () => {
@@ -205,19 +234,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById(containerId);
     if (!el) return;
     el.innerHTML = list.map(p => `
-      <article class="product-card">
-        <div class="product-thumb">
-          <img src="${p.image}" alt="${p.title}">
-          <div class="product-badges"><span class="badge badge-sale">-20%</span></div>
-          <button class="product-quickview-btn" onclick="navigateToView('view-detail', ${p.id})">Xem Chi Tiết</button>
-        </div>
-        <div class="product-body">
-          <h3 class="product-title" onclick="navigateToView('view-detail', ${p.id})">${p.title}</h3>
-          <div class="product-footer">
-            <span class="product-price-current">${formatMoney(p.price)}</span>
-            <button class="btn btn-primary" style="padding:6px 10px;" onclick="addToCart(${p.id})">+</button>
+      <article class="store-product-card">
+        <a class="store-product-image-link" href="../products/product-detail.html?id=${encodeURIComponent(p.code)}">
+          <div class="store-product-visual">
+            <span class="store-product-tag">${window.StoreCatalog.categories[p.category]}</span>
+            ${p.hot ? '<span class="store-product-tag store-product-hot">Hot</span>' : ''}
+            <img src="${p.image}" alt="${p.title}" loading="lazy">
           </div>
+        </a>
+        <div class="store-product-code">Mã: ${p.code}</div>
+        <a class="store-product-name" href="../products/product-detail.html?id=${encodeURIComponent(p.code)}">${p.title}</a>
+        <div class="store-product-meta">
+          <strong class="store-product-price">${formatMoney(p.price)}</strong>
+          ${p.oldPrice
+            ? `<span class="store-product-old-price">${formatMoney(p.oldPrice)}</span>`
+            : `<span class="store-product-stock">Kho: ${p.stock}</span>`}
         </div>
+        <button class="store-product-cart" type="button" onclick="addToCart(${p.id})">🛒 Thêm vào giỏ</button>
       </article>
     `).join('');
   };
@@ -225,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderCategoryProducts = () => renderProductList('categoryProductsGrid', products);
 
   // Khởi tạo trang chủ và danh mục
-  renderProductList('homeProductsGrid', products);
+  renderProductList('homeProductsGrid', featuredProducts);
   renderCategoryProducts();
   updateBadges();
 
@@ -233,4 +266,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(cb => {
     cb.addEventListener('change', filterCategoryProducts);
   });
+
+  if (window.location.hash === '#view-category') {
+    window.navigateToView('view-category');
+  }
 });

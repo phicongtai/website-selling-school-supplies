@@ -1,5 +1,5 @@
-
 document.addEventListener("DOMContentLoaded", () => {
+<<<<<<< HEAD
   const products = [
     {
       code: "SP01",
@@ -224,16 +224,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const money = value =>
     new Intl.NumberFormat("vi-VN").format(value) + "đ";
 
+=======
+  const products = window.StoreCatalog.products;
+  const money = value => new Intl.NumberFormat("vi-VN").format(value) + " ₫";
+>>>>>>> 8bf8f0c30c5901e9bde020d5e4bef08e5c141375
   const params = new URLSearchParams(window.location.search);
-  const code = params.get("id") || "SP01";
-  const product = products.find(p => p.code === code);
+  const requestedCode = params.get("id");
+  const product = requestedCode
+    ? products.find(item => item.code === requestedCode)
+    : products.find(item => item.code === "SP01");
 
   if (!product) {
     document.querySelector(".product-overview").innerHTML =
-      '<p>Không tìm thấy sản phẩm. <a href="pens.html">Quay lại danh mục</a></p>';
+      '<p>Không tìm thấy sản phẩm. <a href="../homepage/main.html">Quay lại trang chủ</a></p>';
     return;
   }
 
+<<<<<<< HEAD
   document.title = `${product.name} | Học Đường Store`;
   const categoryInfo = {
   SP: { name: "Bút viết", link: "pens.html" },
@@ -247,99 +254,93 @@ const category = categoryInfo[product.code.substring(0, 2)];
 if (category) {
   document.getElementById("productCategory").textContent = category.name;
 
+=======
+  const categoryName = window.StoreCatalog.categories[product.category] || "Sản phẩm";
+  const categoryPages = {
+    pens: "pens.html",
+    notebooks: "notebooks.html",
+    backpacks: "backpacks.html"
+  };
+>>>>>>> 8bf8f0c30c5901e9bde020d5e4bef08e5c141375
   const categoryLink = document.getElementById("categoryLink");
-  categoryLink.textContent = category.name;
-  categoryLink.href = category.link;
-}
+  const categoryPage = categoryPages[product.category] || "../homepage/main.html";
 
+  document.title = `${product.title} | Học Đường Store`;
+  document.getElementById("productCategory").textContent = categoryName;
+  document.getElementById("productCategorySummary").textContent = categoryName;
+  categoryLink.textContent = categoryName;
+  categoryLink.href = categoryPage;
   document.getElementById("breadcrumbName").textContent =
-    `${product.code} ${product.name}`;
-
-  document.getElementById("productCode").textContent =
-    `Mã: ${product.code}`;
-
-  document.getElementById("productName").textContent = product.name;
+    `${product.code} ${product.title}`;
+  document.getElementById("productCode").textContent = `Mã: ${product.code}`;
+  document.getElementById("productCodeSummary").textContent = product.code;
+  document.getElementById("productName").textContent = product.title;
 
   const image = document.getElementById("productImage");
   image.src = product.image;
-  image.alt = product.name;
-
+  image.alt = product.title;
   document.getElementById("thumbnail").src = product.image;
-  document.getElementById("thumbnail").alt = product.name;
-
-  document.getElementById("productPrice").textContent =
-    money(product.price);
-
+  document.getElementById("thumbnail").alt = product.title;
+  document.getElementById("productPrice").textContent = money(product.price);
   document.getElementById("oldPrice").textContent =
     product.oldPrice ? money(product.oldPrice) : "";
-
-  document.getElementById("discount").textContent =
-    product.oldPrice
-      ? `-${Math.round((1 - product.price / product.oldPrice) * 100)}%`
-      : "";
-
-  document.getElementById("productPack").textContent = product.pack;
+  document.getElementById("discount").textContent = product.oldPrice
+    ? `-${Math.round((1 - product.price / product.oldPrice) * 100)}%`
+    : "";
+  document.getElementById("productPack").textContent = product.pack || "1 sản phẩm";
   document.getElementById("stockText").textContent =
     `Còn ${product.stock} sản phẩm trong kho`;
-
   document.getElementById("descriptionTitle").textContent =
-    `Trải nghiệm ${product.name}`;
-
+    `Trải nghiệm ${product.title}`;
   document.getElementById("descriptionText").textContent =
-    `${product.name} (${product.code}) là lựa chọn dành cho học sinh, sinh viên và người đi làm. Sản phẩm có quy cách ${product.pack}, phù hợp với nhu cầu học tập và ghi chép hằng ngày.`;
+    product.description ||
+    `${product.title} (${product.code}) là lựa chọn phù hợp cho nhu cầu học tập hằng ngày.`;
+  document.getElementById("productDescription").textContent =
+    product.description || `${product.title} phù hợp cho nhu cầu học tập hằng ngày.`;
 
   const quantity = document.getElementById("quantity");
   const notice = document.getElementById("notice");
+  quantity.max = String(product.stock);
 
   document.getElementById("decrease").addEventListener("click", () => {
-    quantity.value = Math.max(1, Number(quantity.value) - 1);
+    quantity.value = String(Math.max(1, Number(quantity.value) - 1));
   });
-
   document.getElementById("increase").addEventListener("click", () => {
-    quantity.value = Math.min(
-      product.stock,
-      Math.max(1, Number(quantity.value) + 1)
-    );
+    quantity.value = String(Math.min(product.stock, Number(quantity.value) + 1));
   });
 
   function getQuantity() {
     const value = Number(quantity.value);
-
     if (!Number.isInteger(value) || value < 1 || value > product.stock) {
       notice.textContent = `Vui lòng chọn số lượng từ 1 đến ${product.stock}.`;
       return null;
     }
-
     return value;
   }
 
   document.getElementById("addToCart").addEventListener("click", () => {
     const amount = getQuantity();
-    if (amount === null) return;
-
-    notice.textContent =
-      `Đã chọn ${amount} × ${product.name}.`;
-
-    // Đây mới là thông báo giao diện, chưa lưu giỏ hàng thực tế.
+    if (amount !== null) {
+      notice.textContent = `Đã chọn ${amount} × ${product.title}.`;
+    }
   });
-
   document.getElementById("buyNow").addEventListener("click", () => {
     const amount = getQuantity();
-    if (amount === null) return;
-
-    notice.textContent =
-      `Bạn đã chọn ${amount} sản phẩm, tổng tiền ${money(amount * product.price)}.`;
+    if (amount !== null) {
+      notice.textContent =
+        `Bạn đã chọn ${amount} sản phẩm, tổng tiền ${money(amount * product.price)}.`;
+    }
   });
 
-  const relatedProducts = products.filter(p => p.code !== product.code).slice(0, 4);
-
-  document.getElementById("relatedProducts").innerHTML =
-    relatedProducts.map(p => `
-      <a class="related-card" href="product-detail.html?id=${p.code}">
-        <img src="${p.image}" alt="${p.name}" loading="lazy">
-        <small>${p.code}</small>
-        <strong>${p.name}</strong>
-        <span>${money(p.price)}</span>
-      </a>
-    `).join("");
+  const relatedProducts = products
+    .filter(item => item.category === product.category && item.code !== product.code)
+    .slice(0, 4);
+  document.getElementById("relatedProducts").innerHTML = relatedProducts.map(item => `
+    <a class="related-card" href="product-detail.html?id=${encodeURIComponent(item.code)}">
+      <img src="${item.image}" alt="${item.title}" loading="lazy">
+      <small>${item.code}</small>
+      <strong>${item.title}</strong>
+      <span>${money(item.price)}</span>
+    </a>
+  `).join("");
 });

@@ -6,22 +6,30 @@
   <title>Bút viết | Học Đường Store</title>
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="stylesheet" href="category.css">
+  <script src="product-data.js" defer></script>
   <script src="category.js" defer></script>
 </head>
-<body>
+<body data-product-category="pens">
 <header class="main-header category-header">
   <div class="header-container">
     <a class="brand" href="../homepage/main.html"><span class="brand-mark">HD</span><strong>Học Đường Store</strong></a>
-    <div class="header-search"><input id="searchInput" type="search" placeholder="Tìm kiếm dụng cụ học tập, bút viết, tập vở..."><button id="searchButton">⌕ Tìm kiếm</button><small>Tìm kiếm nâng cao</small></div>
+    <div class="header-search store-search">
+      <div class="store-search-field"><input id="searchInput" class="store-search-input" type="search" placeholder="Tìm kiếm dụng cụ học tập, bút viết, tập vở..."><button id="searchButton" class="store-search-button" type="button">⌕ Tìm kiếm</button></div>
+      <small class="store-search-hint">Tìm kiếm nâng cao</small>
+    </div>
     <div class="header-actions"><a class="cart-link" href="../homepage/main.html">♧ <sup>3</sup></a><span class="user-avatar">👤</span><strong class="user-name">Nguyễn Minh Anh</strong></div>
   </div>
   <nav class="category-nav">
+<<<<<<< HEAD
     <a href="../homepage/main.html">Trang chủ</a><a href="#">Sản phẩm</a><a class="active" href="pens.html">Bút viết</a><a href="notebooks.html">Vở &amp; giấy</a><a href="backpacks.html">Cặp &amp; balo</a><a href="school-supplies.html">Dụng cụ học tập</a><a href="#">Dụng cụ vẽ &amp; mỹ thuật</a><a href="#">Máy tính &amp; thiết bị học tập</a>
+=======
+    <a href="../homepage/main.html">Trang chủ</a><a href="../homepage/main.html#view-category">Sản phẩm</a><a class="active" href="pens.html">Bút viết</a><a href="notebooks.html">Vở &amp; giấy</a><a href="backpacks.html">Cặp &amp; balo</a><a href="#">Dụng cụ học tập</a><a href="#">Dụng cụ vẽ &amp; mỹ thuật</a><a href="#">Máy tính &amp; thiết bị học tập</a>
+>>>>>>> 8bf8f0c30c5901e9bde020d5e4bef08e5c141375
   </nav>
 </header>
 
 <main class="category-page">
-  <div class="breadcrumb"><a href="../homepage/main.html">⌂ Trang chủ</a><span>/</span><span>Sản phẩm</span><span>/</span><strong>Bút viết</strong></div>
+  <div class="breadcrumb"><a href="../homepage/main.html">⌂ Trang chủ</a><span>/</span><a href="../homepage/main.html#view-category">Sản phẩm</a><span>/</span><strong>Bút viết</strong></div>
   <div class="category-layout">
     <aside class="category-sidebar">
       <div class="sidebar-title"><span>♧</span><strong>Danh mục sản phẩm</strong><small>7 nhóm</small></div>

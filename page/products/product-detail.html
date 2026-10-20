@@ -7,15 +7,24 @@
 
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="stylesheet" href="product-detail.css">
+  <script src="product-data.js" defer></script>
   <script src="product-detail.js" defer></script>
 </head>
 <body>
   <header class="detail-header">
     <a class="store-logo" href="../homepage/main.html">🟧 Học Đường Store</a>
 
+<<<<<<< HEAD
     <div class="detail-search">
       <input type="search" placeholder="Tìm kiếm dụng cụ học tập, bút viết, tập vở...">
       <button type="button" onclick="location.href='../homepage/main.html'">Tìm kiếm</button>
+=======
+    <div class="detail-search store-search">
+      <div class="store-search-field">
+        <input class="store-search-input" type="search" placeholder="Tìm kiếm dụng cụ học tập, bút viết, tập vở...">
+        <button class="store-search-button" type="button" onclick="location.href='pens.html'">⌕ Tìm kiếm</button>
+      </div>
+>>>>>>> 8bf8f0c30c5901e9bde020d5e4bef08e5c141375
     </div>
 
     <a class="header-home" href="../homepage/main.html">Sản phẩm</a>
@@ -23,7 +32,7 @@
 
   <main class="detail-container">
     <nav class="breadcrumb">
-      <a href="pens.html">Trang chủ</a> ›
+      <a href="../homepage/main.html">Trang chủ</a> ›
       <a id="categoryLink" href="pens.html">Bút viết</a> ›
       <span id="breadcrumbName">Chi tiết sản phẩm</span>
     </nav>
@@ -60,14 +69,14 @@
         </div>
 
         <div class="feature-list">
-          <p>☑ Mực viết rõ nét, phù hợp với nhu cầu học tập và làm việc.</p>
-          <p>☑ Thiết kế tiện dụng, dễ cầm và sử dụng.</p>
-          <p>☑ Phù hợp cho học sinh, sinh viên và nhân viên văn phòng.</p>
+          <p>☑ <span id="productDescription"></span></p>
+          <p>☑ Sản phẩm chính hãng, phù hợp nhu cầu học tập.</p>
+          <p>☑ Được đóng gói cẩn thận trước khi giao hàng.</p>
         </div>
 
         <div class="spec-summary">
-          <div><small>Độ dày nét</small><strong>0.5 mm chuẩn thi</strong></div>
-          <div><small>Màu mực</small><strong>Mực đen đậm</strong></div>
+          <div><small>Danh mục</small><strong id="productCategorySummary">Sản phẩm</strong></div>
+          <div><small>Mã sản phẩm</small><strong id="productCodeSummary">SP01</strong></div>
           <div><small>Quy cách</small><strong id="productPack">1 sản phẩm</strong></div>
         </div>
 
