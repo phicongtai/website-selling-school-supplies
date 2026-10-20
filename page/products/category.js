@@ -1,106 +1,135 @@
-// S02 - Dữ liệu và tương tác trang danh mục Bút viết
 document.addEventListener("DOMContentLoaded", () => {
-  const products = [
-    {code:"SP01",name:"Bút gel đen 0.5mm (hộp 10 cây)",price:45000,oldPrice:55000,stock:120,image:"https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=600&q=85"},
-    {code:"SP02",name:"Bút bi xanh êm tay (vỉ 5 cây)",price:25000,stock:120,image:"https://down-vn.img.susercontent.com/file/e1d32d504e8bb3568ca14d404f30e82a"},
-    {code:"SP03",name:"Bút máy luyện chữ học sinh",price:89000,oldPrice:110000,stock:35,image:"https://images.unsplash.com/photo-1455390582262-044c48d58150?auto=format&fit=crop&w=600&q=85",hot:true},
-    {code:"SP04",name:"Bút highlight pastel (bộ 6 màu)",price:59000,stock:45,image:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=85"},
-    {code:"SP05",name:"Bút gel nhiều màu (bộ 12 màu)",price:78000,oldPrice:95000,stock:60,image:"https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=600&q=85"},
-    {code:"SP06",name:"Bút chì gỗ 2B (hộp 12 cây)",price:36000,stock:210,image:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=85"},
-    {code:"SP07",name:"Bút bi mực đen nét mảnh",price:18000,stock:95,image:"https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=600&q=85"},
-    {code:"SP08",name:"Bút ký thân kim loại",price:125000,oldPrice:150000,stock:18,image:"https://images.unsplash.com/photo-1455390582262-044c48d58150?auto=format&fit=crop&w=600&q=85"}
-  ];
-  // Ảnh pastel có URL riêng để tránh lỗi tải do nguồn ảnh không hợp lệ.
-  products[3].image = "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=85";
+  const activeNavigationLink = document.querySelector(".category-nav a.active");
+  if (activeNavigationLink) {
+    activeNavigationLink.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "nearest",
+      inline: "center"
+    });
+  }
+
+  const category = document.body.dataset.productCategory || "pens";
+  const products = window.StoreCatalog.products.filter(item => item.category === category);
+  const categoryName = window.StoreCatalog.categories[category];
   const grid = document.getElementById("productGrid");
   const count = document.getElementById("resultCount");
   const sort = document.getElementById("sortSelect");
   const search = document.getElementById("searchInput");
+  const previousButton = document.getElementById("prevPage");
+  const nextButton = document.getElementById("nextPage");
+  const categoryLinks = {
+    "pens.html": "pens",
+    "notebooks.html": "notebooks",
+    "backpacks.html": "backpacks"
+  };
+
+  if (!categoryName || !grid || !count || !sort || !search || !previousButton || !nextButton) {
+    throw new Error("Thiếu dữ liệu hoặc thành phần cần thiết cho trang danh mục sản phẩm.");
+  }
+
+  document.querySelectorAll(".category-option").forEach(link => {
+    const target = Object.entries(categoryLinks)
+      .find(([file]) => link.getAttribute("href").endsWith(file));
+    const number = link.querySelector("span:last-child");
+    if (target && number) {
+      number.textContent = String(
+        window.StoreCatalog.products.filter(item => item.category === target[1]).length
+      );
+    } else if (link.textContent.includes("Tất cả sản phẩm")) {
+      const number = link.querySelector("span:last-child");
+      if (number) number.textContent = String(window.StoreCatalog.products.length);
+    }
+  });
+
   let page = 1;
   const perPage = 6;
-  const money = value => new Intl.NumberFormat("vi-VN").format(value) + "đ";
+  const money = value => new Intl.NumberFormat("vi-VN").format(value) + " ₫";
 
   function render() {
-    let list = products.filter(p => `${p.code} ${p.name}`.toLowerCase().includes(search.value.trim().toLowerCase()));
-    if (sort.value === "low") list.sort((a,b)=>a.price-b.price);
-    if (sort.value === "high") list.sort((a,b)=>b.price-a.price);
-    if (sort.value === "name") list.sort((a,b)=>a.name.localeCompare(b.name,"vi"));
-    const totalPages = Math.max(1,Math.ceil(list.length/perPage));
-    page = Math.min(page,totalPages);
-    const shown = list.slice((page-1)*perPage,page*perPage);
-    count.textContent = list.length ? `Hiển thị ${(page-1)*perPage+1}–${Math.min(page*perPage,list.length)} của ${list.length} sản phẩm` : "Không tìm thấy sản phẩm phù hợp";
-    grid.innerHTML = shown.map(p => `
-  <article class="product-card">
-    <a class="product-detail-link" href="product-detail.html?id=${p.code}">
-      <div class="product-visual">
-        <span class="product-tag">Bút viết</span>
-        ${p.hot ? '<span class="product-tag hot">Hot</span>' : ''}
-        <img src="${p.image}" alt="${p.name}" loading="lazy"
-          onerror="this.style.display='none';this.parentElement.classList.add('image-missing')">
-      </div>
-    </a>
+    let filtered = products.filter(product =>
+      `${product.code} ${product.title}`.toLocaleLowerCase("vi")
+        .includes(search.value.trim().toLocaleLowerCase("vi"))
+    );
 
-    <div class="product-code">Mã: ${p.code}</div>
+    if (sort.value === "low") filtered.sort((a, b) => a.price - b.price);
+    if (sort.value === "high") filtered.sort((a, b) => b.price - a.price);
+    if (sort.value === "name") {
+      filtered.sort((a, b) => a.title.localeCompare(b.title, "vi"));
+    }
 
-    <a class="product-detail-link product-name-link"
-       href="product-detail.html?id=${p.code}">
-      <div class="product-name">${p.name}</div>
-    </a>
+    const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
+    page = Math.min(page, totalPages);
+    const visibleProducts = filtered.slice((page - 1) * perPage, page * perPage);
 
-    <div class="product-meta">
-      <strong class="price">${money(p.price)}</strong>
-      ${p.oldPrice
-        ? `<span class="old-price">${money(p.oldPrice)}</span>`
-        : `<span class="stock">Kho: ${p.stock}</span>`}
-    </div>
+    count.textContent = filtered.length
+      ? `Hiển thị ${(page - 1) * perPage + 1}–${Math.min(page * perPage, filtered.length)} của ${filtered.length} sản phẩm`
+      : "Không tìm thấy sản phẩm phù hợp";
 
-    <button class="add-cart" type="button">
-      <span>🛒</span> Thêm vào giỏ
-    </button>
-  </article>
-`).join("");
+    grid.innerHTML = visibleProducts.map(product => `
+      <article class="store-product-card">
+        <a class="store-product-image-link" href="product-detail.html?id=${encodeURIComponent(product.code)}">
+          <div class="store-product-visual">
+            <span class="store-product-tag">${categoryName}</span>
+            ${product.hot ? '<span class="store-product-tag store-product-hot">Hot</span>' : ""}
+            <img src="${product.image}" alt="${product.title}" loading="lazy">
+          </div>
+        </a>
+        <div class="store-product-code">Mã: ${product.code}</div>
+        <a class="store-product-name" href="product-detail.html?id=${encodeURIComponent(product.code)}">${product.title}</a>
+        <div class="store-product-meta">
+          <strong class="store-product-price">${money(product.price)}</strong>
+          ${product.oldPrice
+            ? `<span class="store-product-old-price">${money(product.oldPrice)}</span>`
+            : `<span class="store-product-stock">Kho: ${product.stock}</span>`}
+        </div>
+        <button class="store-product-cart" type="button">🛒 Thêm vào giỏ</button>
+      </article>
+    `).join("");
 
-    document.querySelectorAll(".page-number").forEach(btn=>{btn.classList.toggle("active",Number(btn.dataset.page)===page);btn.hidden=Number(btn.dataset.page)>totalPages});
-    document.getElementById("prevPage").disabled=page===1;
-    document.getElementById("nextPage").disabled=page===totalPages;
-    grid.querySelectorAll(".add-cart").forEach(btn=>btn.addEventListener("click",()=>{btn.classList.add("added");btn.textContent="✓ Đã thêm vào giỏ";setTimeout(()=>{btn.classList.remove("added");btn.innerHTML='<span>🛒</span> Thêm vào giỏ'},1200)}));
+    document.querySelectorAll(".page-number").forEach(button => {
+      const buttonPage = Number(button.dataset.page);
+      button.classList.toggle("active", buttonPage === page);
+      button.hidden = buttonPage > totalPages;
+    });
+    previousButton.disabled = page === 1;
+    nextButton.disabled = page === totalPages;
+
+    grid.querySelectorAll(".store-product-cart").forEach(button => {
+      button.addEventListener("click", () => {
+        button.classList.add("added");
+        button.textContent = "✓ Đã thêm vào giỏ";
+        window.setTimeout(() => {
+          button.classList.remove("added");
+          button.textContent = "🛒 Thêm vào giỏ";
+        }, 1200);
+      });
+    });
   }
-  sort.addEventListener("change",()=>{page=1;render()});
-  search.addEventListener("input",()=>{page=1;render()});
-  document.getElementById("searchButton").addEventListener("click",()=>{search.focus();page=1;render()});
-  document.querySelectorAll(".page-number").forEach(btn=>btn.addEventListener("click",()=>{page=Number(btn.dataset.page);render();window.scrollTo({top:0,behavior:"smooth"})}));
-  document.getElementById("prevPage").addEventListener("click",()=>{page=Math.max(1,page-1);render()});
-  document.getElementById("nextPage").addEventListener("click",()=>{page=Math.min(2,page+1);render()});
+
+  sort.addEventListener("change", () => {
+    page = 1;
+    render();
+  });
+  search.addEventListener("input", () => {
+    page = 1;
+    render();
+  });
+  document.getElementById("searchButton").addEventListener("click", () => search.focus());
+  document.querySelectorAll(".page-number").forEach(button => {
+    button.addEventListener("click", () => {
+      page = Number(button.dataset.page);
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+  previousButton.addEventListener("click", () => {
+    page = Math.max(1, page - 1);
+    render();
+  });
+  nextButton.addEventListener("click", () => {
+    page = Math.min(Math.ceil(products.length / perPage), page + 1);
+    render();
+  });
+
   render();
 });
-
-grid.innerHTML = shown.map(p => `
-  <article class="product-card">
-    <a class="product-detail-link" href="product-detail.html?id=${p.code}">
-      <div class="product-visual">
-        <span class="product-tag">Bút viết</span>
-        ${p.hot ? '<span class="product-tag hot">Hot</span>' : ''}
-        <img src="${p.image}" alt="${p.name}" loading="lazy"
-          onerror="this.style.display='none';this.parentElement.classList.add('image-missing')">
-      </div>
-    </a>
-
-    <div class="product-code">Mã: ${p.code}</div>
-
-    <a class="product-detail-link product-name-link"
-       href="product-detail.html?id=${p.code}">
-      <div class="product-name">${p.name}</div>
-    </a>
-
-    <div class="product-meta">
-      <strong class="price">${money(p.price)}</strong>
-      ${p.oldPrice
-        ? `<span class="old-price">${money(p.oldPrice)}</span>`
-        : `<span class="stock">Kho: ${p.stock}</span>`}
-    </div>
-
-    <button class="add-cart" type="button">
-      <span>🛒</span> Thêm vào giỏ
-    </button>
-  </article>
-`).join("");

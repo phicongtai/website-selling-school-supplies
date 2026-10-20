@@ -1,8 +1,6 @@
 /* ==========================================================================
    VIBRANT ACADEMIC MINIMAL - STYLING FRAMEWORK & DESIGN SYSTEM
    ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap');
-@import url("/assets/style.css");
 :root {
   /* Design Tokens theo Figma */
   --color-primary:          #FF6900;
@@ -79,7 +77,15 @@ button { cursor: pointer; }
 
 /* Views SPA Toggle */
 .app-view { display: none; }
-.app-view.active { display: block; }
+.app-view.active {
+  display: block;
+  animation: view-enter 0.3s ease both;
+}
+
+@keyframes view-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 /* Top Announcement Bar */
 .top-bar {
@@ -91,6 +97,33 @@ button { cursor: pointer; }
 .top-bar-inner { display: flex; justify-content: space-between; align-items: center; }
 
 /* Sticky Header */
+.homepage-header { height: auto; padding: 12px 0; }
+.homepage-header-container { display: flex; flex-direction: column; gap: 12px; }
+.homepage-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+}
+.homepage-header .brand-logo { flex: 0 0 auto; }
+.homepage-header .brand-text { display: flex; align-items: baseline; gap: 8px; white-space: nowrap; }
+.homepage-header .brand-title { color: var(--color-primary-800); font-size: 1.2rem; font-weight: 800; }
+.homepage-header .brand-slogan { color: var(--text-main); font-size: 0.8rem; font-weight: 600; }
+.homepage-header .header-search.store-search { max-width: 440px; margin-top: 4px; }
+.homepage-header-actions { flex: 0 0 auto; gap: 16px; }
+.homepage-user { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.homepage-user img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+.homepage-user span { color: var(--text-headline); font-size: 0.85rem; font-weight: 700; white-space: nowrap; }
+.homepage-header .main-nav {
+  display: flex;
+  width: 100%;
+  gap: 24px;
+  padding-top: 10px;
+  overflow-x: auto;
+  border-top: 1px solid var(--border-light);
+  white-space: nowrap;
+}
 .main-header {
   position: sticky; top: 0; z-index: 100;
   background-color: var(--bg-surface);
@@ -106,23 +139,36 @@ button { cursor: pointer; }
   display: flex; align-items: center; justify-content: center; color: white;
 }
 
-.main-nav { display: flex; gap: 24px; }
-.nav-link { font-size: 0.875rem; font-weight: 500; color: var(--text-headline); position: relative; padding: 6px 0; }
+.main-nav { display: flex; gap: 24px; scroll-behavior: smooth; }
+.nav-link { font-size: 0.875rem; font-weight: 500; color: var(--text-headline); position: relative; padding: 6px 0; transition: color var(--transition-normal); }
 .nav-link.active, .nav-link:hover { color: var(--color-primary-800); font-weight: 600; }
 .nav-link.active::after {
   content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px;
   background-color: var(--color-primary); border-radius: var(--radius-full);
+  animation: nav-indicator-enter var(--transition-normal) both;
+}
+
+@keyframes nav-indicator-enter {
+  from { transform: scaleX(0.35); opacity: 0.5; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-view.active,
+  .nav-link.active::after {
+    animation: none;
+  }
+
+  .main-nav {
+    scroll-behavior: auto;
+  }
+
+  .nav-link {
+    transition: none;
+  }
 }
 
 /* Header Search & Live Search Dropdown */
-.header-search { flex: 1; max-width: 400px; position: relative; }
-.search-input-wrap {
-  display: flex; align-items: center; padding: 8px 14px;
-  background-color: #f6f7f9; border: 1.5px solid var(--border-light);
-  border-radius: var(--radius-md);
-}
-.search-input-wrap input { width: 100%; font-size: 0.875rem; margin-left: 8px; }
-
 .live-search-dropdown {
   position: absolute; top: 110%; left: 0; width: 100%;
   background: var(--bg-surface); border: 1px solid var(--border-light);
@@ -190,57 +236,6 @@ button { cursor: pointer; }
 
 /* Products Grid */
 .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 20px; }
-.product-card {
-  background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-light);
-  overflow: hidden; display: flex; flex-direction: column; position: relative;
-  transition: all var(--transition-normal);
-}
-.product-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: rgba(255,105,0,0.3); }
-
-.product-thumb { position: relative; width: 100%; padding-top: 100%; background: #f8f9fb; }
-.product-thumb img { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; }
-
-.product-badges { position: absolute; top: 10px; left: 10px; z-index: 2; }
-.badge { padding: 4px 8px; font-size: 0.7rem; font-weight: 700; border-radius: var(--radius-xs); color: white; }
-.badge-sale { background-color: var(--color-primary); }
-.badge-hot { background-color: var(--color-danger); }
-
-/* Thiết lập trạng thái ẩn ban đầu của nút Xem Nhanh / Xem Chi Tiết */
-.product-thumb {
-  position: relative;
-  overflow: hidden; /* Cực kỳ quan trọng để che phần nút bị đẩy ra ngoài */
-}
-
-.product-quickview-btn {
-  position: absolute;
-  bottom: -45px; /* Đẩy hẳn xuống dưới khung ảnh để ẩn đi */
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 24px);
-  background-color: rgba(33, 33, 33, 0.9);
-  color: #ffffff;
-  padding: 8px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: bottom 0.25s ease-in-out; /* Hiệu ứng chuyển động mượt mà */
-  z-index: 2;
-}
-
-/* Khi rê chuột (hover) vào toàn bộ card sản phẩm thì nút trượt lên vị trí 12px */
-.product-card:hover .product-quickview-btn {
-  bottom: 12px; 
-}
-
-.product-body { padding: 14px; flex: 1; display: flex; flex-direction: column; }
-.product-title { font-size: 0.875rem; font-weight: 600; color: var(--text-headline); line-height: 1.3; margin-bottom: 6px; }
-.product-footer { margin-top: auto; display: flex; align-items: center; justify-content: space-between; pt: 8px; }
-.product-price-current { font-size: 1.1rem; font-weight: 700; color: var(--color-primary-800); }
-.product-price-old { font-size: 0.75rem; color: var(--text-muted); text-decoration: line-through; }
 
 /* Filter Sidebar (Category View) */
 .category-layout { display: grid; grid-template-columns: 260px 1fr; gap: 24px; margin-top: 20px; }
@@ -290,10 +285,19 @@ button { cursor: pointer; }
 
 /* Responsive */
 @media (max-width: 992px) {
+  .homepage-header-row { flex-wrap: wrap; gap: 12px 20px; }
+  .homepage-header .header-search.store-search { order: 3; flex-basis: 100%; max-width: none; margin: 0; }
+  .homepage-header-actions { margin-left: auto; }
+  .homepage-header .main-nav { display: flex; }
   .hero-grid, .category-layout, .detail-layout { grid-template-columns: 1fr; }
   .products-grid { grid-template-columns: repeat(2, 1fr); }
   .category-grid { grid-template-columns: repeat(3, 1fr); }
-  .main-nav { display: none; }
+}
+
+@media (max-width: 760px) {
+  .homepage-header .brand-slogan,
+  .homepage-user span { display: none; }
+  .homepage-header-actions { gap: 12px; }
 }
 
 .main-footer {
@@ -466,4 +470,12 @@ button { cursor: pointer; }
   font-size: 0.7rem;
   font-weight: var(--fw-semibold);
   border: 1px solid #383838;
+}
+
+@media (max-width: 992px) {
+  .footer-top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .footer-top { grid-template-columns: minmax(0, 1fr); }
 }

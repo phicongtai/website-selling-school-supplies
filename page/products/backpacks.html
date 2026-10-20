@@ -8,9 +8,10 @@
 
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="stylesheet" href="category.css">
-  <script src="backpacks.js" defer></script>
+  <script src="product-data.js" defer></script>
+  <script src="category.js" defer></script>
 </head>
-<body>
+<body data-product-category="backpacks">
 <header class="main-header category-header">
   <div class="header-container">
     <a class="brand" href="../homepage/main.html">
@@ -18,11 +19,13 @@
       <strong>Học Đường Store</strong>
     </a>
 
-    <div class="header-search">
-      <input id="searchInput" type="search"
-        placeholder="Tìm kiếm cặp, balo, túi đựng laptop...">
-      <button id="searchButton">⌕ Tìm kiếm</button>
-      <small>Tìm kiếm nâng cao</small>
+    <div class="header-search store-search">
+      <div class="store-search-field">
+        <input id="searchInput" class="store-search-input" type="search"
+          placeholder="Tìm kiếm cặp, balo, túi đựng laptop...">
+        <button id="searchButton" class="store-search-button" type="button">⌕ Tìm kiếm</button>
+      </div>
+      <small class="store-search-hint">Tìm kiếm nâng cao</small>
     </div>
 
     <div class="header-actions">
@@ -34,7 +37,7 @@
 
   <nav class="category-nav">
     <a href="../homepage/main.html">Trang chủ</a>
-    <a href="../homepage/main.html">Sản phẩm</a>
+    <a href="../homepage/main.html#view-category">Sản phẩm</a>
     <a href="pens.html">Bút viết</a>
     <a href="notebooks.html">Vở &amp; giấy</a>
     <a class="active" href="backpacks.html">Cặp &amp; balo</a>
@@ -48,7 +51,7 @@
   <div class="breadcrumb">
     <a href="../homepage/main.html">⌂ Trang chủ</a>
     <span>/</span>
-    <span>Sản phẩm</span>
+    <a href="../homepage/main.html#view-category">Sản phẩm</a>
     <span>/</span>
     <strong>Cặp &amp; balo</strong>
   </div>
