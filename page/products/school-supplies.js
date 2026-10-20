@@ -109,11 +109,11 @@ document.addEventListener("DOMContentLoaded", () => {
       : "Không tìm thấy sản phẩm phù hợp";
 
     grid.innerHTML = shown.map(p => `
-      <article class="product-card">
-        <a class="product-detail-link"
+      <article class="store-product-card">
+        <a class="store-product-image-link"
            href="product-detail.html?id=${p.code}">
-          <div class="product-visual">
-            <span class="product-tag">Dụng cụ học tập</span>
+          <div class="store-product-visual">
+            <span class="store-product-tag">Dụng cụ học tập</span>
             <img
               src="${p.image}"
               alt="${p.name}"
@@ -123,23 +123,23 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </a>
 
-        <div class="product-code">Mã: ${p.code}</div>
+        <div class="store-product-code">Mã: ${p.code}</div>
 
-        <a class="product-detail-link product-name-link"
+        <a class="store-product-name"
            href="product-detail.html?id=${p.code}">
-          <div class="product-name">${p.name}</div>
+          ${p.name}
         </a>
 
-        <div class="product-meta">
-          <strong class="price">${money(p.price)}</strong>
+        <div class="store-product-meta">
+          <strong class="store-product-price">${money(p.price)}</strong>
           ${
             p.oldPrice
-              ? `<span class="old-price">${money(p.oldPrice)}</span>`
-              : `<span class="stock">Kho: ${p.stock}</span>`
+              ? `<span class="store-product-old-price">${money(p.oldPrice)}</span>`
+              : `<span class="store-product-stock">Kho: ${p.stock}</span>`
           }
         </div>
 
-        <button class="add-cart" type="button">
+        <button class="store-product-cart add-cart" type="button">
           <span>🛒</span> Thêm vào giỏ
         </button>
       </article>

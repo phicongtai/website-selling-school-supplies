@@ -267,7 +267,16 @@ document.addEventListener('DOMContentLoaded', () => {
     cb.addEventListener('change', filterCategoryProducts);
   });
 
-  if (window.location.hash === '#view-category') {
-    window.navigateToView('view-category');
+  const pageParams = new URLSearchParams(window.location.search);
+  const categoryParam = pageParams.get('category');
+  const searchParam = pageParams.get('search');
+
+  if (searchParam) {
+    document.getElementById('advKeyword').value = searchParam;
+    window.applyAdvancedSearch();
+  } else if (categoryParam) {
+    window.showHomeCategory(categoryParam);
+  } else if (['#view-category', '#view-advanced-search'].includes(window.location.hash)) {
+    window.navigateToView(window.location.hash.slice(1));
   }
 });

@@ -391,18 +391,29 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   padding: 36px max(calc((100% - 1200px) / 2), 24px);
-  background: var(--bg-surface);
-  border-top: 1px solid var(--border-light);
-  color: var(--text-muted);
+  background: #1a1a1a;
+  border-top: 1px solid #2d2d2d;
+  color: #a3a3a3;
   font-size: 13px;
 }
 
 .detail-footer h3 {
-  color: var(--color-primary-800);
+  color: #fff;
 }
 
 .detail-footer a {
   color: inherit;
+}
+
+.detail-footer div:first-child h3 {
+  color: var(--color-primary-400);
+}
+
+.detail-copyright {
+  grid-column: 1 / -1;
+  padding-top: 18px;
+  border-top: 1px solid #2d2d2d;
+  font-size: 11px;
 }
 
 @media (max-width: 800px) {
