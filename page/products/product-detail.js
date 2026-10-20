@@ -209,6 +209,15 @@ document.addEventListener("DOMContentLoaded", () => {
       pack: "1 cặp",
       image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=85"
     }
+    ,
+    { code: "DC01", name: "Thước kẻ nhựa 20cm", price: 8000, oldPrice: 10000, stock: 150, pack: "20 cm", image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=85" },
+    { code: "DC02", name: "Hộp bút học sinh đa năng", price: 45000, oldPrice: 55000, stock: 80, pack: "1 hộp", image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=800&q=85" },
+    { code: "DC03", name: "Máy tính cầm tay học sinh", price: 185000, oldPrice: 210000, stock: 35, pack: "1 máy", image: "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=800&q=85" },
+    { code: "DC04", name: "Gôm tẩy trắng sạch", price: 5000, stock: 200, pack: "1 cục", image: "https://images.unsplash.com/photo-1455390582262-044c48d58150?auto=format&fit=crop&w=800&q=85" },
+    { code: "DC05", name: "Đồ chuốt bút chì", price: 12000, stock: 100, pack: "1 chiếc", image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=85" },
+    { code: "DC06", name: "Compa học sinh kèm bút chì", price: 25000, oldPrice: 30000, stock: 60, pack: "1 bộ", image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=85" },
+    { code: "DC07", name: "Kéo học sinh đầu tròn", price: 18000, stock: 75, pack: "1 chiếc", image: "https://images.unsplash.com/photo-1455390582262-044c48d58150?auto=format&fit=crop&w=800&q=85" },
+    { code: "DC08", name: "Keo dán giấy học sinh", price: 15000, stock: 90, pack: "1 chai", image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=85" }
   ];
 
 
@@ -229,7 +238,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const categoryInfo = {
   SP: { name: "Bút viết", link: "pens.html" },
   VG: { name: "Vở & giấy", link: "notebooks.html" },
-  CB: { name: "Cặp & balo", link: "backpacks.html" }
+  CB: { name: "Cặp & balo", link: "backpacks.html" },
+  DC: { name: "Dụng cụ học tập", link: "school-supplies.html" }
 };
 
 const category = categoryInfo[product.code.substring(0, 2)];
