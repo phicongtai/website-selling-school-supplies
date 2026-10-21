@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bộ Sưu Tập Biểu Tượng SVG - Học Đường Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text: #0F172A;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+      --primary: #FF6900;
+      --admin-green: #1B4332;
+    }
+    body.dark {
+      --bg: #0F172A;
+      --card-bg: #1E293B;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 32px 24px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .header {
+      max-width: 1200px;
+      margin: 0 auto 32px auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 20px;
+    }
+    .header-info h1 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-info p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .search-box {
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      width: 260px;
+      outline: none;
+    }
+    .search-box:focus {
+      border-color: var(--primary);
+    }
+    .btn-toggle {
+      padding: 8px 16px;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .category-section {
+      max-width: 1200px;
+      margin: 0 auto 36px auto;
+    }
+    .category-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge-count {
+      font-size: 12px;
+      background: #E2E8F0;
+      color: #334155;
+      padding: 2px 8px;
+      border-radius: 9999px;
+    }
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 16px;
+    }
+    .icon-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+    .icon-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      border-color: var(--primary);
+    }
+    .icon-card:active {
+      transform: translateY(0);
+    }
+    .icon-preview {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.02);
+      border-radius: 8px;
+    }
+    .icon-preview img {
+      max-width: 28px;
+      max-height: 28px;
+      object-fit: contain;
+    }
+    .icon-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text);
+      word-break: break-all;
+      line-height: 1.3;
+    }
+    .icon-dim {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10B981;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      z-index: 9999;
+    }
+    .toast.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-info">
+      <h1>
+        <img src="logo-mark-orange.svg" alt="Học Đường Store" width="32" height="32">
+        Bộ Sưu Tập Biểu Tượng SVG - Học Đường Store
+      </h1>
+      <p>Tổng hợp 75 icon vector SVG chuẩn hóa từ bản thiết kế Figma (Click vào icon để sao chép mã nhúng)</p>
+    </div>
+    <div class="header-actions">
+      <input type="text" id="searchInput" class="search-box" placeholder="Tìm kiếm icon (vd: search, cart)...">
+      <button class="btn-toggle" onclick="toggleTheme()">🌓 Đổi nền Sáng/Tối</button>
+    </div>
+  </header>
+
+  <main id="galleryContainer">
+    <!-- Rendered dynamically by script -->
+  </main>
+
+  <div class="toast" id="toast">Đã sao chép đường dẫn icon!</div>
+
+  <script>
+    const categories = [
+      {
+        name: "Nhận Diện & Điều Hướng Chung (Navigation & Common)",
+        icons: [
+          "logo-mark.svg", "logo-mark-orange.svg", "search.svg", "bell.svg", "user.svg", "user-circle.svg",
+          "menu.svg", "close.svg", "chevron-down.svg", "chevron-up.svg", "chevron-left.svg", "chevron-right.svg",
+          "arrow-left.svg", "arrow-right.svg", "check.svg", "check-circle.svg", "alert-triangle.svg", "info-circle.svg",
+          "calendar.svg", "clock.svg", "heart.svg"
+        ]
+      },
+      {
+        name: "Giỏ Hàng, Mua Sắm & Đánh Giá (Storefront Shopping)",
+        icons: [
+          "cart.svg", "cart-empty.svg", "bag.svg", "plus.svg", "minus.svg", "trash.svg",
+          "credit-card.svg", "wallet.svg", "package.svg", "map-pin.svg", "history.svg",
+          "star.svg", "star-filled.svg", "star-half.svg", "discount.svg", "fire.svg", "sparkles.svg",
+          "truck.svg", "shield-check.svg", "refresh-cw.svg", "award.svg", "bolt.svg"
+        ]
+      },
+      {
+        name: "Danh Mục Sản Phẩm (Categories)",
+        icons: [
+          "cat-pen.svg", "cat-book.svg", "cat-backpack.svg", "cat-ruler.svg", "cat-palette.svg", "cat-calculator.svg", "filter.svg"
+        ]
+      },
+      {
+        name: "Xác Thực & Biểu Mẫu (Authentication & Forms)",
+        icons: [
+          "id-card.svg", "mail.svg", "phone.svg", "lock.svg", "lock-ssl.svg", "eye.svg", "eye-off.svg",
+          "shield.svg", "google.svg", "facebook.svg"
+        ]
+      },
+      {
+        name: "Hệ Thống Quản Trị Admin (Admin Navigation & Actions)",
+        icons: [
+          "dashboard.svg", "nav-users.svg", "nav-products.svg", "nav-orders.svg", "nav-stats.svg",
+          "logout.svg", "storefront.svg", "user-plus.svg", "edit.svg", "upload.svg", "printer.svg",
+          "stat-total.svg", "stat-active.svg", "stat-locked.svg", "stat-rate.svg"
+        ]
+      }
+    ];
+
+    function renderGallery(filter = "") {
+      const container = document.getElementById("galleryContainer");
+      container.innerHTML = "";
+      const query = filter.toLowerCase().trim();
+
+      categories.forEach(cat => {
+        const filteredIcons = cat.icons.filter(icon => icon.toLowerCase().includes(query));
+        if (filteredIcons.length === 0) return;
+
+        const section = document.createElement("section");
+        section.className = "category-section";
+
+        const title = document.createElement("h2");
+        title.className = "category-title";
+        title.innerHTML = `${cat.name} <span class="badge-count">${filteredIcons.length}</span>`;
+        section.appendChild(title);
+
+        const grid = document.createElement("div");
+        grid.className = "icon-grid";
+
+        filteredIcons.forEach(icon => {
+          const card = document.createElement("div");
+          card.className = "icon-card";
+          card.title = `Click để sao chép: assets/icons/${icon}`;
+          card.onclick = () => copySnippet(icon);
+
+          card.innerHTML = `
+            <div class="icon-preview">
+              <img src="${icon}" alt="${icon}" onerror="this.style.display='none'">
+            </div>
+            <span class="icon-name">${icon}</span>
+            <span class="icon-dim">SVG</span>
+          `;
+          grid.appendChild(card);
+        });
+
+        section.appendChild(grid);
+        container.appendChild(section);
+      });
+    }
+
+    function copySnippet(icon) {
+      const tag = `<img src="../../assets/icons/${icon}" alt="${icon.replace('.svg','')}" width="20" height="20">`;
+      navigator.clipboard.writeText(tag).then(() => {
+        showToast(`Đã sao chép thẻ img cho: ${icon}`);
+      }).catch(() => {
+        showToast(`assets/icons/${icon}`);
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.innerText = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2000);
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+    }
+
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+      renderGallery(e.target.value);
+    });
+
+    renderGallery();
+  </script>
+</body>
+</html>
+
