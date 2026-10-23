@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
       name: "Gôm tẩy trắng sạch",
       price: 5000,
       stock: 200,
-      image: "https://images.unsplash.com/photo-1455390582262-044c48d58150?auto=format&fit=crop&w=600&q=85"
+      image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=85"
     },
     {
       code: "DC05",
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
       name: "Kéo học sinh đầu tròn",
       price: 18000,
       stock: 75,
-      image: "https://images.unsplash.com/photo-1455390582262-044c48d58150?auto=format&fit=crop&w=600&q=85"
+      image: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=600&q=85"
     },
     {
       code: "DC08",

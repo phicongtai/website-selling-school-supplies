@@ -4,9 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>S07 - Đăng nhập | Học Đường Store</title>
+    <title>Đăng nhập | Học Đường Store</title>
     <link rel="stylesheet" href="../homepage/homepage.css">
     <link rel="stylesheet" href="../../assets/css/style.css">
+  <script src="../../assets/js/site.js" defer></script>
+  <script src="../../assets/js/cart.js" defer></script>
     <link rel="stylesheet" href="auth.css">
 </head>
 
@@ -32,7 +34,7 @@
                     <div class="store-search-hint"><a href="../homepage/main.html#view-advanced-search">Tìm kiếm nâng cao</a></div>
                 </div>
                 <div class="header-actions homepage-header-actions">
-                    <a class="action-btn" href="../homepage/main.html" title="Giỏ hàng" aria-label="Giỏ hàng">🛒<span class="action-badge">3</span></a>
+                    <a class="action-btn" href="../homepage/main.html" title="Giỏ hàng" aria-label="Giỏ hàng">🛒<span class="action-badge cart-count-badge">3</span></a>
                     <a class="homepage-user" href="login.html">👤<span>Tài khoản</span></a>
                 </div>
             </div>
@@ -43,8 +45,8 @@
                 <a class="nav-link" href="../products/notebooks.html">Vở &amp; giấy</a>
                 <a class="nav-link" href="../products/backpacks.html">Cặp &amp; balo</a>
                 <a class="nav-link" href="../products/school-supplies.html">Dụng cụ học tập</a>
-                <a class="nav-link" href="../homepage/main.html?category=art#view-category">Dụng cụ vẽ &amp; mỹ thuật</a>
-                <a class="nav-link" href="../homepage/main.html?category=school-supplies#view-category">Máy tính &amp; thiết bị học tập</a>
+                <a class="nav-link" href="../products/art.html">Dụng cụ vẽ &amp; mỹ thuật</a>
+                <a class="nav-link" href="../products/computers.html">Máy tính &amp; thiết bị học tập</a>
             </nav>
         </div>
     </header>
@@ -112,31 +114,55 @@
             </div>
         </div>
     </section>
-    <footer class="site-footer">
-        <div class="footer-columns">
-            <section>
-                <h3>Học Đường Store</h3>
-                <p>Nền tảng bán đồ dùng học tập trực tuyến thông minh, tối giản và chất lượng cho học sinh, sinh viên
-                    Việt Nam.</p><small>Hotline: 1900 6868 • Email: cskh@hocduongstore.vn</small>
-            </section>
-            <section>
-                <h3>Danh mục nổi bật</h3>
-                <p>Bút viết cao cấp</p>
-                <p>Vở ghi chép & Giấy thi</p>
-                <p>Dụng cụ học sinh</p>
-                <p>Máy tính khoa học</p>
-            </section>
-            <section>
-                <h3>Hỗ trợ & Chính sách</h3>
-                <p>Chính sách đổi trả 30 ngày</p>
-                <p>Hướng dẫn mua hàng & thanh toán</p>
-                <p>Chính sách vận chuyển</p>
-                <p>Trung tâm trợ giúp học sinh</p>
-            </section>
+    <footer class="main-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-col footer-about">
+        <a href="../homepage/main.html" class="brand-logo" style="margin-bottom: 4px; color: #fff;">
+          <div class="brand-icon">HD</div>
+          <span class="brand-title" style="color: #fff;">Học Đường Store</span>
+        </a>
+        <p>Hệ thống cung cấp đồ dùng học tập, văn phòng phẩm sáng tạo tối giản chuẩn công thái học cho học sinh, sinh viên toàn quốc.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Danh Mục</h4>
+        <div class="footer-links">
+          <a href="../products/pens.html">Bút viết &amp; Mực</a>
+          <a href="../products/notebooks.html">Sổ tay &amp; Giấy vở</a>
+          <a href="../products/backpacks.html">Balo &amp; Cặp sách</a>
+          <a href="../products/school-supplies.html">Dụng cụ học tập</a>
+          <a href="../products/art.html">Dụng cụ mỹ thuật</a>
+          <a href="../products/computers.html">Máy tính &amp; thiết bị</a>
         </div>
-        <div class="copyright"><span>© 2026 Học Đường Store. Chuẩn mực phong cách tối giản học đường.</span><span>Thiết
-                kế tinh giản • Chất lượng bền bỉ • Giá thành tối ưu</span></div>
-    </footer>
+      </div>
+      <div class="footer-col">
+        <h4>Hỗ Trợ</h4>
+        <div class="footer-links">
+          <a href="#">Chính sách giao hàng</a>
+          <a href="#">Đổi trả trong 30 ngày</a>
+          <a href="#">Bảo hành sản phẩm</a>
+          <a href="#">Trung tâm trợ giúp</a>
+        </div>
+      </div>
+      <div class="footer-col footer-newsletter">
+        <h4>Bản Tin Khuyến Mãi</h4>
+        <p>Nhận thông báo ưu đãi và sản phẩm mới sớm nhất.</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); this.reset(); window.showSiteToast && window.showSiteToast('Đăng ký nhận tin thành công!');">
+          <input type="email" placeholder="Email của bạn..." required>
+          <button type="submit" class="btn btn-primary btn-sm">Gửi</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Học Đường Store. Chuẩn mực phong cách tối giản học đường.</p>
+      <div class="payment-methods">
+        <span class="payment-badge">COD</span>
+        <span class="payment-badge">VNPAY</span>
+        <span class="payment-badge">MOMO</span>
+      </div>
+    </div>
+  </div>
+</footer>
     <script src="auth.js"></script>
 </body>
 

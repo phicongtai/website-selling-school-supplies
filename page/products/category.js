@@ -20,7 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const categoryLinks = {
     "pens.html": "pens",
     "notebooks.html": "notebooks",
-    "backpacks.html": "backpacks"
+    "backpacks.html": "backpacks",
+    "school-supplies.html": "school-supplies",
+    "art.html": "art",
+    "computers.html": "computers"
   };
 
   if (!categoryName || !grid || !count || !sort || !search || !previousButton || !nextButton) {
@@ -42,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   let page = 1;
+  let totalPages = 1;
   const perPage = 6;
   const money = value => new Intl.NumberFormat("vi-VN").format(value) + " ₫";
 
@@ -57,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
       filtered.sort((a, b) => a.title.localeCompare(b.title, "vi"));
     }
 
-    const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
+    totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
     page = Math.min(page, totalPages);
     const visibleProducts = filtered.slice((page - 1) * perPage, page * perPage);
 
@@ -82,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ? `<span class="store-product-old-price">${money(product.oldPrice)}</span>`
             : `<span class="store-product-stock">Kho: ${product.stock}</span>`}
         </div>
-        <button class="store-product-cart" type="button">🛒 Thêm vào giỏ</button>
+        <button class="store-product-cart" type="button" data-product-id="${product.id}">🛒 Thêm vào giỏ</button>
       </article>
     `).join("");
 
@@ -96,8 +100,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     grid.querySelectorAll(".store-product-cart").forEach(button => {
       button.addEventListener("click", () => {
+        const productId = Number(button.dataset.productId);
+        if (window.StoreCart) window.StoreCart.add(productId, 1);
         button.classList.add("added");
         button.textContent = "✓ Đã thêm vào giỏ";
+        if (window.showSiteToast) window.showSiteToast("Đã thêm sản phẩm vào giỏ hàng!");
         window.setTimeout(() => {
           button.classList.remove("added");
           button.textContent = "🛒 Thêm vào giỏ";
@@ -114,7 +121,11 @@ document.addEventListener("DOMContentLoaded", () => {
     page = 1;
     render();
   });
-  document.getElementById("searchButton").addEventListener("click", () => search.focus());
+  document.getElementById("searchButton").addEventListener("click", () => {
+    page = 1;
+    render();
+    search.focus();
+  });
   document.querySelectorAll(".page-number").forEach(button => {
     button.addEventListener("click", () => {
       page = Number(button.dataset.page);
@@ -127,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
     render();
   });
   nextButton.addEventListener("click", () => {
-    page = Math.min(Math.ceil(products.length / perPage), page + 1);
+    page = Math.min(totalPages, page + 1);
     render();
   });
 
