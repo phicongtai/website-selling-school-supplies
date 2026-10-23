@@ -6,6 +6,8 @@
   <title>Học Đường Store | Đồ dùng học tập &amp; sáng tạo</title>
   <link rel="stylesheet" href="homepage.css">
   <link rel="stylesheet" href="../../assets/css/style.css">
+  <script src="../../assets/js/site.js" defer></script>
+  <script src="../../assets/js/cart.js" defer></script>
 </head>
 <body>
   <!-- TOP ANNOUNCEMENT BAR -->
@@ -31,7 +33,7 @@
         <div class="header-search store-search">
           <div class="store-search-field">
             <input type="search" id="headerSearchInput" class="store-search-input" placeholder="Tìm kiếm dụng cụ học tập, bút viết, tập vở..." aria-label="Tìm kiếm sản phẩm">
-            <button class="store-search-button" onclick="showToast('Đang tìm kiếm...')">🔍 Tìm kiếm</button>
+            <button class="store-search-button" type="button" onclick="headerSearch()">🔍 Tìm kiếm</button>
           </div>
           <div class="live-search-dropdown" id="liveSearchDropdown"></div>
           <div class="store-search-hint">
@@ -59,8 +61,8 @@
         <a href="../products/notebooks.html" class="nav-link">Vở & giấy</a>
         <a href="../products/backpacks.html" class="nav-link">Cặp & balo</a>
         <a href="../products/school-supplies.html" class="nav-link">Dụng cụ học tập</a>
-        <a href="main.html?category=art#view-category" class="nav-link">Dụng cụ vẽ & mỹ thuật</a>
-        <a href="main.html?category=school-supplies#view-category" class="nav-link">Máy tính & thiết bị học tập</a>
+        <a href="../products/art.html" class="nav-link">Dụng cụ vẽ & mỹ thuật</a>
+        <a href="../products/computers.html" class="nav-link">Máy tính & thiết bị học tập</a>
       </nav>
     </div>
   </header>
@@ -106,7 +108,7 @@
         <div class="category-card" onclick="showHomeCategory('backpacks')"><div class="category-icon-box">🎒</div><strong>Balo & Cặp</strong></div>
         <div class="category-card" onclick="showHomeCategory('cases')"><div class="category-icon-box">👝</div><strong>Hộp Bút</strong></div>
         <div class="category-card" onclick="showHomeCategory('art')"><div class="category-icon-box">🎨</div><strong>Mỹ Thuật</strong></div>
-        <div class="category-card" onclick="showHomeCategory('school-supplies')"><div class="category-icon-box">🖥️</div><strong>Bàn Học</strong></div>
+        <div class="category-card" onclick="showHomeCategory('school-supplies')"><div class="category-icon-box">📏</div><strong>Dụng Cụ Học Tập</strong></div>
       </div>
     </section>
 
@@ -120,31 +122,76 @@
   <!-- ==================== 2. MAN HINH SAN PHAM THEO PHAN LOAI ==================== -->
   <main id="view-category" class="app-view">
     <div class="container section">
-      <h2>Danh Mục Sản Phẩm</h2>
+      <div class="page-heading">
+        <div>
+          <span class="page-eyebrow">Khám phá bộ sưu tập</span>
+          <h2>Danh Mục Sản Phẩm</h2>
+          <p>Chọn nhóm sản phẩm phù hợp hoặc kết hợp bộ lọc để tìm nhanh hơn.</p>
+        </div>
+        <a class="page-heading-link" href="#" onclick="navigateToView('view-advanced-search'); return false;">Tìm kiếm nâng cao →</a>
+      </div>
+
       <div class="category-layout">
         <!-- Sidebar Lọc -->
-        <aside class="filter-sidebar">
+        <aside class="filter-sidebar" aria-label="Bộ lọc sản phẩm">
+          <div class="filter-sidebar-head">
+            <div>
+              <span class="filter-kicker">Bộ lọc</span>
+              <h3>Tinh chỉnh kết quả</h3>
+            </div>
+            <button type="button" class="filter-reset" onclick="resetHomeFilters()">Xóa</button>
+          </div>
+
           <div class="filter-group">
-            <div class="filter-title">Sản Phẩm</div>
-            <div class="filter-options">
-              <label><input type="checkbox" onchange="filterCategoryProducts()"> Bút Viết</label>
-              <label><input type="checkbox" onchange="filterCategoryProducts()"> Sổ Vở</label>
-              <label><input type="checkbox" onchange="filterCategoryProducts()"> Balo & Cặp</label>
-              <label><input type="checkbox" onchange="filterCategoryProducts()"> Hộp Bút</label>
-              <label><input type="checkbox" onchange="filterCategoryProducts()"> Mỹ Thuật</label>
-              <label><input type="checkbox" onchange="filterCategoryProducts()"> Dụng cụ học tập</label>
+            <div class="filter-title"><span>Danh mục</span><span id="filterCategoryHint">Tất cả</span></div>
+            <div class="filter-options filter-categories">
+              <label class="filter-option"><input type="checkbox" data-category="pens" onchange="filterCategoryProducts()"><span>Bút viết</span><span class="filter-count" data-category-count="pens">10</span></label>
+              <label class="filter-option"><input type="checkbox" data-category="notebooks" onchange="filterCategoryProducts()"><span>Sổ &amp; vở</span><span class="filter-count" data-category-count="notebooks">9</span></label>
+              <label class="filter-option"><input type="checkbox" data-category="backpacks" onchange="filterCategoryProducts()"><span>Balo &amp; cặp</span><span class="filter-count" data-category-count="backpacks">9</span></label>
+              <label class="filter-option"><input type="checkbox" data-category="cases" onchange="filterCategoryProducts()"><span>Hộp bút</span><span class="filter-count" data-category-count="cases">1</span></label>
+              <label class="filter-option"><input type="checkbox" data-category="art" onchange="filterCategoryProducts()"><span>Mỹ thuật</span><span class="filter-count" data-category-count="art">8</span></label>
+              <label class="filter-option"><input type="checkbox" data-category="school-supplies" onchange="filterCategoryProducts()"><span>Dụng cụ học tập</span><span class="filter-count" data-category-count="school-supplies">9</span></label>
+              <label class="filter-option"><input type="checkbox" data-category="computers" onchange="filterCategoryProducts()"><span>Máy tính &amp; thiết bị</span><span class="filter-count" data-category-count="computers">8</span></label>
             </div>
           </div>
+
           <div class="filter-group">
-            <div class="filter-title">Đánh Giá</div>
-            <div class="filter-options">
-              <label><input type="radio" name="star" checked> ⭐⭐⭐⭐⭐ (5 sao)</label>
+            <div class="filter-title"><span>Khoảng giá</span><span>VNĐ</span></div>
+            <div class="filter-price-row">
+              <input id="filterMinPrice" type="number" min="0" step="1000" placeholder="Từ" aria-label="Giá tối thiểu">
+              <span>–</span>
+              <input id="filterMaxPrice" type="number" min="0" step="1000" placeholder="Đến" aria-label="Giá tối đa">
+            </div>
+            <button type="button" class="filter-apply" onclick="filterCategoryProducts()">Áp dụng khoảng giá</button>
+          </div>
+
+          <div class="filter-group">
+            <div class="filter-title"><span>Ưu đãi</span></div>
+            <div class="filter-options filter-offers">
+              <label class="filter-option"><input type="checkbox" data-filter="sale" onchange="filterCategoryProducts()"><span>Đang giảm giá</span><span class="filter-count" data-offer-count="sale">0</span></label>
+              <label class="filter-option"><input type="checkbox" data-filter="hot" onchange="filterCategoryProducts()"><span>Sản phẩm nổi bật</span><span class="filter-count" data-offer-count="hot">0</span></label>
             </div>
           </div>
+
+          <div class="filter-summary" id="filterSummary">Đang hiển thị tất cả sản phẩm.</div>
         </aside>
 
         <!-- Danh sách -->
-        <div>
+        <div class="category-results">
+          <div class="results-toolbar">
+            <div>
+              <h3 id="categoryResultTitle">Tất cả sản phẩm</h3>
+              <p id="categoryResultCount">Đang tải sản phẩm...</p>
+            </div>
+            <label class="sort-control">Sắp xếp
+              <select id="categorySortSelect" onchange="filterCategoryProducts()">
+                <option value="default">Phổ biến</option>
+                <option value="price-asc">Giá thấp → cao</option>
+                <option value="price-desc">Giá cao → thấp</option>
+                <option value="name">Tên A → Z</option>
+              </select>
+            </label>
+          </div>
           <div class="products-grid" id="categoryProductsGrid"></div>
         </div>
       </div>
@@ -159,9 +206,9 @@
   <!-- ==================== 4 & 5. MAN HINH TIM KIEM NANG CAO ==================== -->
   <main id="view-advanced-search" class="app-view">
     <div class="container section">
-      <h2>Bộ Lọc Tìm Kiếm Nâng Cao</h2>
-      <div style="background:white; padding:20px; border-radius:12px; margin-bottom:20px; display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+      <div class="page-heading">
         <div>
+<<<<<<< HEAD
           <label style="font-size:0.8rem; font-weight:700;">Từ khóa chính</label>
           <input type="text" id="advKeyword" placeholder="Nhập tên sản phẩm..." style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; margin-top:4px;">
         </div>
@@ -188,10 +235,72 @@
         </div>
         <div style="grid-column: span 3;">
           <button class="btn btn-primary" onclick="applyAdvancedSearch()">Áp Dụng Lọc Nâng Cao</button>
+=======
+          <span class="page-eyebrow">Tìm kiếm thông minh</span>
+          <h2>Bộ Lọc Tìm Kiếm Nâng Cao</h2>
+          <p>Kết hợp từ khóa, danh mục và khoảng giá để tìm đúng sản phẩm.</p>
+>>>>>>> 0da2e011ac65d5232576dd754a9eb7ea045311db
         </div>
+        <a class="page-heading-link" href="#" onclick="navigateToView('view-category'); return false;">← Về danh mục</a>
       </div>
 
-      <h3>Kết Quả Tìm Kiếm</h3>
+      <section class="advanced-search-panel" aria-label="Bộ lọc tìm kiếm nâng cao">
+        <form class="advanced-search-form" id="advancedSearchForm" onsubmit="event.preventDefault(); applyAdvancedSearch();">
+          <div class="adv-field">
+            <label for="advKeyword">Từ khóa</label>
+            <div class="adv-input-wrap">
+              <span aria-hidden="true">⌕</span>
+              <input type="search" id="advKeyword" placeholder="Tên hoặc mã sản phẩm...">
+            </div>
+          </div>
+          <div class="adv-field">
+            <label for="advCategory">Danh mục</label>
+            <select id="advCategory">
+              <option value="all">Tất cả danh mục</option>
+              <option value="pens">Bút viết</option>
+              <option value="notebooks">Sổ &amp; vở</option>
+              <option value="backpacks">Balo &amp; cặp</option>
+              <option value="cases">Hộp bút</option>
+              <option value="art">Mỹ thuật</option>
+              <option value="school-supplies">Dụng cụ học tập</option>
+              <option value="computers">Máy tính &amp; thiết bị học tập</option>
+            </select>
+          </div>
+          <div class="adv-field">
+            <label for="advMinPrice">Giá tối thiểu</label>
+            <div class="adv-input-wrap">
+              <input type="number" id="advMinPrice" value="0" min="0" step="1000" placeholder="0">
+              <span>₫</span>
+            </div>
+          </div>
+          <div class="adv-field">
+            <label for="advMaxPrice">Giá tối đa</label>
+            <div class="adv-input-wrap">
+              <input type="number" id="advMaxPrice" value="5000000" min="0" step="1000" placeholder="Không giới hạn">
+              <span>₫</span>
+            </div>
+          </div>
+          <div class="adv-actions">
+            <button type="submit" class="btn btn-primary">Áp dụng bộ lọc</button>
+            <button type="button" class="btn btn-ghost" onclick="resetAdvancedSearch()">Đặt lại</button>
+          </div>
+        </form>
+
+        <div class="adv-presets">
+          <span>Gợi ý nhanh:</span>
+          <button type="button" onclick="applyPricePreset(0, 50000)">Dưới 50.000 ₫</button>
+          <button type="button" onclick="applyPricePreset(50000, 200000)">50.000 – 200.000 ₫</button>
+          <button type="button" onclick="applyPricePreset(200000, 500000)">200.000 – 500.000 ₫</button>
+          <button type="button" onclick="applyPricePreset(500000, 5000000)">Trên 500.000 ₫</button>
+        </div>
+      </section>
+
+      <div class="results-toolbar">
+        <div>
+          <h3>Kết quả tìm kiếm</h3>
+          <p id="advResultCount">Đang tải kết quả...</p>
+        </div>
+      </div>
       <div class="products-grid" id="advResultGrid"></div>
     </div>
   </main>
@@ -226,52 +335,55 @@
 
   <div class="toast-container" id="toastContainer"></div>
 
-  <footer class="main-footer">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-col footer-about">
-          <div class="brand-logo" style="margin-bottom: 4px; color: #fff;">
+  <footer class="main-footer homepage-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-col footer-about">
+        <a href="main.html" class="brand-logo" style="margin-bottom: 4px; color: #fff;">
           <div class="brand-icon">HD</div>
           <span class="brand-title" style="color: #fff;">Học Đường Store</span>
-          </div>
-          <p>Hệ thống cung cấp đồ dùng học tập, văn phòng phẩm sáng tạo tối giản chuẩn công thái học cho học sinh, sinh viên toàn quốc.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Danh Mục</h4>
-          <div class="footer-links">
-            <a href="#row-pens">Bút viết & Mực</a>
-            <a href="#row-notebooks">Sổ tay & Giấy vở</a>
-            <a href="#row-backpacks">Balo & Cặp sách</a>
-            <a href="#row-art">Dụng cụ mỹ thuật</a>
-          </div>
-        </div>
-        <div class="footer-col">
-          <h4>Hỗ Trợ</h4>
-          <div class="footer-links">
-            <a href="#">Chính sách giao hàng</a>
-            <a href="#">Đổi trả trong 7 ngày</a>
-            <a href="#">Bảo hành sản phẩm</a>
-          </div>
-        </div>
-        <div class="footer-col footer-newsletter">
-          <h4>Bản Tin Khuyến Mãi</h4>
-          <p>Nhận thông báo ưu đãi và sản phẩm mới sớm nhất.</p>
-          <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('Đăng ký nhận tin thành công!');">
-            <input type="email" placeholder="Email của bạn..." required>
-            <button type="submit" class="btn btn-primary btn-sm">Gửi</button>
-          </form>
+        </a>
+        <p>Hệ thống cung cấp đồ dùng học tập, văn phòng phẩm sáng tạo tối giản chuẩn công thái học cho học sinh, sinh viên toàn quốc.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Danh Mục</h4>
+        <div class="footer-links">
+          <a href="../products/pens.html">Bút viết &amp; Mực</a>
+          <a href="../products/notebooks.html">Sổ tay &amp; Giấy vở</a>
+          <a href="../products/backpacks.html">Balo &amp; Cặp sách</a>
+          <a href="../products/school-supplies.html">Dụng cụ học tập</a>
+          <a href="../products/art.html">Dụng cụ mỹ thuật</a>
+          <a href="../products/computers.html">Máy tính &amp; thiết bị</a>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 Học Đường Store. Chuẩn mực phong cách tối giản học đường.</p>
-        <div class="payment-methods">
-          <span class="payment-badge">COD</span>
-          <span class="payment-badge">VNPAY</span>
-          <span class="payment-badge">MOMO</span>
+      <div class="footer-col">
+        <h4>Hỗ Trợ</h4>
+        <div class="footer-links">
+          <a href="#">Chính sách giao hàng</a>
+          <a href="#">Đổi trả trong 30 ngày</a>
+          <a href="#">Bảo hành sản phẩm</a>
+          <a href="#">Trung tâm trợ giúp</a>
         </div>
+      </div>
+      <div class="footer-col footer-newsletter">
+        <h4>Bản Tin Khuyến Mãi</h4>
+        <p>Nhận thông báo ưu đãi và sản phẩm mới sớm nhất.</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); this.reset(); window.showSiteToast && window.showSiteToast('Đăng ký nhận tin thành công!');">
+          <input type="email" placeholder="Email của bạn..." required>
+          <button type="submit" class="btn btn-primary btn-sm">Gửi</button>
+        </form>
       </div>
     </div>
-  </footer>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Học Đường Store. Chuẩn mực phong cách tối giản học đường.</p>
+      <div class="payment-methods">
+        <span class="payment-badge">COD</span>
+        <span class="payment-badge">VNPAY</span>
+        <span class="payment-badge">MOMO</span>
+      </div>
+    </div>
+  </div>
+</footer>
 
   <script src="../products/product-data.js"></script>
   <script src="homepage.js"></script>

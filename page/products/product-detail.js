@@ -18,7 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
     pens: "pens.html",
     notebooks: "notebooks.html",
     backpacks: "backpacks.html",
-    "school-supplies": "school-supplies.html"
+    "school-supplies": "school-supplies.html",
+    art: "art.html",
+    computers: "computers.html",
+    cases: "../homepage/main.html?category=cases"
   };
   const categoryLink = document.getElementById("categoryLink");
   const categoryPage = categoryPages[product.category] || "../homepage/main.html";
@@ -56,6 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("productDescription").textContent =
     product.description || `${product.title} phù hợp cho nhu cầu học tập hằng ngày.`;
 
+  const bestTag = document.querySelector(".best-tag");
+  if (bestTag) {
+    bestTag.hidden = !product.hot;
+    bestTag.style.display = product.hot ? "" : "none";
+  }
+
   const quantity = document.getElementById("quantity");
   const notice = document.getElementById("notice");
   quantity.max = String(product.stock);
@@ -79,7 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("addToCart").addEventListener("click", () => {
     const amount = getQuantity();
     if (amount !== null) {
-      notice.textContent = `Đã chọn ${amount} × ${product.title}.`;
+      if (window.StoreCart) window.StoreCart.add(product.id, amount);
+      notice.textContent = `Đã thêm ${amount} × ${product.title} vào giỏ hàng.`;
+      if (window.showSiteToast) window.showSiteToast("Đã thêm sản phẩm vào giỏ hàng!");
     }
   });
   document.getElementById("buyNow").addEventListener("click", () => {
@@ -90,9 +101,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const relatedProducts = products
+  let relatedProducts = products
     .filter(item => item.category === product.category && item.code !== product.code)
     .slice(0, 4);
+  let relatedTitle = "Sản phẩm cùng loại";
+
+  // Danh mục chỉ có một sản phẩm: gợi ý các sản phẩm nổi bật khác để không bỏ trống khu vực.
+  if (relatedProducts.length === 0) {
+    relatedProducts = products
+      .filter(item => item.code !== product.code && (item.featured || item.hot))
+      .slice(0, 4);
+    relatedTitle = "Sản phẩm gợi ý";
+  }
+  if (relatedProducts.length === 0) {
+    relatedProducts = products.filter(item => item.code !== product.code).slice(0, 4);
+    relatedTitle = "Sản phẩm gợi ý";
+  }
+
+  const relatedHeading = document.querySelector(".related-section h2");
+  if (relatedHeading) relatedHeading.textContent = relatedTitle;
+
   document.getElementById("relatedProducts").innerHTML = relatedProducts.map(item => `
     <a class="related-card" href="product-detail.html?id=${encodeURIComponent(item.code)}">
       <img src="${item.image}" alt="${item.title}" loading="lazy">
