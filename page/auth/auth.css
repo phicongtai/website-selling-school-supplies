@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-    --orange: #ff6900;
-    --brown: #a94300;
-    --ink: #252321;
-    --muted: #777;
-    --line: #dedede;
-    --bg: #faf7f6;
-    --soft: #f5f2f1;
-    --red: #c82020
+    --orange: var(--color-primary);
+    --brown: var(--color-primary-800);
+    --ink: var(--text-headline);
+    --muted: var(--text-muted);
+    --line: var(--border-light);
+    --bg: var(--bg-page);
+    --soft: var(--bg-muted);
+    --red: var(--color-danger)
 }
 
 * {
@@ -19,7 +19,7 @@ body {
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: 'Be Vietnam Pro', Georgia, serif;
+    font-family: var(--font-family-body);
     font-size: 13px
 }
 
@@ -804,6 +804,33 @@ select {
     .topbar {
         padding: 12px 16px;
         gap: 12px
+    }
+
+    .site-footer {
+        background: #1a1a1a;
+        color: #a3a3a3
+    }
+
+    .footer-columns {
+        border-bottom: 1px solid #2d2d2d;
+        padding-bottom: 28px
+    }
+
+    .footer-columns h3 {
+        color: #fff
+    }
+
+    .footer-columns section:first-child h3 {
+        color: var(--color-primary-400)
+    }
+
+    .footer-columns p,
+    .footer-columns small {
+        color: #a3a3a3
+    }
+
+    .copyright {
+        color: #a3a3a3
     }
 
     .user-area strong {

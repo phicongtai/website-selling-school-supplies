@@ -1,0 +1,333 @@
+/* ==========================================================================
+   A04: SỬA NGƯỜI DÙNG (MODAL CHỈNH SỬA CHUẨN FIGMA)
+   Dự án: Web Bán Đồ Dùng Học Tập - Học Đường Store Admin
+   Kế thừa: assets/css/style.css & A02 Quản lý người dùng/admin.css
+   ========================================================================== */
+
+/* Modal Backdrop & Căn giữa màn hình chuẩn Figma Frame 1:5843 */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(17, 24, 39, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Khối Hộp thoại Modal Popup (560px) */
+.modal-box {
+  background-color: #ffffff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 560px;
+  padding: 28px;
+  box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  transform: translateY(16px) scale(0.98);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-overlay.open .modal-box {
+  transform: translateY(0) scale(1);
+}
+
+/* Header Modal */
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f1f2f6;
+}
+
+.modal-header-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: rgba(255, 105, 0, 0.12);
+  color: var(--color-primary, #FF6900);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.modal-icon-badge svg {
+  width: 18px;
+  height: 18px;
+}
+
+.modal-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.modal-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.modal-subtitle strong {
+  color: #111827;
+}
+
+.modal-close-btn {
+  background: #f3f4f6;
+  border: 1px solid transparent;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.modal-close-btn:hover {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+/* Form Fields */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modal-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.modal-field label .req {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+.modal-field label .tip {
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: normal;
+  margin-left: auto;
+}
+
+.modal-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.modal-field input,
+.modal-field select {
+  width: 100%;
+  height: 42px;
+  padding: 0 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #111827;
+  background-color: #ffffff;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.modal-field input:focus,
+.modal-field select:focus {
+  border-color: var(--color-primary, #FF6900);
+  box-shadow: 0 0 0 3px rgba(255, 105, 0, 0.15);
+}
+
+.modal-field input[readonly],
+.modal-field input:disabled {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  cursor: not-allowed;
+  border-color: #e5e7eb;
+}
+
+.modal-field.has-error input {
+  border-color: #dc2626;
+  background-color: #fffaf0;
+}
+
+.field-error-text {
+  font-size: 11.5px;
+  color: #dc2626;
+  display: none;
+}
+
+.modal-field.has-error .field-error-text {
+  display: block;
+}
+
+.btn-toggle-pwd {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.btn-toggle-pwd:hover {
+  color: #4b5563;
+}
+
+.btn-toggle-pwd svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Footer Modal */
+.modal-footer {
+  margin-top: 10px;
+  padding-top: 16px;
+  border-top: 1px solid #f1f2f6;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-cancel {
+  height: 42px;
+  padding: 0 18px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.btn-cancel:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #111827;
+}
+
+.btn-save {
+  height: 42px;
+  padding: 0 22px;
+  background: var(--color-primary, #FF6900);
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(255, 105, 0, 0.25);
+  transition: all 0.15s ease;
+}
+
+.btn-save:hover {
+  background: var(--color-primary-600, #c25000);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(255, 105, 0, 0.35);
+}
+
+.btn-save svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 640px) {
+  .modal-row {
+    grid-template-columns: 1fr;
+  }
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+  .modal-footer button,
+  .modal-footer a {
+    width: 100%;
+  }
+}
+
+
+/* Hàng được chọn chỉnh sửa trong bảng nền */
+.users-table tbody tr.selected-row {
+  background-color: #fff7ed !important;
+}
+
+.users-table tbody tr.selected-row td:first-child {
+  border-left: 3px solid var(--color-primary, #FF6900);
+}
+
+.toast-msg.error {
+  background-color: #dc2626 !important;
+}
+.toast-msg.lock {
+  background-color: #b45309 !important;
+}
+.toast-msg.unlock {
+  background-color: #15803d !important;
+}

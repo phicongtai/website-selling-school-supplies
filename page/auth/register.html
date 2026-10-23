@@ -5,22 +5,48 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>S06 - Đăng ký | Học Đường Store</title>
+    <link rel="stylesheet" href="../homepage/homepage.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="auth.css">
 </head>
 
 <body>
-    <header class="site-header">
-        <div class="topbar"><a class="brand" href="../homepage/main.html"><span class="brand-mark">HD</span><strong>Học
-                    Đường Store</strong></a>
-            <div class="search-area"><input placeholder="Tìm kiếm dụng cụ học tập, bút viết, tập vở..."
-                    aria-label="Tìm kiếm"><button type="button">⌕ Tìm kiếm</button><small>Tìm kiếm nâng cao</small>
-            </div>
-            <div class="user-area"><span class="bag">♧<b>3</b></span><a class="account-link" href="login.html">👤
-                    <strong>Tài khoản</strong></a></div>
+    <div class="top-bar">
+        <div class="container top-bar-inner">
+            <span>🎉 Giảm giá 20% cho đơn hàng đầu tiên với mã: <strong>WELCOME2026</strong></span>
+            <span>Hotline hỗ trợ: 1900 6868</span>
         </div>
-        <nav class="nav"><a href="../homepage/main.html">Trang chủ</a><a href="#">Sản phẩm</a><a href="#">Bút viết</a><a
-                href="#">Vở & giấy</a><a href="#">Cặp & balo</a><a href="#">Dụng cụ học tập</a><a href="#">Dụng cụ vẽ &
-                mỹ thuật</a><a href="#">Máy tính & thiết bị học tập</a></nav>
+    </div>
+    <header class="main-header homepage-header">
+        <div class="container homepage-header-container">
+            <div class="homepage-header-row">
+                <a href="../homepage/main.html" class="brand-logo">
+                    <span class="brand-icon">HD</span>
+                    <span class="brand-text"><span class="brand-title">Học Đường Store</span><span class="brand-slogan">Vibrant &amp; Minimal</span></span>
+                </a>
+                <div class="header-search store-search">
+                    <div class="store-search-field">
+                        <input id="headerSearchInput" class="store-search-input" type="search" placeholder="Tìm kiếm dụng cụ học tập, bút viết, tập vở..." aria-label="Tìm kiếm sản phẩm">
+                        <button class="store-search-button" type="button" onclick="location.href='../homepage/main.html?search=' + encodeURIComponent(document.getElementById('headerSearchInput').value)">🔍 Tìm kiếm</button>
+                    </div>
+                    <div class="store-search-hint"><a href="../homepage/main.html#view-advanced-search">Tìm kiếm nâng cao</a></div>
+                </div>
+                <div class="header-actions homepage-header-actions">
+                    <a class="action-btn" href="../homepage/main.html" title="Giỏ hàng" aria-label="Giỏ hàng">🛒<span class="action-badge">3</span></a>
+                    <a class="homepage-user" href="login.html">👤<span>Tài khoản</span></a>
+                </div>
+            </div>
+            <nav class="main-nav homepage-nav">
+                <a class="nav-link" href="../homepage/main.html">Trang chủ</a>
+                <a class="nav-link" href="../homepage/main.html#view-category">Sản phẩm</a>
+                <a class="nav-link" href="../products/pens.html">Bút viết</a>
+                <a class="nav-link" href="../products/notebooks.html">Vở &amp; giấy</a>
+                <a class="nav-link" href="../products/backpacks.html">Cặp &amp; balo</a>
+                <a class="nav-link" href="../products/school-supplies.html">Dụng cụ học tập</a>
+                <a class="nav-link" href="../homepage/main.html?category=art#view-category">Dụng cụ vẽ &amp; mỹ thuật</a>
+                <a class="nav-link" href="../homepage/main.html?category=school-supplies#view-category">Máy tính &amp; thiết bị học tập</a>
+            </nav>
+        </div>
     </header>
     <div class="crumb">⌂ Trang chủ › <b>Tạo tài khoản thành viên</b></div>
     <main class="auth-layout register-layout">
@@ -54,7 +80,7 @@
                 <p><b>Bảo hành đổi mới 30 ngày an tâm tuyệt đối</b><br>Đổi trả không cần lý do phức tạp cho tập vở, balo
                     chống gù và phụ kiện công nghệ.</p>
             </div>
-            <div style="display:flex;justify-content:space-between;font-size:9px;margin-top:25px"><span>© 2024 Học Đường
+            <div style="display:flex;justify-content:space-between;font-size:9px;margin-top:25px"><span>© 2026 Học Đường
                     Store Inc.</span><span>● Máy chủ vận hành ổn định</span></div>
         </aside>
         <section class="panel register-panel">
@@ -181,7 +207,7 @@
                 <p>Trung tâm trợ giúp học sinh</p>
             </section>
         </div>
-        <div class="copyright"><span>© 2024 Học Đường Store. Chuẩn mực phong cách tối giản học đường.</span><span>Thiết
+        <div class="copyright"><span>© 2026 Học Đường Store. Chuẩn mực phong cách tối giản học đường.</span><span>Thiết
                 kế tinh giản • Chất lượng bền bỉ • Giá thành tối ưu</span></div>
     </footer>
     <script src="auth.js"></script>

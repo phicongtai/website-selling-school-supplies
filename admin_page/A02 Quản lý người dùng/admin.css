@@ -981,6 +981,16 @@
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.toast-msg.error {
+  background: #dc2626;
+}
+.toast-msg.lock {
+  background: #b45309;
+}
+.toast-msg.unlock {
+  background: #15803d;
+}
+
 .toast-msg.show {
   transform: translateY(0);
   opacity: 1;

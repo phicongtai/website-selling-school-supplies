@@ -2,21 +2,67 @@
  * ==========================================================================
  * A02: QUẢN LÝ NGƯỜI DÙNG (USER MANAGEMENT CONTROLLER)
  * Dự án: Web Bán Đồ Dùng Học Tập - Học Đường Store
+ * Ghi chú: Dữ liệu gốc trong JS cố định, khi sửa đổi/thêm mới từ A3/A4 trở về
+ * sẽ hiển thị số mới trên trang hiện tại. Khi reload (F5) lại trang sẽ khôi phục về dữ liệu gốc.
  * ==========================================================================
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Dữ liệu mẫu khởi tạo chuẩn xác theo bản vẽ Figma (8 tài khoản)
-  let usersData = [
-    { code: 'U01', name: 'Nguyễn Minh Anh', username: 'minhanh', email: 'minhanh@email.com', phone: '0901 234 567', status: 'active', avatar: 'NA', avatarClass: 'avatar-na' },
-    { code: 'U02', name: 'Trần Quốc Bảo', username: 'quocbao', email: 'quocbao@email.com', phone: '0912 345 678', status: 'active', avatar: 'QB', avatarClass: 'avatar-qb' },
-    { code: 'U03', name: 'Lê Thị Cẩm Tú', username: 'camtu', email: 'camtu@email.com', phone: '0923 456 789', status: 'active', avatar: 'CT', avatarClass: 'avatar-ct' },
-    { code: 'U04', name: 'Võ Ngọc Hân', username: 'ngochan', email: 'ngochan@email.com', phone: '0934 567 890', status: 'active', avatar: 'NH', avatarClass: 'avatar-nh' },
-    { code: 'U05', name: 'Đặng Gia Huy', username: 'giahuy', email: 'giahuy@email.com', phone: '0945 678 901', status: 'active', avatar: 'GH', avatarClass: 'avatar-gh' },
-    { code: 'U06', name: 'Bùi Thu Trang', username: 'thutrang', email: 'thutrang@email.com', phone: '0956 789 012', status: 'active', avatar: 'TT', avatarClass: 'avatar-tt' },
-    { code: 'U07', name: 'Phạm Hoàng Duy', username: 'hoangduy', email: 'hoangduy@email.com', phone: '0967 890 123', status: 'locked', avatar: 'HD', avatarClass: 'avatar-hd' },
-    { code: 'U08', name: 'Hoàng Anh Tuấn', username: 'anhtuan', email: 'anhtuan@email.com', phone: '0978 901 234', status: 'locked', avatar: 'AT', avatarClass: 'avatar-at' }
+  // Dữ liệu mẫu khởi tạo chuẩn xác theo bản vẽ Figma (8 tài khoản cố định trong JS)
+  const DEFAULT_USERS = [
+    { code: 'U01', name: 'Nguyễn Minh Anh', username: 'minhanh', email: 'minhanh@email.com', phone: '0901 234 567', role: 'customer', status: 'active', avatar: 'NA', avatarClass: 'avatar-na' },
+    { code: 'U02', name: 'Trần Quốc Bảo', username: 'quocbao', email: 'quocbao@email.com', phone: '0912 345 678', role: 'customer', status: 'active', avatar: 'QB', avatarClass: 'avatar-qb' },
+    { code: 'U03', name: 'Lê Thị Cẩm Tú', username: 'camtu', email: 'camtu@email.com', phone: '0923 456 789', role: 'customer', status: 'active', avatar: 'CT', avatarClass: 'avatar-ct' },
+    { code: 'U04', name: 'Võ Ngọc Hân', username: 'ngochan', email: 'ngochan@email.com', phone: '0934 567 890', role: 'customer', status: 'active', avatar: 'NH', avatarClass: 'avatar-nh' },
+    { code: 'U05', name: 'Đặng Gia Huy', username: 'giahuy', email: 'giahuy@email.com', phone: '0945 678 901', role: 'customer', status: 'active', avatar: 'GH', avatarClass: 'avatar-gh' },
+    { code: 'U06', name: 'Bùi Thu Trang', username: 'thutrang', email: 'thutrang@email.com', phone: '0956 789 012', role: 'staff', status: 'active', avatar: 'TT', avatarClass: 'avatar-tt' },
+    { code: 'U07', name: 'Phạm Hoàng Duy', username: 'hoangduy', email: 'hoangduy@email.com', phone: '0967 890 123', role: 'customer', status: 'locked', avatar: 'HD', avatarClass: 'avatar-hd' },
+    { code: 'U08', name: 'Hoàng Anh Tuấn', username: 'anhtuan', email: 'anhtuan@email.com', phone: '0978 901 234', role: 'customer', status: 'locked', avatar: 'AT', avatarClass: 'avatar-at' }
   ];
+
+  // Kiểm tra nếu trang được Reload (F5 / Refresh)
+  function isPageReload() {
+    try {
+      const navEntries = performance.getEntriesByType('navigation');
+      if (navEntries && navEntries.length > 0) {
+        return navEntries[0].type === 'reload';
+      }
+      if (window.performance && window.performance.navigation) {
+        return window.performance.navigation.type === 1;
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+    return false;
+  }
+
+  // Nếu người dùng ấn Reload (F5), xóa dữ liệu tạm và nạp lại số gốc cố định từ JS
+  if (isPageReload()) {
+    try {
+      sessionStorage.removeItem('hd_temp_users');
+      localStorage.removeItem('hd_users_data');
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
+  // Đọc danh sách người dùng hiển thị
+  function loadCurrentUsers() {
+    try {
+      const stored = sessionStorage.getItem('hd_temp_users');
+      if (stored) {
+        const list = JSON.parse(stored);
+        if (Array.isArray(list) && list.length > 0) {
+          return list;
+        }
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+    return DEFAULT_USERS.map(u => ({ ...u }));
+  }
+
+  let usersData = loadCurrentUsers();
 
   // Các phần tử DOM
   const tbody = document.getElementById('users-tbody');
@@ -30,22 +76,46 @@ document.addEventListener('DOMContentLoaded', () => {
   const statLockedVal = document.getElementById('stat-locked-val');
   const paginationInfo = document.getElementById('pagination-info');
 
-  // Modal elements
-  const userModal = document.getElementById('user-modal');
-  const modalTitle = document.getElementById('modal-title');
-  const userForm = document.getElementById('user-form');
-  const openAddModalBtn = document.getElementById('open-add-modal-btn');
-  const closeModalBtn = document.getElementById('close-modal-btn');
-  const cancelModalBtn = document.getElementById('cancel-modal-btn');
+  // Toast elements
+  const toast = document.getElementById('toast');
+  const toastIcon = document.getElementById('toast-icon');
+  const toastText = document.getElementById('toast-text');
+  let toastTimer = null;
 
-  const modalUserCode = document.getElementById('modal-user-code');
-  const modalUsername = document.getElementById('modal-username');
-  const modalFullname = document.getElementById('modal-fullname');
-  const modalEmail = document.getElementById('modal-email');
-  const modalPhone = document.getElementById('modal-phone');
-  const modalStatus = document.getElementById('modal-status');
+  function showToast(message, type = 'success') {
+    if (!toast) return;
+    if (toastTimer) clearTimeout(toastTimer);
 
-  let editingUserCode = null;
+    if (toastText) toastText.textContent = message;
+    if (toastIcon) {
+      if (type === 'lock') {
+        toastIcon.textContent = '🔒';
+      } else if (type === 'unlock') {
+        toastIcon.textContent = '🔓';
+      } else if (type === 'error') {
+        toastIcon.textContent = '✕';
+      } else {
+        toastIcon.textContent = '✓';
+      }
+    }
+
+    toast.className = 'toast-msg show ' + (type || '');
+    toastTimer = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3200);
+  }
+
+  // Đọc thông báo chuyển trang (Flash message từ A03 / A04 trả về A02)
+  try {
+    const flashToast = sessionStorage.getItem('hd_toast_message');
+    if (flashToast) {
+      sessionStorage.removeItem('hd_toast_message');
+      const parsed = JSON.parse(flashToast);
+      showToast(parsed.text, parsed.type || 'success');
+    }
+  } catch (err) {
+    console.warn('Lỗi đọc flash toast:', err);
+  }
 
   // Hiển thị tên người dùng đăng nhập từ phiên làm việc
   const loggedInUser = sessionStorage.getItem('hd_admin_user');
@@ -89,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return matchSearch && matchStatus;
     });
 
+    if (!tbody) return;
     tbody.innerHTML = '';
 
     if (filtered.length === 0) {
@@ -111,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td><span class="user-code">${user.code}</span></td>
         <td>
           <div class="user-name-cell">
-            <span class="user-avatar-tag ${user.avatarClass}">${user.avatar}</span>
+            <span class="user-avatar-tag ${user.avatarClass || 'avatar-na'}">${user.avatar || 'UN'}</span>
             <span class="user-fullname">${user.name}</span>
           </div>
         </td>
@@ -126,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </td>
         <td>
           <div class="action-links">
-            <button type="button" class="action-link edit" data-code="${user.code}">Sửa</button>
+            <a href="../A04 Sửa người dùng/index.html?code=${user.code}" class="action-link edit" style="text-decoration: none;">Sửa</a>
             <button type="button" class="action-link ${isActive ? 'lock' : 'unlock'}" data-code="${user.code}">
               ${isActive ? 'Khoá' : 'Mở khoá'}
             </button>
@@ -142,29 +213,31 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * 3. Xử lý thao tác Khoá / Mở khoá và Sửa
+   * 3. Xử lý thao tác Khoá / Mở khoá trên bảng hiện tại
    */
   if (tbody) {
     tbody.addEventListener('click', (e) => {
       const btn = e.target.closest('.action-link');
       if (!btn) return;
 
+      // Nếu là thẻ <a> (nút Sửa mở chức năng A04), cho phép điều hướng tự nhiên sang A04
+      if (btn.tagName.toLowerCase() === 'a') return;
+
       const code = btn.getAttribute('data-code');
       const user = usersData.find(u => u.code === code);
       if (!user) return;
 
-      if (btn.classList.contains('edit')) {
-        // Mở modal sửa người dùng
-        openEditModal(user);
-      } else if (btn.classList.contains('lock')) {
-        // Khoá tài khoản
+      if (btn.classList.contains('lock')) {
+        // Khoá tài khoản trên trang hiện tại
         user.status = 'locked';
+        sessionStorage.setItem('hd_temp_users', JSON.stringify(usersData));
         updateStats();
         renderTable();
         showToast(`Đã khoá tài khoản ${user.name} (${user.code})`, 'lock');
       } else if (btn.classList.contains('unlock')) {
-        // Mở khoá tài khoản
+        // Mở khoá tài khoản trên trang hiện tại
         user.status = 'active';
+        sessionStorage.setItem('hd_temp_users', JSON.stringify(usersData));
         updateStats();
         renderTable();
         showToast(`Đã mở khoá tài khoản ${user.name} (${user.code})`, 'unlock');
@@ -191,8 +264,12 @@ document.addEventListener('DOMContentLoaded', () => {
     btnRefresh.addEventListener('click', () => {
       if (searchInput) searchInput.value = '';
       if (statusFilter) statusFilter.value = 'all';
+      // Khôi phục lại dữ liệu gốc từ DEFAULT_USERS
+      sessionStorage.removeItem('hd_temp_users');
+      usersData = DEFAULT_USERS.map(u => ({ ...u }));
+      updateStats();
       renderTable();
-      showToast('Đã làm mới danh sách người dùng');
+      showToast('Đã làm mới danh sách người dùng về dữ liệu gốc');
     });
   }
 
@@ -201,13 +278,14 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   if (btnExportExcel) {
     btnExportExcel.addEventListener('click', () => {
-      const headers = ['MÃ', 'HỌ TÊN', 'TÊN ĐĂNG NHẬP', 'EMAIL', 'SỐ ĐIỆN THOẠI', 'TRẠNG THÁI'];
+      const headers = ['MÃ', 'HỌ TÊN', 'TÊN ĐĂNG NHẬP', 'EMAIL', 'SỐ ĐIỆN THOẠI', 'VAI TRÒ', 'TRẠNG THÁI'];
       const rows = usersData.map(u => [
         u.code,
         `"${u.name}"`,
         u.username,
         u.email,
         u.phone,
+        u.role === 'staff' ? 'Nhân viên' : (u.role === 'admin' ? 'Quản trị viên' : 'Khách hàng'),
         u.status === 'active' ? 'Hoạt động' : 'Đã khoá'
       ]);
 
@@ -225,138 +303,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /**
-   * 6. Quản lý Modal Thêm / Sửa người dùng
-   */
-  function openAddModal() {
-    editingUserCode = null;
-    modalTitle.textContent = 'Thêm người dùng mới';
-    userForm.reset();
-    
-    // Tự sinh mã tiếp theo
-    const nextNum = usersData.length + 1;
-    modalUserCode.value = `U${nextNum < 10 ? '0' + nextNum : nextNum}`;
-    modalUserCode.disabled = false;
-    modalStatus.value = 'active';
-
-    userModal.classList.add('open');
-    modalUsername.focus();
-  }
-
-  function openEditModal(user) {
-    editingUserCode = user.code;
-    modalTitle.textContent = `Chỉnh sửa: ${user.name} (${user.code})`;
-    modalUserCode.value = user.code;
-    modalUserCode.disabled = true;
-    modalUsername.value = user.username;
-    modalFullname.value = user.name;
-    modalEmail.value = user.email;
-    modalPhone.value = user.phone;
-    modalStatus.value = user.status;
-
-    userModal.classList.add('open');
-    modalFullname.focus();
-  }
-
-  function closeModal() {
-    userModal.classList.remove('open');
-    userForm.reset();
-    editingUserCode = null;
-  }
-
-  if (openAddModalBtn) openAddModalBtn.addEventListener('click', openAddModal);
-  if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
-  if (cancelModalBtn) cancelModalBtn.addEventListener('click', closeModal);
-
-  if (userModal) {
-    userModal.addEventListener('click', (e) => {
-      if (e.target === userModal) closeModal();
-    });
-  }
-
-  if (userForm) {
-    userForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const code = modalUserCode.value.trim().toUpperCase();
-      const username = modalUsername.value.trim();
-      const name = modalFullname.value.trim();
-      const email = modalEmail.value.trim();
-      const phone = modalPhone.value.trim();
-      const status = modalStatus.value;
-
-      // Tạo avatar 2 chữ cái đầu
-      const words = name.split(' ');
-      const avatar = words.length > 1 
-        ? (words[words.length - 2][0] + words[words.length - 1][0]).toUpperCase() 
-        : name.slice(0, 2).toUpperCase();
-
-      if (editingUserCode) {
-        // Cập nhật người dùng hiện có
-        const user = usersData.find(u => u.code === editingUserCode);
-        if (user) {
-          user.username = username;
-          user.name = name;
-          user.email = email;
-          user.phone = phone;
-          user.status = status;
-          user.avatar = avatar;
-        }
-        showToast(`Đã cập nhật thông tin người dùng ${name}`);
-      } else {
-        // Thêm mới
-        const colorClasses = ['avatar-na', 'avatar-qb', 'avatar-ct', 'avatar-nh', 'avatar-gh', 'avatar-tt'];
-        const avatarClass = colorClasses[Math.floor(Math.random() * colorClasses.length)];
-
-        usersData.unshift({
-          code,
-          name,
-          username,
-          email,
-          phone,
-          status,
-          avatar,
-          avatarClass
-        });
-        showToast(`Đã thêm thành công người dùng mới ${name}`);
-      }
-
-      closeModal();
-      updateStats();
-      renderTable();
-    });
-  }
-
-  /**
-   * 7. Toast thông báo
-   */
-  const toast = document.getElementById('toast');
-  const toastIcon = document.getElementById('toast-icon');
-  const toastText = document.getElementById('toast-text');
-  let toastTimer = null;
-
-  function showToast(message, type = 'success') {
-    if (!toast) return;
-
-    if (toastTimer) clearTimeout(toastTimer);
-
-    toastText.textContent = message;
-    if (type === 'lock') {
-      toastIcon.textContent = '🔒';
-    } else if (type === 'unlock') {
-      toastIcon.textContent = '🔓';
-    } else {
-      toastIcon.textContent = '✓';
-    }
-
-    toast.classList.add('show');
-    toastTimer = setTimeout(() => {
-      toast.classList.remove('show');
-    }, 2800);
-  }
-
   // Khởi động giao diện ban đầu
   updateStats();
   renderTable();
 });
 
+// Xử lý đăng xuất an toàn
+document.querySelectorAll('.sidebar-logout').forEach(btn => {
+  btn.addEventListener('click', () => {
+    sessionStorage.removeItem('hd_admin_authenticated');
+    sessionStorage.removeItem('hd_admin_user');
+  });
+});

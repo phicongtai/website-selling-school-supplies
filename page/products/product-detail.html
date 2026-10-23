@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi tiết sản phẩm | Học Đường Store</title>
+
+  <link rel="stylesheet" href="../homepage/homepage.css">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="product-detail.css">
+  <script src="product-data.js" defer></script>
+  <script src="product-detail.js" defer></script>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <span>🎉 Giảm giá 20% cho đơn hàng đầu tiên với mã: <strong>WELCOME2026</strong></span>
+      <span>Hotline hỗ trợ: 1900 6868</span>
+    </div>
+  </div>
+  <header class="main-header homepage-header">
+    <div class="container homepage-header-container">
+      <div class="homepage-header-row">
+        <a href="../homepage/main.html" class="brand-logo">
+          <span class="brand-icon">HD</span>
+          <span class="brand-text"><span class="brand-title">Học Đường Store</span><span class="brand-slogan">Vibrant &amp; Minimal</span></span>
+        </a>
+        <div class="header-search store-search">
+          <div class="store-search-field">
+            <input id="headerSearchInput" class="store-search-input" type="search" placeholder="Tìm kiếm dụng cụ học tập, bút viết, tập vở..." aria-label="Tìm kiếm sản phẩm">
+            <button class="store-search-button" type="button" onclick="location.href='../homepage/main.html?search=' + encodeURIComponent(document.getElementById('headerSearchInput').value)">🔍 Tìm kiếm</button>
+          </div>
+          <div class="store-search-hint"><a href="../homepage/main.html#view-advanced-search">Tìm kiếm nâng cao</a></div>
+        </div>
+        <div class="header-actions homepage-header-actions">
+          <a class="action-btn" href="../homepage/main.html" title="Giỏ hàng" aria-label="Giỏ hàng">🛒<span class="action-badge">3</span></a>
+          <a class="homepage-user" href="../auth/login.html">👤<span>Tài khoản</span></a>
+        </div>
+      </div>
+      <nav class="main-nav homepage-nav">
+        <a class="nav-link" href="../homepage/main.html">Trang chủ</a>
+        <a class="nav-link active" aria-current="page" href="../homepage/main.html#view-category">Sản phẩm</a>
+        <a class="nav-link" href="pens.html">Bút viết</a>
+        <a class="nav-link" href="notebooks.html">Vở &amp; giấy</a>
+        <a class="nav-link" href="backpacks.html">Cặp &amp; balo</a>
+        <a class="nav-link" href="school-supplies.html">Dụng cụ học tập</a>
+        <a class="nav-link" href="../homepage/main.html?category=art#view-category">Dụng cụ vẽ &amp; mỹ thuật</a>
+        <a class="nav-link" href="../homepage/main.html?category=school-supplies#view-category">Máy tính &amp; thiết bị học tập</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="detail-container">
+    <nav class="breadcrumb">
+      <a href="../homepage/main.html">Trang chủ</a> ›
+      <a id="categoryLink" href="pens.html">Bút viết</a> ›
+      <span id="breadcrumbName">Chi tiết sản phẩm</span>
+    </nav>
+
+    <section class="product-overview">
+      <div class="gallery">
+        <div class="main-image">
+          <span class="best-tag">Bán chạy nhất</span>
+          <img id="productImage" src="" alt="">
+        </div>
+
+        <div class="thumbnail-list">
+          <img id="thumbnail" src="" alt="Ảnh sản phẩm">
+        </div>
+
+        <div class="service-list">
+          <div>🛡️ <strong>100% Chính hãng</strong><br>Đổi mới trong 30 ngày</div>
+          <div>🚚 <strong>Giao hàng tốc độ</strong><br>Nội thành Hà Nội & HCM</div>
+        </div>
+      </div>
+
+      <div class="product-info">
+        <div class="product-labels">
+          <span id="productCode">Mã: SP01</span>
+          <span>Phân loại: <strong id="productCategory">Bút viết</strong></span>
+        </div>
+
+        <h1 id="productName">Đang tải sản phẩm...</h1>
+
+        <div class="price-box">
+          <strong id="productPrice"></strong>
+          <del id="oldPrice"></del>
+          <span id="discount"></span>
+        </div>
+
+        <div class="feature-list">
+          <p>☑ <span id="productDescription"></span></p>
+          <p>☑ Sản phẩm chính hãng, phù hợp nhu cầu học tập.</p>
+          <p>☑ Được đóng gói cẩn thận trước khi giao hàng.</p>
+        </div>
+
+        <div class="spec-summary">
+          <div><small>Danh mục</small><strong id="productCategorySummary">Sản phẩm</strong></div>
+          <div><small>Mã sản phẩm</small><strong id="productCodeSummary">SP01</strong></div>
+          <div><small>Quy cách</small><strong id="productPack">1 sản phẩm</strong></div>
+        </div>
+
+        <div class="quantity-row">
+          <label for="quantity">Số lượng:</label>
+          <button id="decrease" type="button">−</button>
+          <input id="quantity" type="number" value="1" min="1">
+          <button id="increase" type="button">+</button>
+          <span id="stockText"></span>
+        </div>
+
+        <div class="purchase-actions">
+          <button id="addToCart" type="button">🛒 Thêm vào giỏ hàng</button>
+          <button id="buyNow" type="button">ϟ Mua ngay</button>
+        </div>
+
+        <p id="notice" role="status"></p>
+        <p class="secure-note">🛡 Bảo mật thanh toán & Kiểm tra hàng trước khi nhận</p>
+      </div>
+    </section>
+
+    <section class="description-section">
+      <div class="tab-heading">
+        <h2>▤ Mô tả chi tiết</h2>
+        <h2>☷ Thông số kỹ thuật</h2>
+      </div>
+
+      <div class="description-content">
+        <h3 id="descriptionTitle"></h3>
+        <p id="descriptionText"></p>
+
+        <div class="description-cards">
+          <article>
+            <h3>✎ Chất lượng sản phẩm</h3>
+            <p>Thiết kế tiện dụng, đáp ứng nhu cầu học tập hằng ngày.</p>
+          </article>
+          <article>
+            <h3>▤ Thiết kế tiện lợi</h3>
+            <p>Dễ dàng mang theo khi đi học, đi làm hoặc ghi chép.</p>
+          </article>
+          <article>
+            <h3>♧ Phù hợp nhiều nhu cầu</h3>
+            <p>Lựa chọn phù hợp cho góc học tập và làm việc.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="related-section">
+      <h2>Sản phẩm cùng loại</h2>
+      <div id="relatedProducts" class="related-grid"></div>
+    </section>
+  </main>
+
+  <footer class="detail-footer">
+    <div>
+      <h3>Học Đường Store</h3>
+      <p>Nền tảng bán đồ dùng học tập trực tuyến.</p>
+    </div>
+    <div>
+      <h3>Danh mục nổi bật</h3>
+      <a href="pens.html">Bút viết</a>
+    </div>
+    <div>
+      <h3>Hỗ trợ & Chính sách</h3>
+      <p>Chính sách đổi trả và giao hàng.</p>
+    </div>
+    <div class="detail-copyright">© 2026 Học Đường Store. Chuẩn mực phong cách tối giản học đường.</div>
+  </footer>
+</body>
+</html>

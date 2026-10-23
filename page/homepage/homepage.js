@@ -2,6 +2,7 @@
  * VIBRANT ACADEMIC MINIMAL - FULL SPA ENGINE
  */
 document.addEventListener('DOMContentLoaded', () => {
+<<<<<<< HEAD
   // 1. DỮ LIỆU SẢN PHẨM MẪU (100 SẢN PHẨM VĂN PHÒNG PHẨM & ĐỒ DÙNG HỌC TẬP)
   const products = [
     // --- 1. BÚT VIẾT (PENS: 1 - 20) ---
@@ -114,6 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: 99, title: "Giá Vẽ Tranh Gỗ Tự Nhiên Gấp Gọn Để Bàn 50cm Đa Năng", price: 119000, oldPrice: 160000, category: "art", brand: "ArtDesk", image: "../../assets/img/product-6.jpg", description: "Gỗ thông mộc mạc điều chỉnh góc nghiêng tự do, giữ khung toan vẽ tranh ổn định." },
     { id: 100, title: "Kéo Cắt Giấy An Toàn Có Nắp Đậy Cho Học Sinh Thủ Công Deli", price: 22000, oldPrice: 30000, category: "art", brand: "Deli", image: "../../assets/img/product-6.jpg", description: "Mũi kéo bo tròn an toàn bọc nhựa chống gỉ sét, kèm nắp đậy bảo vệ cặp sách." }
   ];
+=======
+  const products = window.StoreCatalog.products;
+  const featuredProducts = products.filter(product => product.featured);
+>>>>>>> 05d28c7f993fe36241e92cee783919574e70d452
 
   let cart = [{ id: 1, quantity: 1 }, { id: 3, quantity: 2 }];
   let wishlist = [1, 4];
@@ -122,14 +127,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 2. CHUYỂN ĐỔI MÀN HÌNH (SPA NAVIGATION)
   window.navigateToView = (viewId, param = null) => {
-    document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
-    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-
     const targetView = document.getElementById(viewId);
-    if (targetView) {
-      targetView.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    if (!targetView) return;
+
+    document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+    targetView.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    const activeNavTarget = viewId === 'view-home' ? 'view-home' : 'view-category';
+    document.querySelectorAll('.main-nav .nav-link[data-target]').forEach(link => {
+      const isActive = link.dataset.target === activeNavTarget;
+      link.classList.toggle('active', isActive);
+      if (isActive) {
+        link.setAttribute('aria-current', 'page');
+        link.scrollIntoView({
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+          block: 'nearest',
+          inline: 'center'
+        });
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
 
     if (viewId === 'view-detail' && param) {
       renderProductDetail(param);
@@ -150,16 +169,18 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const matches = products.filter(p => p.title.toLowerCase().includes(term)).slice(0, 4);
+      const matches = products.filter(p =>
+        `${p.code} ${p.title}`.toLowerCase().includes(term)
+      ).slice(0, 4);
       if (matches.length > 0) {
         liveSearchDropdown.innerHTML = matches.map(p => `
-          <div class="live-search-item" onclick="navigateToView('view-detail', ${p.id}); liveSearchDropdown.classList.remove('open');">
+          <a class="live-search-item" href="../products/product-detail.html?id=${encodeURIComponent(p.code)}">
             <img src="${p.image}" alt="${p.title}">
             <div>
               <div style="font-size:0.8rem; font-weight:600;">${p.title}</div>
               <div style="font-size:0.75rem; color:#8A3500; font-weight:700;">${formatMoney(p.price)}</div>
             </div>
-          </div>
+          </a>
         `).join('');
         liveSearchDropdown.classList.add('open');
       } else {
@@ -179,8 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
       "Bút Viết": "pens",
       "Sổ Vở": "notebooks",
       "Balo & Cặp": "backpacks",
+      "Hộp Bút": "cases",
       "Mỹ Thuật": "art",
-      "Bàn Học": "cases"
+      "Dụng cụ học tập": "school-supplies"
     };
 
     checkboxes.forEach(cb => {
@@ -199,6 +221,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     renderProductList('categoryProductsGrid', filtered);
+  };
+
+  window.showHomeCategory = category => {
+    const categoryLabels = {
+      pens: "Bút Viết",
+      notebooks: "Sổ Vở",
+      backpacks: "Balo & Cặp",
+      cases: "Hộp Bút",
+      "school-supplies": "Dụng cụ học tập",
+      art: "Mỹ Thuật"
+    };
+    const selectedLabel = categoryLabels[category];
+    if (!selectedLabel) return;
+
+    document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(checkbox => {
+      const label = checkbox.parentElement.textContent.trim().split(' (')[0];
+      checkbox.checked = label === selectedLabel;
+    });
+    navigateToView('view-category');
+    window.filterCategoryProducts();
   };
   // 4. BỘ LỌC TÌM KIẾM NÂNG CAO & CATEGORY
   window.applyAdvancedSearch = () => {
@@ -307,19 +349,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById(containerId);
     if (!el) return;
     el.innerHTML = list.map(p => `
-      <article class="product-card">
-        <div class="product-thumb">
-          <img src="${p.image}" alt="${p.title}">
-          <div class="product-badges"><span class="badge badge-sale">-20%</span></div>
-          <button class="product-quickview-btn" onclick="navigateToView('view-detail', ${p.id})">Xem Chi Tiết</button>
-        </div>
-        <div class="product-body">
-          <h3 class="product-title" onclick="navigateToView('view-detail', ${p.id})">${p.title}</h3>
-          <div class="product-footer">
-            <span class="product-price-current">${formatMoney(p.price)}</span>
-            <button class="btn btn-primary" style="padding:6px 10px;" onclick="addToCart(${p.id})">+</button>
+      <article class="store-product-card">
+        <a class="store-product-image-link" href="../products/product-detail.html?id=${encodeURIComponent(p.code)}">
+          <div class="store-product-visual">
+            <span class="store-product-tag">${window.StoreCatalog.categories[p.category]}</span>
+            ${p.hot ? '<span class="store-product-tag store-product-hot">Hot</span>' : ''}
+            <img src="${p.image}" alt="${p.title}" loading="lazy">
           </div>
+        </a>
+        <div class="store-product-code">Mã: ${p.code}</div>
+        <a class="store-product-name" href="../products/product-detail.html?id=${encodeURIComponent(p.code)}">${p.title}</a>
+        <div class="store-product-meta">
+          <strong class="store-product-price">${formatMoney(p.price)}</strong>
+          ${p.oldPrice
+            ? `<span class="store-product-old-price">${formatMoney(p.oldPrice)}</span>`
+            : `<span class="store-product-stock">Kho: ${p.stock}</span>`}
         </div>
+        <button class="store-product-cart" type="button" onclick="addToCart(${p.id})">🛒 Thêm vào giỏ</button>
       </article>
     `).join('');
   };
@@ -327,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderCategoryProducts = () => renderProductList('categoryProductsGrid', products);
 
   // Khởi tạo trang chủ và danh mục
-  renderProductList('homeProductsGrid', products);
+  renderProductList('homeProductsGrid', featuredProducts);
   renderCategoryProducts();
   updateBadges();
 
@@ -335,4 +381,17 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(cb => {
     cb.addEventListener('change', filterCategoryProducts);
   });
+
+  const pageParams = new URLSearchParams(window.location.search);
+  const categoryParam = pageParams.get('category');
+  const searchParam = pageParams.get('search');
+
+  if (searchParam) {
+    document.getElementById('advKeyword').value = searchParam;
+    window.applyAdvancedSearch();
+  } else if (categoryParam) {
+    window.showHomeCategory(categoryParam);
+  } else if (['#view-category', '#view-advanced-search'].includes(window.location.hash)) {
+    window.navigateToView(window.location.hash.slice(1));
+  }
 });
