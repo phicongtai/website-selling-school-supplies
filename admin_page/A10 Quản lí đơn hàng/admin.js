@@ -1,17 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const orders = [
-    { code: 'DH1001', customer: 'Nguyễn Minh Anh', date: '2026-10-02', address: 'Quận 1, TP. Hồ Chí Minh', location: 'Hồ Chí Minh', total: 479000, status: 'delivered' },
-    { code: 'DH1002', customer: 'Trần Quốc Bảo', date: '2026-10-03', address: 'Cầu Giấy, Hà Nội', location: 'Hà Nội', total: 623000, status: 'delivered' },
-    { code: 'DH1003', customer: 'Lê Thị Cẩm Tú', date: '2026-10-04', address: 'Hải Châu, Đà Nẵng', location: 'Đà Nẵng', total: 686000, status: 'confirmed' },
-    { code: 'DH1004', customer: 'Nguyễn Minh Anh', date: '2026-10-05', address: 'TP. Thủ Đức, TP. Hồ Chí Minh', location: 'Hồ Chí Minh', total: 304000, status: 'delivered' },
-    { code: 'DH1005', customer: 'Võ Ngọc Hân', date: '2026-10-06', address: 'Quận 7, TP. Hồ Chí Minh', location: 'Hồ Chí Minh', total: 337000, status: 'pending' },
-    { code: 'DH1006', customer: 'Đặng Gia Huy', date: '2026-10-07', address: 'Bình Thạnh, TP. Hồ Chí Minh', location: 'Hồ Chí Minh', total: 264000, status: 'cancelled' },
-    { code: 'DH1007', customer: 'Trần Quốc Bảo', date: '2026-10-08', address: 'Đống Đa, Hà Nội', location: 'Hà Nội', total: 167000, status: 'confirmed' },
-    { code: 'DH1008', customer: 'Bùi Thu Trang', date: '2026-10-09', address: 'Quận 5, TP. Hồ Chí Minh', location: 'Hồ Chí Minh', total: 263000, status: 'pending' },
-    { code: 'DH1009', customer: 'Lê Thị Cẩm Tú', date: '2026-10-10', address: 'Hải Châu, Đà Nẵng', location: 'Đà Nẵng', total: 337000, status: 'pending' },
-    { code: 'DH1010', customer: 'Nguyễn Minh Anh', date: '2026-10-10', address: 'Quận 1, TP. Hồ Chí Minh', location: 'Hồ Chí Minh', total: 199000, status: 'pending' }
-  ];
-  const labels = { pending: 'Chưa xác nhận', confirmed: 'Đã xác nhận', delivered: 'Đã giao thành công', cancelled: 'Đã huỷ' };
+  const store = window.HDOrderStore;
+  let orders = store.getOrders();
+  const labels = store.STATUS_LABELS;
   const tbody = document.getElementById('orders-tbody');
   const statusFilter = document.getElementById('status-filter');
   const dateFrom = document.getElementById('date-from');
@@ -26,7 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const escapeHTML = (value) => String(value).replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
   const formatMoney = (amount) => `${new Intl.NumberFormat('vi-VN').format(amount)}đ`;
-  const formatDate = (date) => new Intl.DateTimeFormat('vi-VN').format(new Date(`${date}T00:00:00`));
+  const formatDate = (date) => {
+    const parts = String(date).split('-');
+    return parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : date;
+  };
 
   function showToast(message) {
     const toast = document.getElementById('orders-toast');
@@ -75,21 +68,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function actionMarkup(order) {
     if (['delivered', 'cancelled'].includes(order.status)) {
-      return `<button class="order-action-toggle" type="button" disabled><span>${order.status === 'delivered' ? 'Đã hoàn tất' : 'Đơn đã huỷ'}</span></button>`;
+      return `<button class="order-action-toggle is-locked" type="button" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.2" y="7" width="9.6" height="6.6" rx="1.4"/><path d="M5.4 7V5.2a2.6 2.6 0 0 1 5.2 0V7"/></svg><span>${order.status === 'delivered' ? 'Đã hoàn tất' : 'Đơn đã huỷ'}</span></button>`;
     }
-    const nextLabel = order.status === 'pending' ? 'Xác nhận đơn hàng' : 'Đánh dấu đã giao';
+    const nextLabel = order.status === 'pending' ? 'Xác nhận đơn hàng' : 'Đã giao – Thành công';
     return `<button class="order-action-toggle" type="button" data-action-toggle="${order.code}" aria-expanded="false"><span>${order.status === 'pending' ? 'Chưa duyệt' : 'Chuyển: Đã giao'}</span><span aria-hidden="true">⌄</span></button>
       <div class="order-action-menu" data-action-menu="${order.code}" hidden>
-        <button class="order-action-option" type="button" data-next-status="${order.code}">${escapeHTML(nextLabel)}</button>
-        <button class="order-action-option cancel" type="button" data-cancel-order="${order.code}">Huỷ đơn hàng</button>
+        <button class="order-action-option" type="button" data-next-status="${order.code}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.2 8.2 1.9 1.9 3.7-4"/></svg>${escapeHTML(nextLabel)}</button>
+        <button class="order-action-option cancel" type="button" data-cancel-order="${order.code}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.8 5.8 4.4 4.4m0-4.4-4.4 4.4"/></svg>Huỷ đơn hàng</button>
       </div>`;
   }
 
   function renderOrders() {
     const filtered = getFilteredOrders();
     tbody.innerHTML = filtered.length ? filtered.map((order) => `
-      <tr><td><span class="order-code">${escapeHTML(order.code)}</span></td>
-      <td><span class="order-customer">${escapeHTML(order.customer)}</span></td>
+      <tr><td><a class="order-code" href="../A11 chi tiết đơn hàng/index.html?order=${encodeURIComponent(order.code)}" title="Xem chi tiết đơn ${escapeHTML(order.code)}"><span>${escapeHTML(order.code)}</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.4 2H8v4.6"/></svg></a></td>
+      <td>${order.customerId
+        ? `<a class="order-customer" href="../A12 thống kê khách hàng/index.html?customer=${encodeURIComponent(order.customerId)}" title="Xem thống kê khách hàng ${escapeHTML(order.customer)}">${escapeHTML(order.customer)}</a>`
+        : `<span class="order-customer">${escapeHTML(order.customer)}</span>`}</td>
       <td><span class="order-date">${formatDate(order.date)}</span></td><td>${escapeHTML(order.address)}</td>
       <td><span class="order-total">${formatMoney(order.total)}</span></td>
       <td><span class="order-status ${order.status}">${labels[order.status]}</span></td>
@@ -138,9 +133,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const code = next ? next.dataset.nextStatus : cancel.dataset.cancelOrder;
     const order = orders.find((item) => item.code === code);
     if (!order) return;
-    if (next && order.status === 'pending') { order.status = 'confirmed'; showToast(`Đơn ${code} đã được xác nhận.`); }
-    else if (next && order.status === 'confirmed') { order.status = 'delivered'; showToast(`Đơn ${code} đã được giao thành công.`); }
-    else if (cancel && ['pending', 'confirmed'].includes(order.status)) { order.status = 'cancelled'; showToast(`Đơn ${code} đã được huỷ.`); }
+    if (next && order.status === 'pending') { order.status = 'confirmed'; store.updateStatus(code, order.status); showToast(`Đơn ${code} đã được xác nhận.`); }
+    else if (next && order.status === 'confirmed') { order.status = 'delivered'; store.updateStatus(code, order.status); showToast(`Đơn ${code} đã được giao thành công.`); }
+    else if (cancel && ['pending', 'confirmed'].includes(order.status)) { order.status = 'cancelled'; store.updateStatus(code, order.status); showToast(`Đơn ${code} đã được huỷ.`); }
     render();
   });
 
@@ -161,8 +156,22 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     const data = new FormData(form);
-    const number = Math.max(...orders.map((order) => Number(order.code.slice(2)))) + 1;
-    orders.unshift({ code: `DH${number}`, customer: String(data.get('customer')).trim(), date: new Date().toISOString().slice(0, 10), address: String(data.get('address')).trim(), location: data.get('location'), total: Number(data.get('total')), status: 'pending' });
+    const code = store.nextCode();
+    store.addOrder({
+      code,
+      customer: String(data.get('customer')).trim(),
+      customerId: '',
+      date: new Date().toISOString().slice(0, 10),
+      address: String(data.get('address')).trim(),
+      location: data.get('location'),
+      total: Number(data.get('total')),
+      status: 'pending',
+      payment: 'Tiền mặt khi nhận hàng (COD)',
+      note: '',
+      channel: 'Tạo đơn tại quầy',
+      items: []
+    });
+    orders = store.getOrders();
     dateFrom.value = ''; dateTo.value = ''; statusFilter.value = 'all'; locationFilter.value = 'all'; searchInput.value = ''; activeTab = 'all';
     document.querySelectorAll('.order-tab').forEach((tab) => {
       const selected = tab.dataset.tab === 'all'; tab.classList.toggle('active', selected); tab.setAttribute('aria-selected', String(selected));
@@ -183,5 +192,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const loggedInUser = sessionStorage.getItem('hd_admin_user');
   if (loggedInUser) document.getElementById('sidebar-user-name').textContent = loggedInUser;
   document.getElementById('current-date-text').textContent = `Hôm nay, ${new Intl.DateTimeFormat('vi-VN').format(new Date())}`;
+
+  const searchParam = new URLSearchParams(window.location.search).get('q');
+  if (searchParam) searchInput.value = searchParam;
+
   render();
+
+  // Khi quay lại từ trang A11 bằng nút Back, đồng bộ lại trạng thái mới nhất.
+  window.addEventListener('pageshow', (event) => {
+    if (!event.persisted) return;
+    orders = store.getOrders();
+    render();
+  });
 });

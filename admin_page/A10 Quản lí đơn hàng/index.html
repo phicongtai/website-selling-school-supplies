@@ -29,7 +29,7 @@
           <svg width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1.4 17C1.02 17 0.69 16.87 0.41 16.59C0.14 16.31 0 15.98 0 15.6V4.25C0 3.87 0.14 3.54 0.41 3.26C0.69 2.98 1.02 2.83 1.4 2.83H3.5V2.12C3.5 1.53 3.71 1.03 4.13 0.62C4.55 0.21 5.06 0 5.65 0H8.35C8.94 0 9.45 0.21 9.87 0.62C10.29 1.03 10.5 1.53 10.5 2.12V2.83H12.6C12.98 2.83 13.31 2.98 13.59 3.26C13.86 3.54 14 3.87 14 4.25V15.6C14 15.98 13.86 16.31 13.59 16.59C13.31 16.87 12.98 17 12.6 17H1.4ZM4.9 2.83H9.1V2.12C9.1 1.91 9.03 1.73 8.88 1.59C8.74 1.44 8.56 1.37 8.35 1.37H5.65C5.44 1.37 5.26 1.44 5.12 1.59C4.97 1.73 4.9 1.91 4.9 2.12V2.83Z" fill="currentColor"/></svg>
           <span>Đơn hàng</span>
         </a>
-        <a href="#"><svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 10V4.67L5.33 0L9.33 4L14.67 0V2.67L9.33 6.67L5.33 2.67L0 7.33V10Z" fill="currentColor"/></svg><span>Thống kê</span></a>
+        <a href="../A12 thống kê khách hàng/index.html"><svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 10V4.67L5.33 0L9.33 4L14.67 0V2.67L9.33 6.67L5.33 2.67L0 7.33V10Z" fill="currentColor"/></svg><span>Thống kê</span></a>
       </nav>
       <div class="sidebar-account">
         <div class="account-info"><span class="account-avatar" aria-hidden="true">A</span><div class="account-details"><span class="account-name" id="sidebar-user-name">Quản trị viên Hệ thống</span><small class="account-email">admin@hocduong.vn</small></div></div>
@@ -69,7 +69,7 @@
         </section>
 
         <section class="order-filters" aria-label="Lọc đơn hàng">
-          <label class="filter-field filter-status" for="status-filter"><span><svg class="filter-label-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3h12l-4.7 5.2v3.5l-2.6 1V8.2L2 3Z"/></svg>Tình trạng đơn</span><select id="status-filter"><option value="all">Tất cả tình trạng</option><option value="pending">Chưa xác nhận</option><option value="confirmed">Đã xác nhận</option><option value="delivered">Đã giao thành công</option><option value="cancelled">Đã huỷ</option></select></label>
+          <label class="filter-field filter-status" for="status-filter"><span><svg class="filter-label-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3h12l-4.7 5.2v3.5l-2.6 1V8.2L2 3Z"/></svg>Tình trạng đơn</span><select id="status-filter"><option value="all">Tất cả tình trạng</option><option value="pending">Chưa xác nhận</option><option value="confirmed">Đã xác nhận</option><option value="delivered">Đã giao – Thành công</option><option value="cancelled">Đã huỷ</option></select></label>
           <label class="filter-field filter-date" for="date-from"><span><svg class="filter-label-icon" viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="3.5" width="11" height="10" rx=".8"/><path d="M5 2v3m6-3v3M2.5 6.2h11"/></svg>Từ ngày</span><input id="date-from" type="date" value="2026-10-01"></label>
           <label class="filter-field filter-date" for="date-to"><span><svg class="filter-label-icon" viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="3.5" width="11" height="10" rx=".8"/><path d="M5 2v3m6-3v3M2.5 6.2h11"/><circle class="filter-date-marker" cx="8" cy="9.5" r="1.3"/></svg>Đến ngày</span><input id="date-to" type="date" value="2026-10-10"></label>
           <label class="filter-field filter-location" for="location-filter"><span><svg class="filter-label-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 6.5c0 3.5-5 8-5 8s-5-4.5-5-8a5 5 0 1 1 10 0Z"/><circle cx="8" cy="6.5" r="1.6"/></svg>Địa điểm giao hàng</span><select id="location-filter"><option value="all">Tất cả khu vực</option><option value="Hồ Chí Minh">TP. Hồ Chí Minh</option><option value="Hà Nội">Hà Nội</option><option value="Đà Nẵng">Đà Nẵng</option></select></label>
@@ -99,6 +99,7 @@
     <div class="order-form-actions"><button type="button" class="orders-button orders-button-light" id="cancel-order-modal">Huỷ</button><button type="submit" class="orders-button orders-button-primary">Tạo đơn</button></div>
   </form></section></div>
   <div class="orders-toast" id="orders-toast" role="status" aria-live="polite"></div>
+  <script src="../shared/order-store.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>
