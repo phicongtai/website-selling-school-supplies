@@ -180,12 +180,19 @@
   white-space: nowrap;
 }
 
-.od-status-badge i {
-  width: 6px;
-  height: 6px;
+.od-status-badge .od-status-icon {
+  display: inline-flex;
   flex: 0 0 auto;
-  border-radius: 50%;
-  background: currentColor;
+}
+
+.od-status-badge .od-status-icon svg {
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .od-status-badge.pending { color: #a14000; background: var(--od-orange-soft); }

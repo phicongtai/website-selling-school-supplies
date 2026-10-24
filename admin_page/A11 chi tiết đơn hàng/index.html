@@ -7,7 +7,7 @@
   <title>Chi tiết đơn hàng #DH1003 - Học Đường Store Admin</title>
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="stylesheet" href="../A02 Quản lý người dùng/admin.css">
-  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="admin.css?v=20261024c">
 </head>
 <body>
   <div class="admin-page-container">
@@ -72,7 +72,7 @@
             <div class="od-hero-copy">
               <div class="od-title-row">
                 <h1 class="od-title" id="order-title">Chi tiết đơn hàng <span id="od-code-title">#DH1003</span></h1>
-                <span class="od-status-badge confirmed" data-status-badge><i aria-hidden="true"></i><span data-status-text>Đã xác nhận</span></span>
+                <span class="od-status-badge confirmed" data-status-badge><span class="od-status-icon" data-status-icon aria-hidden="true"></span><span data-status-text>Đã xác nhận</span></span>
               </div>
               <p class="od-meta" id="od-meta">Ngày tạo: 04/10/2026 · 14:20 · Kênh đặt hàng: Storefront Học Sinh</p>
             </div>
@@ -83,7 +83,7 @@
               <span>In phiếu giao hàng</span>
             </button>
             <button class="od-btn od-btn-primary" type="button" id="open-status-modal">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4Z"/><path d="m13.5 6.5 4 4"/></svg>
               <span>Cập nhật trạng thái</span>
             </button>
           </div>
@@ -369,7 +369,7 @@
 
   <div class="od-toast" id="od-toast" role="status" aria-live="polite"></div>
 
-  <script src="../shared/order-store.js"></script>
-  <script src="admin.js"></script>
+  <script src="../shared/order-store.js?v=20261024c"></script>
+  <script src="admin.js?v=20261024c"></script>
 </body>
 </html>
