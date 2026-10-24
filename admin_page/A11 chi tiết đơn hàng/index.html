@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FF6900">
+  <title>Chi tiết đơn hàng #DH1003 - Học Đường Store Admin</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../A02 Quản lý người dùng/admin.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="admin-page-container">
+    <aside class="admin-sidebar" aria-label="Điều hướng quản trị">
+      <a class="sidebar-brand" href="#" aria-label="Học Đường Store Admin">
+        <span class="brand-mark" aria-hidden="true">HĐ</span>
+        <div class="brand-copy"><strong>Học Đường Store Admin</strong><small>Hệ thống Quản trị Nội bộ</small></div>
+      </a>
+      <nav class="sidebar-nav" aria-label="Menu quản trị">
+        <a href="../A02 Quản lý người dùng/index.html">
+          <svg width="18" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14.68 8.64V6.05H12.09V4.32H14.68V1.73H16.41V4.32H19V6.05H16.41V8.64H14.68ZM6.91 6.91C5.96 6.91 5.15 6.57 4.47 5.89C3.79 5.22 3.45 4.4 3.45 3.45C3.45 2.5 3.79 1.69 4.47 1.01C5.15 0.34 5.96 0 6.91 0C7.86 0 8.67 0.34 9.35 1.01C10.03 1.69 10.36 2.5 10.36 3.45C10.36 4.4 10.03 5.22 9.35 5.89C8.67 6.57 7.86 6.91 6.91 6.91ZM0 13.82V11.4C0 10.91 0.13 10.46 0.38 10.05C0.63 9.64 0.96 9.33 1.38 9.11C2.27 8.67 3.18 8.33 4.1 8.11C5.02 7.88 5.96 7.77 6.91 7.77C7.86 7.77 8.79 7.88 9.72 8.11C10.64 8.33 11.54 8.67 12.44 9.11C12.85 9.33 13.19 9.64 13.44 10.05C13.69 10.46 13.82 10.91 13.82 11.4V13.82H0Z" fill="currentColor"/></svg>
+          <span>Người dùng</span>
+        </a>
+        <a href="../A09_xóa_sản_phẩm_đã_bán/index.html">
+          <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1.7 17C1.23 17 0.83 16.83 0.5 16.5C0.17 16.17 0 15.77 0 15.3V5.95C0 5.48 0.17 5.08 0.5 4.75C0.83 4.42 1.23 4.25 1.7 4.25H5.95V1.7C5.95 1.23 6.12 0.83 6.45 0.5C6.78 0.17 7.18 0 7.65 0H9.35C9.82 0 10.22 0.17 10.55 0.5C10.88 0.83 11.05 1.23 11.05 1.7V4.25H15.3C15.77 4.25 16.17 4.42 16.5 4.75C16.83 5.08 17 5.48 17 5.95V15.3C17 15.77 16.83 16.17 16.5 16.5C16.17 16.83 15.77 17 15.3 17H1.7ZM1.7 15.3H15.3V5.95H1.7V15.3ZM7.65 4.25H9.35V1.7H7.65V4.25Z" fill="currentColor"/></svg>
+          <span>Sản phẩm</span>
+        </a>
+        <a class="active" href="../A10 Quản lí đơn hàng/index.html" aria-current="page">
+          <svg width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1.4 17C1.02 17 0.69 16.87 0.41 16.59C0.14 16.31 0 15.98 0 15.6V4.25C0 3.87 0.14 3.54 0.41 3.26C0.69 2.98 1.02 2.83 1.4 2.83H3.5V2.12C3.5 1.53 3.71 1.03 4.13 0.62C4.55 0.21 5.06 0 5.65 0H8.35C8.94 0 9.45 0.21 9.87 0.62C10.29 1.03 10.5 1.53 10.5 2.12V2.83H12.6C12.98 2.83 13.31 2.98 13.59 3.26C13.86 3.54 14 3.87 14 4.25V15.6C14 15.98 13.86 16.31 13.59 16.59C13.31 16.87 12.98 17 12.6 17H1.4ZM4.9 2.83H9.1V2.12C9.1 1.91 9.03 1.73 8.88 1.59C8.74 1.44 8.56 1.37 8.35 1.37H5.65C5.44 1.37 5.26 1.44 5.12 1.59C4.97 1.73 4.9 1.91 4.9 2.12V2.83Z" fill="currentColor"/></svg>
+          <span>Đơn hàng</span>
+        </a>
+        <a href="../A12 thống kê khách hàng/index.html"><svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 10V4.67L5.33 0L9.33 4L14.67 0V2.67L9.33 6.67L5.33 2.67L0 7.33V10Z" fill="currentColor"/></svg><span>Thống kê</span></a>
+      </nav>
+      <div class="sidebar-account">
+        <div class="account-info"><span class="account-avatar" aria-hidden="true">A</span><div class="account-details"><span class="account-name" id="sidebar-user-name">Quản trị viên Hệ thống</span><small class="account-email">admin@hocduong.vn</small></div></div>
+        <a class="sidebar-logout" href="../A01 Đăng nhập quản trị/index.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1.33 14C0.97 14 0.65 13.87 0.39 13.61C0.13 13.35 0 13.03 0 12.67V1.33C0 0.97 0.13 0.65 0.39 0.39C0.65 0.13 0.97 0 1.33 0H6.67V1.33H1.33V12.67H6.67V14H1.33ZM10 10.67L8.93 9.6L10.87 7.67H4.67V6.33H10.87L8.93 4.4L10 3.33L13.67 7L10 10.67Z" fill="currentColor"/></svg><span>Đăng xuất</span></a>
+      </div>
+    </aside>
+
+    <div class="admin-shell">
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <div class="topbar-breadcrumb"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11.8 3 20 6.2v5.3c0 4.6-3.2 8.4-8.2 10.2-5-1.8-8.2-5.6-8.2-10.2V6.2L11.8 3Z" stroke="#686868" stroke-width="1.8" stroke-linejoin="round"/><circle cx="17.5" cy="16.5" r="4.2" fill="#fff" stroke="#686868" stroke-width="1.5"/><path d="M16.3 16.3v-.8a1.2 1.2 0 0 1 2.4 0v.8m-2.8 0h3.2v2.4h-3.2v-2.4Z" stroke="#686868" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Quản trị</span><span>/</span><span>Đơn hàng</span><span>/</span><strong>Chi tiết đơn hàng</strong></div>
+          <span class="topbar-divider" aria-hidden="true"></span><div class="status-badge"><span class="status-dot-green" aria-hidden="true"></span><span>HỆ THỐNG TRỰC TUYẾN</span></div>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-date"><svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1.33 14.67C0.97 14.67 0.65 14.54 0.39 14.28C0.13 14.02 0 13.7 0 13.33V2.67C0 2.3 0.13 1.98 0.39 1.72C0.65 1.46 0.97 1.33 1.33 1.33H2.67V0H4V1.33H9.33V0H10.67V1.33H12C12.37 1.33 12.69 1.46 12.95 1.72C13.21 1.98 13.33 2.3 13.33 2.67V13.33C13.33 13.7 13.21 14.02 12.95 14.28C12.69 14.54 12.37 14.67 12 14.67H1.33ZM1.33 13.33H12V5.33H1.33V13.33Z" fill="#5A4136"/></svg><span id="current-date-text">Hôm nay, 24/10/2024</span></div>
+          <a class="storefront-link" href="../../page/homepage/main.html" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1.33 12C0.97 12 0.65 11.87 0.39 11.61C0.13 11.35 0 11.03 0 10.67V1.33C0 0.97 0.13 0.65 0.39 0.39C0.65 0.13 0.97 0 1.33 0H6V1.33H1.33V10.67H10.67V6H12V10.67C12 11.03 11.87 11.35 11.61 11.61C11.35 11.87 11.03 12 10.67 12H1.33ZM4.47 8.47L3.53 7.53L9.73 1.33H7.33V0H12V4.67H10.67V2.27L4.47 8.47Z" fill="currentColor"/></svg><span>Xem trang Storefront</span></a>
+          <button class="topbar-icon-btn" type="button" aria-label="Thông báo hệ thống"><svg width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.67 16.67C6.12 16.67 5.65 16.47 5.26 16.08C4.87 15.69 4.67 15.22 4.67 14.67H8.67C8.67 15.22 8.47 15.69 8.08 16.08C7.69 16.47 7.22 16.67 6.67 16.67ZM1.33 13.33V12L2.67 10.67V6.67C2.67 5.38 3.06 4.28 3.84 3.38C4.62 2.48 5.56 1.93 6.67 1.77V1.33C6.67 0.97 6.8 0.65 7.06 0.39C7.32 0.13 7.63 0 8 0C8.37 0 8.68 0.13 8.94 0.39C9.2 0.65 9.33 0.97 9.33 1.33V1.77C10.44 1.93 11.38 2.48 12.16 3.38C12.94 4.28 13.33 5.38 13.33 6.67V10.67L14.67 12V13.33H1.33Z" fill="#5A4136"/></svg><span class="badge-dot" aria-hidden="true"></span></button>
+          <button class="topbar-avatar-btn" type="button" aria-label="Hồ sơ quản trị">A</button>
+        </div>
+      </header>
+
+      <main class="admin-main order-detail-main">
+        <nav class="od-topline" aria-label="Đường dẫn trang">
+          <div class="od-breadcrumbs">
+            <span>Bảng điều khiển</span><span aria-hidden="true">/</span>
+            <a href="../A10 Quản lí đơn hàng/index.html">Quản lý đơn hàng</a><span aria-hidden="true">/</span>
+            <strong id="od-breadcrumb-code">Chi tiết đơn hàng #DH1003</strong>
+          </div>
+          <a class="od-back-link" href="../A10 Quản lí đơn hàng/index.html">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>
+            <span>Quay lại danh sách đơn hàng</span>
+          </a>
+        </nav>
+
+        <section class="od-hero" aria-labelledby="order-title">
+          <div class="od-hero-main">
+            <a class="od-back-square" href="../A10 Quản lí đơn hàng/index.html" aria-label="Quay lại danh sách đơn hàng">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+            </a>
+            <div class="od-hero-copy">
+              <div class="od-title-row">
+                <h1 class="od-title" id="order-title">Chi tiết đơn hàng <span id="od-code-title">#DH1003</span></h1>
+                <span class="od-status-badge confirmed" data-status-badge><i aria-hidden="true"></i><span data-status-text>Đã xác nhận</span></span>
+              </div>
+              <p class="od-meta" id="od-meta">Ngày tạo: 04/10/2026 · 14:20 · Kênh đặt hàng: Storefront Học Sinh</p>
+            </div>
+          </div>
+          <div class="od-hero-actions">
+            <button class="od-btn od-btn-light" type="button" id="print-order">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+              <span>In phiếu giao hàng</span>
+            </button>
+            <button class="od-btn od-btn-primary" type="button" id="open-status-modal">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span>Cập nhật trạng thái</span>
+            </button>
+          </div>
+        </section>
+
+        <div class="od-layout">
+          <div class="od-main-column">
+            <section class="od-card" aria-labelledby="products-title">
+              <div class="od-card-head">
+                <h2 class="od-card-title" id="products-title">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6ZM3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+                  Danh sách sản phẩm trong đơn
+                </h2>
+                <span class="od-count-pill" id="od-item-count">3 mặt hàng</span>
+              </div>
+
+              <div class="od-table-wrap">
+                <table class="od-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Sản phẩm</th>
+                      <th scope="col" class="od-price-col">Đơn giá</th>
+                      <th scope="col" class="od-qty-col">Số lượng</th>
+                    </tr>
+                  </thead>
+                  <tbody id="od-products-body">
+                    <tr>
+                      <td>
+                        <div class="od-product">
+                          <img class="od-product-img" src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=120&q=80" alt="Cặp sách bánh xe kéo đa năng công thái học">
+                          <div class="od-product-info">
+                            <span class="od-product-name">Cặp sách bánh xe kéo đa năng công thái học</span>
+                            <div class="od-product-meta"><span class="od-code">Mã: SP24</span><span>Cặp &amp; balo học sinh</span></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="od-price">529.000đ</td>
+                      <td class="od-qty">1</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="od-product">
+                          <img class="od-product-img" src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=120&q=80" alt="Hộp bút chì màu cao cấp 24 màu tươi sáng">
+                          <div class="od-product-info">
+                            <span class="od-product-name">Hộp bút chì màu cao cấp 24 màu tươi sáng</span>
+                            <div class="od-product-meta"><span class="od-code">Mã: SP33</span><span>Dụng cụ vẽ &amp; mỹ thuật</span></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="od-price">85.000đ</td>
+                      <td class="od-qty">1</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="od-product">
+                          <img class="od-product-img" src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=120&q=80" alt="Bộ màu nước 12 màu nén kèm cọ vẽ tỉ mỉ">
+                          <div class="od-product-info">
+                            <span class="od-product-name">Bộ màu nước 12 màu nén kèm cọ vẽ tỉ mỉ</span>
+                            <div class="od-product-meta"><span class="od-code">Mã: SP34</span><span>Dụng cụ vẽ &amp; mỹ thuật</span></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="od-price">72.000đ</td>
+                      <td class="od-qty">1</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="od-summary">
+                <div class="od-summary-row"><span class="od-label">Tạm tính tiền hàng:</span><span class="od-value" id="od-subtotal">686.000đ</span></div>
+                <div class="od-summary-row">
+                  <div class="od-inline"><span class="od-label">Phí vận chuyển tiêu chuẩn:</span><span class="od-pill-green">Hỗ trợ học sinh 100%</span></div>
+                  <span class="od-value od-value-green">0đ</span>
+                </div>
+                <div class="od-summary-row"><span class="od-label">Giảm giá từ voucher ưu đãi:</span><span class="od-value" id="od-discount">0đ</span></div>
+                <div class="od-divider" aria-hidden="true"></div>
+                <div class="od-total-row">
+                  <span class="od-total-label">TỔNG CỘNG THANH TOÁN:</span>
+                  <div class="od-total-amount">
+                    <span class="od-total-price" id="od-total">686.000đ</span>
+                    <small>Đã bao gồm thuế GTGT và phí đóng gói</small>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="od-card od-audit-card" aria-labelledby="audit-title">
+              <div class="od-card-head od-audit-head">
+                <h2 class="od-card-title" id="audit-title">
+                  <img class="od-audit-title-icon" src="audit-icon.png" alt="" width="20" height="16">
+                  Lịch sử xử lý đơn hàng (Audit Log)
+                </h2>
+                <span class="od-audit-note">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>
+                  Nhật ký lưu trữ bất biến
+                </span>
+              </div>
+
+              <div class="od-timeline" id="audit-list">
+                <article class="od-audit-item">
+                  <span class="od-audit-dot" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.9-1.4L21 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M13 6v6m-3-3h6"/></svg>
+                  </span>
+                  <div class="od-audit-body">
+                    <div class="od-audit-top">
+                      <strong>04/10/2026 · 14:20</strong>
+                      <span class="od-tag od-tag-neutral">Hệ thống ghi nhận</span>
+                    </div>
+                    <p class="od-audit-text">Khách hàng <strong>Lê Thị Cẩm Tú</strong> tạo đơn hàng thành công qua cổng thanh toán Storefront.<br>Trạng thái khởi tạo: Chưa xác nhận.</p>
+                  </div>
+                </article>
+                <article class="od-audit-item">
+                  <span class="od-audit-dot is-blue" aria-hidden="true">
+                    <svg viewBox="0 0 16 16"><path d="M3.5 8.4 6.4 11 12.5 5"/></svg>
+                  </span>
+                  <div class="od-audit-body">
+                    <div class="od-audit-top">
+                      <strong>04/10/2026 · 16:45</strong>
+                      <span class="od-tag od-tag-blue">Quản trị viên thao tác</span>
+                    </div>
+                    <p class="od-audit-text">Quản trị viên <span class="od-admin-mail">admin@hocduong.vn</span> đã kiểm tra tồn kho và chuyển trạng thái đơn hàng sang: <strong>Đã xác nhận</strong>.</p>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+
+          <aside class="od-side-column">
+            <section class="od-card" aria-labelledby="progress-title">
+              <h2 class="od-card-title" id="progress-title">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6v3a3 3 0 0 0 3 3h6a3 3 0 0 1 3 3v3"/><circle cx="6" cy="4" r="2.5"/><circle cx="18" cy="20" r="2.5"/></svg>
+                Tiến trình trạng thái
+              </h2>
+
+              <ol class="od-steps" id="progress-steps">
+                <li class="od-step is-done" data-step="0">
+                  <span class="od-step-mark" aria-hidden="true">
+                    <svg class="mark-check" viewBox="0 0 16 16"><path d="M3.5 8.4 6.4 11 12.5 5"/></svg>
+                    <span class="mark-dot"></span>
+                  </span>
+                  <div class="od-step-copy">
+                    <strong class="od-step-title">Bước 1: Chưa xác nhận</strong>
+                    <span class="od-step-note">Hoàn tất lúc 14:20 · Tự động khoá</span>
+                  </div>
+                </li>
+                <li class="od-step is-current" data-step="1">
+                  <span class="od-step-mark" aria-hidden="true">
+                    <svg class="mark-check" viewBox="0 0 16 16"><path d="M3.5 8.4 6.4 11 12.5 5"/></svg>
+                    <span class="mark-dot"></span>
+                  </span>
+                  <div class="od-step-copy">
+                    <strong class="od-step-title">Bước 2: Đã xác nhận<em class="od-current-tag">(Hiện tại)</em></strong>
+                    <span class="od-step-note">Sẵn sàng đóng gói &amp; xuất kho</span>
+                  </div>
+                </li>
+                <li class="od-step is-upcoming" data-step="2">
+                  <span class="od-step-mark" aria-hidden="true">
+                    <svg class="mark-check" viewBox="0 0 16 16"><path d="M3.5 8.4 6.4 11 12.5 5"/></svg>
+                    <svg class="mark-truck" viewBox="0 0 24 24"><path d="M3 6h11v11H3zM14 10h4l3 3v4h-7z"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="17.5" cy="18" r="1.5"/></svg>
+                    <span class="mark-dot"></span>
+                  </span>
+                  <div class="od-step-copy">
+                    <strong class="od-step-title">Bước 3: Đã giao – Thành công</strong>
+                    <span class="od-step-note">Chờ đơn vị vận chuyển phản hồi</span>
+                  </div>
+                </li>
+              </ol>
+
+              <div class="od-transition">
+                <span class="od-transition-label">Chuyển bước tiếp theo:</span>
+                <div class="od-select">
+                  <select id="next-status" aria-label="Chọn trạng thái tiếp theo">
+                    <option value="delivered">Đã giao – Thành công</option>
+                    <option value="cancelled">Huỷ đơn hàng</option>
+                  </select>
+                  <svg viewBox="0 0 12 7" aria-hidden="true"><path d="M1 1l5 5 5-5"/></svg>
+                </div>
+                <p class="od-lock-note">
+                  <svg viewBox="0 0 14 16" aria-hidden="true"><rect x="2" y="7" width="10" height="8" rx="1.6"/><path d="M4.5 7V4.8a2.5 2.5 0 0 1 5 0V7"/></svg>
+                  <span id="lock-note-text">Bước &quot;Chưa xác nhận&quot; đã khoá — Không thể quay lại trạng thái trước theo quy trình hệ thống.</span>
+                </p>
+                <button class="od-btn od-btn-primary od-btn-block" type="button" id="confirm-transition">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>Xác nhận chuyển trạng thái</span>
+                </button>
+              </div>
+            </section>
+
+            <section class="od-card" aria-labelledby="customer-title">
+              <div class="od-card-head">
+                <h2 class="od-card-title" id="customer-title">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+                  Thông tin khách hàng
+                </h2>
+                <span class="od-code-pill" id="od-customer-code">Mã U03</span>
+              </div>
+
+              <div class="od-customer-box" id="od-customer-card">
+                <span class="od-avatar" id="od-customer-avatar" aria-hidden="true">LT</span>
+                <div class="od-customer-copy">
+                  <strong id="od-customer-name">Lê Thị Cẩm Tú</strong>
+                  <small id="od-customer-sub">camtu · Thành viên thân thiết</small>
+                </div>
+              </div>
+
+              <dl class="od-info-list">
+                <div><dt>Email:</dt><dd id="od-customer-email">camtu@email.com</dd></div>
+                <div><dt>Số điện thoại:</dt><dd class="is-strong" id="od-customer-phone">0923 456 789</dd></div>
+                <div class="od-account-row">
+                  <dt>Phân loại tài khoản:</dt>
+                  <dd><span class="od-pill-green" id="od-customer-account"><i aria-hidden="true"></i>Khách hàng học sinh - Hoạt động</span></dd>
+                </div>
+              </dl>
+              <a class="od-customer-stats-link" id="od-customer-link" href="../A12 thống kê khách hàng/index.html">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 13V9m4 4V5m4 8V7m4 6V2"/></svg>
+                <span>Xem thống kê khách hàng</span>
+                <svg class="arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4"/></svg>
+              </a>
+            </section>
+
+            <section class="od-card" aria-labelledby="shipping-title">
+              <div class="od-card-head">
+                <h2 class="od-card-title" id="shipping-title">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+                  Địa chỉ &amp; Giao nhận
+                </h2>
+              </div>
+
+              <div class="od-field">
+                <span class="od-field-label">Người nhận kiện hàng:</span>
+                <div class="od-recipient-row"><strong id="od-recipient-name">Lê Thị Cẩm Tú</strong><span id="od-recipient-phone">0923 456 789</span></div>
+              </div>
+
+              <div class="od-field">
+                <span class="od-field-label">Địa chỉ giao hàng:</span>
+                <div class="od-address-box" id="od-address">Số 58 Bạch Đằng, Phường Thạch Thang, Quận Hải Châu, TP. Đà Nẵng</div>
+              </div>
+
+              <div class="od-field od-payment-field">
+                <span class="od-field-label">Phương thức thanh toán:</span>
+                <span class="od-pill-cod" id="od-payment">Tiền mặt khi nhận hàng (COD)</span>
+              </div>
+
+              <div class="od-field">
+                <span class="od-field-label">Ghi chú giao hàng:</span>
+                <div class="od-delivery-note">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3h10v8H7l-3 2v-2H3V3Z"/></svg>
+                  <span id="od-note">&quot;Giao giờ hành chính, gọi trước khi đến.&quot;</span>
+                </div>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="od-modal" id="status-modal" aria-hidden="true">
+    <section class="od-dialog" role="dialog" aria-modal="true" aria-labelledby="status-modal-title">
+      <div class="od-dialog-head">
+        <h2 id="status-modal-title">Cập nhật trạng thái đơn hàng</h2>
+        <button class="od-dialog-close" type="button" id="close-status-modal" aria-label="Đóng">×</button>
+      </div>
+      <form class="od-form" id="status-form">
+        <p class="od-dialog-sub">Đơn <strong id="od-modal-code">#DH1003</strong> · Trạng thái hiện tại: <strong data-status-text>Đã xác nhận</strong></p>
+        <label class="od-form-field">Trạng thái tiếp theo
+          <select name="nextStatus" id="modal-status-select" required>
+            <option value="delivered">Đã giao – Thành công</option>
+            <option value="cancelled">Huỷ đơn hàng</option>
+          </select>
+        </label>
+        <label class="od-form-field">Ghi chú xử lý (không bắt buộc)
+          <textarea name="note" id="status-note" rows="3" maxlength="240" placeholder="Ví dụ: Đã kiểm tra tồn kho và bàn giao cho đơn vị vận chuyển."></textarea>
+        </label>
+        <div class="od-form-actions">
+          <button class="od-btn od-btn-light" type="button" id="cancel-status-modal">Huỷ</button>
+          <button class="od-btn od-btn-primary" type="submit">Xác nhận chuyển trạng thái</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <div class="od-toast" id="od-toast" role="status" aria-live="polite"></div>
+
+  <script src="../shared/order-store.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,1715 @@
+/* ==========================================================================
+   A12: THỐNG KÊ KHÁCH HÀNG MUA NHIỀU NHẤT
+   Dự án: Web Bán Đồ Dùng Học Tập - Học Đường Store
+   Kế thừa: assets/css/style.css + A02 Quản lý người dùng/admin.css
+   ========================================================================== */
+
+:root {
+  --cs-bg: #f5f3f3;
+  --cs-surface: #ffffff;
+  --cs-text: #1b1c1c;
+  --cs-body: #5a4136;
+  --cs-muted: #5f5e5e;
+  --cs-soft: #f5f3f3;
+  --cs-line: #efeded;
+  --cs-line-strong: #e3dfdd;
+  --cs-orange: #ff6900;
+  --cs-orange-deep: #c25000;
+  --cs-orange-soft: #fff1e6;
+  --cs-blue: #00629f;
+  --cs-blue-deep: #004a79;
+  --cs-blue-soft: #e7f1fb;
+  --cs-green: #1b7f43;
+  --cs-green-soft: #e8f8ee;
+  --cs-red: #ba1a1a;
+  --cs-red-soft: #ffdad6;
+}
+
+/* --------------------------------------------------------------------------
+   1. KHUNG TRANG
+   -------------------------------------------------------------------------- */
+.cs-main {
+  gap: 16px;
+  padding: 20px 24px 28px;
+  background-color: var(--cs-bg);
+}
+
+.cs-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.cs-heading-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.cs-main .page-title {
+  color: var(--cs-text);
+  font-family: var(--font-family-headline);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+}
+
+.cs-main .page-subtitle {
+  max-width: 720px;
+  color: var(--cs-muted);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+/* --------------------------------------------------------------------------
+   2. NÚT BẤM DÙNG CHUNG
+   -------------------------------------------------------------------------- */
+.cs-btn {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  color: var(--cs-text);
+  background: transparent;
+  font-family: var(--font-family-base);
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast),
+    box-shadow var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.cs-btn svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-btn:active {
+  transform: translateY(1px);
+}
+
+.cs-btn-outline {
+  color: var(--cs-body);
+  background: var(--cs-surface);
+  border-color: var(--cs-line-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.cs-btn-outline:hover {
+  color: var(--cs-orange-deep);
+  background: #fffaf6;
+  border-color: #ffc9a3;
+}
+
+.cs-btn-light {
+  color: #383838;
+  background: var(--cs-surface);
+  border-color: var(--cs-line-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.cs-btn-light:hover {
+  background: #faf8f7;
+  border-color: #c9c6c4;
+}
+
+.cs-btn-primary {
+  color: #fff;
+  background: var(--cs-orange);
+  box-shadow: 0 2px 6px rgba(255, 105, 0, 0.22);
+}
+
+.cs-btn-primary:hover {
+  background: var(--cs-orange-deep);
+}
+
+/* --------------------------------------------------------------------------
+   3. BỘ LỌC THỜI GIAN
+   -------------------------------------------------------------------------- */
+.cs-filter-card {
+  padding: 14px 16px 12px;
+  background: var(--cs-surface);
+  border: 1px solid var(--cs-line);
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+.cs-filter-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.cs-field {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--cs-text);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.cs-field > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.1px;
+}
+
+.cs-field > span svg {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: var(--cs-muted);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-calendar-dot {
+  fill: var(--cs-muted);
+  stroke: none;
+}
+
+.cs-field input {
+  width: 142px;
+  height: 36px;
+  padding: 0 10px;
+  color: #383838;
+  background: #f8f6f5;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  font-family: var(--font-family-base);
+  font-size: 11.5px;
+  outline: none;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.cs-field input:hover {
+  background: #f3f0ee;
+}
+
+.cs-field input:focus {
+  background: #fff;
+  border-color: #ffb27d;
+  box-shadow: 0 0 0 3px rgba(255, 105, 0, 0.12);
+}
+
+.cs-date-sep {
+  align-self: flex-end;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 36px;
+  color: #b9b5b3;
+}
+
+.cs-date-sep svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-filter-row .cs-btn {
+  margin-left: 2px;
+}
+
+.cs-filter-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 11px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--cs-line);
+  color: var(--cs-muted);
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+
+.cs-filter-note strong {
+  color: var(--cs-body);
+  font-weight: 700;
+}
+
+.cs-note-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  margin-top: 1px;
+  color: var(--cs-blue);
+}
+
+.cs-note-icon svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-filter-state {
+  margin-left: 3px;
+  color: #8a8684;
+}
+
+.cs-filter-state strong {
+  color: var(--cs-orange-deep);
+}
+
+/* --------------------------------------------------------------------------
+   4. THẺ THỐNG KÊ
+   -------------------------------------------------------------------------- */
+.cs-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.cs-stat {
+  min-width: 0;
+  min-height: 158px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 18px 14px;
+  background: var(--cs-surface);
+  border: 1px solid var(--cs-line);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.cs-stat:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.cs-stat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--cs-muted);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.35px;
+}
+
+.cs-stat-icon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+}
+
+.cs-stat-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-stat-icon.is-orange {
+  color: var(--cs-orange-deep);
+  background: #ffeadb;
+}
+
+.cs-stat-icon.is-blue {
+  color: var(--cs-blue-deep);
+  background: var(--cs-blue-soft);
+}
+
+.cs-stat-icon.is-gold {
+  color: #a14000;
+  background: #fff0cf;
+}
+
+.cs-stat-value {
+  margin-top: 12px;
+  color: var(--cs-text);
+  font-family: var(--font-family-headline);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.cs-stat-value.is-orange {
+  color: var(--cs-orange);
+}
+
+.cs-stat-value small {
+  margin-left: 3px;
+  color: var(--cs-muted);
+  font-family: var(--font-family-base);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.cs-stat-caption {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 10px;
+  color: var(--cs-muted);
+  font-size: 10.5px;
+  line-height: 1.45;
+}
+
+.cs-stat-caption strong {
+  color: var(--cs-body);
+  font-weight: 700;
+}
+
+.cs-stat-caption.is-trend {
+  color: var(--cs-orange-deep);
+}
+
+.cs-trend-icon {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  color: var(--cs-green);
+  background: var(--cs-green-soft);
+  border-radius: 50%;
+}
+
+.cs-trend-icon svg {
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-status-dot {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  margin-right: 1px;
+  background: var(--cs-green);
+  border-radius: 50%;
+}
+
+.cs-top-customer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+}
+
+.cs-top-customer > strong {
+  overflow: hidden;
+  color: var(--cs-text);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cs-top-customer > span {
+  color: var(--cs-orange);
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.cs-top-customer small {
+  color: var(--cs-muted);
+  font-size: 10.5px;
+  font-weight: 500;
+}
+
+.cs-rank-mini {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 19px;
+  height: 17px;
+  padding: 0 4px;
+  color: #8a5b00;
+  background: #fff0cf;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+/* --------------------------------------------------------------------------
+   5. TIÊU ĐỀ BẢNG XẾP HẠNG
+   -------------------------------------------------------------------------- */
+.cs-ranking {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.cs-ranking-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 2px 2px 0;
+}
+
+.cs-ranking-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  color: var(--cs-text);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.cs-trophy-icon {
+  display: inline-flex;
+  color: var(--cs-orange);
+}
+
+.cs-trophy-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-ranking-count {
+  color: var(--cs-muted);
+  font-size: 10.5px;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   6. DANH SÁCH THẺ KHÁCH HÀNG
+   -------------------------------------------------------------------------- */
+.cs-customer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.cs-customer-card {
+  min-width: 0;
+  overflow: hidden;
+  background: var(--cs-surface);
+  border: 1px solid var(--cs-line);
+  border-radius: 11px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.cs-customer-card:hover {
+  border-color: #e6ddd8;
+  box-shadow: 0 3px 10px rgba(90, 65, 54, 0.06);
+}
+
+.cs-customer-card.is-expanded {
+  border-color: #f0dfd4;
+}
+
+.cs-customer-card.is-highlighted {
+  border-color: rgba(255, 105, 0, 0.55);
+  box-shadow: 0 0 0 3px rgba(255, 105, 0, 0.14), 0 8px 22px rgba(90, 65, 54, 0.1);
+}
+
+.cs-customer-head {
+  display: grid;
+  grid-template-columns: 40px 46px minmax(0, 1fr) 138px auto;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+}
+
+.cs-rank-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cs-rank-badge {
+  position: relative;
+  isolation: isolate;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  color: #7a4d00;
+  background: radial-gradient(circle at 32% 26%, #fff8d9 0 16%, #f8cc59 52%, #e0a514 100%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.45), 0 2px 5px rgba(122, 77, 0, 0.2);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+}
+
+.cs-rank-badge::before {
+  position: absolute;
+  right: 7px;
+  bottom: -8px;
+  left: 7px;
+  z-index: -1;
+  height: 12px;
+  background: linear-gradient(90deg, #c78c00 0 37%, transparent 37% 63%, #c78c00 63% 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 72%, 0 100%);
+  content: "";
+}
+
+.cs-rank-badge.rank-2 {
+  color: #4e5968;
+  background: radial-gradient(circle at 32% 26%, #ffffff 0 16%, #d9dee5 52%, #aab3bf 100%);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.55), 0 2px 5px rgba(78, 89, 104, 0.18);
+}
+
+.cs-rank-badge.rank-2::before {
+  background: linear-gradient(90deg, #8e98a5 0 37%, transparent 37% 63%, #8e98a5 63% 100%);
+}
+
+.cs-rank-badge.rank-3 {
+  color: #6b3a17;
+  background: radial-gradient(circle at 32% 26%, #fff0df 0 16%, #dfa477 52%, #b46b35 100%);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5), 0 2px 5px rgba(107, 58, 23, 0.18);
+}
+
+.cs-rank-badge.rank-3::before {
+  background: linear-gradient(90deg, #8f5427 0 37%, transparent 37% 63%, #8f5427 63% 100%);
+}
+
+.cs-rank-badge.rank-plain {
+  color: #5f5e5e;
+  background: radial-gradient(circle at 32% 26%, #fbfbfb 0 16%, #e6e3e1 52%, #c7c2bf 100%);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.55), 0 2px 5px rgba(95, 94, 94, 0.12);
+}
+
+.cs-rank-badge.rank-plain::before {
+  background: linear-gradient(90deg, #aaa5a2 0 37%, transparent 37% 63%, #aaa5a2 63% 100%);
+}
+
+.cs-avatar {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  color: #a14000;
+  background: #fce7db;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+}
+
+.cs-avatar.av-olive { color: #3f6212; background: #ecfccb; }
+.cs-avatar.av-blue { color: #1e40af; background: #dbeafe; }
+.cs-avatar.av-rose { color: #9d174d; background: #fce7f3; }
+.cs-avatar.av-teal { color: #115e59; background: #ccfbf1; }
+.cs-avatar.av-violet { color: #5b21b6; background: #ede9fe; }
+.cs-avatar.av-amber { color: #92400e; background: #fef3c7; }
+
+.cs-customer-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cs-name-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.cs-customer-name {
+  margin: 0;
+  overflow: hidden;
+  color: var(--cs-text);
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cs-code-pill {
+  flex-shrink: 0;
+  padding: 1px 6px;
+  color: var(--cs-muted);
+  background: #f2f0ef;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1.55;
+  white-space: nowrap;
+}
+
+.cs-customer-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-width: 0;
+  color: var(--cs-muted);
+  font-size: 9.5px;
+  line-height: 1.45;
+}
+
+.cs-customer-meta > span,
+.cs-customer-meta > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  min-width: 0;
+}
+
+.cs-customer-meta svg {
+  width: 11px;
+  height: 11px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-customer-meta .meta-orders {
+  color: var(--cs-orange-deep);
+  font-weight: 600;
+}
+
+.cs-customer-meta .meta-success {
+  color: var(--cs-green);
+  font-weight: 600;
+}
+
+.cs-customer-meta a {
+  overflow: hidden;
+  color: var(--cs-muted);
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cs-customer-meta a:hover {
+  color: var(--cs-blue);
+  text-decoration: underline;
+}
+
+.cs-meta-dot {
+  width: 3px;
+  height: 3px;
+  flex: 0 0 auto;
+  background: #c9c4c1;
+  border-radius: 50%;
+}
+
+.cs-customer-total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.cs-customer-total > span {
+  color: var(--cs-muted);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.cs-customer-total > strong {
+  color: var(--cs-text);
+  font-family: var(--font-family-headline);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+}
+
+.cs-customer-total > small {
+  color: var(--cs-muted);
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.cs-expand-btn {
+  min-height: 29px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 9px;
+  color: var(--cs-blue-deep);
+  background: #f7fbfe;
+  border: 1px solid #d6e7f5;
+  border-radius: 6px;
+  font-family: var(--font-family-base);
+  font-size: 9.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.cs-expand-btn:hover {
+  background: var(--cs-blue-soft);
+  border-color: #a9cdea;
+}
+
+.cs-expand-btn svg {
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--transition-fast);
+}
+
+.cs-customer-card.is-expanded .cs-expand-btn svg {
+  transform: rotate(180deg);
+}
+
+/* --------------------------------------------------------------------------
+   7. CHI TIẾT ĐƠN HÀNG TRONG THẺ KHÁCH HÀNG
+   -------------------------------------------------------------------------- */
+.cs-order-details {
+  border-top: 1px solid #f3f0ee;
+  background: linear-gradient(180deg, #fffdfc 0%, #ffffff 100%);
+}
+
+.cs-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.cs-order-table {
+  width: 100%;
+  min-width: 660px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.cs-order-table th {
+  padding: 8px 14px;
+  color: var(--cs-muted);
+  background: #faf8f7;
+  border-bottom: 1px solid #f3f0ee;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.45px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.cs-order-table th:first-child {
+  padding-left: 18px;
+}
+
+.cs-order-table th:last-child {
+  padding-right: 18px;
+  text-align: right;
+}
+
+.cs-order-table td {
+  padding: 9px 14px;
+  color: var(--cs-body);
+  border-bottom: 1px solid #f6f3f1;
+  font-size: 10.5px;
+  line-height: 1.5;
+  vertical-align: middle;
+}
+
+.cs-order-table td:first-child {
+  padding-left: 18px;
+}
+
+.cs-order-table td:last-child {
+  padding-right: 18px;
+  text-align: right;
+}
+
+.cs-order-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.cs-order-table tbody tr:hover {
+  background: #fffaf7;
+}
+
+.cs-order-code {
+  color: var(--cs-blue);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cs-order-code:hover {
+  text-decoration: underline;
+}
+
+.cs-order-date {
+  color: var(--cs-muted);
+  white-space: nowrap;
+}
+
+.cs-product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 0;
+  min-width: 0;
+  color: var(--cs-body);
+}
+
+.cs-product-item {
+  display: inline;
+  white-space: normal;
+}
+
+.cs-product-item + .cs-product-item::before {
+  padding: 0 4px;
+  color: #b9b5b3;
+  content: ",";
+}
+
+.cs-product-code {
+  margin-left: 2px;
+  color: #8a8684;
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.cs-order-total {
+  color: var(--cs-orange-deep);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.cs-detail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--cs-blue);
+  font-size: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cs-detail-link svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-detail-link:hover {
+  color: var(--cs-blue-deep);
+  text-decoration: underline;
+}
+
+.cs-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 9px 18px;
+  background: #fcfaf9;
+  border-top: 1px solid #f3f0ee;
+  color: var(--cs-muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.cs-card-foot strong {
+  color: var(--cs-body);
+  font-weight: 700;
+}
+
+.cs-card-foot .is-orange {
+  color: var(--cs-orange-deep);
+}
+
+.cs-card-foot-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--cs-blue);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cs-card-foot-link svg {
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-card-foot-link:hover {
+  text-decoration: underline;
+}
+
+/* Trạng thái không có dữ liệu */
+.cs-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 52px 20px;
+  background: var(--cs-surface);
+  border: 1px dashed var(--cs-line-strong);
+  border-radius: 11px;
+  color: var(--cs-muted);
+  text-align: center;
+}
+
+.cs-empty svg {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 4px;
+  fill: none;
+  stroke: #c9c4c1;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-empty strong {
+  color: var(--cs-body);
+  font-size: 13px;
+}
+
+.cs-empty span {
+  font-size: 11px;
+}
+
+/* --------------------------------------------------------------------------
+   8. GHI CHÚ CUỐI TRANG
+   -------------------------------------------------------------------------- */
+.cs-footnote {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 11px 14px;
+  background: #fffbf8;
+  border: 1px solid #ffe5d4;
+  border-radius: 8px;
+}
+
+.cs-footnote-main {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.cs-footnote-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  margin-top: 1px;
+  color: var(--cs-red);
+}
+
+.cs-footnote-icon svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-footnote p {
+  margin: 0;
+  color: #7a6a61;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.cs-footnote p strong {
+  color: #5a4136;
+  font-weight: 700;
+}
+
+.cs-footnote-link {
+  flex-shrink: 0;
+  color: var(--cs-blue);
+  font-size: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cs-footnote-link:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   9. MODAL & TOAST
+   -------------------------------------------------------------------------- */
+.cs-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(20, 21, 22, 0.52);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.cs-modal.open {
+  display: flex;
+}
+
+.cs-dialog {
+  width: min(100%, 470px);
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: var(--shadow-xl);
+  animation: csDialogIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes csDialogIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cs-dialog-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.cs-dialog-head h2 {
+  margin: 0 0 2px;
+  color: var(--cs-text);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.cs-dialog-head p {
+  margin: 0;
+  color: var(--cs-muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.cs-dialog-head p strong {
+  color: var(--cs-body);
+}
+
+.cs-dialog-close {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  color: var(--cs-muted);
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cs-dialog-close:hover {
+  color: var(--cs-text);
+  background: var(--cs-soft);
+}
+
+.cs-dialog-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 11px;
+  background: var(--cs-soft);
+  border-radius: 8px;
+}
+
+.cs-dialog-summary > div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 9px;
+  border-left: 1px solid #e3dfdd;
+}
+
+.cs-dialog-summary > div:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.cs-dialog-summary span {
+  color: var(--cs-muted);
+  font-size: 9.5px;
+  line-height: 1.4;
+}
+
+.cs-dialog-summary strong {
+  overflow: hidden;
+  color: var(--cs-orange-deep);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cs-dialog-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin-top: 12px;
+  padding: 10px;
+  color: var(--cs-muted);
+  background: #f8fbfe;
+  border: 1px solid #e3eff9;
+  border-radius: 7px;
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+
+.cs-dialog-note svg {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+  margin-top: 1px;
+  fill: none;
+  stroke: var(--cs-blue);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-dialog-note p {
+  margin: 0;
+}
+
+.cs-dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.cs-toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1200;
+  max-width: min(430px, calc(100vw - 32px));
+  padding: 11px 15px;
+  color: #fff;
+  background: #212121;
+  border-radius: 6px;
+  box-shadow: var(--shadow-lg);
+  font-size: 12px;
+  line-height: 1.45;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+.cs-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   10. TINH CHỈNH TOPBAR
+   -------------------------------------------------------------------------- */
+.admin-topbar {
+  padding: 0 22px;
+}
+
+.admin-topbar .topbar-left {
+  gap: 12px;
+  min-width: 0;
+}
+
+.admin-topbar .topbar-breadcrumb {
+  gap: 6px;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.admin-topbar .topbar-breadcrumb svg {
+  flex: 0 0 auto;
+}
+
+.admin-topbar .status-badge {
+  padding: 3px 8px;
+  font-size: 10px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.admin-topbar .topbar-right {
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.admin-topbar .topbar-date,
+.admin-topbar .storefront-link {
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   11. RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 1280px) {
+  .cs-customer-head {
+    grid-template-columns: 40px 46px minmax(0, 1fr) 124px auto;
+    gap: 10px;
+  }
+
+  .cs-customer-total > strong {
+    font-size: 16.5px;
+  }
+
+  .cs-customer-meta .meta-phone,
+  .cs-customer-meta .meta-dot-phone {
+    display: none;
+  }
+}
+
+@media (max-width: 1120px) {
+  .admin-topbar .status-badge,
+  .admin-topbar .topbar-divider {
+    display: none;
+  }
+
+  .cs-stat {
+    padding: 14px 15px 12px;
+  }
+
+  .cs-stat-value {
+    font-size: 26px;
+  }
+
+  .cs-customer-head {
+    grid-template-columns: 36px 44px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "rank avatar info total"
+      "rank avatar info action";
+    row-gap: 5px;
+  }
+
+  .cs-rank-col { grid-area: rank; }
+  .cs-avatar { grid-area: avatar; }
+  .cs-customer-info { grid-area: info; }
+  .cs-customer-total { grid-area: total; }
+  .cs-expand-btn { grid-area: action; justify-self: end; }
+}
+
+@media (max-width: 980px) {
+  .admin-topbar .storefront-link {
+    display: none;
+  }
+
+  .cs-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cs-stat:last-child {
+    grid-column: 1 / -1;
+    min-height: 130px;
+  }
+
+  .cs-stat:last-child .cs-stat-caption {
+    padding-top: 6px;
+  }
+}
+
+@media (max-width: 860px) {
+  .admin-topbar .topbar-date {
+    display: none;
+  }
+
+  .cs-main {
+    padding: 16px 16px 22px;
+  }
+
+  .cs-field input {
+    width: 132px;
+  }
+
+  .cs-customer-meta .meta-email {
+    display: none;
+  }
+
+  .cs-customer-meta .meta-dot-email {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .admin-sidebar {
+    display: none;
+  }
+
+  .admin-shell {
+    margin-left: 0;
+  }
+
+  .admin-topbar {
+    height: 56px;
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .admin-topbar .topbar-left {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .admin-topbar .topbar-breadcrumb {
+    font-size: 11.5px;
+    overflow: hidden;
+  }
+
+  .admin-topbar .topbar-breadcrumb svg,
+  .admin-topbar .topbar-breadcrumb > span {
+    display: none;
+  }
+
+  .admin-topbar .topbar-breadcrumb strong {
+    overflow: hidden;
+    color: var(--cs-text);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .admin-topbar .topbar-right {
+    gap: 8px;
+    margin-left: auto;
+  }
+
+  .cs-main {
+    padding: 14px 11px 20px;
+    gap: 12px;
+  }
+
+  .cs-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cs-main .page-title {
+    font-size: 21px;
+  }
+
+  .cs-main .page-subtitle {
+    font-size: 11.5px;
+  }
+
+  .cs-btn-outline {
+    width: 100%;
+  }
+
+  .cs-filter-card {
+    padding: 11px;
+  }
+
+  .cs-filter-row {
+    gap: 8px;
+  }
+
+  .cs-field {
+    flex: 1 1 calc(50% - 20px);
+  }
+
+  .cs-field input {
+    width: 100%;
+  }
+
+  .cs-date-sep {
+    display: none;
+  }
+
+  .cs-filter-row .cs-btn {
+    flex: 1 1 100%;
+    margin-left: 0;
+  }
+
+  .cs-filter-note {
+    font-size: 10px;
+  }
+
+  .cs-filter-state {
+    display: block;
+    margin: 2px 0 0;
+  }
+
+  .cs-stats {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .cs-stat,
+  .cs-stat:last-child {
+    grid-column: auto;
+    min-height: 132px;
+    padding: 13px 14px 11px;
+  }
+
+  .cs-stat-value {
+    font-size: 25px;
+  }
+
+  .cs-ranking-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cs-customer-head {
+    grid-template-columns: 34px 40px minmax(0, 1fr);
+    grid-template-areas:
+      "rank avatar info"
+      "total total action";
+    gap: 7px 9px;
+    padding: 11px 12px;
+  }
+
+  .cs-rank-badge {
+    width: 30px;
+    height: 30px;
+    font-size: 10px;
+  }
+
+  .cs-rank-badge::before {
+    right: 5px;
+    bottom: -7px;
+    left: 5px;
+    height: 11px;
+  }
+
+  .cs-avatar {
+    width: 38px;
+    height: 38px;
+    font-size: 10.5px;
+  }
+
+  .cs-customer-name {
+    font-size: 13px;
+  }
+
+  .cs-customer-total {
+    align-items: flex-start;
+    padding-top: 2px;
+    text-align: left;
+  }
+
+  .cs-customer-total > span {
+    display: none;
+  }
+
+  .cs-customer-total > strong {
+    font-size: 15px;
+  }
+
+  .cs-customer-total > small {
+    display: inline;
+  }
+
+  .cs-expand-btn {
+    min-height: 26px;
+    font-size: 9px;
+  }
+
+  .cs-order-table {
+    min-width: 600px;
+  }
+
+  .cs-order-table th,
+  .cs-order-table td {
+    padding: 7px 10px;
+  }
+
+  .cs-order-table th:first-child,
+  .cs-order-table td:first-child {
+    padding-left: 12px;
+  }
+
+  .cs-order-table th:last-child,
+  .cs-order-table td:last-child {
+    padding-right: 12px;
+  }
+
+  .cs-card-foot {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+    padding: 8px 12px;
+  }
+
+  .cs-footnote {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .cs-dialog-summary {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .cs-dialog-summary > div {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .cs-dialog-actions {
+    flex-direction: column-reverse;
+  }
+
+  .cs-dialog-actions .cs-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .cs-customer-meta {
+    gap: 4px;
+    font-size: 9px;
+  }
+
+  .cs-customer-meta .meta-orders,
+  .cs-customer-meta .meta-success {
+    font-size: 9px;
+  }
+
+  .cs-customer-meta .meta-sep {
+    display: none;
+  }
+
+  .cs-code-pill {
+    display: none;
+  }
+
+  .cs-ranking-count {
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-main *,
+  .cs-dialog,
+  .cs-toast {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   TOPBAR: breadcrumb dài của trang thống kê không chồng lên cụm ngày/tiện ích
+   -------------------------------------------------------------------------- */
+.admin-topbar {
+  gap: 10px;
+}
+
+.topbar-left {
+  min-width: 0;
+  gap: 8px;
+}
+
+.topbar-breadcrumb {
+  min-width: 0;
+  gap: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.topbar-right {
+  flex-shrink: 0;
+  gap: 14px;
+}
+
+@media (max-width: 1440px) {
+  .admin-topbar { padding: 0 18px; }
+  .topbar-left { gap: 7px; }
+  .topbar-breadcrumb { gap: 5px; font-size: 11px; }
+  .topbar-divider { height: 14px; }
+  .status-badge { gap: 4px; padding: 3px 7px; font-size: 9px; letter-spacing: 0.3px; }
+  .topbar-right { gap: 8px; }
+  .topbar-date { gap: 4px; font-size: 11px; }
+  .storefront-link { gap: 4px; padding: 5px 8px; font-size: 11px; }
+  .topbar-avatar-btn { width: 30px; height: 30px; font-size: 12px; }
+}
