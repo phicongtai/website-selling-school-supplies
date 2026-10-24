@@ -47,7 +47,7 @@
             <span class="action-badge cart-count-badge">3</span>
           </button>
 
-          <a class="homepage-user" href="../auth/login.html">
+          <a class="homepage-user" href="../customer/profile.html" title="Tài khoản cá nhân">
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Avatar">
             <span>Nguyễn Minh Anh</span>
           </a>
@@ -290,16 +290,22 @@
   <div class="cart-drawer-overlay" id="cartDrawerOverlay">
     <div class="cart-drawer">
       <div class="cart-drawer-header">
-        <h3>Giỏ Hàng Của Bạn</h3>
-        <button onclick="closeCartDrawer()">✕</button>
+        <h3>Giỏ Hàng Của Bạn <span class="cart-drawer-count" id="cartDrawerCount">3</span></h3>
+        <button onclick="closeCartDrawer()" aria-label="Đóng giỏ hàng">✕</button>
       </div>
-      <div class="cart-drawer-body" id="cartDrawerBody"></div>
+      <div class="cart-drawer-body" id="cartDrawerBody" aria-live="polite"></div>
       <div class="cart-drawer-footer">
-        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:12px;">
+        <a class="cart-drawer-add" href="../homepage/main.html#view-category" onclick="closeCartDrawer()">
+          <span aria-hidden="true">+</span> Thêm sản phẩm khác
+        </a>
+        <div class="cart-drawer-total-row">
           <span>Tổng tiền:</span>
-          <span id="cartDrawerTotal" style="color:#8A3500;">0 ₫</span>
+          <span id="cartDrawerTotal">0 ₫</span>
         </div>
-        <button class="btn btn-primary" style="width:100%;" onclick="showToast('Tiến hành thanh toán...')">Thanh Toán Ngay</button>
+        <div class="cart-drawer-actions">
+          <a class="btn btn-secondary" href="../customer/cart.html">Xem giỏ hàng</a>
+          <a class="btn btn-primary" href="../customer/checkout.html">Thanh toán ngay</a>
+        </div>
       </div>
     </div>
   </div>

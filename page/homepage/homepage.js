@@ -340,37 +340,112 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast("Đã thêm sản phẩm vào giỏ hàng!");
   };
 
+  const CART_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>';
+  const TRASH_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18"></path><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"></path><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6M14 11v6"></path></svg>';
+
   const renderCartDrawer = () => {
     const body = document.getElementById('cartDrawerBody');
     const totalEl = document.getElementById('cartDrawerTotal');
+    const countEl = document.getElementById('cartDrawerCount');
     if (!body) return;
 
     const cart = window.StoreCart.get();
     let total = 0;
-    body.innerHTML = cart.map(item => {
-      const p = products.find(prod => prod.id === item.id);
-      if (!p) return '';
-      total += p.price * item.quantity;
-      return `
-        <div style="display:flex; gap:10px; margin-bottom:12px; align-items:center;">
-          <img src="${p.image}" style="width:50px; height:50px; border-radius:6px; object-fit:cover;">
-          <div style="flex:1;">
-            <div style="font-size:0.8rem; font-weight:600;">${p.title}</div>
-            <div style="font-size:0.8rem; color:#8A3500; font-weight:700;">${formatMoney(p.price)} x ${item.quantity}</div>
-          </div>
+    let totalQuantity = 0;
+
+    if (!cart.length) {
+      body.innerHTML = `
+        <div class="cart-drawer-empty">
+          <span class="cart-drawer-empty-icon" aria-hidden="true">${CART_ICON}</span>
+          <strong>Giỏ hàng đang trống</strong>
+          <p>Thêm vài dụng cụ học tập xinh xắn để bắt đầu đơn hàng của bạn nhé.</p>
+          <a class="btn btn-primary" href="../homepage/main.html#view-category" onclick="closeCartDrawer()">Mua sắm ngay</a>
         </div>
       `;
-    }).join('');
+    } else {
+      body.innerHTML = cart.map(item => {
+        const p = products.find(prod => prod.id === item.id);
+        if (!p) return '';
+        const lineTotal = p.price * item.quantity;
+        total += lineTotal;
+        totalQuantity += item.quantity;
+        return `
+          <div class="cart-drawer-item" data-cart-item="${p.id}">
+            <img class="cart-drawer-thumb" src="${p.image}" alt="${p.title}" loading="lazy">
+            <div class="cart-drawer-info">
+              <a class="cart-drawer-name" href="../products/product-detail.html?id=${encodeURIComponent(p.code)}">${p.title}</a>
+              <div class="cart-drawer-unit">${formatMoney(p.price)} / sản phẩm</div>
+              <div class="cart-drawer-controls">
+                <div class="cart-drawer-qty" role="group" aria-label="Số lượng ${p.title}">
+                  <button type="button" data-cart-dec aria-label="${item.quantity > 1 ? 'Giảm số lượng' : 'Xóa sản phẩm'}">−</button>
+                  <span>${item.quantity}</span>
+                  <button type="button" data-cart-inc aria-label="Tăng số lượng" ${item.quantity >= 99 ? 'disabled' : ''}>+</button>
+                </div>
+                <strong class="cart-drawer-line-total">${formatMoney(lineTotal)}</strong>
+              </div>
+            </div>
+            <div class="cart-drawer-side">
+              <button class="cart-drawer-remove" type="button" data-cart-remove aria-label="Xóa ${p.title} khỏi giỏ hàng" title="Xóa sản phẩm">${TRASH_ICON}</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
     if (totalEl) totalEl.textContent = formatMoney(total);
+    if (countEl) countEl.textContent = String(totalQuantity);
   };
+
+  const cartDrawerBody = document.getElementById('cartDrawerBody');
+  cartDrawerBody?.addEventListener('click', event => {
+    const row = event.target.closest('[data-cart-item]');
+    if (!row) return;
+
+    const id = Number(row.dataset.cartItem);
+    const current = window.StoreCart.get().find(item => Number(item.id) === id);
+    if (!current) return;
+
+    if (event.target.closest('[data-cart-inc]')) {
+      window.StoreCart.setQuantity(id, Math.min(99, current.quantity + 1));
+      renderCartDrawer();
+      return;
+    }
+
+    if (event.target.closest('[data-cart-dec]')) {
+      if (current.quantity <= 1) {
+        window.StoreCart.remove(id);
+      } else {
+        window.StoreCart.setQuantity(id, current.quantity - 1);
+      }
+      renderCartDrawer();
+      return;
+    }
+
+    if (event.target.closest('[data-cart-remove]')) {
+      window.StoreCart.remove(id);
+      renderCartDrawer();
+    }
+  });
 
   window.openCartDrawer = () => {
     renderCartDrawer();
     document.getElementById('cartDrawerOverlay')?.classList.add('open');
+    document.body.classList.add('cart-drawer-open');
   };
   window.closeCartDrawer = () => {
     document.getElementById('cartDrawerOverlay')?.classList.remove('open');
+    document.body.classList.remove('cart-drawer-open');
   };
+
+  const cartDrawerOverlay = document.getElementById('cartDrawerOverlay');
+  cartDrawerOverlay?.addEventListener('click', event => {
+    if (event.target === cartDrawerOverlay) window.closeCartDrawer();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && cartDrawerOverlay?.classList.contains('open')) {
+      window.closeCartDrawer();
+    }
+  });
 
   window.showToast = (msg) => {
     const container = document.getElementById('toastContainer');
