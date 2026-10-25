@@ -116,32 +116,24 @@
 }
 
 .od-back-square {
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  color: var(--od-blue-deep);
-  background: var(--od-blue-soft);
-  border-radius: 8px;
-  box-shadow: var(--shadow-sm);
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  color: #2563eb;
+  background: #dbeafe;
+  border-radius: 10px;
 }
 
 .od-back-square svg {
-  width: 16px;
-  height: 16px;
+  width: 19px;
+  height: 19px;
   fill: none;
   stroke: currentColor;
-  stroke-width: 2;
+  stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
-}
-
-.od-back-square:hover {
-  background: #b8d8ff;
-  color: var(--od-blue-deep);
-  transform: translateX(-1px);
 }
 
 .od-hero-copy {
@@ -1307,32 +1299,6 @@
 }
 
 .od-toast.show { opacity: 1; transform: translateY(0); }
-
-/* --------------------------------------------------------------------------
-   10. TINH CHỈNH TOPBAR CHO TRANG CHI TIẾT
-   -------------------------------------------------------------------------- */
-.admin-topbar { padding: 0 20px; }
-.admin-topbar .topbar-left { gap: 12px; min-width: 0; }
-.admin-topbar .topbar-breadcrumb { gap: 6px; font-size: 12.5px; white-space: nowrap; }
-.admin-topbar .topbar-breadcrumb svg { flex: 0 0 auto; }
-.admin-topbar .status-badge { padding: 3px 8px; font-size: 10px; letter-spacing: 0.3px; white-space: nowrap; }
-.admin-topbar .topbar-right { gap: 14px; flex-shrink: 0; }
-.admin-topbar .topbar-date,
-.admin-topbar .storefront-link { white-space: nowrap; }
-.admin-topbar .topbar-icon-btn { flex-shrink: 0; }
-
-@media (max-width: 1320px) {
-  .admin-topbar .status-badge,
-  .admin-topbar .topbar-divider { display: none; }
-}
-
-@media (max-width: 1100px) {
-  .admin-topbar .storefront-link { display: none; }
-}
-
-@media (max-width: 860px) {
-  .admin-topbar .topbar-date { display: none; }
-}
 
 /* --------------------------------------------------------------------------
    11. RESPONSIVE

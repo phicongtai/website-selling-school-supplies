@@ -76,6 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const statLockedVal = document.getElementById('stat-locked-val');
   const paginationInfo = document.getElementById('pagination-info');
 
+  // Khi F5/refresh, đưa cả bộ lọc/tìm kiếm về trạng thái mặc định như ảnh thiết kế
+  if (isPageReload()) {
+    if (searchInput) searchInput.value = '';
+    if (statusFilter) statusFilter.value = 'all';
+  }
+
   // Toast elements
   const toast = document.getElementById('toast');
   const toastIcon = document.getElementById('toast-icon');

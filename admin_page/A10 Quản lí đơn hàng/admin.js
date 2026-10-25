@@ -53,6 +53,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeTab = 'all';
   let toastTimer;
 
+  const DEFAULT_FILTERS = Object.freeze({
+    status: 'all',
+    from: '2026-10-01',
+    to: '2026-10-10',
+    location: 'all',
+    search: ''
+  });
+
   function setActiveTab(tabName) {
     activeTab = ['all', 'pending', 'processing', 'finished'].includes(tabName) ? tabName : 'all';
     document.querySelectorAll('.order-tab').forEach((tab) => {
@@ -60,6 +68,17 @@ document.addEventListener('DOMContentLoaded', () => {
       tab.classList.toggle('active', selected);
       tab.setAttribute('aria-selected', String(selected));
     });
+  }
+
+  // Đưa toàn bộ điều khiển lọc về trạng thái ban đầu như ảnh thiết kế.
+  function resetFilterControls() {
+    statusFilter.value = DEFAULT_FILTERS.status;
+    dateFrom.value = DEFAULT_FILTERS.from;
+    dateTo.value = DEFAULT_FILTERS.to;
+    locationFilter.value = DEFAULT_FILTERS.location;
+    searchInput.value = DEFAULT_FILTERS.search;
+    setActiveTab('all');
+    closeActionMenus();
   }
 
   const escapeHTML = (value) => String(value).replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
@@ -172,9 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
   [statusFilter, dateFrom, dateTo, locationFilter].forEach((control) => control.addEventListener('change', renderOrders));
   searchInput.addEventListener('input', renderOrders);
   document.getElementById('reset-filters').addEventListener('click', () => {
-    statusFilter.value = 'all'; dateFrom.value = '2026-10-01'; dateTo.value = '2026-10-10';
-    locationFilter.value = 'all'; searchInput.value = ''; setActiveTab('all');
-    closeActionMenus();
+    resetFilterControls();
     renderOrders();
     showToast('Đã khôi phục bộ lọc mặc định.');
   });
@@ -267,7 +284,10 @@ document.addEventListener('DOMContentLoaded', () => {
     try { return sessionStorage.getItem('hd_admin_user'); } catch (error) { return null; }
   })();
   if (loggedInUser) document.getElementById('sidebar-user-name').textContent = loggedInUser;
-  document.getElementById('current-date-text').textContent = `Hôm nay, ${new Intl.DateTimeFormat('vi-VN').format(new Date())}`;
+
+  // Trình duyệt có thể khôi phục giá trị đã nhập sau khi F5, nên đặt lại
+  // điều khiển lọc trước khi áp dụng tham số tìm kiếm trên URL.
+  if (shouldResetDemoData) resetFilterControls();
 
   const searchParam = new URLSearchParams(window.location.search).get('q');
   if (searchParam) searchInput.value = searchParam;

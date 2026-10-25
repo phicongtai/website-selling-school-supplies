@@ -1290,45 +1290,6 @@
 }
 
 /* --------------------------------------------------------------------------
-   10. TINH CHỈNH TOPBAR
-   -------------------------------------------------------------------------- */
-.admin-topbar {
-  padding: 0 22px;
-}
-
-.admin-topbar .topbar-left {
-  gap: 12px;
-  min-width: 0;
-}
-
-.admin-topbar .topbar-breadcrumb {
-  gap: 6px;
-  font-size: 12.5px;
-  white-space: nowrap;
-}
-
-.admin-topbar .topbar-breadcrumb svg {
-  flex: 0 0 auto;
-}
-
-.admin-topbar .status-badge {
-  padding: 3px 8px;
-  font-size: 10px;
-  letter-spacing: 0.3px;
-  white-space: nowrap;
-}
-
-.admin-topbar .topbar-right {
-  gap: 14px;
-  flex-shrink: 0;
-}
-
-.admin-topbar .topbar-date,
-.admin-topbar .storefront-link {
-  white-space: nowrap;
-}
-
-/* --------------------------------------------------------------------------
    11. RESPONSIVE
    -------------------------------------------------------------------------- */
 @media (max-width: 1280px) {
@@ -1679,37 +1640,309 @@
 }
 
 /* --------------------------------------------------------------------------
-   TOPBAR: breadcrumb dài của trang thống kê không chồng lên cụm ngày/tiện ích
+   10. ĐỒNG BỘ GIAO DIỆN VỚI BẢN THIẾT KẾ THAM CHIẾU
    -------------------------------------------------------------------------- */
-.admin-topbar {
-  gap: 10px;
+.cs-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-width: 0;
 }
 
-.topbar-left {
-  min-width: 0;
-  gap: 8px;
-}
-
-.topbar-breadcrumb {
-  min-width: 0;
+.cs-breadcrumb {
+  display: flex;
+  align-items: center;
   gap: 6px;
+  min-width: 0;
+  color: #9a9693;
+  font-size: 10.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cs-breadcrumb strong {
+  color: var(--cs-orange-deep);
+  font-weight: 600;
+}
+
+.cs-live-pill {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 27px;
+  padding: 4px 10px;
+  color: #77736f;
+  background: var(--cs-surface);
+  border: 1px solid var(--cs-line-strong);
+  border-radius: 999px;
+  font-family: var(--font-family-base);
+  font-size: 9.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cs-live-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--cs-orange);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(255, 105, 0, 0.12);
+}
+
+.cs-date-sep {
+  display: none;
+}
+
+.cs-customer-head {
+  grid-template-columns: 44px minmax(0, 1fr) 150px auto;
+  grid-template-areas: none;
+  gap: 13px;
+  padding: 15px 18px;
+}
+
+.cs-rank-col,
+.cs-customer-info,
+.cs-customer-total,
+.cs-expand-btn {
+  grid-area: auto;
+}
+
+.cs-rank-badge {
+  width: 38px;
+  height: 38px;
+  color: #76716e;
+  background: #f0efee;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: none;
   font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.cs-rank-badge::before {
+  display: none;
+}
+
+.cs-rank-badge.rank-1 {
+  color: #fff;
+  background: var(--cs-orange);
+}
+
+.cs-rank-badge.rank-2 {
+  color: #6846ad;
+  background: #e9dcff;
+}
+
+.cs-rank-badge.rank-3 {
+  color: #8a5a43;
+  background: #f0ded2;
+}
+
+.cs-rank-badge.rank-plain {
+  color: #76716e;
+  background: #f0efee;
+}
+
+.cs-customer-info {
+  gap: 3px;
+}
+
+.cs-name-row {
+  gap: 6px;
+}
+
+.cs-customer-name {
+  font-size: 14px;
+}
+
+.cs-tier-pill {
+  flex-shrink: 0;
+  padding: 1px 7px;
+  color: #807a76;
+  background: #f4f2f1;
+  border-radius: 999px;
+  font-size: 8.5px;
+  font-weight: 600;
+  line-height: 1.6;
   white-space: nowrap;
 }
 
-.topbar-right {
-  flex-shrink: 0;
-  gap: 14px;
+.cs-tier-pill.rank-1 {
+  color: #b85600;
+  background: #fff0e5;
 }
 
-@media (max-width: 1440px) {
-  .admin-topbar { padding: 0 18px; }
-  .topbar-left { gap: 7px; }
-  .topbar-breadcrumb { gap: 5px; font-size: 11px; }
-  .topbar-divider { height: 14px; }
-  .status-badge { gap: 4px; padding: 3px 7px; font-size: 9px; letter-spacing: 0.3px; }
-  .topbar-right { gap: 8px; }
-  .topbar-date { gap: 4px; font-size: 11px; }
-  .storefront-link { gap: 4px; padding: 5px 8px; font-size: 11px; }
-  .topbar-avatar-btn { width: 30px; height: 30px; font-size: 12px; }
+.cs-tier-pill.rank-2 {
+  color: #6b4aad;
+  background: #f2ebff;
+}
+
+.cs-tier-pill.rank-3 {
+  color: #80543d;
+  background: #f7ebe3;
+}
+
+.cs-code-pill {
+  padding: 0;
+  color: #a5a09d;
+  background: transparent;
+  font-size: 8.5px;
+}
+
+.cs-customer-meta {
+  gap: 5px;
+  font-size: 9.5px;
+}
+
+.cs-purchase-line {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin: 1px 0 0;
+  color: var(--cs-orange-deep);
+  font-size: 9.5px;
+  line-height: 1.45;
+}
+
+.cs-purchase-line strong,
+.cs-purchase-line span {
+  color: var(--cs-orange-deep);
+  font-weight: 600;
+}
+
+.cs-customer-total {
+  gap: 1px;
+}
+
+.cs-customer-total > span {
+  font-size: 8px;
+  letter-spacing: 0.45px;
+}
+
+.cs-customer-total > strong {
+  color: #5a4136;
+  font-size: 19px;
+}
+
+.cs-customer-total > small {
+  display: none;
+}
+
+.cs-expand-btn {
+  min-height: 26px;
+  gap: 7px;
+  padding: 0;
+  color: var(--cs-muted);
+  background: transparent;
+  border: 0;
+  font-size: 9.5px;
+  font-weight: 500;
+}
+
+.cs-expand-btn:hover {
+  color: var(--cs-body);
+  background: transparent;
+  border-color: transparent;
+}
+
+.cs-expand-btn .cs-chevron {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  background: #f7f5f4;
+  border: 1px solid #eee9e6;
+  border-radius: 50%;
+}
+
+.cs-expand-btn .cs-chevron svg {
+  width: 10px;
+  height: 10px;
+  stroke: #7c7571;
+}
+
+.cs-customer-card.is-expanded .cs-expand-btn svg {
+  transform: rotate(180deg);
+}
+
+.cs-detail-link {
+  color: var(--cs-orange-deep);
+}
+
+.cs-detail-link:hover {
+  color: var(--cs-orange);
+}
+
+.cs-card-foot {
+  padding: 10px 18px;
+}
+
+.cs-foot-left {
+  color: var(--cs-muted);
+}
+
+.cs-foot-right {
+  color: var(--cs-muted);
+}
+
+.cs-foot-right .is-orange {
+  color: var(--cs-orange-deep);
+  font-weight: 700;
+}
+
+.cs-footnote-icon {
+  color: var(--cs-orange);
+}
+
+.cs-footnote-link {
+  color: var(--cs-orange-deep);
+}
+
+.cs-heading {
+  align-items: flex-start;
+}
+
+@media (max-width: 1120px) {
+  .cs-customer-head {
+    grid-template-columns: 40px minmax(0, 1fr) auto auto;
+    grid-template-areas: none;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 760px) {
+  .cs-topline {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .cs-breadcrumb {
+    white-space: normal;
+    flex-wrap: wrap;
+  }
+
+  .cs-customer-head {
+    grid-template-columns: 32px minmax(0, 1fr);
+    grid-template-areas:
+      "rank info"
+      "total total"
+      "action action";
+    gap: 8px 10px;
+    padding: 12px;
+  }
+
+  .cs-rank-col { grid-area: rank; }
+  .cs-customer-info { grid-area: info; }
+  .cs-customer-total { grid-area: total; align-items: flex-start; text-align: left; }
+  .cs-expand-btn { grid-area: action; justify-self: start; }
+
+  .cs-customer-total > span {
+    display: block;
+  }
 }

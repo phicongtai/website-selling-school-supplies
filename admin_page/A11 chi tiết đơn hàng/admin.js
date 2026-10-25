@@ -622,11 +622,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const sidebarUserName = $('#sidebar-user-name');
   if (loggedInUser && sidebarUserName) sidebarUserName.textContent = loggedInUser;
 
-  const dateText = $('#current-date-text');
-  if (dateText) {
-    dateText.textContent = `Hôm nay, ${new Intl.DateTimeFormat('vi-VN').format(new Date())}`;
-  }
-
   renderHeader();
   renderProducts();
   renderAll();

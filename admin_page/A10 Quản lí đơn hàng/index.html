@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#FF6900">
+  <link rel="icon" href="data:,">
   <title>Quản lý đơn hàng - Học Đường Store Admin</title>
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="stylesheet" href="../A02 Quản lý người dùng/admin.css">
@@ -12,7 +13,7 @@
 <body>
   <div class="admin-page-container">
     <aside class="admin-sidebar" aria-label="Điều hướng quản trị">
-      <a class="sidebar-brand" href="#" aria-label="Học Đường Store Admin">
+      <a class="sidebar-brand" href="../A02 Quản lý người dùng/index.html" aria-label="Học Đường Store Admin">
         <span class="brand-mark" aria-hidden="true">HĐ</span>
         <div class="brand-copy"><strong>Học Đường Store Admin</strong><small>Hệ thống Quản trị Nội bộ</small></div>
       </a>
@@ -40,7 +41,7 @@
     <div class="admin-shell">
       <header class="admin-topbar">
         <div class="topbar-left">
-          <div class="topbar-breadcrumb"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11.8 3 20 6.2v5.3c0 4.6-3.2 8.4-8.2 10.2-5-1.8-8.2-5.6-8.2-10.2V6.2L11.8 3Z" stroke="#686868" stroke-width="1.8" stroke-linejoin="round"/><circle cx="17.5" cy="16.5" r="4.2" fill="#fff" stroke="#686868" stroke-width="1.5"/><path d="M16.3 16.3v-.8a1.2 1.2 0 0 1 2.4 0v.8m-2.8 0h3.2v2.4h-3.2v-2.4Z" stroke="#686868" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bảng điều khiển</span><span>/</span><strong>Quản trị</strong></div>
+          <div class="topbar-breadcrumb"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M11.8 3 20 6.2v5.3c0 4.6-3.2 8.4-8.2 10.2-5-1.8-8.2-5.6-8.2-10.2V6.2L11.8 3Z" stroke="#686868" stroke-width="1.8" stroke-linejoin="round"/><circle cx="17.5" cy="16.5" r="4.2" fill="#fff" stroke="#686868" stroke-width="1.5"/><path d="M16.3 16.3v-.8a1.2 1.2 0 0 1 2.4 0v.8m-2.8 0h3.2v2.4h-3.2v-2.4Z" stroke="#686868" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Bảng điều khiển</span><span>/</span><strong>Hệ thống Quản lý</strong></div>
           <span class="topbar-divider" aria-hidden="true"></span><div class="status-badge"><span class="status-dot-green" aria-hidden="true"></span><span>HỆ THỐNG TRỰC TUYẾN</span></div>
         </div>
         <div class="topbar-right">
@@ -52,9 +53,12 @@
       </header>
 
       <main class="admin-main orders-main">
-        <nav class="main-breadcrumbs" aria-label="Đường dẫn trang"><span>Quản trị</span><span>/</span><span>Đơn hàng</span><span>/</span><strong>Danh sách đơn hàng</strong></nav>
+        <nav class="main-breadcrumbs orders-topline" aria-label="Đường dẫn trang">
+          <div class="main-breadcrumb-trail"><span>Bảng điều khiển</span><span>/</span><span>Quản trị</span><span>/</span><strong>Quản lý đơn hàng</strong></div>
+          <span class="server-sync-pill"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.2 6.8A5.4 5.4 0 1 0 13 9.5"/><path d="M13.4 3.2v3.9h-3.9"/></svg>Đồng bộ máy chủ: Vừa xong</span>
+        </nav>
         <section class="orders-heading" aria-labelledby="orders-title">
-          <div class="page-title-group"><h1 class="page-title" id="orders-title">Quản lý đơn hàng</h1><p class="page-subtitle">Theo dõi, xử lý và điều phối đơn hàng trên hệ thống thương mại Học Đường Store</p></div>
+          <div class="page-title-group"><h1 class="page-title" id="orders-title">Quản lý đơn hàng</h1><p class="page-subtitle">Theo dõi, xử lý và điều phối 10 đơn hàng trên hệ thống thương mại Học Đường Store</p></div>
           <div class="orders-heading-actions">
             <button class="orders-button orders-button-light" id="export-orders" type="button" title="Tải danh sách dạng CSV"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/></svg>Xuất danh sách (Excel)</button>
             <button class="orders-button orders-button-primary" id="open-order-modal" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Tạo đơn tại quầy</button>

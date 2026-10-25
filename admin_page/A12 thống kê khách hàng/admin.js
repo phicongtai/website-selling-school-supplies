@@ -21,6 +21,48 @@ document.addEventListener('DOMContentLoaded', () => {
   const RANGE_KEY = 'hd_admin_customer_range';
   const EXPANDED_KEY = 'hd_admin_customer_expanded';
 
+  /* ------------------------------------------------------------------------
+     0. KHÔI PHỤC DỮ LIỆU MẪU KHI TẢI LẠI TRANG
+     ------------------------------------------------------------------------
+     - Bấm F5/refresh (hoặc mở thẳng trang): xoá mọi thay đổi đã lưu để
+       bảng xếp hạng, bộ lọc và các thẻ đang mở trở về đúng ảnh thiết kế.
+     - Đi từ A10/A11 sang: giữ nguyên trạng thái trong phiên làm việc để các
+       trang quản trị luôn khớp nhau.
+     ------------------------------------------------------------------------ */
+  function navigationType() {
+    try {
+      const entries = performance.getEntriesByType('navigation');
+      if (entries && entries.length && entries[0].type) return entries[0].type;
+      if (performance.navigation) {
+        const legacy = performance.navigation.type;
+        if (legacy === 1) return 'reload';
+        if (legacy === 2) return 'back_forward';
+      }
+    } catch (error) {
+      /* Bỏ qua */
+    }
+    return 'navigate';
+  }
+
+  function openedFromOrderPages() {
+    if (!document.referrer) return false;
+    try {
+      return /A1[012][^/]*\/index\.html/i.test(decodeURIComponent(document.referrer));
+    } catch (error) {
+      return false;
+    }
+  }
+
+  const shouldResetDemoData = navigationType() === 'reload' || !openedFromOrderPages();
+
+  if (store && shouldResetDemoData) {
+    if (typeof store.resetOrders === 'function') store.resetOrders();
+    if (typeof store.removeState === 'function') {
+      store.removeState(RANGE_KEY);
+      store.removeState(EXPANDED_KEY);
+    }
+  }
+
   const CUSTOMERS = [
     {
       id: 'KH003',
@@ -177,12 +219,12 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ------------------------------------------------------------------------
      2. TRẠNG THÁI TRANG & THAM CHIẾU DOM
      ------------------------------------------------------------------------ */
-  const savedRange = readSaved(RANGE_KEY, null);
   const isValidIsoDate = (value) => /^\d{4}-\d{2}-\d{2}$/.test(String(value || ''));
 
+  /* Trang tĩnh: mỗi lần tải lại đều bắt đầu từ khoảng ngày mặc định của thiết kế. */
   const state = {
-    from: savedRange && isValidIsoDate(savedRange.from) ? savedRange.from : DEFAULT_RANGE.from,
-    to: savedRange && isValidIsoDate(savedRange.to) ? savedRange.to : DEFAULT_RANGE.to,
+    from: DEFAULT_RANGE.from,
+    to: DEFAULT_RANGE.to,
     expanded: new Set()
   };
 
@@ -192,7 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const dateFromInput = $('#date-from');
   const dateToInput = $('#date-to');
 
-  /* Khôi phục khoảng ngày đã áp dụng trước đó để reload không bị mất. */
   if (dateFromInput && state.from) dateFromInput.value = state.from;
   if (dateToInput && state.to) dateToInput.value = state.to;
 
@@ -388,8 +429,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <td class="cs-order-total">${formatCurrency(order.total)}</td>
         <td>
           <a class="cs-detail-link" href="../A11 chi tiết đơn hàng/index.html?order=${encodeURIComponent(order.code)}">
-            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 8s2.4-4.2 6.5-4.2S14.5 8 14.5 8s-2.4 4.2-6.5 4.2S1.5 8 1.5 8Z"></path><circle cx="8" cy="8" r="1.7"></circle></svg>
             Chi tiết
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4"></path></svg>
           </a>
         </td>
       </tr>
@@ -399,7 +440,11 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderCustomerCard(customer, rank, totalAccounts) {
     const isExpanded = state.expanded.has(customer.id);
     const rankClass = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : 'rank-plain';
+    const tier = rank === 1 ? 'Kim Cương' : rank === 2 ? 'Vàng' : rank === 3 ? 'Bạc' : '';
     const detailsId = `orders-${customer.id}`;
+    const orderBreakdown = customer.visibleOrders
+      .map((order) => `${order.code}: ${formatCurrency(order.total)}`)
+      .join(', ');
 
     return `
       <article class="cs-customer-card ${isExpanded ? 'is-expanded' : ''}" data-customer-id="${escapeHTML(customer.id)}">
@@ -408,41 +453,38 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="cs-rank-badge ${rankClass}" aria-label="Hạng ${rank}">#${rank}</span>
           </div>
 
-          <span class="cs-avatar ${escapeHTML(customer.avatarClass)}" aria-hidden="true">${escapeHTML(customer.initials)}</span>
-
           <div class="cs-customer-info">
             <div class="cs-name-row">
               <h3 class="cs-customer-name">${escapeHTML(customer.name)}</h3>
+              ${tier ? `<span class="cs-tier-pill ${rankClass}">Hạng ${rank} · ${tier}</span>` : ''}
               <span class="cs-code-pill">Mã KH: ${escapeHTML(customer.id)}</span>
             </div>
             <div class="cs-customer-meta">
-              <span class="meta-orders">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 5V3.8A1.8 1.8 0 0 1 6.8 2h2.4A1.8 1.8 0 0 1 11 3.8V5"></path><path d="M3 5h10l-.8 9H3.8L3 5Z"></path></svg>
-                ${customer.orderCount} đơn hàng
+              <a class="meta-email" href="mailto:${escapeHTML(customer.email)}">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3.5" width="12" height="9" rx="1.2"></rect><path d="m3 5 5 3.8L13 5"></path></svg>
+                ${escapeHTML(customer.email)}
+              </a>
+              <span class="cs-meta-dot" aria-hidden="true"></span>
+              <span class="meta-city">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 6.5c0 3.5-5 8-5 8s-5-4.5-5-8a5 5 0 1 1 10 0Z"></path><circle cx="8" cy="6.5" r="1.6"></circle></svg>
+                ${escapeHTML(customer.city)}
               </span>
-              <span class="meta-success">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"></circle><path d="m5.2 8.2 1.9 1.9 3.7-4"></path></svg>
-                ${customer.orderCount} đơn thành công
-              </span>
-              <span class="cs-meta-dot meta-sep" aria-hidden="true"></span>
-              <a class="meta-email" href="mailto:${escapeHTML(customer.email)}">${escapeHTML(customer.email)}</a>
-              <span class="cs-meta-dot meta-dot-email" aria-hidden="true"></span>
-              <span class="meta-phone">${escapeHTML(customer.phone)}</span>
-              <span class="cs-meta-dot meta-dot-phone" aria-hidden="true"></span>
-              <span>${escapeHTML(customer.city)}</span>
             </div>
+            <p class="cs-purchase-line">
+              <strong>${customer.orderCount} đơn</strong>
+              <span>[${escapeHTML(orderBreakdown)}]</span>
+            </p>
           </div>
 
           <div class="cs-customer-total">
-            <span>TỔNG CHI TIÊU</span>
+            <span>TỔNG TIỀN MUA</span>
             <strong>${formatCurrency(customer.total)}</strong>
-            <small>${customer.orderCount} đơn · ${escapeHTML(customer.city)}</small>
           </div>
 
           <button class="cs-expand-btn" type="button" data-toggle-customer="${escapeHTML(customer.id)}"
             aria-expanded="${isExpanded}" aria-controls="${detailsId}">
-            <span>${isExpanded ? 'Thu gọn' : 'Xem đơn'}</span>
-            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 6 5 5 5-5"></path></svg>
+            <span>${isExpanded ? 'Thu gọn' : `Xem ${customer.orderCount} đơn`}</span>
+            <span class="cs-chevron" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m3 6 5 5 5-5"></path></svg></span>
           </button>
         </div>
 
@@ -465,15 +507,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <div class="cs-card-foot">
-            <span>
-              <strong>Tổng hợp:</strong>
-              ${customer.orderCount} đơn hàng đã giao · Tổng chi:
-              <strong class="is-orange">${formatCurrency(customer.total)}</strong>
-            </span>
-            <a class="cs-card-foot-link" href="../A10 Quản lí đơn hàng/index.html?q=${encodeURIComponent(customer.name)}">
-              <span>Xem tất cả đơn hàng</span>
-              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4"></path></svg>
-            </a>
+            <span class="cs-foot-left">Trong thời: <strong>${customer.orderCount}/${customer.orderCount}</strong> đơn giao hoàn tất thành công</span>
+            <span class="cs-foot-right">Tổng mua tích lũy: <strong class="is-orange">${formatCurrency(customer.total)}</strong></span>
           </div>
         </div>
       </article>
@@ -520,7 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderFilterMeta(report) {
-    const rangeLabel = `${formatDateVN(state.from)} – ${formatDateVN(state.to)}`;
+    const rangeLabel = `${formatDateVN(state.from)} - ${formatDateVN(state.to)}`;
     const isDefault = state.from === DEFAULT_RANGE.from && state.to === DEFAULT_RANGE.to;
 
     if (rangeText) rangeText.textContent = rangeLabel;
@@ -569,12 +604,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     state.from = from;
     state.to = to;
-    writeSaved(RANGE_KEY, { from, to });
 
     // Sau khi lọc, mở sẵn chi tiết của 2 khách hàng đứng đầu.
     const report = buildReport();
     state.expanded = new Set(report.visibleRanking.slice(0, 2).map((customer) => customer.id));
-    writeSaved(EXPANDED_KEY, Array.from(state.expanded));
 
     renderAll();
     showToast(`Đã áp dụng bộ lọc từ ${formatDateVN(from)} đến ${formatDateVN(to)}.`);
@@ -608,13 +641,13 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         state.expanded.delete(customerId);
       }
-      writeSaved(EXPANDED_KEY, Array.from(state.expanded));
 
       card.classList.toggle('is-expanded', willExpand);
       details.hidden = !willExpand;
       toggleButton.setAttribute('aria-expanded', String(willExpand));
       const label = toggleButton.querySelector('span');
-      if (label) label.textContent = willExpand ? 'Thu gọn' : 'Xem đơn';
+      const orderCount = details.querySelectorAll('.cs-order-table tbody tr').length;
+      if (label) label.textContent = willExpand ? 'Thu gọn' : `Xem ${orderCount} đơn`;
     });
   }
 
@@ -744,51 +777,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const sidebarUserName = $('#sidebar-user-name');
   if (loggedInUser && sidebarUserName) sidebarUserName.textContent = loggedInUser;
 
-  const dateText = $('#current-date-text');
-  if (dateText) {
-    dateText.textContent = `Hôm nay, ${new Intl.DateTimeFormat('vi-VN').format(new Date())}`;
-  }
-
   // Mở sẵn chi tiết 2 khách hàng đứng đầu giống bản thiết kế.
   const initialReport = buildReport();
   const customerParam = new URLSearchParams(window.location.search).get('customer');
   const highlightedCustomer = initialReport.visibleRanking.find((customer) => customer.id === customerParam);
-  const savedExpanded = readSaved(EXPANDED_KEY, null);
 
-  function isReloadNavigation() {
-    try {
-      const entries = window.performance && typeof performance.getEntriesByType === 'function'
-        ? performance.getEntriesByType('navigation')
-        : [];
-      const navigation = entries && entries[0];
-      if (navigation && navigation.type) return navigation.type === 'reload';
-      return !!(window.performance && performance.navigation && performance.navigation.type === 1);
-    } catch (error) {
-      return false;
-    }
-  }
+  const isReload = navigationType() === 'reload';
 
-  if (Array.isArray(savedExpanded)) {
-    /* Giữ nguyên các thẻ khách hàng đã mở/đóng ở lần truy cập trước. */
-    state.expanded = new Set(savedExpanded.filter((id) => typeof id === 'string'));
-  } else if (highlightedCustomer) {
+  /* Đi từ A10/A11 sang bằng link ?customer=... thì mở thẻ của khách hàng đó.
+     Khi người dùng tải lại trang (F5), luôn trở về 2 thẻ mở sẵn mặc định. */
+  if (highlightedCustomer && !isReload) {
     state.expanded = new Set([highlightedCustomer.id]);
   } else {
     state.expanded = new Set(initialReport.visibleRanking.slice(0, 2).map((customer) => customer.id));
   }
 
-  /* Đi từ A10/A11 sang bằng link ?customer=... thì mở thẻ của khách hàng đó.
-     Khi người dùng tải lại trang (F5) thì tôn trọng trạng thái đóng/mở đã lưu
-     để thao tác thu gọn không bị mất. */
-  if (highlightedCustomer && !isReloadNavigation()) {
-    state.expanded.add(highlightedCustomer.id);
-  }
-
-  writeSaved(EXPANDED_KEY, Array.from(state.expanded));
-
   renderAll();
 
-  if (highlightedCustomer && customerList) {
+  if (highlightedCustomer && !isReload && customerList) {
     const card = customerList.querySelector(`[data-customer-id="${highlightedCustomer.id}"]`);
     if (card) {
       card.classList.add('is-highlighted');
@@ -806,27 +812,6 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Đồng bộ khi đơn hàng được cập nhật từ tab khác (A10/A11), đồng thời giữ
      bộ lọc và các thẻ đang mở khớp với thay đổi ở tab khác. */
   window.addEventListener('storage', (event) => {
-    if (event.key === RANGE_KEY) {
-      const saved = readSaved(RANGE_KEY, null);
-      if (saved && isValidIsoDate(saved.from) && isValidIsoDate(saved.to)) {
-        state.from = saved.from;
-        state.to = saved.to;
-        if (dateFromInput) dateFromInput.value = saved.from;
-        if (dateToInput) dateToInput.value = saved.to;
-      }
-      renderAll();
-      return;
-    }
-
-    if (event.key === EXPANDED_KEY) {
-      const saved = readSaved(EXPANDED_KEY, null);
-      if (Array.isArray(saved)) {
-        state.expanded = new Set(saved.filter((id) => typeof id === 'string'));
-      }
-      renderAll();
-      return;
-    }
-
     if (event.key && !['hd_admin_order_status', 'hd_admin_custom_orders', 'hd_admin_order_audit'].includes(event.key)) return;
     renderAll();
   });

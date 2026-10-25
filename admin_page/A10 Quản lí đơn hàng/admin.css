@@ -1,5 +1,8 @@
 .orders-main { padding: 12px 14px 20px; gap: 12px; background: #f5f3f3; }
-.orders-main .main-breadcrumbs { font-size: 11px; gap: 7px; }
+.orders-main .main-breadcrumbs { font-size: 11px; gap: 7px; justify-content: space-between; }
+.main-breadcrumb-trail { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.orders-topline .server-sync-pill { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border: 1px solid #ececec; border-radius: 999px; background: #fff; color: #74757a; font-size: 10px; font-weight: 600; white-space: nowrap; }
+.orders-topline .server-sync-pill svg { width: 12px; height: 12px; fill: none; stroke: var(--color-primary, #ff6900); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .orders-main .main-breadcrumbs strong { color: var(--color-primary-800); }
 .orders-heading, .orders-heading-actions, .order-stat-head, .order-stat-value, .orders-table-toolbar, .order-tabs, .flow-note, .orders-pagination, .pagination-controls, .filter-actions, .order-form-row, .order-form-actions, .order-dialog-head { display: flex; align-items: center; }
 .orders-heading { justify-content: space-between; gap: 18px; }

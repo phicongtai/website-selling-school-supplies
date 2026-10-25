@@ -20,7 +20,7 @@
 .admin-sidebar {
   width: 260px;
   min-width: 260px;
-  background-color: #1b1c1e;
+  background-color: #1f1f1f;
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -75,53 +75,41 @@
 }
 
 .sidebar-nav {
-  padding: 16px 12px;
+  padding: 16px 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
 }
 
 .sidebar-nav a {
   height: 48px;
-  border-radius: 8px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 0 16px;
+  gap: 0;
+  padding: 0 20px;
   color: #9ca3af;
   text-decoration: none;
   font-size: 14px;
   font-weight: var(--fw-medium, 500);
   position: relative;
-  transition: all var(--transition-fast, 150ms ease);
+  transition: background-color var(--transition-fast, 150ms ease), color var(--transition-fast, 150ms ease);
 }
 
 .sidebar-nav a:hover {
-  background-color: rgba(255, 255, 255, 0.06);
+  background-color: rgba(255, 255, 255, 0.05);
   color: #ffffff;
 }
 
 .sidebar-nav a.active {
-  background-color: rgba(255, 105, 0, 0.12);
+  background-color: #2a2421;
   color: var(--color-primary, #FF6900);
   font-weight: var(--fw-semibold, 600);
-}
-
-.sidebar-nav a.active::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background-color: var(--color-primary, #FF6900);
-  border-radius: 4px 0 0 4px;
+  border-left: 3px solid var(--color-primary, #FF6900);
+  padding-left: 17px;
 }
 
 .sidebar-nav a svg {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
+  display: none;
 }
 
 .sidebar-account {
@@ -231,14 +219,17 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  min-width: 0;
 }
 
 .topbar-breadcrumb {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
   font-size: 13.5px;
   color: var(--text-muted, #757575);
+  white-space: nowrap;
 }
 
 .topbar-divider {
@@ -272,6 +263,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
+  flex-shrink: 0;
 }
 
 .topbar-date {
@@ -341,6 +333,26 @@
   font-weight: 700;
   border: none;
   cursor: pointer;
+}
+
+/* Thu gọn topbar đồng nhất trên mọi trang quản trị khi màn hình hẹp */
+@media (max-width: 1320px) {
+  .admin-topbar .status-badge,
+  .admin-topbar .topbar-divider {
+    display: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .admin-topbar .storefront-link {
+    display: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .admin-topbar .topbar-date {
+    display: none;
+  }
 }
 
 /* Nội dung trang (Main Content) */
