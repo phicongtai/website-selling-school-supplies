@@ -37,7 +37,7 @@
     if (document.getElementById('cartDrawerOverlay')) return;
     if (!window.StoreCart) return;
 
-    const anchors = document.querySelectorAll('a.action-btn[title="Giỏ hàng"]');
+    const anchors = document.querySelectorAll('a.action-btn[title="Giỏ hàng"], button.action-btn[title="Giỏ hàng"]');
     if (!anchors.length) return;
 
     const path = window.location.pathname.replace(/\\/g, '/');
@@ -204,3 +204,20 @@
     }
   });
 })();
+// Hàm mở giỏ hàng (Cart Drawer)
+window.openCartDrawer = function() {
+  const drawer = document.getElementById('cartDrawer') || document.querySelector('.cart-drawer');
+  if (drawer) {
+    drawer.classList.add('open'); // Hoặc class hiển thị tương ứng trong CSS của bạn
+  } else {
+    console.warn('Không tìm thấy element của Cart Drawer trên trang này.');
+  }
+};
+
+// Hàm đóng giỏ hàng
+window.closeCartDrawer = function() {
+  const drawer = document.getElementById('cartDrawer') || document.querySelector('.cart-drawer');
+  if (drawer) {
+    drawer.classList.remove('open');
+  }
+};

@@ -35,9 +35,20 @@
         <div class="store-search-hint"><a href="../homepage/main.html#view-advanced-search">Tìm kiếm nâng cao</a></div>
       </div>
       <div class="header-actions homepage-header-actions">
-        <a class="action-btn" href="../customer/cart.html" title="Giỏ hàng" aria-label="Giỏ hàng">🛒<span class="action-badge cart-count-badge">3</span></a>
-        <a class="homepage-user" href="../auth/login.html">👤<span>Tài khoản</span></a>
-      </div>
+  <button class="action-btn" onclick="openCartDrawer()" title="Giỏ hàng">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+      <circle cx="9" cy="21" r="1"></circle>
+      <circle cx="20" cy="21" r="1"></circle>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+    </svg>
+    <span class="action-badge cart-count-badge">3</span>
+  </button>
+
+  <a class="homepage-user" href="../customer/profile.html" title="Tài khoản cá nhân">
+    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Avatar">
+    <span>Nguyễn Minh Anh</span>
+  </a>
+</div>
     </div>
     <nav class="main-nav homepage-nav category-nav">
       <a class="nav-link" href="../homepage/main.html">Trang chủ</a>
