@@ -16,6 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
     to: '2026-10-10'
   };
 
+  /* Dùng chung kho đơn hàng với A10/A11 để trạng thái đơn luôn đồng bộ. */
+  const store = window.HDOrderStore || null;
+  const RANGE_KEY = 'hd_admin_customer_range';
+  const EXPANDED_KEY = 'hd_admin_customer_expanded';
+
   const CUSTOMERS = [
     {
       id: 'KH003',
@@ -172,9 +177,12 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ------------------------------------------------------------------------
      2. TRẠNG THÁI TRANG & THAM CHIẾU DOM
      ------------------------------------------------------------------------ */
+  const savedRange = readSaved(RANGE_KEY, null);
+  const isValidIsoDate = (value) => /^\d{4}-\d{2}-\d{2}$/.test(String(value || ''));
+
   const state = {
-    from: DEFAULT_RANGE.from,
-    to: DEFAULT_RANGE.to,
+    from: savedRange && isValidIsoDate(savedRange.from) ? savedRange.from : DEFAULT_RANGE.from,
+    to: savedRange && isValidIsoDate(savedRange.to) ? savedRange.to : DEFAULT_RANGE.to,
     expanded: new Set()
   };
 
@@ -183,6 +191,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const dateFromInput = $('#date-from');
   const dateToInput = $('#date-to');
+
+  /* Khôi phục khoảng ngày đã áp dụng trước đó để reload không bị mất. */
+  if (dateFromInput && state.from) dateFromInput.value = state.from;
+  if (dateToInput && state.to) dateToInput.value = state.to;
+
   const applyFilterBtn = $('#apply-filter');
   const exportExcelBtn = $('#export-excel');
   const openDataModalBtn = $('#open-data-modal');
@@ -247,6 +260,31 @@ document.addEventListener('DOMContentLoaded', () => {
     toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
   }
 
+  /* Lưu trạng thái bộ lọc / thẻ đang mở để reload giữ nguyên thay đổi. */
+  function readSaved(key, fallback) {
+    try {
+      if (store && typeof store.readState === 'function') {
+        return store.readState(key, fallback);
+      }
+      const raw = window.localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch (error) {
+      return fallback;
+    }
+  }
+
+  function writeSaved(key, value) {
+    try {
+      if (store && typeof store.writeState === 'function') {
+        store.writeState(key, value);
+        return;
+      }
+      window.localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      /* Trình duyệt chặn localStorage: bỏ qua, trang vẫn chạy bình thường. */
+    }
+  }
+
   /* ------------------------------------------------------------------------
      4. LỌC & TÍNH TOÁN DỮ LIỆU
      ------------------------------------------------------------------------ */
@@ -256,10 +294,42 @@ document.addEventListener('DOMContentLoaded', () => {
     return timestamp >= toTimestamp(state.from) && timestamp <= toTimestamp(state.to);
   }
 
+  function statusOverrides() {
+    if (!store || typeof store.getStatusOverrides !== 'function') return {};
+    return store.getStatusOverrides();
+  }
+
+  /* Đơn do A10 tạo tại quầy (hoặc đơn chưa có trong dữ liệu thống kê) thuộc
+     khách hàng đang xét và đã ở trạng thái giao thành công. */
+  function liveOrdersFor(customer, knownCodes) {
+    if (!store || typeof store.getOrders !== 'function') return [];
+    return store.getOrders()
+      .filter((order) => !knownCodes.has(order.code) && order.status === 'delivered')
+      .filter((order) => order.customerId === customer.id || order.customer === customer.name)
+      .map((order) => ({
+        code: order.code,
+        date: order.date,
+        status: order.status,
+        total: Number(order.total) || 0,
+        products: Array.isArray(order.items) && order.items.length
+          ? order.items.map((item) => ({ name: item.name, code: item.code }))
+          : [{ name: 'Đơn hàng tổng hợp tại quầy', code: 'SP00' }]
+      }));
+  }
+
   function buildRanking() {
+    const overrides = statusOverrides();
+    const knownCodes = new Set(CUSTOMERS.flatMap((customer) => customer.orders.map((order) => order.code)));
+
     return CUSTOMERS
       .map((customer) => {
-        const orders = customer.orders
+        /* Trạng thái mới nhất do A10/A11 cập nhật được ưu tiên áp dụng. */
+        const seeded = customer.orders.map((order) => ({
+          ...order,
+          status: overrides[order.code] || order.status
+        }));
+
+        const orders = [...seeded, ...liveOrdersFor(customer, knownCodes)]
           .filter((order) => order.status === 'delivered' && isInRange(order.date))
           .sort((a, b) => toTimestamp(a.date) - toTimestamp(b.date));
 
@@ -499,10 +569,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     state.from = from;
     state.to = to;
+    writeSaved(RANGE_KEY, { from, to });
 
     // Sau khi lọc, mở sẵn chi tiết của 2 khách hàng đứng đầu.
     const report = buildReport();
     state.expanded = new Set(report.visibleRanking.slice(0, 2).map((customer) => customer.id));
+    writeSaved(EXPANDED_KEY, Array.from(state.expanded));
 
     renderAll();
     showToast(`Đã áp dụng bộ lọc từ ${formatDateVN(from)} đến ${formatDateVN(to)}.`);
@@ -536,6 +608,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         state.expanded.delete(customerId);
       }
+      writeSaved(EXPANDED_KEY, Array.from(state.expanded));
 
       card.classList.toggle('is-expanded', willExpand);
       details.hidden = !willExpand;
@@ -680,12 +753,38 @@ document.addEventListener('DOMContentLoaded', () => {
   const initialReport = buildReport();
   const customerParam = new URLSearchParams(window.location.search).get('customer');
   const highlightedCustomer = initialReport.visibleRanking.find((customer) => customer.id === customerParam);
+  const savedExpanded = readSaved(EXPANDED_KEY, null);
 
-  if (highlightedCustomer) {
+  function isReloadNavigation() {
+    try {
+      const entries = window.performance && typeof performance.getEntriesByType === 'function'
+        ? performance.getEntriesByType('navigation')
+        : [];
+      const navigation = entries && entries[0];
+      if (navigation && navigation.type) return navigation.type === 'reload';
+      return !!(window.performance && performance.navigation && performance.navigation.type === 1);
+    } catch (error) {
+      return false;
+    }
+  }
+
+  if (Array.isArray(savedExpanded)) {
+    /* Giữ nguyên các thẻ khách hàng đã mở/đóng ở lần truy cập trước. */
+    state.expanded = new Set(savedExpanded.filter((id) => typeof id === 'string'));
+  } else if (highlightedCustomer) {
     state.expanded = new Set([highlightedCustomer.id]);
   } else {
     state.expanded = new Set(initialReport.visibleRanking.slice(0, 2).map((customer) => customer.id));
   }
+
+  /* Đi từ A10/A11 sang bằng link ?customer=... thì mở thẻ của khách hàng đó.
+     Khi người dùng tải lại trang (F5) thì tôn trọng trạng thái đóng/mở đã lưu
+     để thao tác thu gọn không bị mất. */
+  if (highlightedCustomer && !isReloadNavigation()) {
+    state.expanded.add(highlightedCustomer.id);
+  }
+
+  writeSaved(EXPANDED_KEY, Array.from(state.expanded));
 
   renderAll();
 
@@ -697,4 +796,38 @@ document.addEventListener('DOMContentLoaded', () => {
       window.setTimeout(() => card.classList.remove('is-highlighted'), 3200);
     }
   }
+
+  /* Quay lại trang từ A10/A11 (nút Back) thì vẽ lại theo dữ liệu mới nhất. */
+  window.addEventListener('pageshow', (event) => {
+    if (!event.persisted) return;
+    renderAll();
+  });
+
+  /* Đồng bộ khi đơn hàng được cập nhật từ tab khác (A10/A11), đồng thời giữ
+     bộ lọc và các thẻ đang mở khớp với thay đổi ở tab khác. */
+  window.addEventListener('storage', (event) => {
+    if (event.key === RANGE_KEY) {
+      const saved = readSaved(RANGE_KEY, null);
+      if (saved && isValidIsoDate(saved.from) && isValidIsoDate(saved.to)) {
+        state.from = saved.from;
+        state.to = saved.to;
+        if (dateFromInput) dateFromInput.value = saved.from;
+        if (dateToInput) dateToInput.value = saved.to;
+      }
+      renderAll();
+      return;
+    }
+
+    if (event.key === EXPANDED_KEY) {
+      const saved = readSaved(EXPANDED_KEY, null);
+      if (Array.isArray(saved)) {
+        state.expanded = new Set(saved.filter((id) => typeof id === 'string'));
+      }
+      renderAll();
+      return;
+    }
+
+    if (event.key && !['hd_admin_order_status', 'hd_admin_custom_orders', 'hd_admin_order_audit'].includes(event.key)) return;
+    renderAll();
+  });
 });

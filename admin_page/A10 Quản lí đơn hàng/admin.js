@@ -1,5 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
   const store = window.HDOrderStore;
+
+  /* ------------------------------------------------------------------
+     Khôi phục đúng dữ liệu mẫu như thiết kế khi tải lại trang.
+     - Bấm F5 / refresh  → xoá các thay đổi trạng thái, đơn tạo tại quầy,
+       nhật ký xử lý và bộ lọc để trang trở về đúng ảnh thiết kế.
+     - Đi từ A10 → A11 → A10 (hoặc từ A12) thì giữ nguyên thay đổi trong
+       phiên làm việc để các trang vẫn khớp nhau.
+     ------------------------------------------------------------------ */
+  function navigationType() {
+    try {
+      const entries = performance.getEntriesByType('navigation');
+      if (entries && entries.length && entries[0].type) return entries[0].type;
+      if (performance.navigation) {
+        const legacy = performance.navigation.type;
+        if (legacy === 1) return 'reload';
+        if (legacy === 2) return 'back_forward';
+      }
+    } catch (error) {
+      /* Bỏ qua */
+    }
+    return 'navigate';
+  }
+
+  function openedFromOrderPages() {
+    if (!document.referrer) return false;
+    try {
+      return /A1[012][^/]*\/index\.html/i.test(decodeURIComponent(document.referrer));
+    } catch (error) {
+      return false;
+    }
+  }
+
+  const shouldResetDemoData = navigationType() === 'reload' || !openedFromOrderPages();
+
+  if (store && typeof store.resetOrders === 'function' && shouldResetDemoData) {
+    store.resetOrders();
+    if (typeof store.removeState === 'function') store.removeState('hd_admin_order_filters');
+  }
+
   let orders = store.getOrders();
   const labels = store.STATUS_LABELS;
   const tbody = document.getElementById('orders-tbody');
@@ -14,11 +53,28 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeTab = 'all';
   let toastTimer;
 
+  function setActiveTab(tabName) {
+    activeTab = ['all', 'pending', 'processing', 'finished'].includes(tabName) ? tabName : 'all';
+    document.querySelectorAll('.order-tab').forEach((tab) => {
+      const selected = tab.dataset.tab === activeTab;
+      tab.classList.toggle('active', selected);
+      tab.setAttribute('aria-selected', String(selected));
+    });
+  }
+
   const escapeHTML = (value) => String(value).replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
   const formatMoney = (amount) => `${new Intl.NumberFormat('vi-VN').format(amount)}đ`;
   const formatDate = (date) => {
     const parts = String(date).split('-');
     return parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : date;
+  };
+
+  /* Biểu tượng nhỏ đi kèm nhãn trạng thái, giống các pill trong thiết kế. */
+  const STATUS_ICONS = {
+    pending: '<svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.5v2.8l1.8 1.1"/></svg>',
+    confirmed: '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.4h8v5.3H2z"/><path d="M1.3 2.5h9.4v1.9H1.3z"/><path d="M4.8 7.7h2.4"/></svg>',
+    delivered: '<svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="m3.9 6.2 1.5 1.5 2.8-3"/></svg>',
+    cancelled: '<svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="m4.3 4.3 3.4 3.4m0-3.4L4.3 7.7"/></svg>'
   };
 
   function showToast(message) {
@@ -70,12 +126,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (['delivered', 'cancelled'].includes(order.status)) {
       return `<button class="order-action-toggle is-locked" type="button" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.2" y="7" width="9.6" height="6.6" rx="1.4"/><path d="M5.4 7V5.2a2.6 2.6 0 0 1 5.2 0V7"/></svg><span>${order.status === 'delivered' ? 'Đã hoàn tất' : 'Đơn đã huỷ'}</span></button>`;
     }
-    const nextLabel = order.status === 'pending' ? 'Xác nhận đơn hàng' : 'Đã giao – Thành công';
-    return `<button class="order-action-toggle" type="button" data-action-toggle="${order.code}" aria-expanded="false"><span>${order.status === 'pending' ? 'Chưa duyệt' : 'Chuyển: Đã giao'}</span><span aria-hidden="true">⌄</span></button>
+    const isPending = order.status === 'pending';
+    const toggleLabel = isPending ? 'Chưa xác nhận' : 'Chuyển: Đã giao';
+    const nextLabel = isPending ? 'Đã xác nhận' : 'Đã giao – Thành công';
+    return `<button class="order-action-toggle" type="button" data-action-toggle="${order.code}" aria-expanded="false" aria-haspopup="true"><span>${toggleLabel}</span><span class="order-action-caret" aria-hidden="true">⌄</span></button>
       <div class="order-action-menu" data-action-menu="${order.code}" hidden>
-        <button class="order-action-option" type="button" data-next-status="${order.code}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.2 8.2 1.9 1.9 3.7-4"/></svg>${escapeHTML(nextLabel)}</button>
-        <button class="order-action-option cancel" type="button" data-cancel-order="${order.code}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.8 5.8 4.4 4.4m0-4.4-4.4 4.4"/></svg>Huỷ đơn hàng</button>
+        <button class="order-action-option deliver" type="button" data-next-status="${order.code}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.2 8.2 1.9 1.9 3.7-4"/></svg>${escapeHTML(nextLabel)}</button>
+        <button class="order-action-option cancel" type="button" data-cancel-order="${order.code}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.8 5.8 4.4 4.4m0-4.4-4.4 4.4"/></svg>Đã huỷ</button>
       </div>`;
+  }
+
+  function statusMarkup(order) {
+    const icon = STATUS_ICONS[order.status] || '';
+    return `<span class="order-status ${order.status}">${icon}${labels[order.status]}</span>`;
   }
 
   function renderOrders() {
@@ -87,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         : `<span class="order-customer">${escapeHTML(order.customer)}</span>`}</td>
       <td><span class="order-date">${formatDate(order.date)}</span></td><td>${escapeHTML(order.address)}</td>
       <td><span class="order-total">${formatMoney(order.total)}</span></td>
-      <td><span class="order-status ${order.status}">${labels[order.status]}</span></td>
+      <td>${statusMarkup(order)}</td>
       <td><div class="order-action-wrap">${actionMarkup(order)}</div></td></tr>`).join('')
       : '<tr><td class="orders-empty" colspan="7">Không tìm thấy đơn hàng phù hợp.</td></tr>';
     paginationInfo.textContent = `Hiển thị ${filtered.length ? `1–${filtered.length}` : '0'} trên tổng số ${filtered.length} đơn hàng`;
@@ -95,13 +158,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function render() { updateCounts(); renderOrders(); }
 
+  function closeActionMenus() {
+    tbody.querySelectorAll('.order-action-menu').forEach((menu) => { menu.hidden = true; });
+    tbody.querySelectorAll('[data-action-toggle]').forEach((toggle) => toggle.setAttribute('aria-expanded', 'false'));
+  }
+
   document.querySelectorAll('.order-tab').forEach((tab) => tab.addEventListener('click', () => {
-    activeTab = tab.dataset.tab;
-    document.querySelectorAll('.order-tab').forEach((item) => {
-      const selected = item === tab;
-      item.classList.toggle('active', selected);
-      item.setAttribute('aria-selected', String(selected));
-    });
+    setActiveTab(tab.dataset.tab);
     renderOrders();
   }));
 
@@ -109,13 +172,11 @@ document.addEventListener('DOMContentLoaded', () => {
   [statusFilter, dateFrom, dateTo, locationFilter].forEach((control) => control.addEventListener('change', renderOrders));
   searchInput.addEventListener('input', renderOrders);
   document.getElementById('reset-filters').addEventListener('click', () => {
-    statusFilter.value = 'all'; dateFrom.value = ''; dateTo.value = '';
-    locationFilter.value = 'all'; searchInput.value = ''; activeTab = 'all';
-    document.querySelectorAll('.order-tab').forEach((tab) => {
-      const selected = tab.dataset.tab === 'all';
-      tab.classList.toggle('active', selected); tab.setAttribute('aria-selected', String(selected));
-    });
+    statusFilter.value = 'all'; dateFrom.value = '2026-10-01'; dateTo.value = '2026-10-10';
+    locationFilter.value = 'all'; searchInput.value = ''; setActiveTab('all');
+    closeActionMenus();
     renderOrders();
+    showToast('Đã khôi phục bộ lọc mặc định.');
   });
 
   tbody.addEventListener('click', (event) => {
@@ -124,25 +185,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancel = event.target.closest('[data-cancel-order]');
     if (toggle) {
       const menu = tbody.querySelector(`[data-action-menu="${toggle.dataset.actionToggle}"]`);
+      if (!menu) return;
       const willOpen = menu.hidden;
-      tbody.querySelectorAll('.order-action-menu').forEach((item) => { item.hidden = true; });
-      tbody.querySelectorAll('[data-action-toggle]').forEach((item) => item.setAttribute('aria-expanded', 'false'));
-      menu.hidden = !willOpen; toggle.setAttribute('aria-expanded', String(willOpen)); return;
+      closeActionMenus();
+      menu.hidden = !willOpen;
+      toggle.setAttribute('aria-expanded', String(willOpen));
+      return;
     }
     if (!next && !cancel) return;
     const code = next ? next.dataset.nextStatus : cancel.dataset.cancelOrder;
     const order = orders.find((item) => item.code === code);
     if (!order) return;
-    if (next && order.status === 'pending') { order.status = 'confirmed'; store.updateStatus(code, order.status); showToast(`Đơn ${code} đã được xác nhận.`); }
-    else if (next && order.status === 'confirmed') { order.status = 'delivered'; store.updateStatus(code, order.status); showToast(`Đơn ${code} đã được giao thành công.`); }
-    else if (cancel && ['pending', 'confirmed'].includes(order.status)) { order.status = 'cancelled'; store.updateStatus(code, order.status); showToast(`Đơn ${code} đã được huỷ.`); }
+    if (next && order.status === 'pending') {
+      order.status = 'confirmed';
+      store.updateStatus(code, order.status);
+      showToast(`Đơn ${code} đã được xác nhận.`);
+    } else if (next && order.status === 'confirmed') {
+      order.status = 'delivered';
+      store.updateStatus(code, order.status);
+      showToast(`Đơn ${code} đã được giao thành công.`);
+    } else if (cancel && ['pending', 'confirmed'].includes(order.status)) {
+      order.status = 'cancelled';
+      store.updateStatus(code, order.status);
+      showToast(`Đơn ${code} đã được huỷ.`);
+    }
     render();
   });
 
   document.addEventListener('click', (event) => {
     if (event.target.closest('.order-action-wrap')) return;
-    tbody.querySelectorAll('.order-action-menu').forEach((menu) => { menu.hidden = true; });
-    tbody.querySelectorAll('[data-action-toggle]').forEach((toggle) => toggle.setAttribute('aria-expanded', 'false'));
+    closeActionMenus();
   });
 
   function openModal() { modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); form.elements.customer.focus(); }
@@ -151,7 +223,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('close-order-modal').addEventListener('click', closeModal);
   document.getElementById('cancel-order-modal').addEventListener('click', closeModal);
   modal.addEventListener('click', (event) => { if (event.target === modal) closeModal(); });
-  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      if (modal.classList.contains('open')) closeModal();
+      closeActionMenus();
+    }
+  });
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -172,10 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
       items: []
     });
     orders = store.getOrders();
-    dateFrom.value = ''; dateTo.value = ''; statusFilter.value = 'all'; locationFilter.value = 'all'; searchInput.value = ''; activeTab = 'all';
-    document.querySelectorAll('.order-tab').forEach((tab) => {
-      const selected = tab.dataset.tab === 'all'; tab.classList.toggle('active', selected); tab.setAttribute('aria-selected', String(selected));
-    });
+    dateFrom.value = ''; dateTo.value = ''; statusFilter.value = 'all'; locationFilter.value = 'all'; searchInput.value = ''; setActiveTab('all');
     closeModal(); render(); showToast('Đơn hàng mới đã được tạo và đang chờ xác nhận.');
   });
 
@@ -189,7 +263,9 @@ document.addEventListener('DOMContentLoaded', () => {
     link.click(); URL.revokeObjectURL(url); showToast(`Đã xuất ${rows.length} đơn hàng ra file CSV.`);
   });
 
-  const loggedInUser = sessionStorage.getItem('hd_admin_user');
+  const loggedInUser = (() => {
+    try { return sessionStorage.getItem('hd_admin_user'); } catch (error) { return null; }
+  })();
   if (loggedInUser) document.getElementById('sidebar-user-name').textContent = loggedInUser;
   document.getElementById('current-date-text').textContent = `Hôm nay, ${new Intl.DateTimeFormat('vi-VN').format(new Date())}`;
 
@@ -201,6 +277,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Khi quay lại từ trang A11 bằng nút Back, đồng bộ lại trạng thái mới nhất.
   window.addEventListener('pageshow', (event) => {
     if (!event.persisted) return;
+    orders = store.getOrders();
+    render();
+  });
+
+  /* Đồng bộ khi A10/A11/A12 được mở ở nhiều tab: tab này cập nhật ngay khi
+     tab khác thay đổi trạng thái hoặc tạo đơn mới. */
+  window.addEventListener('storage', (event) => {
+    if (event.key && !['hd_admin_order_status', 'hd_admin_custom_orders', 'hd_admin_order_audit'].includes(event.key)) return;
     orders = store.getOrders();
     render();
   });

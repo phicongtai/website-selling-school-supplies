@@ -3,14 +3,17 @@
    A10 (Quản lí đơn hàng) · A11 (Chi tiết đơn hàng) · A12 (Thống kê khách hàng)
    --------------------------------------------------------------------------
    - Dữ liệu mẫu dùng chung để các trang luôn hiển thị thống nhất.
-   - Trạng thái đơn và các đơn tạo tại quầy được lưu trong sessionStorage,
-     nhờ đó A10 → A11 → A12 giữ được cùng một nguồn dữ liệu khi điều hướng.
+   - Trạng thái đơn, các đơn tạo tại quầy và nhật ký xử lý được lưu trong
+     localStorage nên A10 → A11 → A12 luôn dùng chung một nguồn dữ liệu.
+   - Riêng trang A10 xoá các thay đổi khi tải lại trang (F5) để luôn hiển
+     thị đúng bộ dữ liệu mẫu như thiết kế.
    ========================================================================== */
 (function () {
   'use strict';
 
   const STATUS_KEY = 'hd_admin_order_status';
   const CUSTOM_ORDERS_KEY = 'hd_admin_custom_orders';
+  const AUDIT_KEY = 'hd_admin_order_audit';
 
   const STATUS_LABELS = {
     pending: 'Chưa xác nhận',
@@ -185,9 +188,161 @@
   /* ------------------------------------------------------------------ */
   /* Tiện ích lưu trữ                                                   */
   /* ------------------------------------------------------------------ */
+  /* Dữ liệu đơn hàng cần tồn tại sau khi tải lại trang và sau khi đóng
+     tab, nên ưu tiên localStorage. sessionStorage chỉ là phương án dự
+     phòng cho trình duyệt chặn localStorage; cuối cùng là bộ nhớ tạm. */
+  const memoryStore = new Map();
+
+  function localStore() {
+    try {
+      return window.localStorage;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function sessionStore() {
+    try {
+      return window.sessionStorage;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function safeGet(storage, key) {
+    try {
+      return storage ? storage.getItem(key) : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function safeSet(storage, key, value) {
+    try {
+      if (!storage) return false;
+      storage.setItem(key, value);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /* ------------------------------------------------------------------
+     Lớp dự phòng theo TAB.
+     Một số môi trường xem trước (iframe sandbox, chế độ riêng tư, công cụ
+     preview…) chặn hoặc xoá localStorage/sessionStorage sau mỗi lần tải lại.
+     Khi đó window.name và history.state vẫn tồn tại theo tab, nên dùng chúng
+     làm nơi lưu cuối cùng để thao tác (huỷ đơn, đổi trạng thái, bộ lọc…)
+     không bị mất khi refresh.
+     ------------------------------------------------------------------ */
+  const TAB_STATE_PREFIX = 'hd-admin-state:';
+
+  function readTabState() {
+    try {
+      const name = String(window.name || '');
+      if (name.indexOf(TAB_STATE_PREFIX) === 0) {
+        const value = JSON.parse(name.slice(TAB_STATE_PREFIX.length));
+        if (value && typeof value === 'object' && !Array.isArray(value)) return value;
+      }
+    } catch (error) {
+      /* Bỏ qua */
+    }
+
+    try {
+      const state = window.history && window.history.state;
+      if (state && typeof state === 'object' && state.__hdAdminState && typeof state.__hdAdminState === 'object') {
+        return state.__hdAdminState;
+      }
+    } catch (error) {
+      /* Bỏ qua */
+    }
+
+    return null;
+  }
+
+  function writeTabState(key, value) {
+    const current = readTabState() || {};
+    current[key] = value;
+
+    try {
+      const name = String(window.name || '');
+      /* Không ghi đè window.name nếu trang chủ nhúng đang dùng nó cho việc khác. */
+      if (!name || name.indexOf(TAB_STATE_PREFIX) === 0) {
+        window.name = TAB_STATE_PREFIX + JSON.stringify(current);
+      }
+    } catch (error) {
+      /* Bỏ qua */
+    }
+
+    try {
+      if (window.history && typeof window.history.replaceState === 'function') {
+        window.history.replaceState({ ...(window.history.state || {}), __hdAdminState: current }, '');
+      }
+    } catch (error) {
+      /* Bỏ qua */
+    }
+  }
+
+  function removeTabState(key) {
+    const current = readTabState();
+    if (!current || !(key in current)) return;
+    delete current[key];
+
+    try {
+      const name = String(window.name || '');
+      if (name.indexOf(TAB_STATE_PREFIX) === 0) {
+        window.name = TAB_STATE_PREFIX + JSON.stringify(current);
+      }
+    } catch (error) {
+      /* Bỏ qua */
+    }
+
+    try {
+      if (window.history && typeof window.history.replaceState === 'function') {
+        window.history.replaceState({ ...(window.history.state || {}), __hdAdminState: current }, '');
+      }
+    } catch (error) {
+      /* Bỏ qua */
+    }
+  }
+
+  function readRaw(key) {
+    const stored = safeGet(localStore(), key);
+    if (stored !== null) return stored;
+
+    /* Chuyển dữ liệu cũ (trước đây lưu trong sessionStorage) sang
+       localStorage để người dùng không bị mất trạng thái đang có. */
+    const legacy = safeGet(sessionStore(), key);
+    if (legacy !== null) {
+      if (safeSet(localStore(), key, legacy)) {
+        try {
+          sessionStore().removeItem(key);
+        } catch (error) {
+          /* Bỏ qua */
+        }
+      }
+      return legacy;
+    }
+
+    /* localStorage/sessionStorage trống (bị chặn hoặc bị xoá khi refresh):
+       lấy lại bản sao lưu theo tab. */
+    const tabState = readTabState();
+    if (tabState && typeof tabState[key] === 'string') return tabState[key];
+
+    return memoryStore.has(key) ? memoryStore.get(key) : null;
+  }
+
+  function writeRaw(key, value) {
+    safeSet(localStore(), key, value);
+    safeSet(sessionStore(), key, value);
+    memoryStore.set(key, value);
+    /* Luôn sao lưu theo tab để refresh vẫn còn dữ liệu ở mọi môi trường. */
+    writeTabState(key, value);
+  }
+
   function readJSON(key, fallback) {
     try {
-      const raw = sessionStorage.getItem(key);
+      const raw = readRaw(key);
       return raw ? JSON.parse(raw) : fallback;
     } catch (error) {
       return fallback;
@@ -195,21 +350,60 @@
   }
 
   function writeJSON(key, value) {
+    writeRaw(key, JSON.stringify(value));
+  }
+
+  /* Trạng thái giao diện (bộ lọc, tab, thẻ đang mở, bản nháp…) cũng dùng
+     chung cơ chế lưu trữ an toàn: localStorage → sessionStorage → bộ nhớ tạm.
+     Nhờ vậy các trang A10/A11/A12 giữ nguyên lựa chọn của người dùng sau khi
+     tải lại trang (F5) kể cả khi trình duyệt chặn localStorage. */
+  function readState(key, fallback) {
     try {
-      sessionStorage.setItem(key, JSON.stringify(value));
+      const raw = readRaw(key);
+      return raw ? JSON.parse(raw) : fallback;
     } catch (error) {
-      /* Bỏ qua khi trình duyệt chặn sessionStorage (chế độ riêng tư). */
+      return fallback;
     }
+  }
+
+  function writeState(key, value) {
+    writeRaw(key, JSON.stringify(value));
+  }
+
+  function removeState(key) {
+    const storages = [localStore(), sessionStore()];
+    storages.forEach((storage) => {
+      try {
+        if (storage) storage.removeItem(key);
+      } catch (error) {
+        /* Bỏ qua */
+      }
+    });
+    memoryStore.delete(key);
+    removeTabState(key);
+  }
+
+  /* Xoá mọi thay đổi đã lưu (trạng thái, đơn tạo tại quầy, nhật ký xử lý)
+     để trang quản trị trở về đúng bộ dữ liệu mẫu của thiết kế. */
+  function resetOrders() {
+    removeState(STATUS_KEY);
+    removeState(CUSTOM_ORDERS_KEY);
+    removeState(AUDIT_KEY);
   }
 
   function statusOverrides() {
     const value = readJSON(STATUS_KEY, {});
-    return value && typeof value === 'object' ? value : {};
+    return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
   }
 
   function customOrders() {
     const value = readJSON(CUSTOM_ORDERS_KEY, []);
     return Array.isArray(value) ? value : [];
+  }
+
+  function auditLog() {
+    const value = readJSON(AUDIT_KEY, {});
+    return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
   }
 
   /* ------------------------------------------------------------------ */
@@ -246,7 +440,7 @@
     return `DH${(numbers.length ? Math.max(...numbers) : 1000) + 1}`;
   }
 
-  function updateStatus(code, status) {
+  function updateStatus(code, status, note) {
     if (!code || !STATUS_LABELS[status]) return false;
     const overrides = statusOverrides();
     overrides[code] = status;
@@ -258,7 +452,31 @@
       custom.status = status;
       writeJSON(CUSTOM_ORDERS_KEY, orders);
     }
+
+    const log = auditLog();
+    const entries = Array.isArray(log[code]) ? log[code] : [];
+    const now = new Date();
+    const pad = (value) => String(value).padStart(2, '0');
+    entries.push({
+      status,
+      at: now.toISOString(),
+      time: `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()} · ${pad(now.getHours())}:${pad(now.getMinutes())}`,
+      note: String(note || '').trim()
+    });
+    log[code] = entries;
+    writeJSON(AUDIT_KEY, log);
+
     return true;
+  }
+
+  function getAuditEntries(code) {
+    if (!code) return [];
+    const entries = auditLog()[code];
+    return Array.isArray(entries) ? entries : [];
+  }
+
+  function getStatusOverrides() {
+    return { ...statusOverrides() };
   }
 
   function addOrder(order) {
@@ -295,7 +513,13 @@
     getOrder,
     nextCode,
     updateStatus,
+    getAuditEntries,
+    getStatusOverrides,
+    resetOrders,
     addOrder,
+    readState,
+    writeState,
+    removeState,
     formatMoney,
     formatDateVN
   };

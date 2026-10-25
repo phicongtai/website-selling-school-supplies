@@ -13,6 +13,44 @@ document.addEventListener('DOMContentLoaded', () => {
      1. DỮ LIỆU ĐƠN HÀNG & TỪ ĐIỂN TRẠNG THÁI
      ------------------------------------------------------------------------ */
   const store = window.HDOrderStore;
+
+  /* ------------------------------------------------------------------------
+     0. KHÔI PHỤC DỮ LIỆU MẪU KHI TẢI LẠI TRANG
+     ------------------------------------------------------------------------
+     - Bấm F5/refresh: xoá các thay đổi trạng thái đã lưu để tiến trình xử lý
+       và nhật ký trở về đúng như thiết kế.
+     - Đi từ A10 (hoặc A12) sang: giữ nguyên trạng thái vừa cập nhật để các
+       trang quản trị luôn khớp nhau.
+     ------------------------------------------------------------------------ */
+  function navigationType() {
+    try {
+      const entries = performance.getEntriesByType('navigation');
+      if (entries && entries.length && entries[0].type) return entries[0].type;
+      if (performance.navigation) {
+        const legacy = performance.navigation.type;
+        if (legacy === 1) return 'reload';
+        if (legacy === 2) return 'back_forward';
+      }
+    } catch (error) {
+      /* Bỏ qua */
+    }
+    return 'navigate';
+  }
+
+  function openedFromOrderPages() {
+    if (!document.referrer) return false;
+    try {
+      return /A1[012][^/]*\/index\.html/i.test(decodeURIComponent(document.referrer));
+    } catch (error) {
+      return false;
+    }
+  }
+
+  if (store && typeof store.resetOrders === 'function'
+    && (navigationType() === 'reload' || !openedFromOrderPages())) {
+    store.resetOrders();
+  }
+
   const params = new URLSearchParams(window.location.search);
   const requestedCode = params.get('order');
   let order = store.getOrder(requestedCode) || store.getOrder('DH1003') || store.getOrders()[0];
@@ -38,6 +76,14 @@ document.addEventListener('DOMContentLoaded', () => {
       badge: 'cancelled',
       dot: 'is-red'
     }
+  };
+
+  /* Biểu tượng nhỏ trong badge trạng thái (giống thiết kế). */
+  const STATUS_ICONS = {
+    pending: '<svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.5v2.8l1.8 1.1"/></svg>',
+    confirmed: '<svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.5v2.8l1.8 1.1"/></svg>',
+    delivered: '<svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="m3.9 6.2 1.5 1.5 2.8-3"/></svg>',
+    cancelled: '<svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="m4.3 4.3 3.4 3.4m0-3.4L4.3 7.7"/></svg>'
   };
 
   /* Luồng trạng thái một chiều: Chưa xác nhận → Đã xác nhận → Đã giao / Huỷ */
@@ -301,6 +347,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (statusBadge) {
       statusBadge.classList.remove('pending', 'confirmed', 'delivered', 'cancelled');
       statusBadge.classList.add(meta.badge);
+
+      const icon = $('[data-status-icon]', statusBadge);
+      if (icon) icon.innerHTML = STATUS_ICONS[order.status] || '';
     }
   }
 
@@ -439,26 +488,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const createdAt = createdLabel();
     const entries = [auditMarkup(createdAt, 'pending', '', true)];
+    const history = typeof store.getAuditEntries === 'function'
+      ? store.getAuditEntries(order.code)
+      : [];
 
-    if (order.status === 'confirmed' || order.status === 'delivered') {
-      entries.push(auditMarkup(timeAfter(createdAt, 145), 'confirmed', '', false));
-    }
-    if (order.status === 'delivered') {
-      entries.push(auditMarkup(timeAfter(createdAt, 1585), 'delivered', '', false));
-    }
-    if (order.status === 'cancelled') {
-      entries.push(auditMarkup(timeAfter(createdAt, 145), 'cancelled', 'Khách hàng yêu cầu huỷ đơn và hoàn tồn kho.', false));
+    if (history.length) {
+      /* Đã có thao tác thật của quản trị viên: hiển thị đúng lịch sử đã lưu
+         (kể cả ghi chú xử lý) để reload không bị mất. */
+      history.forEach((entry) => {
+        entries.push(auditMarkup(entry.time, entry.status, entry.note, false));
+      });
+    } else {
+      if (order.status === 'confirmed' || order.status === 'delivered') {
+        entries.push(auditMarkup(timeAfter(createdAt, 145), 'confirmed', '', false));
+      }
+      if (order.status === 'delivered') {
+        entries.push(auditMarkup(timeAfter(createdAt, 1585), 'delivered', '', false));
+      }
+      if (order.status === 'cancelled') {
+        entries.push(auditMarkup(timeAfter(createdAt, 145), 'cancelled', 'Khách hàng yêu cầu huỷ đơn và hoàn tồn kho.', false));
+      }
     }
 
     auditList.innerHTML = entries.join('');
-  }
-
-  function addAuditEntry(nextStatus, note) {
-    if (!auditList) return;
-    const now = new Date();
-    const pad = (value) => String(value).padStart(2, '0');
-    const time = `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()} · ${pad(now.getHours())}:${pad(now.getMinutes())}`;
-    auditList.insertAdjacentHTML('beforeend', auditMarkup(time, nextStatus, note, false));
   }
 
   /* ------------------------------------------------------------------------
@@ -499,9 +551,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     order.status = nextStatus;
-    store.updateStatus(order.code, nextStatus);
+    store.updateStatus(order.code, nextStatus, note);
     renderAll();
-    addAuditEntry(nextStatus, note);
+    renderAuditLog();
     showToast(`Đơn hàng ${order.code} đã chuyển sang: ${STATUS[nextStatus].label}.`);
     return true;
   }
@@ -582,6 +634,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('pageshow', (event) => {
     if (!event.persisted) return;
+    const refreshed = store.getOrder(order.code);
+    if (!refreshed) return;
+    order = refreshed;
+    renderHeader();
+    renderProducts();
+    renderAll();
+    renderAuditLog();
+  });
+
+  /* Đồng bộ trạng thái khi đơn hàng được cập nhật từ tab khác (A10/A12). */
+  window.addEventListener('storage', (event) => {
+    if (event.key && !['hd_admin_order_status', 'hd_admin_custom_orders', 'hd_admin_order_audit'].includes(event.key)) return;
     const refreshed = store.getOrder(order.code);
     if (!refreshed) return;
     order = refreshed;
