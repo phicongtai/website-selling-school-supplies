@@ -184,26 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  window.showHomeCategory = category => {
-    if (!window.StoreCatalog.categories[category]) return;
-
-    getCategoryCheckboxes().forEach(checkbox => {
-      checkbox.checked = checkbox.dataset.category === category;
-    });
-    document.querySelectorAll('.filter-offers input[type="checkbox"]').forEach(checkbox => {
-      checkbox.checked = false;
-    });
-    const minInput = document.getElementById('filterMinPrice');
-    const maxInput = document.getElementById('filterMaxPrice');
-    const sortSelect = document.getElementById('categorySortSelect');
-    if (minInput) minInput.value = '';
-    if (maxInput) maxInput.value = '';
-    if (sortSelect) sortSelect.value = 'default';
-
-    navigateToView('view-category');
-    window.filterCategoryProducts();
-  };
-
   window.resetHomeFilters = () => {
     getCategoryCheckboxes().forEach(checkbox => { checkbox.checked = false; });
     document.querySelectorAll('.filter-offers input[type="checkbox"]').forEach(checkbox => {

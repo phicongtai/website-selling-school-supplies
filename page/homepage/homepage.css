@@ -224,8 +224,9 @@ button { cursor: pointer; }
 .hero-image-card img { width: 100%; height: 380px; object-fit: cover; }
 
 /* Quick Categories */
-.category-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-top: 20px; }
+.category-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 16px; margin-top: 20px; }
 .category-card {
+  display: block; color: inherit; text-decoration: none;
   background: white; border: 1px solid var(--border-light); border-radius: var(--radius-lg);
   padding: 16px; text-align: center; cursor: pointer; transition: all var(--transition-fast);
 }
