@@ -1110,3 +1110,73 @@ h6, .h6 {
 .bg-surface  { background-color: var(--bg-surface); }
 .bg-primary  { background-color: var(--color-primary); }
 .bg-secondary{ background-color: var(--color-secondary); }
+
+
+/* ==========================================================================
+   GLOBAL FIX: TOPBAR AVATAR & BRAND LOGO PROTECTION
+   Ngăn chặn avatar chữ A và logo bị co rúm, méo mó khi thu nhỏ màn hình hoặc zoom
+   ========================================================================== */
+.topbar-avatar-btn,
+.topbar-avatar,
+.account-avatar {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  flex: 0 0 36px !important;
+  flex-shrink: 0 !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  line-height: 1 !important;
+  user-select: none !important;
+}
+
+.brand-mark {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  flex: 0 0 36px !important;
+  flex-shrink: 0 !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  user-select: none !important;
+}
+
+.topbar-right {
+  display: flex !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+}
+
+@media (max-width: 860px) {
+  .topbar-date {
+    display: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .storefront-link span {
+    display: none !important;
+  }
+  .storefront-link {
+    padding: 6px !important;
+  }
+  .topbar-right {
+    gap: 8px !important;
+  }
+}

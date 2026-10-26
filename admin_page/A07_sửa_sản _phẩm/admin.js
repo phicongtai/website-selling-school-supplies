@@ -1,44 +1,157 @@
 /**
- * ==========================================================================
- * A07: SỬA SẢN PHẨM (PRODUCT EDITOR CONTROLLER)
- * Dự án: Web Bán Đồ Dùng Học Tập - Học Đường Store
- * --------------------------------------------------------------------------
- * Cơ chế dữ liệu (đồng bộ với A02 - Quản lý người dùng):
- *  - Dữ liệu gốc SP17 được khai báo cố định trong JS (DEFAULT_PRODUCT).
- *  - Khi sửa và bấm "Lưu thay đổi", dữ liệu được lưu tạm vào sessionStorage
- *    để giữ nguyên khi chuyển trang trong cùng phiên làm việc.
- *  - Khi người dùng nhấn Refresh (F5), dữ liệu tạm bị xoá và giao diện quay
- *    về đúng trạng thái ban đầu như bản thiết kế.
- * ==========================================================================
+ * ============================================================================
+ * TRANG QUẢN TRỊ A07: SỬA SẢN PHẨM (EDIT PRODUCT CONTROLLER)
+ * Học Đường Store - Quản lý Danh mục & Kho hàng
+ * Thiết kế chuẩn Figma: Frame 1:7230 (1280 x 1498)
+ * Tái sử dụng bộ lưu trữ & Đồng bộ dữ liệu liền mạch với A05 & A06
+ * ============================================================================
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  'use strict';
 
-  const STORAGE_KEY = 'hd_temp_products';
-  const PRODUCT_CODE = 'SP17';
+  // 1. DỮ LIỆU GỐC DỰ PHÒNG (ĐỒNG BỘ VỚI A05 & A06)
+  const DEFAULT_PRODUCTS = [
+    {
+      code: 'SP01',
+      name: 'Set 10 Bút Gel Morandi Vintage Tone Pastel 0.5mm',
+      category: 'Bút viết',
+      price: 65000,
+      status: 'active',
+      sold: 342,
+      stock: 450,
+      ordersCount: 42,
+      image: '../../assets/img/product-1.jpg',
+      iconType: 'pen',
+      sku: 'HD-PEN-001',
+      description: 'Set 10 bút gel màu Morandi cao cấp ngòi 0.5mm êm mượt, mực nhanh khô chống lem, thiết kế thân nhám cầm êm tay.',
+      brand: 'Morandi Stationery',
+      unit: 'Hộp / Set',
+      grades: ['Tiểu học', 'THCS', 'THPT', 'Đại học']
+    },
+    {
+      code: 'SP02',
+      name: 'Bút Máy Pilot Kakuno Ngòi F Nhật Bản',
+      category: 'Bút viết',
+      price: 195000,
+      status: 'active',
+      sold: 156,
+      stock: 120,
+      ordersCount: 28,
+      image: '../../assets/img/product-2.jpg',
+      iconType: 'pen',
+      sku: 'HD-PEN-002',
+      description: 'Bút máy chính hãng Pilot Kakuno ngòi thép không gỉ cỡ F, thân bút công thái học hỗ trợ định hình tay cầm bút chuẩn.',
+      brand: 'Pilot Pen Japan',
+      unit: 'Cây / Chiếc',
+      grades: ['Tiểu học', 'THCS']
+    },
+    {
+      code: 'SP03',
+      name: 'Sổ Còng Binder A5 Bìa Da Pastel Kèm Ruột Caro',
+      category: 'Sổ & vở',
+      price: 89000,
+      status: 'active',
+      sold: 240,
+      stock: 200,
+      ordersCount: 35,
+      image: '../../assets/img/product-3.jpg',
+      iconType: 'book',
+      sku: 'HD-BOOK-003',
+      description: 'Sổ còng sắt 6 lỗ bìa da mềm cao cấp kích thước A5, đi kèm 80 tờ ruột ô vuông Caro 100gsm chống thấm.',
+      brand: 'Klong',
+      unit: 'Quyển / Tập',
+      grades: ['THCS', 'THPT', 'Đại học']
+    },
+    {
+      code: 'SP04',
+      name: 'Vở Kẻ Ngang B5 Klong 120 Trang Giấy Dày Chống Lem',
+      category: 'Sổ & vở',
+      price: 28000,
+      status: 'active',
+      sold: 480,
+      stock: 350,
+      ordersCount: 62,
+      image: '../../assets/img/product-3.jpg',
+      iconType: 'book',
+      sku: 'HD-BOOK-004',
+      description: 'Vở B5 kẻ ngang 120 trang giấy định lượng 100gsm không lem khi viết bút máy hay bút dạ highlight.',
+      brand: 'Klong',
+      unit: 'Quyển / Tập',
+      grades: ['Tiểu học', 'THCS', 'THPT']
+    },
+    {
+      code: 'SP05',
+      name: 'Balo Chống Gù Lưng Học Sinh Công Thái Học',
+      category: 'Cặp & balo',
+      price: 389000,
+      status: 'active',
+      sold: 65,
+      stock: 45,
+      ordersCount: 19,
+      image: '../../assets/img/product-4.jpg',
+      iconType: 'backpack',
+      sku: 'HD-BAG-005',
+      description: 'Balo chống gù lưng công thái học cho học sinh, đệm lưng lưới tổ ong thoáng khí trợ lực cột sống, vải polyester trượt nước.',
+      brand: 'Học Đường Ergonomics',
+      unit: 'Cái',
+      grades: ['Tiểu học', 'THCS']
+    },
+    {
+      code: 'SP06',
+      name: 'Balo Đi Học Canvas Hàn Quốc Trơn Unisex',
+      category: 'Cặp & balo',
+      price: 215000,
+      status: 'active',
+      sold: 98,
+      stock: 80,
+      ordersCount: 24,
+      image: '../../assets/img/product-5.jpg',
+      iconType: 'backpack',
+      sku: 'HD-BAG-006',
+      description: 'Balo canvas Hàn Quốc phong cách tối giản, ngăn chống sốc laptop 15.6 inch, quai đeo êm ái chống mỏi.',
+      brand: 'Korean Style',
+      unit: 'Cái',
+      grades: ['THPT', 'Đại học']
+    },
+    {
+      code: 'SP07',
+      name: 'Hộp Bút Vải Canvas Mở Rộng 3 Tầng Ngăn Lớn',
+      category: 'Hộp bút',
+      price: 58000,
+      status: 'active',
+      sold: 175,
+      stock: 110,
+      ordersCount: 31,
+      image: '../../assets/img/product-6.jpg',
+      iconType: 'palette',
+      sku: 'HD-CASE-007',
+      description: 'Hộp bút vải canvas dung lượng lớn 3 ngăn khóa kéo riêng biệt, chứa được hơn 50 bút viết và máy tính cầm tay.',
+      brand: 'Deli',
+      unit: 'Cái',
+      grades: ['Tiểu học', 'THCS', 'THPT', 'Đại học']
+    },
+    {
+      code: 'SP08',
+      name: 'Bộ Màu Nước 36 Màu Kèm Cọ Bút Nước & Khay Pha Hộp Thiếc',
+      category: 'Dụng cụ mỹ thuật',
+      price: 175000,
+      status: 'active',
+      sold: 0,
+      stock: 60,
+      ordersCount: 0,
+      image: '../../assets/img/product-7.jpg',
+      iconType: 'palette',
+      sku: 'HD-ART-008',
+      description: 'Hộp màu nước bánh nén 36 màu tươi sáng, độ bão hòa cao, kèm cọ vẽ ngậm nước chuyên nghiệp và khay pha màu hộp thiếc cao cấp.',
+      brand: 'Deli Art',
+      unit: 'Bộ',
+      grades: ['Tiểu học', 'THCS', 'THPT', 'Đại học']
+    }
+  ];
 
-  /* ------------------------------------------------------------------------
-   * 1. DỮ LIỆU GỐC CỐ ĐỊNH (THEO BẢN THIẾT KẾ)
-   * ---------------------------------------------------------------------- */
-  const DEFAULT_PRODUCT = {
-    code: PRODUCT_CODE,
-    name: 'Balo chống gù tiểu học',
-    category: 'Cặp & balo',
-    stock: 45,
-    price: 389000,
-    sku: 'BALO-TH-XANH-D17',
-    description: 'Balo chống gù cao cấp dành cho học sinh tiểu học, đệm lưng thoáng khí công nghệ tổ ong, quai đeo trợ lực chống cong vẹo cột sống, chất liệu vải chống thấm nước tuyệt đối.',
-    visible: true,
-    imageName: 'balo-chong-gu-sp17.jpg',
-    imageSize: '1.2 MB',
-    createdAt: '12/08/2024 - 09:42',
-    updatedAt: '21/10/2024 - 15:18',
-    updatedBy: 'admin@hocduong.vn',
-    channel: 'Trực tuyến & Đại lý trường học'
-  };
+  const STORAGE_KEY = 'hocduong_admin_products_session_v2';
 
-  // Kiểm tra nếu trang được Reload (F5 / Refresh)
+  // Kiểm tra nếu trang được Reload (F5 / Refresh) - Khôi phục về dữ liệu gốc cố định
   function isPageReload() {
     try {
       const navEntries = performance.getEntriesByType('navigation');
@@ -48,406 +161,357 @@ document.addEventListener('DOMContentLoaded', () => {
       if (window.performance && window.performance.navigation) {
         return window.performance.navigation.type === 1;
       }
-    } catch (error) {
-      console.warn(error);
+    } catch (e) {
+      console.warn(e);
     }
     return false;
   }
 
-  // Nếu người dùng ấn Reload (F5), xoá dữ liệu tạm để nạp lại dữ liệu gốc
   if (isPageReload()) {
     try {
       sessionStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem('hd_products_data');
-    } catch (error) {
-      console.warn(error);
+    } catch (e) {
+      console.warn(e);
     }
   }
 
-  // Đọc danh sách sản phẩm đang lưu tạm trong phiên làm việc
-  function readTempProducts() {
-    try {
-      const raw = sessionStorage.getItem(STORAGE_KEY);
-      const list = raw ? JSON.parse(raw) : [];
-      return Array.isArray(list) ? list : [];
-    } catch (error) {
-      console.warn(error);
-      return [];
+  // Lấy danh sách sản phẩm hiện hành từ sessionStorage
+  function getProductList() {
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      } catch (e) {
+        console.warn('Lỗi đọc session products, khôi phục mặc định:', e);
+      }
     }
+    return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
   }
 
-  // Lấy sản phẩm hiện tại: ưu tiên bản lưu tạm, nếu không có thì dùng dữ liệu gốc
-  function loadCurrentProduct() {
-    const saved = readTempProducts().find(
-      (item) => item && String(item.code).toUpperCase() === PRODUCT_CODE
-    );
-    return { ...DEFAULT_PRODUCT, ...(saved || {}) };
+  const productList = getProductList();
+
+  // 2. TRÍCH XUẤT THAM SỐ TRUY VẤN MÃ SẢN PHẨM ?code=...
+  const urlParams = new URLSearchParams(window.location.search);
+  const targetCode = urlParams.get('code') || 'SP01';
+
+  // Tìm sản phẩm cần chỉnh sửa
+  let product = productList.find(p => p.code.toUpperCase() === targetCode.toUpperCase());
+  if (!product) {
+    product = productList[0] || DEFAULT_PRODUCTS[0];
   }
 
-  let currentProduct = loadCurrentProduct();
-  let pendingImage = null;
-  let uploadedPreviewUrl = null;
-  let hasUserInteraction = false;
+  // 3. THAM CHIẾU CÁC PHẦN TỬ FORM & GIAO DIỆN
+  const form = document.getElementById('product-form');
+  const breadcrumbCode = document.getElementById('breadcrumb-current-code');
+  const headingProductName = document.getElementById('heading-product-name');
+  const badgeCode = document.getElementById('product-badge-code');
+  const badgeStatus = document.getElementById('product-badge-status');
+  const badgeStatusText = document.getElementById('badge-status-text');
 
-  /* ------------------------------------------------------------------------
-   * 2. CÁC PHẦN TỬ DOM
-   * ---------------------------------------------------------------------- */
-  const productForm = document.querySelector('#product-form');
-  const formMessage = document.querySelector('#form-message');
-  const productName = document.querySelector('#product-name');
-  const category = document.querySelector('#category');
-  const stock = document.querySelector('#stock');
-  const price = document.querySelector('#price');
-  const sku = document.querySelector('#sku');
-  const description = document.querySelector('#description');
-  const visibleToggle = document.querySelector('#visible-toggle');
-  const sellingStatus = document.querySelector('#selling-status');
-  const sellingStatusTitle = document.querySelector('#selling-status-title');
-  const sellingStatusNote = document.querySelector('#selling-status-note');
-  const productSubtitle = document.querySelector('#product-subtitle');
-  const productStatusBadge = document.querySelector('#product-status-badge');
-  const productStatusText = document.querySelector('#product-status-text');
-  const metricTitle = document.querySelector('#metric-title');
-  const updatedAt = document.querySelector('#updated-at');
-  const updatedBy = document.querySelector('#updated-by');
-  const imageUpload = document.querySelector('#image-upload');
-  const imagePreview = document.querySelector('#image-preview');
-  const fileName = document.querySelector('#file-name');
-  const fileSize = document.querySelector('#file-size');
-  const cancelButton = document.querySelector('#cancel-button');
-  const mobileMenu = document.querySelector('.mobile-menu');
-  const sidebar = document.querySelector('.admin-sidebar');
+  // Input Fields
+  const productNameInput = document.getElementById('product-name');
+  const categorySelect = document.getElementById('category');
+  const stockInput = document.getElementById('stock');
+  const priceInput = document.getElementById('price');
+  const pricePreviewText = document.getElementById('price-preview-text');
+  const skuInput = document.getElementById('sku');
+  const descriptionInput = document.getElementById('description');
+  const brandInput = document.getElementById('brand');
+  const unitSelect = document.getElementById('unit');
 
-  /* ------------------------------------------------------------------------
-   * 3. TOAST THÔNG BÁO
-   * ---------------------------------------------------------------------- */
-  const toast = document.querySelector('#toast');
-  const toastIcon = document.querySelector('#toast-icon');
-  const toastText = document.querySelector('#toast-text');
+  // Metrics Card Elements (A07)
+  const metricHeadingTitle = document.getElementById('metric-heading-title');
+  const metricSoldOrders = document.getElementById('metric-sold-orders');
+  const metricRevenueVal = document.getElementById('metric-revenue-val');
+  const metricReviewsCount = document.getElementById('metric-reviews-count');
+
+  // Side Column Elements
+  const imagePreview = document.getElementById('image-preview');
+  const fileNameDisplay = document.getElementById('file-name');
+  const imageUploadInput = document.getElementById('image-upload');
+  const sampleThumbs = document.querySelectorAll('.sample-thumb');
+  const storefrontToggle = document.getElementById('storefront-visible');
+  const sellingStatusBox = document.getElementById('selling-status-box');
+  const statusHeadline = document.getElementById('status-text-headline');
+  const statusSub = document.getElementById('status-text-sub');
+
+  // Toast
+  const adminToast = document.getElementById('admin-toast');
+  const toastTitle = document.getElementById('toast-title');
+  const toastDesc = document.getElementById('toast-desc');
+  const closeToastBtn = document.getElementById('close-toast-btn');
   let toastTimer = null;
 
-  function showToast(message, type = 'success') {
-    if (!toast) return;
+  // 4. TIỆN ÍCH ĐỊNH DẠNG
+  function formatVnd(val) {
+    return new Intl.NumberFormat('vi-VN').format(val) + '₫';
+  }
+
+  // Cập nhật ngày tháng trên Topbar
+  const currentDateEl = document.getElementById('current-date-text');
+  if (currentDateEl) {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = now.getFullYear();
+    currentDateEl.textContent = `Hôm nay, ${day}/${month}/${year}`;
+  }
+
+  // Hiển thị thông báo Toast
+  function showToast(title, desc, duration = 3000) {
+    if (!adminToast) return;
     if (toastTimer) clearTimeout(toastTimer);
 
-    if (toastText) toastText.textContent = message;
-    if (toastIcon) {
-      if (type === 'error') {
-        toastIcon.textContent = '✕';
-      } else if (type === 'info') {
-        toastIcon.textContent = 'ⓘ';
-      } else {
-        toastIcon.textContent = '✓';
-      }
-    }
+    if (toastTitle) toastTitle.textContent = title;
+    if (toastDesc) toastDesc.textContent = desc;
 
-    toast.className = 'toast-msg show ' + (type || '');
+    adminToast.setAttribute('aria-hidden', 'false');
+    adminToast.classList.add('is-visible');
+
     toastTimer = setTimeout(() => {
-      toast.classList.remove('show');
-    }, 3200);
+      adminToast.classList.remove('is-visible');
+      adminToast.setAttribute('aria-hidden', 'true');
+    }, duration);
   }
 
-  /* ------------------------------------------------------------------------
-   * 4. CÁC HÀM ĐỊNH DẠNG
-   * ---------------------------------------------------------------------- */
-  function formatPrice(value) {
-    const digits = String(value ?? '').replace(/\D/g, '');
-    if (!digits) return '';
-    return Number(digits).toLocaleString('vi-VN');
-  }
-
-  function parsePrice(value) {
-    return Number(String(value ?? '').replace(/\D/g, '')) || 0;
-  }
-
-  function formatDateTime(date = new Date()) {
-    const pad = (number) => String(number).padStart(2, '0');
-    return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} - ${pad(date.getHours())}:${pad(date.getMinutes())}`;
-  }
-
-  function formatFileSize(bytes) {
-    if (!Number.isFinite(bytes) || bytes <= 0) return '0 KB';
-    if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-    return `${Math.max(1, Math.round(bytes / 1024))} KB`;
-  }
-
-  /* ------------------------------------------------------------------------
-   * 5. HIỂN THỊ DỮ LIỆU
-   * ---------------------------------------------------------------------- */
-  function renderImagePreview(imageUrl) {
-    const defaultPhoto = imagePreview.querySelector('.product-photo');
-    const oldPreview = imagePreview.querySelector('.uploaded-preview');
-
-    if (oldPreview) oldPreview.remove();
-
-    if (imageUrl) {
-      const preview = document.createElement('img');
-      preview.className = 'uploaded-preview';
-      preview.src = imageUrl;
-      preview.alt = 'Ảnh xem trước sản phẩm';
-      imagePreview.append(preview);
-      if (defaultPhoto) defaultPhoto.hidden = true;
-      return;
-    }
-
-    if (defaultPhoto) defaultPhoto.hidden = false;
-  }
-
-  // Gán ảnh xem trước mới và giải phóng URL blob cũ (tránh rò rỉ bộ nhớ)
-  function setUploadedPreview(imageUrl) {
-    if (uploadedPreviewUrl && uploadedPreviewUrl !== imageUrl) {
-      URL.revokeObjectURL(uploadedPreviewUrl);
-    }
-    uploadedPreviewUrl = imageUrl;
-    renderImagePreview(imageUrl);
-  }
-
-  // Hiển thị thông báo trong biểu mẫu kèm trạng thái lỗi
-  function setFormMessage(message, type = 'success') {
-    if (!formMessage) return;
-    formMessage.textContent = message;
-    formMessage.classList.toggle('is-error', type === 'error');
-  }
-
-  function updateSellingStatus() {
-    const isVisible = Boolean(visibleToggle && visibleToggle.checked);
-
-    if (sellingStatus) sellingStatus.classList.toggle('is-off', !isVisible);
-    if (sellingStatusTitle) sellingStatusTitle.textContent = isVisible ? 'Đang bán' : 'Tạm ẩn';
-    if (sellingStatusNote) {
-      sellingStatusNote.textContent = isVisible
-        ? 'Sẵn sàng tiếp nhận đơn'
-        : 'Không hiển thị trên cửa hàng';
-    }
-
-    if (productStatusBadge) {
-      productStatusBadge.classList.toggle('is-off', !isVisible);
-    }
-    if (productStatusText) {
-      productStatusText.textContent = isVisible ? 'Đang bán' : 'Tạm ẩn';
-    }
-  }
-
-  // Đổ dữ liệu sản phẩm vào toàn bộ biểu mẫu
-  function renderProduct(product, options = {}) {
-    if (!product) return;
-    const { previewUrl = null } = options;
-
-    if (productName) productName.value = product.name;
-    if (category) category.value = product.category;
-    if (stock) stock.value = product.stock;
-    if (price) price.value = formatPrice(product.price);
-    if (sku) sku.value = product.sku;
-    if (description) description.value = product.description;
-    if (visibleToggle) visibleToggle.checked = Boolean(product.visible);
-
-    if (fileName) fileName.textContent = product.imageName;
-    if (fileSize) fileSize.textContent = product.imageSize;
-    if (productSubtitle) productSubtitle.textContent = `Chỉnh sửa sản phẩm: ${product.name}`;
-    if (metricTitle) metricTitle.textContent = `Chỉ số giao dịch của ${product.code}`;
-    if (updatedAt) updatedAt.textContent = product.updatedAt;
-    if (updatedBy) updatedBy.textContent = product.updatedBy;
-
-    pendingImage = null;
-    if (previewUrl) {
-      // Giữ nguyên ảnh vừa chọn sau khi lưu, tránh xoá oan bản xem trước
-      if (uploadedPreviewUrl !== previewUrl) setUploadedPreview(previewUrl);
-    } else if (uploadedPreviewUrl) {
-      setUploadedPreview(null);
-    } else {
-      renderImagePreview(null);
-    }
-    updateSellingStatus();
-  }
-
-  // Lưu sản phẩm vào sessionStorage (chỉ tồn tại trong phiên làm việc)
-  function saveTempProduct(product) {
-    try {
-      const products = readTempProducts().filter(
-        (item) => item && String(item.code).toUpperCase() !== PRODUCT_CODE
-      );
-      products.push(product);
-      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(products));
-    } catch (error) {
-      console.warn(error);
-      showToast('Không thể lưu tạm dữ liệu trong trình duyệt.', 'error');
-    }
-  }
-
-  /* ------------------------------------------------------------------------
-   * 6. XỬ LÝ NHẬP LIỆU
-   * ---------------------------------------------------------------------- */
-  const markInteraction = () => { hasUserInteraction = true; };
-  if (productForm) {
-    productForm.addEventListener('input', markInteraction, { once: true });
-    productForm.addEventListener('change', markInteraction, { once: true });
-  }
-
-  if (price) {
-    price.addEventListener('input', () => {
-      const digits = price.value.replace(/\D/g, '');
-      price.value = digits ? Number(digits).toLocaleString('vi-VN') : '';
-    });
-
-    price.addEventListener('blur', () => {
-      price.value = formatPrice(price.value);
-    });
-  }
-
-  if (stock) {
-    stock.addEventListener('change', () => {
-      const value = Number(stock.value);
-      if (!Number.isFinite(value) || value < 0 || stock.value === '') {
-        stock.value = 0;
+  if (closeToastBtn) {
+    closeToastBtn.addEventListener('click', () => {
+      if (adminToast) {
+        adminToast.classList.remove('is-visible');
+        adminToast.setAttribute('aria-hidden', 'true');
       }
     });
   }
 
-  if (visibleToggle) {
-    visibleToggle.addEventListener('change', updateSellingStatus);
+  // 5. ĐIỀN DỮ LIỆU SẢN PHẨM HIỆN TẠI VÀO BIỂU MẪU (PRE-FILL)
+  document.title = `Sửa sản phẩm ${product.code} - Học Đường Store Admin`;
+  if (breadcrumbCode) breadcrumbCode.textContent = `Sửa sản phẩm ${product.code}`;
+  if (headingProductName) headingProductName.textContent = product.name;
+  if (badgeCode) badgeCode.textContent = `Mã: ${product.code}`;
+
+  const isActive = product.status === 'active';
+  if (badgeStatus && badgeStatusText) {
+    if (isActive) {
+      badgeStatus.className = 'badge-status badge-active';
+      badgeStatusText.textContent = 'Đang bán';
+    } else {
+      badgeStatus.className = 'badge-status badge-hidden';
+      badgeStatusText.textContent = 'Tạm ẩn';
+    }
   }
 
-  // Đổi ảnh sản phẩm
-  if (imageUpload) {
-    imageUpload.addEventListener('change', () => {
-      const file = imageUpload.files?.[0];
+  // Điền thông tin cơ bản
+  productNameInput.value = product.name || '';
+  if (categorySelect) {
+    categorySelect.value = product.category || 'Bút viết';
+  }
+  stockInput.value = product.stock !== undefined ? product.stock : 100;
+  priceInput.value = product.price || 0;
+  if (pricePreviewText) {
+    pricePreviewText.textContent = `Giá niêm yết: ${formatVnd(product.price || 0)}`;
+    pricePreviewText.style.color = 'var(--color-primary, #FF6900)';
+  }
+  skuInput.value = product.sku || `HD-${product.code}`;
+  if (descriptionInput) {
+    descriptionInput.value = product.description || `Sản phẩm ${product.name} chính hãng chất lượng cao, an toàn cho học sinh.`;
+  }
+  if (brandInput) {
+    brandInput.value = product.brand || 'Học Đường';
+  }
+  if (unitSelect) {
+    unitSelect.value = product.unit || 'Cây / Chiếc';
+  }
+
+  // Điền cấp học
+  if (Array.isArray(product.grades) && product.grades.length > 0) {
+    document.querySelectorAll('input[name="grades"]').forEach(cb => {
+      cb.checked = product.grades.includes(cb.value);
+    });
+  }
+
+  // Cập nhật thẻ chỉ số 30 ngày (A07 Metrics)
+  const soldQty = product.sold !== undefined ? product.sold : 0;
+  const productPrice = product.price || 0;
+  const revenue = soldQty * productPrice;
+  const ordersCount = product.ordersCount !== undefined ? product.ordersCount : Math.round(soldQty / 4) + 5;
+
+  if (metricHeadingTitle) metricHeadingTitle.textContent = `Chỉ số giao dịch của ${product.code}`;
+  if (metricSoldOrders) metricSoldOrders.textContent = `${soldQty} đơn`;
+  if (metricRevenueVal) metricRevenueVal.textContent = formatVnd(revenue);
+  if (metricReviewsCount) metricReviewsCount.textContent = `${ordersCount} lượt phản hồi`;
+
+  // Cập nhật khung hình ảnh
+  let currentImageUrl = product.image || '../../assets/img/product-1.jpg';
+  if (imagePreview) {
+    imagePreview.src = currentImageUrl;
+  }
+  if (fileNameDisplay) {
+    fileNameDisplay.textContent = currentImageUrl.split('/').pop() || 'product-image.jpg';
+  }
+
+  // Highlight thumbnail mẫu khớp với ảnh hiện tại
+  sampleThumbs.forEach(thumb => {
+    if (thumb.dataset.img === currentImageUrl) {
+      thumb.classList.add('active');
+    } else {
+      thumb.classList.remove('active');
+    }
+  });
+
+  // Cập nhật công tắc Storefront
+  if (storefrontToggle && sellingStatusBox) {
+    storefrontToggle.checked = isActive;
+    if (isActive) {
+      statusHeadline.textContent = 'Đang bán';
+      statusSub.textContent = 'Sẵn sàng tiếp nhận đơn đặt hàng từ khách';
+      sellingStatusBox.classList.remove('hidden-status');
+    } else {
+      statusHeadline.textContent = 'Tạm ẩn';
+      statusSub.textContent = 'Không xuất hiện trên storefront, giữ nguyên dữ liệu';
+      sellingStatusBox.classList.add('hidden-status');
+    }
+
+    storefrontToggle.addEventListener('change', () => {
+      if (storefrontToggle.checked) {
+        statusHeadline.textContent = 'Đang bán';
+        statusSub.textContent = 'Sẵn sàng tiếp nhận đơn đặt hàng từ khách';
+        sellingStatusBox.classList.remove('hidden-status');
+        if (badgeStatus && badgeStatusText) {
+          badgeStatus.className = 'badge-status badge-active';
+          badgeStatusText.textContent = 'Đang bán';
+        }
+      } else {
+        statusHeadline.textContent = 'Tạm ẩn';
+        statusSub.textContent = 'Không xuất hiện trên storefront, giữ nguyên dữ liệu';
+        sellingStatusBox.classList.add('hidden-status');
+        if (badgeStatus && badgeStatusText) {
+          badgeStatus.className = 'badge-status badge-hidden';
+          badgeStatusText.textContent = 'Tạm ẩn';
+        }
+      }
+    });
+  }
+
+  // 6. XỬ LÝ SỰ KIỆN GIÁ BÁN THỜI GIAN THỰC
+  if (priceInput && pricePreviewText) {
+    priceInput.addEventListener('input', () => {
+      const val = parseInt(priceInput.value, 10);
+      if (!isNaN(val) && val > 0) {
+        pricePreviewText.textContent = `Giá niêm yết: ${formatVnd(val)}`;
+        pricePreviewText.style.color = 'var(--color-primary, #FF6900)';
+        // Đồng thời cập nhật doanh thu dự kiến trong thẻ metrics
+        if (metricRevenueVal) metricRevenueVal.textContent = formatVnd(soldQty * val);
+      } else {
+        pricePreviewText.textContent = 'Giá niêm yết: 0₫';
+        pricePreviewText.style.color = '#6b7280';
+      }
+    });
+  }
+
+  // 7. CHỌN ẢNH TỪ BỘ MẪU SẴN
+  sampleThumbs.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      sampleThumbs.forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+
+      const imgPath = thumb.dataset.img;
+      if (imgPath && imagePreview) {
+        imagePreview.src = imgPath;
+        currentImageUrl = imgPath;
+        const baseName = imgPath.split('/').pop();
+        if (fileNameDisplay) fileNameDisplay.textContent = baseName;
+      }
+    });
+  });
+
+  // 8. TẢI TỆP ẢNH TỪ MÁY
+  if (imageUploadInput) {
+    imageUploadInput.addEventListener('change', () => {
+      const file = imageUploadInput.files?.[0];
       if (!file) return;
 
       if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-        setFormMessage('Vui lòng chọn ảnh JPG, PNG hoặc WebP.', 'error');
-        showToast('Định dạng ảnh không hợp lệ. Chỉ hỗ trợ JPG, PNG hoặc WebP.', 'error');
-        imageUpload.value = '';
+        alert('Vui lòng chọn hình ảnh định dạng JPG, PNG hoặc WebP.');
+        imageUploadInput.value = '';
         return;
       }
 
-      setUploadedPreview(URL.createObjectURL(file));
+      const objectUrl = URL.createObjectURL(file);
+      currentImageUrl = objectUrl;
 
-      pendingImage = {
-        name: file.name,
-        size: formatFileSize(file.size)
-      };
+      if (imagePreview) {
+        imagePreview.src = objectUrl;
+      }
 
-      if (fileName) fileName.textContent = pendingImage.name;
-      if (fileSize) fileSize.textContent = pendingImage.size;
-      setFormMessage('');
-      showToast('Đã chọn ảnh mới. Nhấn "Lưu thay đổi" để áp dụng.', 'info');
+      if (fileNameDisplay) {
+        fileNameDisplay.textContent = file.name;
+      }
+
+      sampleThumbs.forEach(t => t.classList.remove('active'));
     });
   }
 
-  // Gửi biểu mẫu: cập nhật dữ liệu tạm và giao diện
-  if (productForm) {
-    productForm.addEventListener('submit', (event) => {
-      event.preventDefault();
+  // 9. LƯU THAY ĐỔI & ĐỒNG BỘ VỀ A05
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-      if (!productForm.reportValidity()) return;
+      if (!form.reportValidity()) return;
 
-      const name = productName.value.trim();
-      const priceValue = parsePrice(price.value);
-      const stockValue = Number(stock.value);
+      const name = productNameInput.value.trim();
+      const category = categorySelect.value;
+      const stock = parseInt(stockInput.value, 10);
+      const price = parseInt(priceInput.value, 10);
+      const sku = skuInput.value.trim() || `HD-${product.code}`;
+      const description = descriptionInput ? descriptionInput.value.trim() : '';
+      const brand = brandInput ? brandInput.value.trim() : 'Học Đường';
+      const unit = unitSelect ? unitSelect.value : 'Cây / Chiếc';
 
-      if (!name) {
-        productName.focus();
-        showToast('Vui lòng nhập tên sản phẩm.', 'error');
-        return;
+      const gradeCheckboxes = document.querySelectorAll('input[name="grades"]:checked');
+      const selectedGrades = Array.from(gradeCheckboxes).map(cb => cb.value);
+
+      const isStorefrontVisible = storefrontToggle ? storefrontToggle.checked : true;
+      const status = isStorefrontVisible ? 'active' : 'hidden';
+
+      // Xác định iconType tương ứng theo danh mục
+      let iconType = 'pen';
+      if (category.includes('Sổ') || category.includes('vở')) {
+        iconType = 'book';
+      } else if (category.includes('Cặp') || category.includes('balo')) {
+        iconType = 'backpack';
+      } else if (category.includes('Hộp') || category.includes('mỹ thuật')) {
+        iconType = 'palette';
       }
 
-      if (priceValue <= 0) {
-        price.focus();
-        showToast('Giá bán phải lớn hơn 0.', 'error');
-        return;
+      // Cập nhật sản phẩm trực tiếp vào productList
+      product.name = name;
+      product.category = category;
+      product.stock = stock;
+      product.price = price;
+      product.sku = sku;
+      product.description = description;
+      product.brand = brand;
+      product.unit = unit;
+      product.grades = selectedGrades;
+      product.status = status;
+      product.image = currentImageUrl;
+      product.iconType = iconType;
+
+      // Lưu lại vào sessionStorage để A05 tự động hiển thị dữ liệu đã sửa
+      try {
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(productList));
+        sessionStorage.setItem('hocduong_admin_toast', JSON.stringify({
+          title: 'Cập nhật thành công',
+          desc: `Đã cập nhật thông tin sản phẩm [${product.code}] ${name} thành công.`
+        }));
+      } catch (err) {
+        console.error('Không thể lưu thay đổi vào sessionStorage:', err);
       }
 
-      if (!Number.isFinite(stockValue) || stockValue < 0) {
-        stock.focus();
-        showToast('Số lượng tồn kho không hợp lệ.', 'error');
-        return;
-      }
-
-      const previewToKeep = uploadedPreviewUrl;
-
-      currentProduct = {
-        ...currentProduct,
-        name,
-        category: category.value,
-        stock: stockValue,
-        price: priceValue,
-        sku: sku.value.trim(),
-        description: description.value.trim(),
-        visible: visibleToggle.checked,
-        imageName: pendingImage ? pendingImage.name : currentProduct.imageName,
-        imageSize: pendingImage ? pendingImage.size : currentProduct.imageSize,
-        updatedAt: formatDateTime(),
-        updatedBy: sessionStorage.getItem('hd_admin_user') || 'admin@hocduong.vn'
-      };
-
-      saveTempProduct(currentProduct);
-      renderProduct(currentProduct, { previewUrl: previewToKeep });
-      if (imageUpload) imageUpload.value = '';
-
-      setFormMessage('Thông tin sản phẩm đã được lưu.');
-      showToast(`Đã lưu thay đổi cho sản phẩm ${currentProduct.code}`);
+      // Trở về ngay trang danh sách A05
+      window.location.href = '../A05 Quản lý sản phẩm/index.html';
     });
   }
 
-  // Hủy thay đổi: quay lại trạng thái đã lưu gần nhất (mặc định là ảnh gốc)
-  if (cancelButton) {
-    cancelButton.addEventListener('click', () => {
-      setUploadedPreview(null);
-      if (imageUpload) imageUpload.value = '';
-
-      renderProduct(currentProduct);
-
-      setFormMessage('Đã hủy các thay đổi trong biểu mẫu.');
-      showToast('Đã hủy các thay đổi trong biểu mẫu.', 'info');
-    });
-  }
-
-  /* ------------------------------------------------------------------------
-   * 7. ĐIỀU HƯỚNG DI ĐỘNG
-   * ---------------------------------------------------------------------- */
-  if (mobileMenu && sidebar) {
-    mobileMenu.addEventListener('click', () => {
-      const isOpen = sidebar.classList.toggle('is-open');
-      mobileMenu.setAttribute('aria-expanded', String(isOpen));
-    });
-
-    document.addEventListener('click', (event) => {
-      if (window.innerWidth <= 560
-        && sidebar.classList.contains('is-open')
-        && !sidebar.contains(event.target)
-        && !mobileMenu.contains(event.target)) {
-        sidebar.classList.remove('is-open');
-        mobileMenu.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-
-  // Đăng xuất an toàn
-  document.querySelectorAll('.sidebar-logout').forEach((button) => {
-    button.addEventListener('click', () => {
-      sessionStorage.removeItem('hd_admin_authenticated');
-      sessionStorage.removeItem('hd_admin_user');
-    });
-  });
-
-  /* ------------------------------------------------------------------------
-   * 8. KHỞI TẠO GIAO DIỆN
-   * ---------------------------------------------------------------------- */
-  const loggedInUser = (() => {
-    try { return sessionStorage.getItem('hd_admin_user'); } catch (error) { return null; }
-  })();
-  const sidebarUserName = document.querySelector('#sidebar-user-name');
-  if (loggedInUser && sidebarUserName) sidebarUserName.textContent = loggedInUser;
-
-  renderProduct(currentProduct);
-
-  // Ghi đè trạng thái form mà trình duyệt có thể khôi phục sau khi reload
-  window.addEventListener('load', () => {
-    if (!hasUserInteraction) renderProduct(currentProduct);
-    if (isPageReload()) window.scrollTo(0, 0);
-  });
-
-  window.addEventListener('pageshow', () => {
-    if (!hasUserInteraction) renderProduct(currentProduct);
-  });
 });

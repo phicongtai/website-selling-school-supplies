@@ -308,11 +308,51 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast('Đã tải xuống file Excel danh sách người dùng');
     });
   }
+  // 6. Xử lý phân trang (Next / Prev / Page 1): Bấm là reload về lại trang 1
+  const prevPageBtn = document.getElementById('prev-page-btn');
+  const nextPageBtn = document.getElementById('next-page-btn');
+  const pageBtns = document.querySelectorAll('.pagination-btns .page-btn');
+
+  function reloadA02Page1(label) {
+    if (tableBody) {
+      tableBody.style.transition = 'opacity 200ms ease';
+      tableBody.style.opacity = '0.35';
+    }
+    setTimeout(() => {
+      window.location.reload();
+    }, 150);
+  }
+
+  if (prevPageBtn) {
+    prevPageBtn.removeAttribute('disabled');
+    prevPageBtn.style.cursor = 'pointer';
+    prevPageBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      reloadA02Page1('Trang trước');
+    });
+  }
+
+  if (nextPageBtn) {
+    nextPageBtn.removeAttribute('disabled');
+    nextPageBtn.style.cursor = 'pointer';
+    nextPageBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      reloadA02Page1('Trang sau');
+    });
+  }
+
+  pageBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      reloadA02Page1(`Trang ${btn.textContent.trim()}`);
+    });
+  });
 
   // Khởi động giao diện ban đầu
   updateStats();
   renderTable();
 });
+
 
 // Xử lý đăng xuất an toàn
 document.querySelectorAll('.sidebar-logout').forEach(btn => {

@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FF6900">
+  <title>Quản lý sản phẩm - Học Đường Store Admin</title>
+
+  <!-- Kế thừa Design System & Tokens toàn cục của dự án -->
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../A02 Quản lý người dùng/admin.css">
+
+  <!-- CSS riêng biệt cho trang Quản lý sản phẩm A05 -->
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <div class="admin-page-container">
+
+    <!-- 1. SIDEBAR ĐIỀU HƯỚNG BÊN TRÁI -->
+    <aside class="admin-sidebar" aria-label="Điều hướng quản trị">
+      <!-- Logo Thương hiệu -->
+      <a class="sidebar-brand" href="#" aria-label="Học Đường Store Admin">
+        <span class="brand-mark" aria-hidden="true">HĐ</span>
+        <div class="brand-copy">
+          <strong>Học Đường Store Admin</strong>
+          <small>Hệ thống Quản trị Nội bộ</small>
+        </div>
+      </a>
+
+      <!-- Menu chuyển trang -->
+      <nav class="sidebar-nav" aria-label="Menu quản trị">
+        <!-- Người dùng -->
+        <a href="../A02 Quản lý người dùng/index.html">
+          <svg width="18" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M14.68 8.64V6.05H12.09V4.32H14.68V1.73H16.41V4.32H19V6.05H16.41V8.64H14.68ZM6.91 6.91C5.96 6.91 5.15 6.57 4.47 5.89C3.79 5.22 3.45 4.4 3.45 3.45C3.45 2.5 3.79 1.69 4.47 1.01C5.15 0.34 5.96 0 6.91 0C7.86 0 8.67 0.34 9.35 1.01C10.03 1.69 10.36 2.5 10.36 3.45C10.36 4.4 10.03 5.22 9.35 5.89C8.67 6.57 7.86 6.91 6.91 6.91ZM0 13.82V11.4C0 10.91 0.13 10.46 0.38 10.05C0.63 9.64 0.96 9.33 1.38 9.11C2.27 8.67 3.18 8.33 4.1 8.11C5.02 7.88 5.96 7.77 6.91 7.77C7.86 7.77 8.79 7.88 9.72 8.11C10.64 8.33 11.54 8.67 12.44 9.11C12.85 9.33 13.19 9.64 13.44 10.05C13.69 10.46 13.82 10.91 13.82 11.4V13.82H0Z" fill="currentColor"/>
+          </svg>
+          <span>Người dùng</span>
+        </a>
+
+        <!-- Sản phẩm (Active) -->
+        <a class="active" href="index.html" aria-current="page">
+          <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M1.7 17C1.23 17 0.83 16.83 0.5 16.5C0.17 16.17 0 15.77 0 15.3V5.95C0 5.48 0.17 5.08 0.5 4.75C0.83 4.42 1.23 4.25 1.7 4.25H5.95V1.7C5.95 1.23 6.12 0.83 6.45 0.5C6.78 0.17 7.18 0 7.65 0H9.35C9.82 0 10.22 0.17 10.55 0.5C10.88 0.83 11.05 1.23 11.05 1.7V4.25H15.3C15.77 4.25 16.17 4.42 16.5 4.75C16.83 5.08 17 5.48 17 5.95V15.3C17 15.77 16.83 16.17 16.5 16.5C16.17 16.83 15.77 17 15.3 17H1.7ZM1.7 15.3H15.3V5.95H1.7V15.3ZM7.65 4.25H9.35V1.7H7.65V4.25Z" fill="currentColor"/>
+          </svg>
+          <span>Sản phẩm</span>
+        </a>
+
+        <!-- Đơn hàng -->
+        <a href="../A10 Quản lí đơn hàng/index.html">
+          <svg width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M1.4 17C1.02 17 0.69 16.87 0.41 16.59C0.14 16.31 0 15.98 0 15.6V4.25C0 3.87 0.14 3.54 0.41 3.26C0.69 2.98 1.02 2.83 1.4 2.83H3.5V2.12C3.5 1.53 3.71 1.03 4.13 0.62C4.55 0.21 5.06 0 5.65 0H8.35C8.94 0 9.45 0.21 9.87 0.62C10.29 1.03 10.5 1.53 10.5 2.12V2.83H12.6C12.98 2.83 13.31 2.98 13.59 3.26C13.86 3.54 14 3.87 14 4.25V15.6C14 15.98 13.86 16.31 13.59 16.59C13.31 16.87 12.98 17 12.6 17H1.4ZM4.9 2.83H9.1V2.12C9.1 1.91 9.03 1.73 8.88 1.59C8.74 1.44 8.56 1.37 8.35 1.37H5.65C5.44 1.37 5.26 1.44 5.12 1.59C4.97 1.73 4.9 1.91 4.9 2.12V2.83Z" fill="currentColor"/>
+          </svg>
+          <span>Đơn hàng</span>
+        </a>
+
+        <!-- Thống kê -->
+        <a href="../A12 thống kê khách hàng/index.html">
+          <svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M0 10V4.67L5.33 0L9.33 4L14.67 0V2.67L9.33 6.67L5.33 2.67L0 7.33V10Z" fill="currentColor"/>
+          </svg>
+          <span>Thống kê</span>
+        </a>
+      </nav>
+
+      <!-- Tài khoản quản trị & Đăng xuất -->
+      <div class="sidebar-account">
+        <div class="account-info">
+          <span class="account-avatar" aria-hidden="true">A</span>
+          <div class="account-details">
+            <span class="account-name" id="sidebar-user-name">Quản trị viên Hệ thống</span>
+            <small class="account-email">admin@hocduong.vn</small>
+          </div>
+        </div>
+        <a class="sidebar-logout" href="../A01 Đăng nhập quản trị/index.html">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M1.33 14C0.97 14 0.65 13.87 0.39 13.61C0.13 13.35 0 13.03 0 12.67V1.33C0 0.97 0.13 0.65 0.39 0.39C0.65 0.13 0.97 0 1.33 0H6.67V1.33H1.33V12.67H6.67V14H1.33ZM10 10.67L8.93 9.6L10.87 7.67H4.67V6.33H10.87L8.93 4.4L10 3.33L13.67 7L10 10.67Z" fill="currentColor"/>
+          </svg>
+          <span>Đăng xuất</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- 2. NỘI DUNG CHÍNH (SHELL) -->
+    <div class="admin-shell">
+      
+      <!-- Topbar Header -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <div class="topbar-breadcrumb">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M11.8 3 20 6.2v5.3c0 4.6-3.2 8.4-8.2 10.2-5-1.8-8.2-5.6-8.2-10.2V6.2L11.8 3Z" stroke="#686868" stroke-width="1.8" stroke-linejoin="round"/>
+              <circle cx="17.5" cy="16.5" r="4.2" fill="#fff" stroke="#686868" stroke-width="1.5"/>
+              <path d="M16.3 16.3v-.8a1.2 1.2 0 0 1 2.4 0v.8m-2.8 0h3.2v2.4h-3.2v-2.4Z" stroke="#686868" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Bảng điều khiển</span>
+            <span>/</span>
+            <strong>Quản trị</strong>
+          </div>
+          <span class="topbar-divider" aria-hidden="true"></span>
+          <div class="status-badge">
+            <span class="status-dot-green" aria-hidden="true"></span>
+            <span>HỆ THỐNG TRỰC TUYẾN</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="topbar-date">
+            <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M1.33 14.67C0.97 14.67 0.65 14.54 0.39 14.28C0.13 14.02 0 13.7 0 13.33V2.67C0 2.3 0.13 1.98 0.39 1.72C0.65 1.46 0.97 1.33 1.33 1.33H2.67V0H4V1.33H9.33V0H10.67V1.33H12C12.37 1.33 12.69 1.46 12.95 1.72C13.21 1.98 13.33 2.3 13.33 2.67V13.33C13.33 13.7 13.21 14.02 12.95 14.28C12.69 14.54 12.37 14.67 12 14.67H1.33ZM1.33 13.33H12V5.33H1.33V13.33Z" fill="#5A4136"/>
+            </svg>
+            <span id="current-date-text">Hôm nay, 24/10/2024</span>
+          </div>
+
+          <a class="storefront-link" href="../../page/homepage/main.html" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M1.33 12C0.97 12 0.65 11.87 0.39 11.61C0.13 11.35 0 11.03 0 10.67V1.33C0 0.97 0.13 0.65 0.39 0.39C0.65 0.13 0.97 0 1.33 0H6V1.33H1.33V10.67H10.67V6H12V10.67C12 11.03 11.87 11.35 11.61 11.61C11.35 11.87 11.03 12 10.67 12H1.33ZM4.47 8.47L3.53 7.53L9.73 1.33H7.33V0H12V4.67H10.67V2.27L4.47 8.47Z" fill="currentColor"/>
+            </svg>
+            <span>Xem trang Storefront</span>
+          </a>
+
+          <button class="topbar-icon-btn" type="button" aria-label="Thông báo hệ thống">
+            <svg width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M6.67 16.67C6.12 16.67 5.65 16.47 5.26 16.08C4.87 15.69 4.67 15.22 4.67 14.67H8.67C8.67 15.22 8.47 15.69 8.08 16.08C7.69 16.47 7.22 16.67 6.67 16.67ZM1.33 13.33V12L2.67 10.67V6.67C2.67 5.38 3.06 4.28 3.84 3.38C4.62 2.48 5.56 1.93 6.67 1.77V1.33C6.67 0.97 6.8 0.65 7.06 0.39C7.32 0.13 7.63 0 8 0C8.37 0 8.68 0.13 8.94 0.39C9.2 0.65 9.33 0.97 9.33 1.33V1.77C10.44 1.93 11.38 2.48 12.16 3.38C12.94 4.28 13.33 5.38 13.33 6.67V10.67L14.67 12V13.33H1.33Z" fill="#5A4136"/>
+            </svg>
+            <span class="badge-dot" aria-hidden="true"></span>
+          </button>
+
+          <button class="topbar-avatar-btn" type="button" aria-label="Hồ sơ quản trị">A</button>
+        </div>
+      </header>
+
+      <!-- Main Page Body -->
+      <main class="admin-main">
+        
+        <!-- Breadcrumbs -->
+        <nav class="main-breadcrumbs" aria-label="Đường dẫn trang">
+          <span>Quản trị</span>
+          <span>/</span>
+          <span>Sản phẩm</span>
+          <span>/</span>
+          <strong>Danh sách sản phẩm</strong>
+        </nav>
+
+        <!-- Tiêu đề trang & Nút hành động -->
+        <div class="page-title-row">
+          <div class="page-title-group">
+            <h1 class="page-title">Quản lý sản phẩm</h1>
+            <p class="page-subtitle">
+              Quản lý danh mục hàng hóa và theo dõi tình trạng sản phẩm 
+              (Tổng số: <span class="highlight-text" id="total-products-text">8 sản phẩm</span>)
+            </p>
+          </div>
+          <div class="page-actions-group">
+            <button type="button" class="btn-action-light" id="btn-export-excel" title="Xuất danh sách ra file Excel / CSV">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/>
+              </svg>
+              <span>Xuất Excel</span>
+            </button>
+            <a href="../A06 Thêm sản phẩm/index.html" class="btn-add-product" id="open-add-product-btn" style="text-decoration: none;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              <span>Thêm sản phẩm mới</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 4 Thẻ Thống kê danh mục -->
+        <section class="stats-grid" aria-label="Thống kê sản phẩm">
+          <!-- Card 1 -->
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Tổng số sản phẩm</span>
+              <span class="stat-value" id="stat-total-val">8</span>
+            </div>
+            <div class="stat-icon-wrapper total" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Đang kinh doanh</span>
+              <span class="stat-value" id="stat-active-val">8</span>
+            </div>
+            <div class="stat-icon-wrapper active" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Đã ẩn khỏi shop</span>
+              <span class="stat-value" id="stat-hidden-val">0</span>
+            </div>
+            <div class="stat-icon-wrapper locked" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Tổng lượt đã bán</span>
+              <span class="stat-value" id="stat-sold-val">1.556</span>
+            </div>
+            <div class="stat-icon-wrapper rate" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <!-- Bảng Danh Sách Sản Phẩm & Công cụ -->
+        <section class="table-card" aria-label="Bảng danh sách sản phẩm">
+          <!-- Toolbar Lọc & Tìm kiếm -->
+          <div class="table-toolbar">
+            <div class="toolbar-left">
+              <div class="search-wrap">
+                <span class="search-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </span>
+                <input type="search" id="product-search-input" placeholder="Tìm theo tên, mã sản phẩm (SP01, Bút...)..." aria-label="Tìm kiếm sản phẩm">
+              </div>
+
+              <!-- Lọc danh mục -->
+              <select class="filter-select" id="category-filter" aria-label="Lọc theo danh mục">
+                <option value="all">Tất cả danh mục</option>
+                <option value="Bút viết">Bút viết</option>
+                <option value="Sổ & vở">Sổ &amp; vở</option>
+                <option value="Cặp & balo">Cặp &amp; balo</option>
+                <option value="Hộp bút">Hộp bút</option>
+                <option value="Dụng cụ mỹ thuật">Dụng cụ mỹ thuật</option>
+              </select>
+
+              <!-- Lọc trạng thái -->
+              <select class="filter-select" id="status-filter" aria-label="Lọc theo trạng thái">
+                <option value="all">Tất cả trạng thái</option>
+                <option value="active">Đang bán</option>
+                <option value="hidden">Đã ẩn</option>
+              </select>
+            </div>
+
+            <div class="toolbar-right">
+              <button type="button" class="btn-toolbar-action" id="btn-refresh" title="Làm mới bảng">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M23 4v6h-6"></path>
+                  <path d="M1 20v-6h6"></path>
+                  <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                </svg>
+                <span>Làm mới</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bảng cuộn ngang linh hoạt -->
+          <div class="table-responsive">
+            <table class="user-table products-table" id="products-table">
+              <thead>
+                <tr>
+                  <th class="col-checkbox">
+                    <input type="checkbox" id="select-all-checkbox" aria-label="Chọn tất cả sản phẩm">
+                  </th>
+                  <th class="col-code">MÃ SẢN PHẨM</th>
+                  <th class="col-product">TÊN SẢN PHẨM</th>
+                  <th class="col-price">GIÁ BÁN</th>
+                  <th class="col-status">TRẠNG THÁI</th>
+                  <th class="col-sold">ĐÃ BÁN</th>
+                  <th class="col-actions">THAO TÁC</th>
+                </tr>
+              </thead>
+              <tbody id="products-tbody">
+                <!-- Nội dung được sinh động từ admin.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Phân trang danh sách -->
+          <div class="table-pagination">
+            <span class="pagination-info" id="pagination-info-text">
+              Hiển thị 1 - 8 trên tổng số 8 sản phẩm
+            </span>
+            <div class="pagination-controls">
+              <button type="button" class="btn-page" id="btn-prev-page" aria-label="Trang trước" title="Trang trước">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <button type="button" class="btn-page active" id="btn-page-1" aria-current="page" title="Trang 1">1</button>
+              <button type="button" class="btn-page" id="btn-next-page" aria-label="Trang sau" title="Trang sau (Tải lại trang 1)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- 3. HỘP THOẠI XÓA SẢN PHẨM CHƯA BÁN (Tương thích Figma Frame A08) -->
+  <div class="modal-backdrop" id="delete-modal" aria-hidden="true">
+    <section class="delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="delete-dialog-title" aria-describedby="delete-dialog-description">
+      <div class="dialog-heading">
+        <span class="warning-icon-badge" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <line x1="10" y1="11" x2="10" y2="17"></line>
+            <line x1="14" y1="11" x2="14" y2="17"></line>
+          </svg>
+        </span>
+        <div class="dialog-copy">
+          <div class="title-row">
+            <h2 id="delete-dialog-title">Xóa sản phẩm?</h2>
+            <button class="close-dialog-btn" id="close-delete-modal-btn" type="button" aria-label="Đóng hộp thoại">×</button>
+          </div>
+          <p id="delete-dialog-description">
+            Sản phẩm này chưa được bán ra (<strong>0 đơn hàng</strong>). Bạn có chắc chắn muốn xóa vĩnh viễn sản phẩm 
+            <strong class="highlight-product" id="delete-product-name-highlight">SP08 - Bộ Màu Nước 36 Màu Kèm Cọ Bút Nước</strong> khỏi hệ thống không?
+          </p>
+        </div>
+      </div>
+
+      <div class="permanent-warning-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        <p>Hành động này mang tính vĩnh viễn và không thể hoàn tác sau khi xác nhận.</p>
+      </div>
+
+      <!-- Preview sản phẩm bị xóa -->
+      <article class="product-preview-card" aria-label="Sản phẩm sẽ bị xóa">
+        <div class="product-preview-thumb" id="delete-preview-thumb">
+          <!-- Thumbnail icon sinh từ JS -->
+        </div>
+        <div class="product-preview-details">
+          <div class="product-preview-cat">
+            <span class="preview-code" id="delete-preview-code">SP08</span>
+            <span class="preview-category" id="delete-preview-category">Dụng cụ mỹ thuật</span>
+          </div>
+          <h3 id="delete-preview-name">Bộ Màu Nước 36 Màu Kèm Cọ Bút Nước &amp; Khay Pha Hộp Thiếc</h3>
+          <div class="product-preview-meta">
+            <strong class="preview-price" id="delete-preview-price">175.000₫</strong>
+            <span class="preview-sold">Số lượng đã bán: <strong id="delete-preview-sold">0</strong></span>
+          </div>
+        </div>
+      </article>
+
+      <div class="dialog-actions-row">
+        <button class="btn-dialog-cancel" id="cancel-delete-btn" type="button">Hủy bỏ</button>
+        <button class="btn-dialog-danger" id="confirm-delete-btn" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          <span>Xóa sản phẩm</span>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- 4. HỘP THOẠI BẢO VỆ ĐƠN HÀNG / ẨN SẢN PHẨM ĐÃ BÁN (Tương thích Figma Frame A09) -->
+  <div class="modal-backdrop" id="protect-modal" aria-hidden="true">
+    <section class="delete-dialog sold-protection-dialog" role="alertdialog" aria-modal="true" aria-labelledby="protect-dialog-title" aria-describedby="protect-dialog-description">
+      <div class="dialog-heading">
+        <span class="shield-icon-badge" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </span>
+        <div class="dialog-copy">
+          <div class="title-row">
+            <div class="sold-title-wrap">
+              <h2 id="protect-dialog-title">Sản phẩm đã được bán ra</h2>
+              <span class="badge-order-protection">Bảo vệ đơn hàng</span>
+            </div>
+            <button class="close-dialog-btn" id="close-protect-modal-btn" type="button" aria-label="Đóng hộp thoại">×</button>
+          </div>
+          <p id="protect-dialog-description">
+            Mã định danh: <strong id="protect-product-code">SP01</strong> • <span id="protect-product-name">Bút gel đen 0.5mm</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="sold-alert-box">
+        <div class="sold-alert-text">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <p>
+            <strong>Không thể xoá vĩnh viễn.</strong> Sản phẩm này đã tồn tại trong lịch sử giao dịch và hóa đơn đơn hàng của khách hàng. Để đảm bảo dữ liệu kế toán, hệ thống sẽ <strong>Ẩn sản phẩm</strong> khỏi website bán hàng.
+          </p>
+        </div>
+        <div class="order-audit-row">
+          <span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            Ràng buộc kế toán &amp; đối soát:
+          </span>
+          <strong id="protect-order-count">42 đơn hàng liên quan</strong>
+        </div>
+      </div>
+
+      <ul class="protection-notes-list">
+        <li>Khách hàng không thể tìm kiếm hay đặt mua sản phẩm mới này trên Storefront</li>
+        <li>Người mua cũ vẫn xem lại hóa đơn, phiếu xuất kho và bảo hành đầy đủ thông tin</li>
+      </ul>
+
+      <div class="dialog-actions-row">
+        <button class="btn-dialog-cancel" id="cancel-protect-btn" type="button">Hủy bỏ</button>
+        <button class="btn-dialog-hide" id="confirm-hide-btn" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+          </svg>
+          <span id="hide-btn-text">Ẩn sản phẩm</span>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- 5. HỘP THOẠI THÊM SẢN PHẨM MỚI -->
+  <div class="modal-backdrop" id="add-modal" aria-hidden="true">
+    <section class="modal-dialog-form" role="dialog" aria-modal="true" aria-labelledby="add-modal-title">
+      <div class="dialog-heading">
+        <span class="add-icon-badge" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </span>
+        <div class="dialog-copy">
+          <div class="title-row">
+            <h2 id="add-modal-title">Thêm sản phẩm mới</h2>
+            <button class="close-dialog-btn" id="close-add-modal-btn" type="button" aria-label="Đóng hộp thoại">×</button>
+          </div>
+          <p>Nhập thông tin sản phẩm mới vào hệ thống hàng hóa Học Đường Store.</p>
+        </div>
+      </div>
+
+      <form id="add-product-form" class="admin-product-form">
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="new-product-code">Mã sản phẩm <span class="required">*</span></label>
+            <input type="text" id="new-product-code" class="form-input" required placeholder="SP51" value="SP51">
+          </div>
+          <div class="form-group">
+            <label for="new-product-category">Danh mục <span class="required">*</span></label>
+            <select id="new-product-category" class="form-select" required>
+              <option value="Bút viết">Bút viết</option>
+              <option value="Sổ & vở">Sổ &amp; vở</option>
+              <option value="Cặp & balo">Cặp &amp; balo</option>
+              <option value="Hộp bút">Hộp bút</option>
+              <option value="Dụng cụ mỹ thuật">Dụng cụ mỹ thuật</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="new-product-name">Tên sản phẩm <span class="required">*</span></label>
+          <input type="text" id="new-product-name" class="form-input" required placeholder="Ví dụ: Bút máy luyện chữ nét thanh nét đậm">
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="new-product-price">Giá bán (VNĐ) <span class="required">*</span></label>
+            <input type="number" id="new-product-price" class="form-input" required min="1000" step="500" placeholder="45000">
+          </div>
+          <div class="form-group">
+            <label for="new-product-stock">Số lượng tồn ban đầu</label>
+            <input type="number" id="new-product-stock" class="form-input" min="0" placeholder="100" value="100">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="new-product-status">Trạng thái kinh doanh</label>
+          <select id="new-product-status" class="form-select">
+            <option value="active">Đang bán</option>
+            <option value="hidden">Tạm ẩn</option>
+          </select>
+        </div>
+
+        <div class="dialog-actions-row">
+          <button class="btn-dialog-cancel" id="cancel-add-btn" type="button">Hủy bỏ</button>
+          <button class="btn-dialog-primary" type="submit">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Lưu sản phẩm</span>
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <!-- 6. TOAST THÔNG BÁO HỆ THỐNG -->
+  <aside class="admin-toast" id="admin-toast" role="status" aria-live="polite" aria-hidden="true">
+    <div class="toast-icon-wrap" id="toast-icon">✓</div>
+    <div class="toast-body">
+      <div class="toast-header-row">
+        <strong id="toast-title">Thông báo hệ thống</strong>
+        <button id="close-toast-btn" type="button" aria-label="Đóng thông báo">×</button>
+      </div>
+      <p id="toast-desc">Cập nhật dữ liệu sản phẩm thành công.</p>
+    </div>
+  </aside>
+
+  <!-- Script xử lý trang A05 -->
+  <script src="admin.js"></script>
+</body>
+</html>
+
