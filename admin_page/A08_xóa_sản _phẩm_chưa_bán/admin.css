@@ -1,7 +1,7 @@
 .admin-page {
   min-height: 100vh;
-  background: #f4f4f5;
-  color: #252628;
+  background: var(--bg-page, #f7f8fa);
+  color: var(--text-main, #212121);
   font-family: var(--font-family-base);
   font-size: 13px;
 }
@@ -26,7 +26,6 @@
   border-bottom: 1px solid #343537;
 }
 
-.brand-mark,
 .account-avatar,
 .topbar-avatar {
   display: grid;
@@ -39,9 +38,17 @@
 }
 
 .brand-mark {
-  width: 28px;
-  height: 28px;
-  font-size: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+}
+
+img.brand-mark {
+  background: transparent !important;
+  border-radius: 8px;
+  object-fit: contain;
 }
 
 .brand-copy,
@@ -155,7 +162,7 @@
 
 .topbar-links a.topbar-current {
   border-bottom: 2px solid var(--color-primary);
-  color: #252628;
+  color: var(--text-main, #212121);
   font-weight: 600;
 }
 

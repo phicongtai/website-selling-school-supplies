@@ -8,13 +8,13 @@
 :root {
   --c-orange: var(--color-primary);
   --c-orange-dark: var(--color-primary-800);
-  --c-orange-deep: #b34a00;
+  --c-orange-deep: var(--color-primary-700, #9e3e00);
   --c-orange-soft: var(--color-primary-50);
-  --c-orange-line: #ffd9c0;
-  --c-green: #0f9d63;
-  --c-green-soft: #eafaf1;
-  --c-blue: #0074b8;
-  --c-blue-soft: #eef6ff;
+  --c-orange-line: var(--color-primary-100, #ffe1cc);
+  --c-green: var(--color-success, #10B981);
+  --c-green-soft: var(--color-success-soft, #ecfdf5);
+  --c-blue: var(--color-tertiary, #009EFB);
+  --c-blue-soft: var(--color-tertiary-50, #f0f9ff);
   --c-ink: var(--text-headline);
   --c-body: var(--text-body);
   --c-muted: var(--text-muted);

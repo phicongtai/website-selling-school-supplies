@@ -5,8 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Đăng ký | Học Đường Store</title>
-    <link rel="stylesheet" href="../homepage/homepage.css">
+  <!-- Google Fonts: Be Vietnam Pro (Đồng bộ font chữ toàn dự án) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png">
     <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../homepage/homepage.css">
   <script src="../../assets/js/site.js" defer></script>
   <script src="../../assets/js/cart.js" defer></script>
   <script src="../products/product-data.js" defer></script>
@@ -24,19 +29,29 @@
         <div class="container homepage-header-container">
             <div class="homepage-header-row">
                 <a href="../homepage/main.html" class="brand-logo">
-                    <span class="brand-icon">HD</span>
+                    <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
                     <span class="brand-text"><span class="brand-title">Học Đường Store</span><span class="brand-slogan">Vibrant &amp; Minimal</span></span>
                 </a>
                 <div class="header-search store-search">
                     <div class="store-search-field">
                         <input id="headerSearchInput" class="store-search-input" type="search" placeholder="Tìm kiếm dụng cụ học tập, bút viết, tập vở..." aria-label="Tìm kiếm sản phẩm">
-                        <button class="store-search-button" type="button" onclick="location.href='../homepage/main.html?search=' + encodeURIComponent(document.getElementById('headerSearchInput').value)">🔍 Tìm kiếm</button>
+                        <button class="store-search-button" type="button" onclick="location.href='../homepage/main.html?search=' + encodeURIComponent(document.getElementById('headerSearchInput').value)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>Tìm kiếm</span></button>
                     </div>
                     <div class="store-search-hint"><a href="../homepage/main.html#view-advanced-search">Tìm kiếm nâng cao</a></div>
                 </div>
                 <div class="header-actions homepage-header-actions">
-                    <a class="action-btn" href="../customer/cart.html" title="Giỏ hàng" aria-label="Giỏ hàng">🛒<span class="action-badge cart-count-badge">3</span></a>
-                    <a class="homepage-user" href="login.html">👤<span>Tài khoản</span></a>
+                    <a class="action-btn" href="../customer/cart.html" title="Giỏ hàng" aria-label="Giỏ hàng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><span class="action-badge cart-count-badge">3</span></a>
+                    <div class="header-auth-slot" id="headerAuthSlot">
+            <div class="header-auth-group">
+              <a class="header-auth-btn header-auth-login" href="../auth/login.html" title="Đăng nhập tài khoản">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                <span>Đăng nhập</span>
+              </a>
+              <a class="header-auth-btn header-auth-register" href="../auth/register.html" title="Đăng ký tài khoản">
+                <span>Đăng ký</span>
+              </a>
+            </div>
+          </div>
                 </div>
             </div>
             <nav class="main-nav homepage-nav">
@@ -65,21 +80,21 @@
             <div class="promo-stats"><b style="font-size:10px">BỘ ĐẶC QUYỀN THÀNH VIÊN MỚI <span
                         style="float:right">#VERIFIED_STUDENT</span></b>
                 <div class="stats-row">
-                    <div class="stat"><b>♧</b>2 Giờ<br>Nội thành tốc hành</div>
-                    <div class="stat"><b>♧</b>100%<br>Chính hãng kiểm duyệt</div>
-                    <div class="stat"><b>◷</b>30 Ngày<br>1 đổi 1 tận nơi</div>
+                    <div class="stat"><b><img src="../../assets/icons/truck.svg" alt="" width="14" height="14" style="vertical-align: -1px; filter: brightness(0) invert(1);" aria-hidden="true"></b> 2 Giờ<br>Nội thành tốc hành</div>
+                    <div class="stat"><b><img src="../../assets/icons/shield-check.svg" alt="" width="14" height="14" style="vertical-align: -1px; filter: brightness(0) invert(1);" aria-hidden="true"></b> 100%<br>Chính hãng kiểm duyệt</div>
+                    <div class="stat"><b><img src="../../assets/icons/clock.svg" alt="" width="14" height="14" style="vertical-align: -1px; filter: brightness(0) invert(1);" aria-hidden="true"></b> 30 Ngày<br>1 đổi 1 tận nơi</div>
                 </div>
             </div>
             <div class="promo-spacer"></div>
-            <div class="promo-feature"><span>♧</span>
+            <div class="promo-feature"><span><img src="../../assets/icons/shield-check.svg" alt="" width="18" height="18" aria-hidden="true"></span>
                 <p><b>Tài khoản học sinh sinh viên chính hãng</b><br>Tự động kích hoạt ưu đãi giá giáo dục theo mã sinh
                     viên toàn quốc.</p>
             </div>
-            <div class="promo-feature"><span>ϟ</span>
+            <div class="promo-feature"><span><img src="../../assets/icons/bolt.svg" alt="" width="18" height="18" aria-hidden="true"></span>
                 <p><b>Giao hàng siêu tốc 2h trước giờ thi</b><br>Cứu nguy dụng cụ thi cử, máy tính Casio chuẩn Bộ Giáo
                     Dục chuẩn xác từng phút.</p>
             </div>
-            <div class="promo-feature"><span>◉</span>
+            <div class="promo-feature"><span><img src="../../assets/icons/refresh-cw.svg" alt="" width="18" height="18" aria-hidden="true"></span>
                 <p><b>Bảo hành đổi mới 30 ngày an tâm tuyệt đối</b><br>Đổi trả không cần lý do phức tạp cho tập vở, balo
                     chống gù và phụ kiện công nghệ.</p>
             </div>
@@ -98,7 +113,7 @@
                 <div class="form-grid">
                     <div class="field">
                         <div class="field-head"><label for="fullname">Họ và tên <b>*</b></label></div>
-                        <div class="field-input"><span class="glyph">♙</span><input id="fullname"
+                        <div class="field-input"><span class="glyph"><img src="../../assets/icons/id-card.svg" alt="" width="15" height="15" aria-hidden="true"></span><input id="fullname"
                                 placeholder="Nguyễn Minh Anh" required></div>
                     </div>
                     <div class="field">
@@ -109,32 +124,32 @@
                     </div>
                     <div class="field">
                         <div class="field-head"><label for="email">Email cá nhân <b>*</b></label></div>
-                        <div class="field-input"><span class="glyph">✉</span><input id="email" type="email"
+                        <div class="field-input"><span class="glyph"><img src="../../assets/icons/mail.svg" alt="" width="15" height="15" aria-hidden="true"></span><input id="email" type="email"
                                 placeholder="minhanh@email.com" required></div>
                     </div>
                     <div class="field">
                         <div class="field-head"><label for="phone">Số điện thoại <b>*</b></label></div>
-                        <div class="field-input"><span class="glyph">☎</span><input id="phone" type="tel"
+                        <div class="field-input"><span class="glyph"><img src="../../assets/icons/phone.svg" alt="" width="15" height="15" aria-hidden="true"></span><input id="phone" type="tel"
                                 placeholder="0901 234 567" pattern="[0-9 +().-]{9,16}" required></div>
                     </div>
                     <div class="field">
                         <div class="field-head"><label for="password">Mật khẩu <b>*</b></label><small>Tối thiểu 8 ký
                                 tự</small></div>
-                        <div class="field-input"><span class="glyph">♙</span><input id="password" type="password"
+                        <div class="field-input"><span class="glyph"><img src="../../assets/icons/lock.svg" alt="" width="15" height="15" aria-hidden="true"></span><input id="password" type="password"
                                 minlength="8" placeholder="Tạo mật khẩu" required><button class="toggle-password"
                                 type="button" data-toggle="password">◎</button></div>
                     </div>
                     <div class="field" id="confirm-field">
                         <div class="field-head"><label for="confirm-password">Nhập lại mật khẩu <b>*</b></label><small
                                 id="confirm-status"></small></div>
-                        <div class="field-input"><span class="glyph">♧</span><input id="confirm-password"
+                        <div class="field-input"><span class="glyph"><img src="../../assets/icons/lock.svg" alt="" width="14" height="14" aria-hidden="true"></span><input id="confirm-password"
                                 type="password" minlength="8" placeholder="Nhập lại mật khẩu" required><button
                                 class="toggle-password" type="button" data-toggle="confirm-password">◎</button></div>
                         <div class="error-text">Mật khẩu nhập lại không khớp. Vui lòng kiểm tra lại.</div>
                     </div>
                 </div>
                 <section class="delivery">
-                    <h3>♧ Địa chỉ giao hàng mặc định <small
+                    <h3><img src="../../assets/icons/map-pin.svg" alt="" width="16" height="16" style="vertical-align: -2px; margin-right: 4px;" aria-hidden="true">Địa chỉ giao hàng mặc định <small
                             style="float:right;color:#888;font-size:9px;font-weight:400">Tối ưu tốc độ giao hàng
                             2h</small></h3>
                     <div class="delivery-grid">
@@ -179,11 +194,19 @@
                         viên.</span></label><button class="primary-btn" type="submit">Đăng ký →</button>
                 <p id="register-message" style="display:none;color:#16804a"></p>
                 <div class="quick-login">Hoặc đăng nhập nhanh qua</div>
-                <div class="social-row"><button type="button">🌐 Tài khoản Google</button><button type="button">◇ Email
-                        Giáo dục (.edu.vn)</button></div>
+                <div class="social-row">
+                    <button type="button">
+                        <img src="../../assets/icons/google.svg" alt="" width="18" height="18" aria-hidden="true">
+                        <span>Tài khoản Google</span>
+                    </button>
+                    <button type="button">
+                        <img src="../../assets/icons/mail.svg" alt="" width="18" height="18" aria-hidden="true">
+                        <span>Email Giáo dục (.edu.vn)</span>
+                    </button>
+                </div>
                 <div class="login-now">Đã có tài khoản? <a href="login.html" class="text-link"><b>Đăng nhập ngay</b></a>
                 </div>
-                <div class="ssl"><span>♧ Mã hóa SSL 256-bit chuẩn thương mại điện tử an toàn</span><span>Hỗ trợ 24/7:
+                <div class="ssl"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Mã hóa SSL 256-bit chuẩn thương mại điện tử an toàn</span><span>Hỗ trợ 24/7:
                         1900 6868</span></div>
             </form>
         </section>
@@ -193,7 +216,7 @@
     <div class="footer-top">
       <div class="footer-col footer-about">
         <a href="../homepage/main.html" class="brand-logo" style="margin-bottom: 4px; color: #fff;">
-          <div class="brand-icon">HD</div>
+          <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
           <span class="brand-title" style="color: #fff;">Học Đường Store</span>
         </a>
         <p>Hệ thống cung cấp đồ dùng học tập, văn phòng phẩm sáng tạo tối giản chuẩn công thái học cho học sinh, sinh viên toàn quốc.</p>

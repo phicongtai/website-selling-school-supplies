@@ -14,7 +14,7 @@ body.admin-login-page {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--bg-page, #f5f3f3);
+  background-color: var(--bg-page, var(--bg-page, #f7f8fa));
   background-image: 
     radial-gradient(at 0% 0%, rgba(255, 105, 0, 0.04) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(0, 158, 251, 0.03) 0px, transparent 50%);
@@ -122,6 +122,14 @@ main.login-card,
   letter-spacing: 0.5px;
   box-shadow: 0 4px 10px rgba(255, 105, 0, 0.25);
   user-select: none;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+}
+
+img.brand-logo-box {
+  background: transparent !important;
+  box-shadow: none;
+  object-fit: contain;
 }
 
 .brand-text-col {
@@ -233,7 +241,7 @@ main.login-card,
   width: 100%;
   height: 44px;
   padding: 10px 14px 10px 42px;
-  background-color: #f5f3f3;
+  background-color: var(--bg-page, #f7f8fa);
   border: 1px solid transparent;
   border-radius: 8px;
   font-family: inherit;

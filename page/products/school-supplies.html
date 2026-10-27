@@ -5,9 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dụng cụ học tập | Học Đường Store</title>
+  <!-- Google Fonts: Be Vietnam Pro (Đồng bộ font chữ toàn dự án) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png">
 
-  <link rel="stylesheet" href="../homepage/homepage.css">
   <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../homepage/homepage.css">
   <script src="../../assets/js/site.js" defer></script>
   <script src="../../assets/js/cart.js" defer></script>
   <link rel="stylesheet" href="category.css">
@@ -25,13 +30,13 @@
   <div class="container homepage-header-container">
     <div class="homepage-header-row">
       <a href="../homepage/main.html" class="brand-logo">
-        <span class="brand-icon">HD</span>
+        <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
         <span class="brand-text"><span class="brand-title">Học Đường Store</span><span class="brand-slogan">Vibrant &amp; Minimal</span></span>
       </a>
       <div class="header-search store-search">
         <div class="store-search-field">
           <input id="searchInput" class="store-search-input" type="search" placeholder="Tìm kiếm dụng cụ học tập..." aria-label="Tìm kiếm sản phẩm">
-          <button id="searchButton" class="store-search-button" type="button">🔍 Tìm kiếm</button>
+          <button id="searchButton" class="store-search-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>Tìm kiếm</span></button>
         </div>
         <div class="store-search-hint"><a href="../homepage/main.html#view-advanced-search">Tìm kiếm nâng cao</a></div>
       </div>
@@ -45,10 +50,17 @@
     <span class="action-badge cart-count-badge">3</span>
   </button>
 
-  <a class="homepage-user" href="../customer/profile.html" title="Tài khoản cá nhân">
-    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Avatar">
-    <span>Nguyễn Minh Anh</span>
-  </a>
+  <div class="header-auth-slot" id="headerAuthSlot">
+            <div class="header-auth-group">
+              <a class="header-auth-btn header-auth-login" href="../auth/login.html" title="Đăng nhập tài khoản">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                <span>Đăng nhập</span>
+              </a>
+              <a class="header-auth-btn header-auth-register" href="../auth/register.html" title="Đăng ký tài khoản">
+                <span>Đăng ký</span>
+              </a>
+            </div>
+          </div>
 </div>
     </div>
     <nav class="main-nav homepage-nav category-nav">
@@ -76,26 +88,21 @@
   <div class="category-layout">
     <aside class="category-sidebar">
       <div class="sidebar-title">
-        <span>♧</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--color-primary);"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
         <strong>Danh mục sản phẩm</strong>
         <small>7 nhóm</small>
       </div>
 
-      <a class="category-option" href="../homepage/main.html#view-category">
-        Tất cả sản phẩm <span>54</span></a>
-      <a class="category-option" href="pens.html">
-        <span>✎ &nbsp;Bút viết</span><span>10</span></a>
-      <a class="category-option" href="notebooks.html">
-        <span>▤ &nbsp;Vở &amp; giấy</span><span>9</span></a>
-      <a class="category-option" href="backpacks.html">
-        <span>🎒 &nbsp;Cặp &amp; balo</span><span>9</span></a>
-      <a class="category-option selected" href="school-supplies.html">
-        <span>✎ &nbsp;Dụng cụ học tập</span><span>9</span></a>
-      <a class="category-option" href="art.html">Dụng cụ vẽ &amp; mỹ thuật <span>8</span></a>
-      <a class="category-option" href="computers.html">Máy tính &amp; thiết bị học tập <span>8</span></a>
+      <a class="category-option" href="../homepage/main.html#view-category"><span>Tất cả sản phẩm</span><span>54</span></a>
+      <a class="category-option" href="pens.html"><span>Bút viết</span><span>10</span></a>
+      <a class="category-option" href="notebooks.html"><span>Vở &amp; giấy</span><span>9</span></a>
+      <a class="category-option" href="backpacks.html"><span>Cặp &amp; balo</span><span>9</span></a>
+      <a class="category-option selected" href="school-supplies.html"><span>Dụng cụ học tập</span><span>9</span></a>
+      <a class="category-option" href="art.html"><span>Dụng cụ vẽ &amp; mỹ thuật</span><span>8</span></a>
+      <a class="category-option" href="computers.html"><span>Máy tính &amp; thiết bị học tập</span><span>8</span></a>
 
       <div class="shipping-note">
-        <strong>♧ GIAO HÀNG SIÊU TỐC</strong>
+        <strong><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align: -2px; margin-right: 4px;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>GIAO HÀNG SIÊU TỐC</strong>
         <p>Đồng giá vận chuyển toàn quốc chỉ từ 15.000đ cho đơn hàng học cụ.</p>
       </div>
     </aside>
@@ -135,7 +142,7 @@
     <div class="footer-top">
       <div class="footer-col footer-about">
         <a href="../homepage/main.html" class="brand-logo" style="margin-bottom: 4px; color: #fff;">
-          <div class="brand-icon">HD</div>
+          <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
           <span class="brand-title" style="color: #fff;">Học Đường Store</span>
         </a>
         <p>Hệ thống cung cấp đồ dùng học tập, văn phòng phẩm sáng tạo tối giản chuẩn công thái học cho học sinh, sinh viên toàn quốc.</p>

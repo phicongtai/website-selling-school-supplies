@@ -16,22 +16,22 @@
   --color-tertiary-600:     #0082cf;
 
   --color-star:             #FBBF24;
-  --color-danger:           #EF4444;
+  --color-danger:           var(--color-danger, #D32F2F);
   --color-success:          #10B981;
 
   --bg-page:                #f7f8fa;
   --bg-surface:             #ffffff;
-  --bg-panel:               #f1f2f6;
+  --bg-panel:                var(--bg-panel, #ebecef);
 
   --border-light:           #e5e7eb;
   --border-medium:          #d1d5db;
 
   --text-headline:          #212121;
-  --text-body:              #4a4542;
+  --text-body:              var(--text-body, #3d332d);
   --text-muted:             #757575;
   --text-white:             #ffffff;
 
-  --font-family:            'Be Vietnam Pro', sans-serif;
+  --font-family:            var(--font-family-base, 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif);
 
   --radius-xs:              4px;
   --radius-sm:              8px;
@@ -132,11 +132,16 @@ button { cursor: pointer; }
 }
 .header-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 16px; }
 
-.brand-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.25rem; }
+.brand-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.25rem; flex-shrink: 0; }
 .brand-icon {
   width: 38px; height: 38px; border-radius: var(--radius-md);
   background: linear-gradient(135deg, var(--color-primary), var(--color-primary-800));
   display: flex; align-items: center; justify-content: center; color: white;
+  flex-shrink: 0; aspect-ratio: 1 / 1;
+}
+img.brand-icon {
+  background: transparent !important;
+  object-fit: contain;
 }
 
 .main-nav { display: flex; gap: 24px; scroll-behavior: smooth; }
@@ -234,6 +239,12 @@ button { cursor: pointer; }
 .category-icon-box {
   width: 48px; height: 48px; border-radius: var(--radius-full); background: #f7f8fa;
   margin: 0 auto 10px; display: flex; align-items: center; justify-content: center;
+}
+.category-icon-box img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
 }
 
 /* Products Grid */

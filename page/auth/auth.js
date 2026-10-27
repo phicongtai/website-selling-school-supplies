@@ -8,23 +8,45 @@ document.querySelectorAll('[data-toggle]').forEach(function (button) {
   });
 });
 
-// Đăng nhập bản giao diện: kiểm tra trường bắt buộc bằng HTML rồi chuyển về trang chủ.
-// Đây chưa phải xác thực tài khoản thật vì dự án hiện chưa có backend đăng nhập.
+// Xử lý Đăng nhập: Lưu trạng thái vào AuthManager / localStorage
 const loginForm = document.getElementById('login-form');
 if (loginForm) {
   loginForm.addEventListener('submit', function (event) {
     event.preventDefault();
-    window.location.href = '../homepage/main.html';
+    const userInput = document.getElementById('login-user');
+    const rawVal = userInput ? userInput.value.trim() : '';
+    const isEmail = rawVal.includes('@');
+
+    const userData = {
+      name: 'Nguyễn Minh Anh',
+      email: isEmail ? rawVal : 'minhanh@email.com',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80',
+      loginTime: new Date().toISOString()
+    };
+
+    if (window.AuthManager) {
+      window.AuthManager.login(userData);
+    } else {
+      sessionStorage.setItem('hds_auth_user', JSON.stringify(userData));
+    }
+
+    if (window.showSiteToast) {
+      window.showSiteToast('Đăng nhập thành công! Chào mừng Nguyễn Minh Anh');
+    }
+    setTimeout(function () {
+      window.location.href = '../homepage/main.html';
+    }, 400);
   });
 }
 
-// Kiểm tra hai mật khẩu ở trang đăng ký; không hiển thị thông báo yêu cầu kết nối backend.
+// Xử lý Đăng ký tài khoản
 const registerForm = document.getElementById('register-form');
 if (registerForm) {
   const password = document.getElementById('password');
   const confirm = document.getElementById('confirm-password');
   const confirmField = document.getElementById('confirm-field');
   const status = document.getElementById('confirm-status');
+
   function checkPasswords() {
     const mismatch = confirm.value.length > 0 && password.value !== confirm.value;
     confirmField.classList.toggle('invalid', mismatch);
@@ -33,15 +55,42 @@ if (registerForm) {
     confirm.setCustomValidity(mismatch ? 'Mật khẩu không khớp' : '');
     return !mismatch;
   }
-  password.addEventListener('input', checkPasswords);
-  confirm.addEventListener('input', checkPasswords);
+
+  if (password && confirm) {
+    password.addEventListener('input', checkPasswords);
+    confirm.addEventListener('input', checkPasswords);
+  }
+
   registerForm.addEventListener('submit', function (event) {
     event.preventDefault();
     if (!checkPasswords()) {
       confirm.reportValidity();
       return;
     }
-    // Bản demo chưa lưu tài khoản; chuyển về trang chủ thay vì hiện cảnh báo backend.
-    window.location.href = '../homepage/main.html';
+
+    const fullnameInput = document.getElementById('fullname');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+
+    const userData = {
+      name: 'Nguyễn Minh Anh',
+      email: (emailInput && emailInput.value.trim()) || 'minhanh@email.com',
+      phone: (phoneInput && phoneInput.value.trim()) || '0901 234 567',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80',
+      loginTime: new Date().toISOString()
+    };
+
+    if (window.AuthManager) {
+      window.AuthManager.login(userData);
+    } else {
+      sessionStorage.setItem('hds_auth_user', JSON.stringify(userData));
+    }
+
+    if (window.showSiteToast) {
+      window.showSiteToast('Đăng ký tài khoản thành công! Đang chuyển hướng...');
+    }
+    setTimeout(function () {
+      window.location.href = '../homepage/main.html';
+    }, 400);
   });
 }

@@ -67,9 +67,14 @@
   /* Màu chức năng & phản hồi (Feedback Colors) */
   --color-danger:           #D32F2F;
   --color-danger-hover:     #b71c1c;
+  --color-danger-soft:      #fee2e2;
   --color-success:          #10B981;
+  --color-success-soft:     #ecfdf5;
   --color-warning:          #F59E0B;
+  --color-warning-soft:     #fef3c7;
   --color-info:             #009EFB;
+  --color-info-soft:        #f0f9ff;
+  --color-star:             #FBBF24;
 
   /* Nền trang & bề mặt (Surfaces & Backgrounds) */
   --bg-page:                #f7f8fa;
@@ -90,8 +95,17 @@
   --text-muted:             #757575;
   --text-white:             #ffffff;
 
+  /* Compatibility Aliases (Đồng bộ toàn dự án) */
+  --orange:                 var(--color-primary);
+  --orange-dark:            var(--color-primary-800);
+  --ink:                    var(--text-headline);
+  --muted:                  var(--text-muted);
+  --line:                   var(--border-light);
+  --paper:                  var(--bg-page);
+
   /* ===== HỆ THỐNG FONT CHỮ (TYPOGRAPHY) ===== */
   --font-family-base:       'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family:            var(--font-family-base);
   --font-family-headline:   'Be Vietnam Pro', sans-serif;
   --font-family-body:       'Be Vietnam Pro', sans-serif;
   --font-family-label:      'Be Vietnam Pro', sans-serif;
@@ -379,6 +393,7 @@ th, td {
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   min-height: 38px;
   padding: 8px 18px;
   border: 0;
@@ -389,6 +404,10 @@ th, td {
   white-space: nowrap;
   cursor: pointer;
   transition: background-color var(--transition-normal), transform var(--transition-fast);
+}
+.store-search-button svg {
+  flex-shrink: 0;
+  display: block;
 }
 .store-search-button:hover { background: var(--color-primary-700); color: var(--text-white); }
 .store-search-button:active { transform: scale(.97); }
@@ -1157,6 +1176,58 @@ h6, .h6 {
   user-select: none !important;
 }
 
+.brand-icon {
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  max-width: 38px !important;
+  max-height: 38px !important;
+  flex: 0 0 38px !important;
+  flex-shrink: 0 !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  user-select: none !important;
+}
+
+.brand-logo-box {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  flex: 0 0 44px !important;
+  flex-shrink: 0 !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  user-select: none !important;
+}
+
+img.brand-mark,
+img.brand-icon,
+img.brand-logo-box {
+  display: block !important;
+  border: none !important;
+  background: transparent !important;
+  object-fit: contain !important;
+  user-select: none !important;
+}
+
+.brand-logo {
+  flex-shrink: 0 !important;
+}
+
 .topbar-right {
   display: flex !important;
   align-items: center !important;
@@ -1178,5 +1249,212 @@ h6, .h6 {
   }
   .topbar-right {
     gap: 8px !important;
+  }
+}
+
+
+/* ==========================================================================
+   HEADER AUTH & USER PROFILE WIDGET (ĐỒNG BỘ TOÀN DỰ ÁN)
+   ========================================================================== */
+.header-auth-slot {
+  display: inline-flex;
+  align-items: center;
+}
+
+.header-auth-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-auth-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 1;
+  transition: all var(--transition-fast, 150ms ease);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.header-auth-btn svg {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.header-auth-login {
+  background-color: var(--color-primary, #FF6900);
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(255, 105, 0, 0.25);
+  border: 1px solid var(--color-primary, #FF6900);
+}
+
+.header-auth-login:hover {
+  background-color: var(--color-primary-700, #9e3e00);
+  border-color: var(--color-primary-700, #9e3e00);
+  transform: translateY(-1px);
+  color: #ffffff !important;
+}
+
+.header-auth-register {
+  background-color: transparent;
+  color: var(--text-headline, #212121) !important;
+  border: 1px solid var(--border-medium, #d1d5db);
+}
+
+.header-auth-register:hover {
+  background-color: var(--color-primary-50, #fff5ed);
+  border-color: var(--color-primary, #FF6900);
+  color: var(--color-primary-800, #8A3500) !important;
+}
+
+.header-auth-admin {
+  background-color: var(--color-secondary, #212121);
+  color: #ffffff !important;
+  border: 1px solid var(--color-secondary, #212121);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.header-auth-admin:hover {
+  background-color: var(--color-primary-800, #8A3500);
+  border-color: var(--color-primary-800, #8A3500);
+  transform: translateY(-1px);
+  color: #ffffff !important;
+}
+
+
+.header-user-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.header-user-wrapper .homepage-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 3px 8px 3px 3px;
+  border-radius: var(--radius-full, 9999px);
+  text-decoration: none;
+  transition: background-color var(--transition-fast, 150ms ease);
+}
+
+.header-user-wrapper .homepage-user:hover {
+  background-color: var(--color-primary-50, #fff5ed);
+}
+
+.header-user-wrapper .homepage-user img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--color-primary, #FF6900);
+  display: block;
+}
+
+.header-user-wrapper .homepage-user span {
+  color: var(--text-headline, #212121);
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.header-user-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 210px;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-light, #e5e7eb);
+  border-radius: var(--radius-md, 12px);
+  box-shadow: var(--shadow-lg, 0 10px 25px rgba(0, 0, 0, 0.1));
+  padding: 6px 0;
+  display: none;
+  z-index: 1000;
+}
+
+.header-user-wrapper:hover .header-user-dropdown,
+.header-user-wrapper:focus-within .header-user-dropdown {
+  display: block;
+}
+
+.header-user-dropdown-header {
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border-light, #e5e7eb);
+  margin-bottom: 4px;
+}
+
+.header-user-dropdown-header strong {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-headline, #212121);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-user-dropdown-header small {
+  font-size: 0.75rem;
+  color: var(--text-muted, #757575);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.header-user-dropdown a,
+.header-user-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  color: var(--text-body, #3d332d);
+  text-decoration: none;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--transition-fast, 150ms ease), color var(--transition-fast, 150ms ease);
+}
+
+.header-user-dropdown a:hover,
+.header-user-dropdown button:hover {
+  background-color: var(--color-primary-50, #fff5ed);
+  color: var(--color-primary-800, #8A3500);
+}
+
+.header-user-dropdown .logout-item {
+  color: var(--color-danger, #D32F2F);
+  border-top: 1px solid var(--border-light, #e5e7eb);
+  margin-top: 4px;
+  padding-top: 8px;
+}
+
+.header-user-dropdown .logout-item:hover {
+  background-color: var(--color-danger-soft, #fee2e2);
+  color: var(--color-danger-hover, #b71c1c);
+}
+
+@media (max-width: 760px) {
+  .header-auth-register {
+    display: none;
+  }
+  .header-auth-btn {
+    padding: 6px 12px;
+    font-size: 0.78rem;
   }
 }

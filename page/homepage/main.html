@@ -4,8 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Học Đường Store | Đồ dùng học tập &amp; sáng tạo</title>
-  <link rel="stylesheet" href="homepage.css">
+  <!-- Google Fonts: Be Vietnam Pro (Đồng bộ font chữ toàn dự án) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png">
   <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="homepage.css">
   <script src="../../assets/js/site.js" defer></script>
   <script src="../../assets/js/cart.js" defer></script>
 </head>
@@ -23,17 +28,17 @@
     <div class="container homepage-header-container">
       <div class="homepage-header-row">
         <a href="#" class="brand-logo" onclick="navigateToView('view-home'); return false;">
-          <div class="brand-icon">HD</div>
+          <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
           <div class="brand-text">
             <span class="brand-title">Học Đường Store</span>
-            <span class="brand-slogan">Vibrant & Minimal</span>
+            <span class="brand-slogan">Vibrant &amp; Minimal</span>
           </div>
         </a>
 
         <div class="header-search store-search">
           <div class="store-search-field">
             <input type="search" id="headerSearchInput" class="store-search-input" placeholder="Tìm kiếm dụng cụ học tập, bút viết, tập vở..." aria-label="Tìm kiếm sản phẩm">
-            <button class="store-search-button" type="button" onclick="headerSearch()">🔍 Tìm kiếm</button>
+            <button class="store-search-button" type="button" onclick="headerSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>Tìm kiếm</span></button>
           </div>
           <div class="live-search-dropdown" id="liveSearchDropdown"></div>
           <div class="store-search-hint">
@@ -47,10 +52,17 @@
             <span class="action-badge cart-count-badge">3</span>
           </button>
 
-          <a class="homepage-user" href="../customer/profile.html" title="Tài khoản cá nhân">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Avatar">
-            <span>Nguyễn Minh Anh</span>
-          </a>
+          <div class="header-auth-slot" id="headerAuthSlot">
+            <div class="header-auth-group">
+              <a class="header-auth-btn header-auth-login" href="../auth/login.html" title="Đăng nhập tài khoản">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                <span>Đăng nhập</span>
+              </a>
+              <a class="header-auth-btn header-auth-register" href="../auth/register.html" title="Đăng ký tài khoản">
+                <span>Đăng ký</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -103,13 +115,13 @@
     <section class="section container">
       <h2>Danh Mục Nổi Bật</h2>
       <div class="category-grid">
-        <a class="category-card" href="../products/pens.html"><div class="category-icon-box">✏️</div><strong>Bút Viết</strong></a>
-        <a class="category-card" href="../products/notebooks.html"><div class="category-icon-box">📖</div><strong>Sổ &amp; Vở</strong></a>
-        <a class="category-card" href="../products/backpacks.html"><div class="category-icon-box">🎒</div><strong>Balo &amp; Cặp</strong></a>
-        <a class="category-card" href="main.html?categories=cases#view-category"><div class="category-icon-box">👝</div><strong>Hộp Bút</strong></a>
-        <a class="category-card" href="../products/art.html"><div class="category-icon-box">🎨</div><strong>Dụng Cụ Vẽ &amp; Mỹ Thuật</strong></a>
-        <a class="category-card" href="../products/school-supplies.html"><div class="category-icon-box">📏</div><strong>Dụng Cụ Học Tập</strong></a>
-        <a class="category-card" href="../products/computers.html"><div class="category-icon-box">💻</div><strong>Máy Tính &amp; Thiết Bị Học Tập</strong></a>
+        <a class="category-card" href="../products/pens.html"><div class="category-icon-box"><img src="../../assets/icons/cat-pen.svg" alt="" width="24" height="24"></div><strong>Bút Viết</strong></a>
+        <a class="category-card" href="../products/notebooks.html"><div class="category-icon-box"><img src="../../assets/icons/cat-book.svg" alt="" width="24" height="24"></div><strong>Sổ &amp; Vở</strong></a>
+        <a class="category-card" href="../products/backpacks.html"><div class="category-icon-box"><img src="../../assets/icons/cat-backpack.svg" alt="" width="24" height="24"></div><strong>Balo &amp; Cặp</strong></a>
+        <a class="category-card" href="main.html?categories=cases#view-category"><div class="category-icon-box"><img src="../../assets/icons/bag.svg" alt="" width="24" height="24"></div><strong>Hộp Bút</strong></a>
+        <a class="category-card" href="../products/art.html"><div class="category-icon-box"><img src="../../assets/icons/cat-palette.svg" alt="" width="24" height="24"></div><strong>Dụng Cụ Vẽ &amp; Mỹ Thuật</strong></a>
+        <a class="category-card" href="../products/school-supplies.html"><div class="category-icon-box"><img src="../../assets/icons/cat-ruler.svg" alt="" width="24" height="24"></div><strong>Dụng Cụ Học Tập</strong></a>
+        <a class="category-card" href="../products/computers.html"><div class="category-icon-box"><img src="../../assets/icons/cat-calculator.svg" alt="" width="24" height="24"></div><strong>Máy Tính &amp; Thiết Bị Học Tập</strong></a>
       </div>
     </section>
 
@@ -280,10 +292,18 @@
   <!-- FLOATING DOCK -->
   <div class="floating-dock-container">
     <div class="floating-dock">
-      <button class="dock-item active" onclick="navigateToView('view-home')">🏠</button>
-      <button class="dock-item" onclick="navigateToView('view-category')">📂</button>
-      <button class="dock-item" onclick="navigateToView('view-advanced-search')">🔍</button>
-      <button class="dock-item" onclick="openCartDrawer()">🛒</button>
+      <button class="dock-item active" onclick="navigateToView('view-home')" aria-label="Trang chủ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </button>
+      <button class="dock-item" onclick="navigateToView('view-category')" aria-label="Danh mục">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+      </button>
+      <button class="dock-item" onclick="navigateToView('view-advanced-search')" aria-label="Tìm kiếm nâng cao">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </button>
+      <button class="dock-item" onclick="openCartDrawer()" aria-label="Giỏ hàng">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+      </button>
     </div>
   </div>
 
@@ -318,7 +338,7 @@
     <div class="footer-top">
       <div class="footer-col footer-about">
         <a href="main.html" class="brand-logo" style="margin-bottom: 4px; color: #fff;">
-          <div class="brand-icon">HD</div>
+          <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
           <span class="brand-title" style="color: #fff;">Học Đường Store</span>
         </a>
         <p>Hệ thống cung cấp đồ dùng học tập, văn phòng phẩm sáng tạo tối giản chuẩn công thái học cho học sinh, sinh viên toàn quốc.</p>

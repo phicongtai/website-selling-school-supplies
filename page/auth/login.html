@@ -5,8 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Đăng nhập | Học Đường Store</title>
-    <link rel="stylesheet" href="../homepage/homepage.css">
+  <!-- Google Fonts: Be Vietnam Pro (Đồng bộ font chữ toàn dự án) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png">
     <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../homepage/homepage.css">
   <script src="../../assets/js/site.js" defer></script>
   <script src="../../assets/js/cart.js" defer></script>
   <script src="../products/product-data.js" defer></script>
@@ -24,19 +29,29 @@
         <div class="container homepage-header-container">
             <div class="homepage-header-row">
                 <a href="../homepage/main.html" class="brand-logo">
-                    <span class="brand-icon">HD</span>
+                    <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
                     <span class="brand-text"><span class="brand-title">Học Đường Store</span><span class="brand-slogan">Vibrant &amp; Minimal</span></span>
                 </a>
                 <div class="header-search store-search">
                     <div class="store-search-field">
                         <input id="headerSearchInput" class="store-search-input" type="search" placeholder="Tìm kiếm dụng cụ học tập, bút viết, tập vở..." aria-label="Tìm kiếm sản phẩm">
-                        <button class="store-search-button" type="button" onclick="location.href='../homepage/main.html?search=' + encodeURIComponent(document.getElementById('headerSearchInput').value)">🔍 Tìm kiếm</button>
+                        <button class="store-search-button" type="button" onclick="location.href='../homepage/main.html?search=' + encodeURIComponent(document.getElementById('headerSearchInput').value)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>Tìm kiếm</span></button>
                     </div>
                     <div class="store-search-hint"><a href="../homepage/main.html#view-advanced-search">Tìm kiếm nâng cao</a></div>
                 </div>
                 <div class="header-actions homepage-header-actions">
-                    <a class="action-btn" href="../customer/cart.html" title="Giỏ hàng" aria-label="Giỏ hàng">🛒<span class="action-badge cart-count-badge">3</span></a>
-                    <a class="homepage-user" href="login.html">👤<span>Tài khoản</span></a>
+                    <a class="action-btn" href="../customer/cart.html" title="Giỏ hàng" aria-label="Giỏ hàng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><span class="action-badge cart-count-badge">3</span></a>
+                    <div class="header-auth-slot" id="headerAuthSlot">
+            <div class="header-auth-group">
+              <a class="header-auth-btn header-auth-login" href="../auth/login.html" title="Đăng nhập tài khoản">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                <span>Đăng nhập</span>
+              </a>
+              <a class="header-auth-btn header-auth-register" href="../auth/register.html" title="Đăng ký tài khoản">
+                <span>Đăng ký</span>
+              </a>
+            </div>
+          </div>
                 </div>
             </div>
             <nav class="main-nav homepage-nav">
@@ -61,55 +76,73 @@
                 <div class="field">
                     <div class="field-head"><label for="login-user">Tên đăng nhập hoặc Email</label><small>Hỗ trợ mã học
                             sinh</small></div>
-                    <div class="field-input"><span class="glyph">♙</span><input id="login-user" autocomplete="username"
+                    <div class="field-input"><span class="glyph"><img src="../../assets/icons/id-card.svg" alt="" width="15" height="15" aria-hidden="true"></span><input id="login-user" autocomplete="username"
                             placeholder="Nhập tên đăng nhập hoặc email" required></div>
                 </div>
                 <div class="field">
                     <div class="field-head"><label for="login-pass">Mật khẩu</label><small>Tối thiểu 8 ký tự</small>
                     </div>
-                    <div class="field-input"><span class="glyph">♙</span><input id="login-pass" type="password"
+                    <div class="field-input"><span class="glyph"><img src="../../assets/icons/lock.svg" alt="" width="15" height="15" aria-hidden="true"></span><input id="login-pass" type="password"
                             autocomplete="current-password" placeholder="Nhập mật khẩu" required><button
                             class="toggle-password" type="button" data-toggle="login-pass">◎</button></div>
                 </div>
                 <div class="row-between"><label class="remember"><input type="checkbox"> Ghi nhớ đăng nhập</label><a
                         class="text-link" href="#">Quên mật khẩu?</a></div><button class="primary-btn"
                     type="submit">Đăng nhập →</button>
+                <div class="quick-login">Hoặc đăng nhập nhanh qua</div>
+                <div class="social-row">
+                    <button type="button">
+                        <img src="../../assets/icons/google.svg" alt="" width="18" height="18" aria-hidden="true">
+                        <span>Tài khoản Google</span>
+                    </button>
+                    <button type="button">
+                        <img src="../../assets/icons/mail.svg" alt="" width="18" height="18" aria-hidden="true">
+                        <span>Email Giáo dục (.edu.vn)</span>
+                    </button>
+                </div>
             </form>
             <div class="register-prompt"><span>Bạn chưa có tài khoản học sinh?</span><a class="text-link"
                     href="register.html"><b>Đăng ký ngay ›</b></a></div>
+            <div class="admin-portal-box">
+                <a href="../../admin_page/A01%20Đăng%20nhập%20quản%20trị/index.html" class="admin-portal-link" title="Cổng dành riêng cho Quản trị viên & Điều phối viên">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span>Đăng nhập Quản trị (Admin)</span>
+                    <span class="admin-arrow" aria-hidden="true">→</span>
+                </a>
+            </div>
         </section>
         <aside class="side-column">
             <section class="panel membership"><span class="membership-tag">Học Đường Membership</span>
                 <h2>Chuẩn bị trọn vẹn hành trang tri thức</h2>
                 <p>Đăng nhập để đồng bộ danh sách dụng cụ, kiểm tra tiến độ giao tập vở và áp dụng ưu đãi độc quyền lên
                     tới 25% cho năm học mới.</p>
-                <div class="study-photo"><span class="photo-caption">♧ Bảo chứng hàng chính hãng 100%</span></div>
+                <div class="study-photo"><span class="photo-caption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>Bảo chứng hàng chính hãng 100%</span></div>
             </section>
             <section class="panel support">
                 <h3>ⓘ Trung tâm hỗ trợ tài khoản</h3>
                 <p>Nếu bạn gặp khó khăn khi đăng nhập hoặc tài khoản đang trong trạng thái xử lý dữ liệu niên khóa, hãy
                     liên hệ chuyên viên ngay:</p>
                 <div class="support-grid">
-                    <div class="support-card">☎ Hotline tư vấn<strong>1900 6868</strong></div>
-                    <div class="support-card">✉ Hòm thư điện tử<strong>cskh@hocduongstore.vn</strong></div>
+                    <div class="support-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Hotline tư vấn<strong>1900 6868</strong></div>
+                    <div class="support-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>Hòm thư điện tử<strong>cskh@hocduongstore.vn</strong></div>
                 </div>
-                <div class="security-note"><b>♧ Cam kết bảo mật học đường:</b> Thông tin cá nhân và học bạ của học sinh
+                <div class="security-note"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Cam kết bảo mật học đường:</b> Thông tin cá nhân và học bạ của học sinh
                     được mã hóa chuẩn SSL 256-bit, đảm bảo an toàn tuyệt đối.</div>
             </section>
         </aside>
     </main>
     <section class="benefits">
-        <div class="benefit"><span class="benefit-icon">♧</span>
+        <div class="benefit"><span class="benefit-icon"><img src="../../assets/icons/truck.svg" alt="" width="22" height="22"></span>
             <div><b>Giao tận tay lớp học</b>
                 <p>Đồng kiểm chất lượng sách vở trước khi nhận</p>
             </div>
         </div>
-        <div class="benefit"><span class="benefit-icon">♧</span>
+        <div class="benefit"><span class="benefit-icon"><img src="../../assets/icons/refresh-cw.svg" alt="" width="22" height="22"></span>
             <div><b>Đổi trả 30 ngày linh hoạt</b>
                 <p>Áp dụng cho mọi dụng cụ chưa qua sử dụng</p>
             </div>
         </div>
-        <div class="benefit"><span class="benefit-icon">♧</span>
+        <div class="benefit"><span class="benefit-icon"><img src="../../assets/icons/award.svg" alt="" width="22" height="22"></span>
             <div><b>Tích điểm học viên</b>
                 <p>Quy đổi dụng cụ vẽ và quà tặng đầu học kỳ</p>
             </div>
@@ -120,7 +153,7 @@
     <div class="footer-top">
       <div class="footer-col footer-about">
         <a href="../homepage/main.html" class="brand-logo" style="margin-bottom: 4px; color: #fff;">
-          <div class="brand-icon">HD</div>
+          <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
           <span class="brand-title" style="color: #fff;">Học Đường Store</span>
         </a>
         <p>Hệ thống cung cấp đồ dùng học tập, văn phòng phẩm sáng tạo tối giản chuẩn công thái học cho học sinh, sinh viên toàn quốc.</p>

@@ -203,6 +203,162 @@
       searchButton.click();
     }
   });
+  /* ==========================================================================
+     QUẢN LÝ XÁC THỰC NGƯỜI DÙNG & ĐỒNG BỘ GIAO DIỆN HEADER (AuthManager)
+     ========================================================================== */
+  const AUTH_STORAGE_KEY = 'hds_auth_user';
+
+  const AuthManager = {
+    getUser: function () {
+      try {
+        const raw = sessionStorage.getItem(AUTH_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch (err) {
+        return null;
+      }
+    },
+    isLoggedIn: function () {
+      return this.getUser() !== null;
+    },
+    login: function (userData) {
+      const user = {
+        name: 'Nguyễn Minh Anh',
+        email: (userData && userData.email) || 'minhanh@email.com',
+        avatar: (userData && userData.avatar) || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80',
+        loginTime: new Date().toISOString()
+      };
+      sessionStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
+      try { localStorage.removeItem(AUTH_STORAGE_KEY); } catch (e) {}
+      return user;
+    },
+    logout: function () {
+      try {
+        sessionStorage.removeItem(AUTH_STORAGE_KEY);
+        localStorage.removeItem(AUTH_STORAGE_KEY);
+      } catch (e) {}
+      if (window.showSiteToast) {
+        window.showSiteToast('Đã đăng xuất tài khoản.');
+      }
+      setTimeout(function () {
+        const path = window.location.pathname.replace(/\\/g, '/');
+        if (path.includes('/page/customer/profile.html')) {
+          window.location.href = '../homepage/main.html';
+        } else {
+          window.location.reload();
+        }
+      }, 400);
+    }
+  };
+
+  window.AuthManager = AuthManager;
+
+  function getAuthPaths() {
+    const p = window.location.pathname.replace(/\\/g, '/');
+    const adminLink = '../../admin_page/A01%20Đăng%20nhập%20quản%20trị/index.html';
+    if (p.includes('/page/auth/')) {
+      return {
+        login: 'login.html',
+        register: 'register.html',
+        admin: adminLink,
+        profile: '../customer/profile.html',
+        orders: '../customer/cart.html?tab=orders'
+      };
+    } else if (p.includes('/page/customer/')) {
+      return {
+        login: '../auth/login.html',
+        register: '../auth/register.html',
+        admin: adminLink,
+        profile: 'profile.html',
+        orders: 'cart.html?tab=orders'
+      };
+    } else {
+      return {
+        login: '../auth/login.html',
+        register: '../auth/register.html',
+        admin: adminLink,
+        profile: '../customer/profile.html',
+        orders: '../customer/cart.html?tab=orders'
+      };
+    }
+  }
+
+  function initHeaderAuth() {
+    const slots = document.querySelectorAll('.header-auth-slot, .homepage-user');
+    if (!slots.length) return;
+
+    const paths = getAuthPaths();
+    const rawUser = AuthManager.getUser();
+    const user = rawUser ? Object.assign({}, rawUser, { name: 'Nguyễn Minh Anh' }) : null;
+
+    slots.forEach(function (slot) {
+      let container = slot;
+      if (slot.classList.contains('homepage-user') && slot.tagName === 'A' && !slot.classList.contains('header-user-link')) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'header-auth-slot';
+        slot.parentNode.replaceChild(wrapper, slot);
+        container = wrapper;
+      }
+
+      if (user) {
+        container.innerHTML = `
+          <div class="header-user-wrapper">
+            <a class="homepage-user header-user-link" href="${paths.profile}" title="Tài khoản cá nhân: ${escapeHTML(user.name)}">
+              <img src="${escapeHTML(user.avatar)}" alt="${escapeHTML(user.name)}" width="36" height="36">
+              <span>${escapeHTML(user.name)}</span>
+            </a>
+            <div class="header-user-dropdown" role="menu">
+              <div class="header-user-dropdown-header">
+                <strong>${escapeHTML(user.name)}</strong>
+                <small>${escapeHTML(user.email || 'Học viên Học Đường')}</small>
+              </div>
+              <a href="${paths.profile}" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>
+                <span>Hồ sơ cá nhân</span>
+              </a>
+              <a href="${paths.orders}" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span>Đơn hàng của tôi</span>
+              </a>
+              <a href="${paths.admin}" role="menuitem" style="color: var(--color-primary-800);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span>Trang quản trị (Admin)</span>
+              </a>
+              <button type="button" class="logout-item" data-action="logout" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <span>Đăng xuất</span>
+              </button>
+            </div>
+          </div>
+        `;
+        const logoutBtn = container.querySelector('[data-action="logout"]');
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            AuthManager.logout();
+          });
+        }
+      } else {
+        container.innerHTML = `
+          <div class="header-auth-group">
+            <a class="header-auth-btn header-auth-login" href="${paths.login}" title="Đăng nhập tài khoản">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+              <span>Đăng nhập</span>
+            </a>
+            <a class="header-auth-btn header-auth-register" href="${paths.register}" title="Đăng ký tài khoản">
+              <span>Đăng ký</span>
+            </a>
+          </div>
+        `;
+      }
+    });
+  }
+
+  if (document.readyState === 'complete') {
+    initHeaderAuth();
+  } else {
+    document.addEventListener('DOMContentLoaded', initHeaderAuth);
+  }
+
 })();
 // Hàm mở giỏ hàng (Cart Drawer)
 window.openCartDrawer = function() {

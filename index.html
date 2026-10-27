@@ -3,11 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0; url=page/homepage/main.html">
   <title>Học Đường Store</title>
+  <link rel="icon" type="image/png" href="assets/Gemini_Generated_Image_ul14lqul14lqul14.png">
 </head>
 <body>
   <p>Đang chuyển đến <a href="page/homepage/main.html">Học Đường Store</a>...</p>
-  <script>window.location.replace("page/homepage/main.html");</script>
+  <script>
+    // Reset hoàn toàn trạng thái đăng nhập mỗi khi mở lại file index
+    try {
+      sessionStorage.removeItem('hds_auth_user');
+      localStorage.removeItem('hds_auth_user');
+    } catch (e) {}
+    window.location.replace("page/homepage/main.html");
+  </script>
 </body>
+</html>
+
 </html>

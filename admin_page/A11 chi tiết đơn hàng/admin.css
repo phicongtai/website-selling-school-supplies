@@ -8,27 +8,27 @@
    1. KHUNG TRANG CHI TIẾT
    -------------------------------------------------------------------------- */
 :root {
-  --od-text: #1b1c1c;
-  --od-muted: #5f5e5e;
-  --od-body: #5a4136;
-  --od-soft: #f5f3f3;
-  --od-line: #efeded;
-  --od-track: #e2dfde;
-  --od-blue: #00629f;
-  --od-blue-soft: #cfe4ff;
-  --od-blue-deep: #004a79;
-  --od-green: #1b7f43;
-  --od-green-soft: #e8f8ee;
-  --od-orange: #ff6900;
-  --od-orange-soft: #fff4e5;
-  --od-red: #93000a;
-  --od-red-soft: #ffdad6;
+  --od-text: var(--text-headline, #212121);
+  --od-muted: var(--text-muted, #757575);
+  --od-body: var(--text-body, #3d332d);
+  --od-soft: var(--bg-page, #f7f8fa);
+  --od-line: var(--border-light, #e5e7eb);
+  --od-track: var(--border-medium, #d1d5db);
+  --od-blue: var(--color-tertiary, #009EFB);
+  --od-blue-soft: var(--color-tertiary-50, #f0f9ff);
+  --od-blue-deep: var(--color-tertiary-700, #0064a0);
+  --od-green: var(--color-success, #10B981);
+  --od-green-soft: var(--color-success-soft, #ecfdf5);
+  --od-orange: var(--color-primary, #FF6900);
+  --od-orange-soft: var(--color-primary-50, #fff5ed);
+  --od-red: var(--color-danger, #D32F2F);
+  --od-red-soft: var(--color-danger-soft, #fee2e2);
 }
 
 .order-detail-main {
   gap: 12px;
   padding: 14px 16px 24px;
-  background-color: #f5f3f3;
+  background-color: var(--bg-page, #f7f8fa);
 }
 
 /* Thanh breadcrumb trên cùng */
@@ -1508,7 +1508,7 @@
    12. IN PHIẾU GIAO HÀNG
    -------------------------------------------------------------------------- */
 @media print {
-  body { background: #fff; }
+  body { background: var(--bg-page, #f7f8fa); font-family: var(--font-family-base); color: var(--text-main); }
 
   .admin-sidebar,
   .admin-topbar,

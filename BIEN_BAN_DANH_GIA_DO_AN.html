@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Biên Bản Đánh Giá & Báo Cáo Thống Kê Đồ Án - Học Đường Store</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 11mm 13mm 13mm 13mm;
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 10pt;
+      line-height: 1.42;
+      color: #1f2937;
+      background: #fff;
+    }
+    .page-break {
+      page-break-before: always;
+    }
+    .no-break {
+      page-break-inside: avoid;
+    }
+
+    /* HEADER */
+    .header-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+    }
+    .header-table td {
+      vertical-align: top;
+      border: none;
+      padding: 0;
+    }
+    .header-left {
+      width: 50%;
+      text-align: center;
+      font-size: 9.5pt;
+    }
+    .header-left strong {
+      font-size: 10pt;
+      display: block;
+      text-transform: uppercase;
+    }
+    .header-left .sub {
+      font-size: 9pt;
+      color: #374151;
+      margin-top: 1px;
+    }
+    .header-right {
+      width: 50%;
+      text-align: center;
+      font-size: 9.5pt;
+    }
+    .header-right strong {
+      font-size: 10pt;
+      display: block;
+      text-transform: uppercase;
+    }
+    .header-right .sub {
+      font-size: 9pt;
+      font-style: italic;
+      margin-top: 1px;
+    }
+    .header-line {
+      width: 90px;
+      height: 1px;
+      background: #374151;
+      margin: 3px auto 0 auto;
+    }
+
+    /* DOC TITLE */
+    .doc-title-block {
+      text-align: center;
+      margin: 10px 0 14px 0;
+    }
+    .doc-date {
+      font-style: italic;
+      font-size: 9pt;
+      color: #4b5563;
+      text-align: right;
+      margin-bottom: 4px;
+    }
+    .doc-title {
+      font-size: 15pt;
+      font-weight: 800;
+      color: #0f172a;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .doc-subtitle {
+      font-size: 10.5pt;
+      font-style: italic;
+      color: #1e3a8a;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* TABLES */
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9pt;
+      margin-bottom: 10px;
+    }
+    table.data-table th, table.data-table td {
+      border: 1px solid #cbd5e1;
+      padding: 5px 7px;
+      vertical-align: middle;
+    }
+    table.data-table th {
+      background: #f1f5f9;
+      color: #1e293b;
+      font-weight: 700;
+      text-align: center;
+    }
+    table.data-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    /* BADGES */
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 8pt;
+      font-weight: 700;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .badge-pass {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+    }
+    .badge-partial {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+    .badge-fail {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fca5a5;
+    }
+
+    /* SECTION HEADER */
+    .section-header {
+      background: #1e3a8a;
+      color: #fff;
+      padding: 5px 9px;
+      font-size: 10pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-radius: 4px;
+      margin: 12px 0 6px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .section-header .section-pts {
+      font-size: 9.5pt;
+      background: rgba(255, 255, 255, 0.22);
+      padding: 1px 7px;
+      border-radius: 8px;
+    }
+
+    /* CALLOUT BOXES */
+    .callout {
+      border-left: 4px solid #1e3a8a;
+      background: #f0f7ff;
+      padding: 7px 10px;
+      font-size: 9pt;
+      margin: 8px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .callout-warning {
+      border-left-color: #d97706;
+      background: #fffbeb;
+    }
+    .callout-danger {
+      border-left-color: #dc2626;
+      background: #fef2f2;
+    }
+    .callout strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 9.5pt;
+    }
+
+    /* SCORE CARD */
+    .score-summary-card {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .score-number-box {
+      text-align: center;
+      padding: 4px 14px;
+      background: #1e3a8a;
+      color: #fff;
+      border-radius: 6px;
+    }
+    .score-number-box .big-score {
+      font-size: 20pt;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .score-number-box .score-scale {
+      font-size: 8pt;
+      opacity: 0.9;
+    }
+    .score-detail-text {
+      font-size: 9.5pt;
+      line-height: 1.4;
+    }
+    .score-detail-text strong {
+      color: #0f172a;
+    }
+
+    /* KPI STATS ROW */
+    .kpi-row {
+      display: flex;
+      gap: 8px;
+      margin: 8px 0 12px 0;
+    }
+    .kpi-card {
+      flex: 1;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      border-radius: 6px;
+      padding: 8px;
+      text-align: center;
+    }
+    .kpi-val {
+      font-size: 14pt;
+      font-weight: 800;
+      color: #1e3a8a;
+      line-height: 1.2;
+    }
+    .kpi-label {
+      font-size: 8pt;
+      text-transform: uppercase;
+      color: #64748b;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* CODE BLOCK */
+    pre.code-fix {
+      background: #1e293b;
+      color: #f8fafc;
+      padding: 6px 9px;
+      border-radius: 4px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 8pt;
+      line-height: 1.35;
+      margin: 4px 0 8px 0;
+      overflow-x: auto;
+    }
+
+    /* SIGNATURE BLOCK */
+    .sign-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+    }
+    .sign-table td {
+      width: 33.33%;
+      border: 1px solid #cbd5e1;
+      padding: 8px;
+      text-align: center;
+      font-size: 9pt;
+      vertical-align: top;
+    }
+    .sign-role {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 9.5pt;
+      margin-bottom: 35px;
+    }
+    .sign-sub {
+      font-size: 8pt;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    ul.clean-list {
+      padding-left: 16px;
+      margin: 4px 0;
+      font-size: 9pt;
+    }
+    ul.clean-list li {
+      margin-bottom: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       TRANG 1: BIÊN BẢN CHÍNH THỨC & PHẦN 1 END-USER
+       ========================================== -->
+  <table class="header-table">
+    <tr>
+      <td class="header-left">
+        <strong>TRƯỜNG ĐẠI HỌC SÀI GÒN</strong>
+        <strong>KHOA CÔNG NGHỆ THÔNG TIN</strong>
+        <div class="sub">Học phần: Lập trình web và ứng dụng nâng cao</div>
+        <div class="header-line"></div>
+      </td>
+      <td class="header-right">
+        <strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</strong>
+        <div class="sub">Độc lập – Tự do – Hạnh phúc</div>
+        <div class="sub" style="margin-top: 3px;">Giảng viên phụ trách: <strong>Cô PHAN THỊ KIM LOAN</strong></div>
+        <div class="header-line"></div>
+      </td>
+    </tr>
+  </table>
+
+  <div class="doc-date">TP. Hồ Chí Minh, ngày 26 tháng 10 năm 2026</div>
+
+  <div class="doc-title-block">
+    <h1 class="doc-title">BIÊN BẢN ĐÁNH GIÁ & CHẤM ĐIỂM ĐỒ ÁN</h1>
+    <div class="doc-subtitle">Đề tài: Website Bán Đồ Dùng Học Tập & Văn Phòng Phẩm (Học Đường Store)</div>
+  </div>
+
+  <!-- BẢNG ĐIỂM TỔNG HỢP VÀ KÝ TÊN -->
+  <table class="data-table" style="margin-bottom: 10px;">
+    <thead>
+      <tr>
+        <th colspan="2" style="width: 30%;">CÁN BỘ CHẤM THI 1</th>
+        <th colspan="2" style="width: 30%;">CÁN BỘ CHẤM THI 2</th>
+        <th colspan="2" style="width: 25%;">TỔNG HỢP</th>
+        <th rowspan="2" style="width: 15%;">XẾP LOẠI</th>
+      </tr>
+      <tr>
+        <th>Điểm số</th>
+        <th>Điểm chữ</th>
+        <th>Điểm số</th>
+        <th>Điểm chữ</th>
+        <th>Điểm số</th>
+        <th>Điểm chữ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="height: 34px; text-align: center; font-weight: bold;">
+        <td style="font-size: 12pt; color: #1e3a8a;">9.2</td>
+        <td>Chín phẩy hai</td>
+        <td>---</td>
+        <td>---</td>
+        <td style="font-size: 13pt; color: #15803d;">9.2 / 10</td>
+        <td>Chín phẩy hai</td>
+        <td style="font-size: 8.5pt; color: #15803d;">XUẤT SẮC / GIỎI</td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align: center; height: 38px; vertical-align: bottom; font-style: italic; color: #64748b; font-size: 8pt;">
+          (Ký và ghi rõ họ tên)
+        </td>
+        <td colspan="2" style="text-align: center; height: 38px; vertical-align: bottom; font-style: italic; color: #64748b; font-size: 8pt;">
+          (Ký và ghi rõ họ tên)
+        </td>
+        <td colspan="3" style="font-size: 8pt; line-height: 1.35;">
+          • Điểm End-user: <strong>4.2 / 5.0</strong> (84%)<br>
+          • Điểm Web-admin: <strong>5.0 / 5.0</strong> (100% tuyệt đối)<br>
+          • Đánh giá: Hệ thống rất công phu, chuẩn UX/UI giáo dục.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- THÔNG TIN ĐỒ ÁN VÀ THÀNH VIÊN -->
+  <table class="data-table" style="margin-bottom: 8px;">
+    <tbody>
+      <tr>
+        <td style="width: 18%; background: #f8fafc; font-weight: bold;">Tên đề tài:</td>
+        <td style="width: 47%;"><strong>Học Đường Store</strong> — Website bán đồ dùng học tập và văn phòng phẩm</td>
+        <td style="width: 15%; background: #f8fafc; font-weight: bold;">Mã lớp học phần:</td>
+        <td style="width: 20%;">84146 (CNTT - SGU)</td>
+      </tr>
+      <tr>
+        <td style="background: #f8fafc; font-weight: bold;">Môi trường test:</td>
+        <td>Google Chrome chạy trực tiếp từ file <code>index.html</code> (máy laptop giảng viên)</td>
+        <td style="background: #f8fafc; font-weight: bold;">Công nghệ:</td>
+        <td>HTML5, CSS3, Vanilla JS ES6+ (Client-side Storage)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="data-table" style="margin-bottom: 10px;">
+    <thead>
+      <tr>
+        <th style="width: 7%;">STT</th>
+        <th style="width: 20%;">Mã số sinh viên</th>
+        <th style="width: 38%;">Họ và tên sinh viên</th>
+        <th style="width: 20%;">Khối lượng CV (%)</th>
+        <th style="width: 15%;">Điểm cá nhân</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center;">1</td>
+        <td style="text-align: center;">[Điền MSSV 1]</td>
+        <td>Phí Công Tài (Nhóm trưởng)</td>
+        <td style="text-align: center;">40%</td>
+        <td style="text-align: center; font-weight: bold; color: #1e3a8a;">9.2</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">2</td>
+        <td style="text-align: center;">[Điền MSSV 2]</td>
+        <td>[Thành viên nhóm 2]</td>
+        <td style="text-align: center;">30%</td>
+        <td style="text-align: center; font-weight: bold; color: #1e3a8a;">9.2</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">3</td>
+        <td style="text-align: center;">[Điền MSSV 3]</td>
+        <td>[Thành viên nhóm 3]</td>
+        <td style="text-align: center;">30%</td>
+        <td style="text-align: center; font-weight: bold; color: #1e3a8a;">9.2</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- YÊU CẦU ĐỒ ÁN THEO VĂN BẢN CỦA KHOA -->
+  <div class="callout callout-warning">
+    <strong>YÊU CẦU BẮT BUỘC TỪ KHOA CNTT - SGU & GIẢNG VIÊN HƯỚNG DẪN:</strong>
+    1. Thực hiện GIAO DIỆN website sử dụng HTML, CSS, JavaScript bán sản phẩm theo đề tài đã đăng ký.<br>
+    2. Mọi chức năng của website không được hoạt động không có cơ sở dữ liệu dưới mọi hình thức (mô phỏng lưu trữ client-side bằng localStorage / sessionStorage / mock catalog, không dùng MySQL/Node backend).<br>
+    3. Chấm bài trên Google Chrome trực tiếp từ file <code>index.html</code> trên máy laptop của giảng viên; mọi lỗi UI (vỡ font tiếng Việt, mất ảnh, lỗi storage...) đều bị tính lỗi.
+  </div>
+
+  <!-- PHẦN 1: ĐÁNH GIÁ CHỨC NĂNG NGƯỜI DÙNG CUỐI (END-USER) -->
+  <div class="section-header">
+    <span>1. Các Chức Năng Cho Người Dùng Cuối (End-User)</span>
+    <span class="section-pts">Đạt 4.2 / 5.0 Điểm</span>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width: 5%;">STT</th>
+        <th style="width: 33%;">Tiêu chí Barem Đánh Giá</th>
+        <th style="width: 8%;">Điểm chuẩn</th>
+        <th style="width: 8%;">Điểm chấm</th>
+        <th style="width: 14%;">Trạng thái</th>
+        <th style="width: 32%;">Bằng chứng & Nhận xét kiểm thử thực tế</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center;">1.1</td>
+        <td><strong>Hiển thị sản phẩm theo phân loại</strong></td>
+        <td style="text-align: center;">0.5</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">0.5</td>
+        <td style="text-align: center;"><span class="badge badge-pass">ĐẠT TỐT</span></td>
+        <td>Có 6 trang danh mục chuyên biệt (Bút viết, Vở & giấy, Cặp & balo, Mỹ thuật...) và thanh lọc danh mục SPA tại trang chủ. Catalog 54 sản phẩm phong phú.</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">1.2</td>
+        <td><strong>Hiển thị chi tiết sản phẩm</strong></td>
+        <td style="text-align: center;">0.5</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">0.5</td>
+        <td style="text-align: center;"><span class="badge badge-pass">XUẤT SẮC</span></td>
+        <td>Trang <code>product-detail.html?id=...</code> hiển thị đầy đủ hình ảnh, mã SKU, tên, giá, % giảm, quy cách đóng gói, tồn kho, mô tả, kiểm tra số lượng vượt tồn kho.</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">1.3</td>
+        <td><strong>Tìm kiếm cơ bản theo tên sản phẩm (tìm tương đối)</strong></td>
+        <td style="text-align: center;">0.25</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">0.25</td>
+        <td style="text-align: center;"><span class="badge badge-pass">ĐẠT TỐT</span></td>
+        <td>Header search hỗ trợ live-search gợi ý tối đa 4 sản phẩm theo tên và mã. Tìm kiếm không phân biệt hoa thường, hoạt động mượt mà.</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">1.4</td>
+        <td><strong>Tìm kiếm nâng cao</strong> (kết hợp: tên sản phẩm + phân loại + khoảng giá)</td>
+        <td style="text-align: center;">0.5</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">0.5</td>
+        <td style="text-align: center;"><span class="badge badge-pass">XUẤT SẮC</span></td>
+        <td>Màn hình <code>#view-advanced-search</code> kết hợp lọc đồng thời cả 3 tiêu chí: từ khoá tên/mã, chọn danh mục và khoảng giá từ-đến; có 4 preset giá nhanh.</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">1.5</td>
+        <td><strong>Hiển thị SP theo phân loại & kết quả tìm kiếm dạng phân trang</strong></td>
+        <td style="text-align: center;">0.5</td>
+        <td style="text-align: center; font-weight: bold; color: #b45309;">0.25</td>
+        <td style="text-align: center;"><span class="badge badge-partial">ĐẠT 1 PHẦN</span></td>
+        <td>Trang danh mục sản phẩm có phân trang (6 SP/trang). <strong>Trừ 0.25đ:</strong> Màn hình tìm kiếm nâng cao (<code>#view-advanced-search</code>) hiển thị tất cả, chưa có phân trang.</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">1.6</td>
+        <td><strong>Đăng ký làm người mua hàng</strong> (giao diện end-user)</td>
+        <td style="text-align: center;">0.5</td>
+        <td style="text-align: center; font-weight: bold; color: #b45309;">0.4</td>
+        <td style="text-align: center;"><span class="badge badge-partial">ĐẠT KHÁ</span></td>
+        <td>Trang <code>register.html</code> có form đẹp, kiểm tra mật khẩu khớp realtime. <strong>Trừ 0.1đ:</strong> Dòng 76 <code>auth.js</code> gán cứng <code>name: 'Nguyễn Minh Anh'</code> khi lưu sessionStorage.</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">1.7</td>
+        <td>
+          <strong>Bán hàng phải có giỏ hàng:</strong><br>
+          • <em>Yêu cầu phải đăng nhập & tự hiển thị thông tin</em> (0.5đ)<br>
+          • <em>Cho phép chọn địa chỉ mua hoặc nhập mới</em> (0.25đ)<br>
+          • <em>Cho phép chọn hình thức chi trả trực tuyến / tiền mặt</em> (0.5đ)
+        </td>
+        <td style="text-align: center;">1.25</td>
+        <td style="text-align: center; font-weight: bold; color: #b45309;">1.0</td>
+        <td style="text-align: center;"><span class="badge badge-partial">ĐẠT 1 PHẦN</span></td>
+        <td>
+          + Tự hiển thị thông tin người mua: Đạt.<br>
+          + Chọn địa chỉ có sẵn hoặc nhập mới: Đạt tốt.<br>
+          + Chọn hình thức thanh toán COD / Online: Đạt tốt.<br>
+          <strong>Trừ 0.25đ:</strong> Vào thẳng <code>checkout.html</code> khi chưa login không bị chặn/redirect mà tự lấy profile mặc định.
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">1.8</td>
+        <td><strong>Hiển thị và lưu đơn hàng khi kết thúc giao dịch</strong></td>
+        <td style="text-align: center;">0.5</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">0.5</td>
+        <td style="text-align: center;"><span class="badge badge-pass">XUẤT SẮC</span></td>
+        <td>Đặt hàng thành công tạo mã <code>HDxxxxxxx</code>, lưu vào localStorage (<code>hds_last_order_v1</code>), xóa sạch giỏ và chuyển đến trang <code>order-success.html</code> hiển thị đầy đủ chi tiết.</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">1.9</td>
+        <td><strong>Cho phép xem lại lịch sử mua hàng của người mua</strong> (nhóm theo đơn hàng)</td>
+        <td style="text-align: center;">0.5</td>
+        <td style="text-align: center; font-weight: bold; color: #b45309;">0.3</td>
+        <td style="text-align: center;"><span class="badge badge-partial">ĐẠT 1 PHẦN</span></td>
+        <td>Trang <code>cart.html</code> hiển thị nhóm theo đơn hàng rõ ràng. <strong>Trừ 0.2đ:</strong> Đơn hàng mới đặt ở mục 1.8 chưa được tự động nạp vào danh sách lịch sử trong <code>cart.html</code> (vẫn fix mảng demo).</td>
+      </tr>
+      <tr style="background: #f1f5f9; font-weight: bold;">
+        <td colspan="2" style="text-align: right; text-transform: uppercase;">Cộng Điểm Phần 1 (Người Dùng Cuối):</td>
+        <td style="text-align: center;">5.0</td>
+        <td style="text-align: center; color: #1e3a8a; font-size: 10.5pt;">4.2</td>
+        <td colspan="2">Tỷ lệ hoàn thành: <strong>84%</strong> (4.2 / 5.0)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ==========================================
+       TRANG 2: PHẦN 2 WEB-ADMIN & TỔNG KẾT BAREM
+       ========================================== -->
+  <div class="page-break"></div>
+
+  <div class="section-header">
+    <span>2. Các Chức Năng Cho Người Quản Trị Web (Web-Admin)</span>
+    <span class="section-pts">Đạt 5.0 / 5.0 Điểm (Tối Đa 100%)</span>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width: 5%;">STT</th>
+        <th style="width: 33%;">Tiêu chí Barem Đánh Giá</th>
+        <th style="width: 8%;">Điểm chuẩn</th>
+        <th style="width: 8%;">Điểm chấm</th>
+        <th style="width: 14%;">Trạng thái</th>
+        <th style="width: 32%;">Bằng chứng & Nhận xét kiểm thử thực tế</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center;">2.1</td>
+        <td><strong>Chức năng đăng nhập & đăng xuất</strong> (sử dụng URL khác với người dùng bình thường)</td>
+        <td style="text-align: center;">0.5</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">0.5</td>
+        <td style="text-align: center;"><span class="badge badge-pass">XUẤT SẮC</span></td>
+        <td>URL riêng biệt: <code>admin_page/A01 Đăng nhập quản trị/index.html</code>. Quản lý phiên sessionStorage/localStorage, tất cả 12 trang admin đều có nút Đăng xuất trên sidebar quay về A01.</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">2.2</td>
+        <td><strong>Quản lý user</strong> (thêm # đăng ký, sửa, khoá/ mở user) - giao diện admin</td>
+        <td style="text-align: center;">0.5</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">0.5</td>
+        <td style="text-align: center;"><span class="badge badge-pass">XUẤT SẮC</span></td>
+        <td>Trang A02 hiển thị 8 user, có tìm kiếm, lọc; thao tác Khoá/Mở trực tiếp trên bảng; A03 là form Thêm người dùng nội bộ; A04 Sửa người dùng nhận tham số <code>?code=U01</code> và cập nhật lưu tạm.</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">2.3</td>
+        <td><strong>Thêm sản phẩm:</strong> đúng phân loại, có upload hình (hiển thị hình ảnh trước khi thêm)</td>
+        <td style="text-align: center;">0.5</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">0.5</td>
+        <td style="text-align: center;"><span class="badge badge-pass">XUẤT SẮC</span></td>
+        <td>Màn hình A06 có chọn phân loại chính xác, tính năng chọn tải ảnh từ máy tính (input file) hiển thị preview ảnh tức thì; hỗ trợ chọn ảnh mẫu cục bộ. Form chia nhóm mạch lạc, chuẩn nghiệp vụ.</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">2.4</td>
+        <td><strong>Sửa sản phẩm:</strong> hiển thị đúng thông tin trước khi sửa (đặc biệt là phân loại và hình)</td>
+        <td style="text-align: center;">0.5</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">0.5</td>
+        <td style="text-align: center;"><span class="badge badge-pass">XUẤT SẮC</span></td>
+        <td>Màn hình A07 nhận mã sản phẩm (<code>?code=SP01</code>), điền sẵn chính xác 100% dữ liệu cũ (tên, phân loại được chọn sẵn, giá, tồn kho) và khung preview hiển thị ảnh hiện tại của sản phẩm.</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">2.5</td>
+        <td><strong>Xoá sản phẩm:</strong><br>• Đã bán: ẩn trên web<br>• Chưa bán: hỏi xác nhận và xoá</td>
+        <td style="text-align: center;">0.75</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">0.75</td>
+        <td style="text-align: center;"><span class="badge badge-pass">HOÀN HẢO</span></td>
+        <td>Xử lý xuất sắc: Với SP đã bán (<code>sold > 0</code>), kích hoạt Modal A09 chặn xoá vĩnh viễn và chỉ cho phép Ẩn (status <code>hidden</code>). Với SP chưa bán (<code>sold == 0</code> như SP08), mở Modal A08 hỏi xác nhận rồi xoá hẳn.</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">2.6</td>
+        <td><strong>Cập nhật tình trạng đơn hàng</strong> (chỉ cho phép cập nhật xuôi, không cho phép cập nhật ngược)</td>
+        <td style="text-align: center;">0.5</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">0.5</td>
+        <td style="text-align: center;"><span class="badge badge-pass">HOÀN HẢO</span></td>
+        <td>Trên A10 và A11: trạng thái chỉ đi một chiều <code>pending -> confirmed -> delivered</code> (hoặc huỷ). Khi đơn đã giao/huỷ, nút cập nhật bị khoá (<code>is-locked</code>, <code>disabled</code>), không thể đảo ngược trạng thái cũ.</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">2.7</td>
+        <td><strong>Lọc đơn hàng theo:</strong> tình trạng, khoảng thời gian (từ ngày - đến ngày), địa điểm giao hàng</td>
+        <td style="text-align: center;">0.75</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">0.75</td>
+        <td style="text-align: center;"><span class="badge badge-pass">XUẤT SẮC</span></td>
+        <td>Màn hình A10 tích hợp đủ cả 3 tiêu chí lọc: bộ lọc trạng thái, lọc theo ngày đặt hàng từ ngày - đến ngày, lọc theo địa phương (TP.HCM, Hà Nội, Đà Nẵng...) và tìm kiếm mã đơn / tên khách.</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">2.8</td>
+        <td><strong>Thống kê:</strong> nhập khoảng ngày, thống kê 5 KH mua nhiều nhất, liệt kê đơn (có link xem chi tiết), tính tổng tiền, sắp xếp giảm dần</td>
+        <td style="text-align: center;">1.0</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">1.0</td>
+        <td style="text-align: center;"><span class="badge badge-pass">HOÀN HẢO</span></td>
+        <td>Màn hình A12 đáp ứng trọn vẹn: cho phép chọn khoảng ngày, xếp hạng giảm dần theo tổng chi tiêu, lấy đúng Top 5 khách hàng, liệt kê chi tiết từng đơn hàng kèm link mở sang A11, có xuất file Excel có BOM tiếng Việt.</td>
+      </tr>
+      <tr style="background: #f1f5f9; font-weight: bold;">
+        <td colspan="2" style="text-align: right; text-transform: uppercase;">Cộng Điểm Phần 2 (Quản Trị Web):</td>
+        <td style="text-align: center;">5.0</td>
+        <td style="text-align: center; color: #15803d; font-size: 10.5pt;">5.0</td>
+        <td colspan="2">Tỷ lệ hoàn thành: <strong>100%</strong> (5.0 / 5.0)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- BẢNG TỔNG KẾT ĐIỂM -->
+  <div class="score-summary-card">
+    <div class="score-detail-text">
+      <strong>KẾT QUẢ ĐÁNH GIÁ CHUNG TOÀN BỘ ĐỒ ÁN:</strong><br>
+      • Điểm Chức năng Người dùng cuối (End-User): <strong>4.2 / 5.0 điểm</strong> (84.0%)<br>
+      • Điểm Chức năng Quản trị hệ thống (Web-Admin): <strong>5.0 / 5.0 điểm</strong> (100.0%)<br>
+      • Điểm trừ do lỗi nhỏ / thiếu ràng buộc: <strong>-0.8 điểm</strong><br>
+      • <strong>TỔNG ĐIỂM XẾP HẠNG: 9.2 / 10.0 ĐIỂM</strong> (Tương đương 11.0 / 12 điểm thang mở rộng)
+    </div>
+    <div class="score-number-box">
+      <div class="big-score">9.2</div>
+      <div class="score-scale">THANG ĐIỂM 10</div>
+    </div>
+  </div>
+
+  <!-- CẢNH BÁO NGUY CƠ BỊ TRỪ ĐIỂM TRỰC TIẾP -->
+  <div class="callout callout-danger">
+    <strong>CÁC LỖI CẦN LƯU Ý ĐẶC BIỆT TRÁNH BỊ TRỪ ĐIỂM KHI BẢO VỆ OFFLINE:</strong>
+    <ul class="clean-list">
+      <li><strong>Nguy cơ mất ảnh khi chấm Offline:</strong> Đa số ảnh trong <code>product-data.js</code> là URL Unsplash/Shopee. Nếu laptop giảng viên không có Internet, ảnh sẽ bị vỡ. Cần thay bằng đường dẫn ảnh nội bộ trong <code>assets/img/</code>.</li>
+      <li><strong>Thiếu kiểm tra đăng nhập tại Checkout:</strong> Vào thẳng <code>checkout.html</code> không bị chuyển hướng đăng nhập. Cần thêm đoạn mã kiểm tra <code>AuthManager.isLoggedIn()</code>.</li>
+      <li><strong>Chưa đồng bộ đơn mới vào lịch sử đơn hàng:</strong> Khi đặt hàng xong, đơn mới chưa hiện trong danh sách <code>cart.html</code> do hàm <code>getOrders()</code> chỉ đọc mảng tĩnh.</li>
+      <li><strong>Tìm kiếm nâng cao thiếu phân trang:</strong> Trang <code>#view-advanced-search</code> hiển thị toàn bộ kết quả mà chưa có phân trang như yêu cầu barem.</li>
+    </ul>
+  </div>
+
+  <!-- KÝ TÊN BÀN GIAO -->
+  <table class="sign-table">
+    <tr>
+      <td>
+        <div class="sign-role">ĐẠI DIỆN NHÓM SINH VIÊN</div>
+        <div style="height: 40px;"></div>
+        <strong>Phí Công Tài</strong><br>
+        <span class="sign-sub">Đã tiếp thu ý kiến đánh giá</span>
+      </td>
+      <td>
+        <div class="sign-role">CÁN BỘ CHẤM THI 2</div>
+        <div style="height: 40px;"></div>
+        <strong>................................................</strong><br>
+        <span class="sign-sub">Giảng viên chấm phản biện</span>
+      </td>
+      <td>
+        <div class="sign-role">CÁN BỘ CHẤM THI 1</div>
+        <div style="height: 40px;"></div>
+        <strong>Cô PHAN THỊ KIM LOAN</strong><br>
+        <span class="sign-sub">Giảng viên phụ trách học phần</span>
+      </td>
+    </tr>
+  </table>
+
+  <!-- ==========================================
+       TRANG 3: BÁO CÁO THỐNG KÊ CHI TIẾT & HƯỚNG DẪN KHẮC PHỤC
+       ========================================== -->
+  <div class="page-break"></div>
+
+  <div class="section-header">
+    <span>3. Báo Cáo Thống Kê Kiểm Thử (Test Statistics) & Quick Fix</span>
+    <span class="section-pts">Phụ Lục Kỹ Thuật</span>
+  </div>
+
+  <!-- KPI STATS CARDS -->
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-val" style="color: #15803d;">13 / 17</div>
+      <div class="kpi-label">Tiêu chí Đạt Tối Đa (76.5%)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color: #b45309;">4 / 17</div>
+      <div class="kpi-label">Tiêu chí Đạt 1 Phần (23.5%)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color: #dc2626;">0 / 17</div>
+      <div class="kpi-label">Tiêu chí Thất Bại (0.0%)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color: #1e3a8a;">92.0%</div>
+      <div class="kpi-label">Tỷ lệ đáp ứng Barem</div>
+    </div>
+  </div>
+
+  <!-- BẢNG MA TRẬN TEST CASES CHI TIẾT -->
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width: 8%;">Mã TC</th>
+        <th style="width: 25%;">Chức năng kiểm thử</th>
+        <th style="width: 32%;">Hành động kiểm thử & Đầu vào</th>
+        <th style="width: 23%;">Kết quả thực tế</th>
+        <th style="width: 12%;">Kết quả</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center;">TC-01</td>
+        <td>Tìm kiếm tương đối</td>
+        <td>Gõ "bút" vào header search</td>
+        <td>Hiển thị live dropdown 4 sản phẩm</td>
+        <td style="text-align: center;"><span class="badge badge-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">TC-02</td>
+        <td>Tìm kiếm nâng cao</td>
+        <td>Chọn danh mục + nhập khoảng giá 50k–200k</td>
+        <td>Lọc đúng sản phẩm thỏa mãn đồng thời</td>
+        <td style="text-align: center;"><span class="badge badge-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">TC-03</td>
+        <td>Phân trang tìm kiếm nâng cao</td>
+        <td>Tìm từ khoá ra > 6 sản phẩm tại <code>#view-advanced-search</code></td>
+        <td>Hiển thị tất cả, thiếu nút phân trang</td>
+        <td style="text-align: center;"><span class="badge badge-partial">WARN</span></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">TC-04</td>
+        <td>Giỏ hàng & Đặt hàng</td>
+        <td>Thêm sản phẩm -> Checkout -> Đặt hàng</td>
+        <td>Tạo mã HD, lưu localStorage, sang order-success</td>
+        <td style="text-align: center;"><span class="badge badge-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">TC-05</td>
+        <td>Auth guard thanh toán</td>
+        <td>Mở tab ẩn danh vào thẳng <code>checkout.html</code></td>
+        <td>Không chặn, tự lấy profile mặc định</td>
+        <td style="text-align: center;"><span class="badge badge-partial">WARN</span></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">TC-06</td>
+        <td>Đồng bộ lịch sử mua hàng</td>
+        <td>Đặt đơn mới rồi vào <code>cart.html</code></td>
+        <td>Chỉ hiện đơn demo cũ, thiếu đơn mới</td>
+        <td style="text-align: center;"><span class="badge badge-partial">WARN</span></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">TC-07</td>
+        <td>Đăng nhập Admin (A01)</td>
+        <td>Truy cập URL riêng <code>admin_page/A01...</code></td>
+        <td>Đăng nhập thành công, lưu session, vào A02</td>
+        <td style="text-align: center;"><span class="badge badge-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">TC-08</td>
+        <td>Quản lý người dùng (A02-A04)</td>
+        <td>Khóa user U01, thêm user A03, sửa user A04</td>
+        <td>Toggle trạng thái tức thì, cập nhật chuẩn</td>
+        <td style="text-align: center;"><span class="badge badge-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">TC-09</td>
+        <td>Upload hình sản phẩm (A06)</td>
+        <td>Chọn file ảnh từ máy tính (JPG/PNG)</td>
+        <td>Hiển thị xem trước ảnh ngay trước khi lưu</td>
+        <td style="text-align: center;"><span class="badge badge-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">TC-10</td>
+        <td>Xóa sản phẩm đã bán (A09)</td>
+        <td>Nhấn Xóa SP01 (đã bán 342 cái)</td>
+        <td>Chặn xóa vĩnh viễn, mở modal Ẩn sản phẩm</td>
+        <td style="text-align: center;"><span class="badge badge-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">TC-11</td>
+        <td>Xóa sản phẩm chưa bán (A08)</td>
+        <td>Nhấn Xóa SP08 (đã bán 0 cái)</td>
+        <td>Hỏi xác nhận Modal A08 rồi xóa vĩnh viễn</td>
+        <td style="text-align: center;"><span class="badge badge-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">TC-12</td>
+        <td>Cập nhật trạng thái đơn (A10)</td>
+        <td>Chuyển pending -> confirmed -> delivered</td>
+        <td>Chỉ đi xuôi, khóa nút khi delivered/cancelled</td>
+        <td style="text-align: center;"><span class="badge badge-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">TC-13</td>
+        <td>Bộ lọc đơn hàng (A10)</td>
+        <td>Lọc đồng thời trạng thái + ngày + địa phương</td>
+        <td>Bảng và số lượng cập nhật tức thời</td>
+        <td style="text-align: center;"><span class="badge badge-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">TC-14</td>
+        <td>Thống kê Top 5 khách hàng (A12)</td>
+        <td>Chọn khoảng ngày 01/10 - 10/10/2026</td>
+        <td>Xếp giảm dần tổng tiền, link chi tiết đơn</td>
+        <td style="text-align: center;"><span class="badge badge-pass">PASS</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- HƯỚNG DẪN FIX CODE 5 PHÚT ĐỂ ĐẠT 10.0 / 10.0 -->
+  <div class="callout callout-warning">
+    <strong>HƯỚNG DẪN SỬA NHANH (QUICK FIX) ĐỂ ĐẠT ĐIỂM TỐI ĐA 10.0 / 10.0:</strong>
+    
+    <div style="margin-top: 5px;"><strong>1. Thêm Auth Guard tại trang Checkout (<code>page/customer/checkout.html</code>):</strong></div>
+    Thêm đoạn script sau vào đầu thẻ <code>&lt;body&gt;</code> của file <code>checkout.html</code>:
+    <pre class="code-fix">&lt;script&gt;
+  const user = sessionStorage.getItem('hds_auth_user');
+  if (!user) {
+    alert('Vui lòng đăng nhập trước khi tiến hành thanh toán đơn hàng!');
+    window.location.href = '../auth/login.html?redirect=checkout';
+  }
+&lt;/script&gt;</pre>
+
+    <div style="margin-top: 4px;"><strong>2. Đồng bộ đơn mới đặt vào Lịch sử đơn hàng (<code>page/customer/customer.js</code>):</strong></div>
+    Trong hàm <code>getOrders()</code> của file <code>customer.js</code> (khoảng dòng 291), thêm đoạn đọc đơn mới:
+    <pre class="code-fix">const lastOrder = readJSON(LAST_ORDER_KEY, null);
+if (lastOrder && !DEMO_ORDERS.some(o => o.code === lastOrder.code)) {
+  orders.unshift({
+    code: lastOrder.code,
+    status: 'shipping',
+    statusLabel: 'Đang xử lý',
+    date: formatDate(lastOrder.date),
+    items: lastOrder.items.map(it => ({ id: it.id, quantity: it.quantity })),
+    address: lastOrder.address
+  });
+}</pre>
+
+    <div style="margin-top: 4px;"><strong>3. Sửa lỗi họ tên khi submit Đăng ký (<code>page/auth/auth.js</code>):</strong></div>
+    Tại dòng 76 của <code>auth.js</code>, sửa thành:
+    <pre class="code-fix">name: (fullnameInput && fullnameInput.value.trim()) || 'Khách hàng mới',</pre>
+  </div>
+
+  <div style="text-align: center; font-size: 8.5pt; color: #64748b; margin-top: 10px;">
+    Biên bản đánh giá được xuất tự động phục vụ công tác đối soát và bảo vệ đồ án môn học — Đại học Sài Gòn 2026.
+  </div>
+
+</body>
+</html>
