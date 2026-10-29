@@ -47,6 +47,7 @@
     const checkoutHref = inCustomer ? 'checkout.html' : '../customer/checkout.html';
     const shopHref = '../homepage/main.html#view-category';
     const detailPrefix = inProducts ? '' : '../products/';
+    const loginHref = inCustomer || inProducts ? '../auth/login.html' : 'page/auth/login.html';
 
     const overlay = document.createElement('div');
     overlay.className = 'cart-drawer-overlay';
@@ -87,8 +88,11 @@
           <div class="cart-drawer-empty">
             <span class="cart-drawer-empty-icon" aria-hidden="true">${CART_ICON}</span>
             <strong>Giỏ hàng đang trống</strong>
-            <p>Thêm vài dụng cụ học tập xinh xắn để bắt đầu đơn hàng của bạn nhé.</p>
-            <a class="btn btn-primary" href="${shopHref}">Mua sắm ngay</a>
+            <p>${(window.AuthManager && !window.AuthManager.isLoggedIn()) ? 'Bạn chưa đăng nhập. Vui lòng đăng nhập để bắt đầu chọn mua sản phẩm.' : 'Thêm vài dụng cụ học tập xinh xắn để bắt đầu đơn hàng của bạn nhé.'}</p>
+            <div style="display: flex; gap: 8px; justify-content: center; margin-top: 12px;">
+              ${(window.AuthManager && !window.AuthManager.isLoggedIn()) ? `<a class="btn btn-primary" href="${loginHref}">Đăng nhập ngay</a>` : ''}
+              <a class="btn ${(window.AuthManager && !window.AuthManager.isLoggedIn()) ? 'btn-outlined' : 'btn-primary'}" href="${shopHref}">Mua sắm ngay</a>
+            </div>
           </div>`;
       } else {
         bodyEl.innerHTML = cart.map(item => {
@@ -212,7 +216,9 @@
     getUser: function () {
       try {
         const raw = sessionStorage.getItem(AUTH_STORAGE_KEY);
-        return raw ? JSON.parse(raw) : null;
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        return Object.assign({}, parsed);
       } catch (err) {
         return null;
       }
@@ -220,22 +226,25 @@
     isLoggedIn: function () {
       return this.getUser() !== null;
     },
-    login: function (userData) {
-      const user = {
-        name: 'Nguyễn Minh Anh',
-        email: (userData && userData.email) || 'minhanh@email.com',
-        avatar: (userData && userData.avatar) || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80',
+    login: function (data) {
+      const user = Object.assign({
+        name: 'Khách hàng mới',
+        email: 'minhanh@email.com',
+        avatar: '../../assets/img/avatar.jpg',
         loginTime: new Date().toISOString()
-      };
+      }, data || {});
       sessionStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
       try { localStorage.removeItem(AUTH_STORAGE_KEY); } catch (e) {}
+      if (window.StoreCart && typeof window.StoreCart.updateBadges === 'function') { window.StoreCart.updateBadges(); }
       return user;
     },
     logout: function () {
       try {
         sessionStorage.removeItem(AUTH_STORAGE_KEY);
         localStorage.removeItem(AUTH_STORAGE_KEY);
+        localStorage.removeItem('hds_cart_v1');
       } catch (e) {}
+      if (window.StoreCart && typeof window.StoreCart.updateBadges === 'function') { window.StoreCart.updateBadges(); }
       if (window.showSiteToast) {
         window.showSiteToast('Đã đăng xuất tài khoản.');
       }
@@ -288,7 +297,10 @@
 
     const paths = getAuthPaths();
     const rawUser = AuthManager.getUser();
-    const user = rawUser ? Object.assign({}, rawUser, { name: 'Nguyễn Minh Anh' }) : null;
+    const user = rawUser ? Object.assign({}, rawUser, {
+      name: 'Nguyễn Minh Anh',
+      email: 'minhanh@email.com'
+    }) : null;
 
     slots.forEach(function (slot) {
       let container = slot;
@@ -330,6 +342,15 @@
             </div>
           </div>
         `;
+        const userWrapper = container.querySelector('.header-user-wrapper');
+        const userLink = container.querySelector('.header-user-link');
+        if (userLink && userWrapper) {
+          userLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            userWrapper.classList.toggle('is-open');
+          });
+        }
+
         const logoutBtn = container.querySelector('[data-action="logout"]');
         if (logoutBtn) {
           logoutBtn.addEventListener('click', function (e) {
@@ -349,6 +370,14 @@
             </a>
           </div>
         `;
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.header-user-wrapper')) {
+        document.querySelectorAll('.header-user-wrapper.is-open').forEach(function (el) {
+          el.classList.remove('is-open');
+        });
       }
     });
   }

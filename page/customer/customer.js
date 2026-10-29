@@ -9,6 +9,7 @@
   const PROFILE_KEY = 'hds_profile_v1';
   const ADDRESS_KEY = 'hds_addresses_v1';
   const LAST_ORDER_KEY = 'hds_last_order_v1';
+  const ORDER_HISTORY_KEY = 'hds_order_history_v1';
   const DRAFT_ORDER_CODE = 'HD1011010';
 
   const DEFAULT_PROFILE = {
@@ -83,6 +84,18 @@
     return value;
   };
 
+  const isUserLoggedIn = () => {
+    try {
+      if (window.AuthManager && typeof window.AuthManager.isLoggedIn === 'function') {
+        return window.AuthManager.isLoggedIn();
+      }
+      const raw = sessionStorage.getItem('hds_auth_user');
+      return Boolean(raw && raw !== 'null');
+    } catch (e) {
+      return false;
+    }
+  };
+
   const getProfile = () => Object.assign({}, DEFAULT_PROFILE, readJSON(PROFILE_KEY, {}) || {});
 
   const cloneAddresses = list => list.map(item => Object.assign({}, item));
@@ -141,6 +154,21 @@
   };
 
   const syncProfileLabels = () => {
+    if (!isUserLoggedIn()) {
+      document.querySelectorAll('[data-profile-name]').forEach(node => {
+        node.textContent = 'Khách vãng lai';
+      });
+      document.querySelectorAll('[data-profile-email]').forEach(node => {
+        node.textContent = 'Chưa đăng nhập';
+      });
+      document.querySelectorAll('[data-profile-points]').forEach(node => {
+        node.textContent = '0 điểm';
+      });
+      document.querySelectorAll('.homepage-user span').forEach(node => {
+        node.textContent = 'Đăng nhập';
+      });
+      return;
+    }
     const profile = getProfile();
     document.querySelectorAll('[data-profile-name]').forEach(node => {
       node.textContent = profile.name;
@@ -289,6 +317,9 @@
     let keyword = '';
 
     const getOrders = () => {
+      if (!isUserLoggedIn()) {
+        return [];
+      }
       const orders = [];
       const cartItems = getCartItems();
       if (cartItems.length) {
@@ -301,6 +332,29 @@
           address: defaultAddress()
         });
       }
+      // Dong bo lich su mua hang: nap cac don da dat (checkout) tu localStorage
+      const history = Array.isArray(readJSON(ORDER_HISTORY_KEY, [])) ? readJSON(ORDER_HISTORY_KEY, []) : [];
+      const lastOrder = readJSON(LAST_ORDER_KEY, null);
+      if (lastOrder && Array.isArray(lastOrder.items) && lastOrder.items.length
+        && !history.some(item => item.code === lastOrder.code)
+        && !DEMO_ORDERS.some(item => item.code === lastOrder.code)) {
+        history.push(lastOrder);
+        writeJSON(ORDER_HISTORY_KEY, history);
+      }
+      history.forEach(saved => {
+        if (DEMO_ORDERS.some(item => item.code === saved.code)) return;
+        orders.push({
+          type: 'placed',
+          code: saved.code,
+          status: 'shipping',
+          statusLabel: 'Đang xử lý',
+          date: formatDate(saved.date),
+          eta: saved.eta ? formatDate(saved.eta) : '',
+          items: saved.items.map(item => ({ id: item.id, quantity: item.quantity })),
+          address: Object.assign({}, saved.address || defaultAddress()),
+          expanded: expandedOrders.has(saved.code)
+        });
+      });
       DEMO_ORDERS.forEach(order => {
         orders.push(Object.assign({}, order, {
           address: defaultAddress(),
@@ -338,9 +392,12 @@
       if (!filtered.length) {
         list.innerHTML = `<div class="c-orders-empty">
           <span class="c-icon-circle">${ICONS.cart}</span>
-          <h3>${keyword ? 'Không tìm thấy đơn hàng' : 'Chưa có đơn hàng phù hợp'}</h3>
-          <p>${keyword ? 'Thử tìm bằng mã đơn hàng hoặc tên sản phẩm khác.' : 'Giỏ hàng của bạn đang trống. Khám phá thêm dụng cụ học tập mới nhé!'}</p>
-          <a class="c-btn c-btn--primary" href="../homepage/main.html#view-category">Khám phá sản phẩm</a>
+          <h3>${!isUserLoggedIn() ? 'Bạn chưa đăng nhập' : (keyword ? 'Không tìm thấy đơn hàng' : 'Chưa có đơn hàng phù hợp')}</h3>
+          <p>${!isUserLoggedIn() ? 'Giỏ hàng của bạn đang trống. Vui lòng đăng nhập để xem giỏ hàng và theo dõi đơn hàng của bạn.' : (keyword ? 'Thử tìm bằng mã đơn hàng hoặc tên sản phẩm khác.' : 'Giỏ hàng của bạn đang trống. Khám phá thêm dụng cụ học tập mới nhé!')}</p>
+          <div style="display:flex; gap:10px; justify-content:center; margin-top:14px;">
+            ${!isUserLoggedIn() ? '<a class="c-btn c-btn--primary" href="../auth/login.html?redirect=cart">Đăng nhập ngay</a>' : ''}
+            <a class="c-btn ${!isUserLoggedIn() ? 'c-btn--secondary' : 'c-btn--primary'}" href="../homepage/main.html#view-category">Khám phá sản phẩm</a>
+          </div>
         </div>`;
         return;
       }
@@ -397,7 +454,13 @@
       const trackButton = event.target.closest('[data-track-order]');
       if (trackButton) {
         const code = trackButton.dataset.trackOrder;
-        const order = DEMO_ORDERS.find(item => item.code === code);
+        const demoOrder = DEMO_ORDERS.find(item => item.code === code);
+        const placedOrder = (readJSON(ORDER_HISTORY_KEY, []) || []).find(item => item.code === code);
+        const order = demoOrder || (placedOrder ? {
+          code: placedOrder.code,
+          status: 'shipping',
+          eta: formatDate(placedOrder.eta)
+        } : null);
         toast(order && order.status === 'shipping'
           ? `Đơn hàng #${code} đang được giao, dự kiến nhận ${order.eta}.`
           : `Đơn hàng #${code} đã giao thành công. Cảm ơn bạn đã tin chọn Học Đường Store!`);
@@ -439,6 +502,18 @@
     const form = document.getElementById('checkoutForm');
     const itemsContainer = document.getElementById('checkoutItems');
     if (!form || !itemsContainer) return;
+
+    if (!isUserLoggedIn()) {
+      if (typeof window.showSiteToast === 'function') {
+        window.showSiteToast('Vui lòng đăng nhập tài khoản trước khi tiến hành thanh toán!');
+      } else {
+        alert('Vui lòng đăng nhập tài khoản trước khi tiến hành thanh toán!');
+      }
+      setTimeout(() => {
+        window.location.replace('../auth/login.html?redirect=checkout');
+      }, 500);
+      return;
+    }
 
     const profile = getProfile();
     const buyerGrid = document.getElementById('buyerInfoGrid');

@@ -355,7 +355,7 @@ textarea.form-control {
 .muted-control {
   background: #f3f4f6;
   color: #4b5563;
-  font-family: monospace;
+  font-family: inherit;
   font-size: 13px;
 }
 

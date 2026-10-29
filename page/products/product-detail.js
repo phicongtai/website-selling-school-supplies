@@ -109,7 +109,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("addToCart").addEventListener("click", () => {
     const amount = getQuantity();
     if (amount !== null) {
-      if (window.StoreCart) window.StoreCart.add(product.id, amount);
+      if (window.StoreCart) {
+        window.StoreCart.add(product.id, amount);
+        if (window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) return;
+      }
       notice.textContent = `Đã thêm ${amount} × ${product.title} vào giỏ hàng.`;
       if (window.showSiteToast) window.showSiteToast("Đã thêm sản phẩm vào giỏ hàng!");
     }
@@ -118,7 +121,11 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("buyNow").addEventListener("click", () => {
     const amount = getQuantity();
     if (amount !== null) {
-      notice.textContent = `Bạn đã chọn ${amount} sản phẩm, tổng tiền ${money(amount * product.price)}.`;
+      if (window.StoreCart) {
+        window.StoreCart.add(product.id, amount);
+        if (window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) return;
+      }
+      window.location.href = '../customer/checkout.html';
     }
   });
 

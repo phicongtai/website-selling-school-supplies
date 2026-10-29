@@ -1372,20 +1372,33 @@ img.brand-logo-box {
 
 .header-user-dropdown {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 4px);
   right: 0;
-  min-width: 210px;
+  min-width: 220px;
   background: var(--bg-surface, #ffffff);
   border: 1px solid var(--border-light, #e5e7eb);
   border-radius: var(--radius-md, 12px);
-  box-shadow: var(--shadow-lg, 0 10px 25px rgba(0, 0, 0, 0.1));
+  box-shadow: var(--shadow-lg, 0 10px 25px rgba(0, 0, 0, 0.12));
   padding: 6px 0;
   display: none;
   z-index: 1000;
 }
 
+/* Cầu đệm vô hình (invisible hover bridge) nối liền khoảng cách giữa nút tài khoản và dropdown
+   Giúp di chuột xuống các mục menu mượt mà, không bao giờ bị chớp tắt hay mất hover */
+.header-user-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: -15px;
+  right: -15px;
+  height: 20px;
+  background: transparent;
+}
+
 .header-user-wrapper:hover .header-user-dropdown,
-.header-user-wrapper:focus-within .header-user-dropdown {
+.header-user-wrapper:focus-within .header-user-dropdown,
+.header-user-wrapper.is-open .header-user-dropdown {
   display: block;
 }
 
@@ -1457,4 +1470,9 @@ img.brand-logo-box {
     padding: 6px 12px;
     font-size: 0.78rem;
   }
+}
+
+.action-badge[hidden],
+.cart-count-badge[hidden] {
+  display: none !important;
 }

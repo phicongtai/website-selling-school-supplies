@@ -328,7 +328,7 @@
     </tr>
   </table>
 
-  <div class="doc-date">TP. Hồ Chí Minh, ngày 26 tháng 10 năm 2026</div>
+  <div class="doc-date">TP. Hồ Chí Minh, ngày 29 tháng 10 năm 2026</div>
 
   <div class="doc-title-block">
     <h1 class="doc-title">BIÊN BẢN ĐÁNH GIÁ & CHẤM ĐIỂM ĐỒ ÁN</h1>
@@ -355,12 +355,12 @@
     </thead>
     <tbody>
       <tr style="height: 34px; text-align: center; font-weight: bold;">
-        <td style="font-size: 12pt; color: #1e3a8a;">9.2</td>
-        <td>Chín phẩy hai</td>
+        <td style="font-size: 12pt; color: #1e3a8a;">9.75</td>
+        <td>Chín phẩy bảy mươi lăm</td>
         <td>---</td>
         <td>---</td>
-        <td style="font-size: 13pt; color: #15803d;">9.2 / 10</td>
-        <td>Chín phẩy hai</td>
+        <td style="font-size: 13pt; color: #15803d;">9.75 / 10</td>
+        <td>Chín phẩy bảy mươi lăm</td>
         <td style="font-size: 8.5pt; color: #15803d;">XUẤT SẮC / GIỎI</td>
       </tr>
       <tr>
@@ -371,9 +371,9 @@
           (Ký và ghi rõ họ tên)
         </td>
         <td colspan="3" style="font-size: 8pt; line-height: 1.35;">
-          • Điểm End-user: <strong>4.2 / 5.0</strong> (84%)<br>
+          • Điểm End-user: <strong>4.75 / 5.0</strong> (95%)<br>
           • Điểm Web-admin: <strong>5.0 / 5.0</strong> (100% tuyệt đối)<br>
-          • Đánh giá: Hệ thống rất công phu, chuẩn UX/UI giáo dục.
+          • Đánh giá: Đã khắc phục 3/4 rủi ro; chỉ còn trừ ở phân trang tìm kiếm nâng cao.
         </td>
       </tr>
     </tbody>
@@ -413,21 +413,21 @@
         <td style="text-align: center;">[Điền MSSV 1]</td>
         <td>Phí Công Tài (Nhóm trưởng)</td>
         <td style="text-align: center;">40%</td>
-        <td style="text-align: center; font-weight: bold; color: #1e3a8a;">9.2</td>
+        <td style="text-align: center; font-weight: bold; color: #1e3a8a;">9.75</td>
       </tr>
       <tr>
         <td style="text-align: center;">2</td>
         <td style="text-align: center;">[Điền MSSV 2]</td>
         <td>[Thành viên nhóm 2]</td>
         <td style="text-align: center;">30%</td>
-        <td style="text-align: center; font-weight: bold; color: #1e3a8a;">9.2</td>
+        <td style="text-align: center; font-weight: bold; color: #1e3a8a;">9.75</td>
       </tr>
       <tr>
         <td style="text-align: center;">3</td>
         <td style="text-align: center;">[Điền MSSV 3]</td>
         <td>[Thành viên nhóm 3]</td>
         <td style="text-align: center;">30%</td>
-        <td style="text-align: center; font-weight: bold; color: #1e3a8a;">9.2</td>
+        <td style="text-align: center; font-weight: bold; color: #1e3a8a;">9.75</td>
       </tr>
     </tbody>
   </table>
@@ -443,7 +443,7 @@
   <!-- PHẦN 1: ĐÁNH GIÁ CHỨC NĂNG NGƯỜI DÙNG CUỐI (END-USER) -->
   <div class="section-header">
     <span>1. Các Chức Năng Cho Người Dùng Cuối (End-User)</span>
-    <span class="section-pts">Đạt 4.2 / 5.0 Điểm</span>
+    <span class="section-pts">Đạt 4.75 / 5.0 Điểm</span>
   </div>
 
   <table class="data-table">
@@ -502,9 +502,9 @@
         <td style="text-align: center;">1.6</td>
         <td><strong>Đăng ký làm người mua hàng</strong> (giao diện end-user)</td>
         <td style="text-align: center;">0.5</td>
-        <td style="text-align: center; font-weight: bold; color: #b45309;">0.4</td>
-        <td style="text-align: center;"><span class="badge badge-partial">ĐẠT KHÁ</span></td>
-        <td>Trang <code>register.html</code> có form đẹp, kiểm tra mật khẩu khớp realtime. <strong>Trừ 0.1đ:</strong> Dòng 76 <code>auth.js</code> gán cứng <code>name: 'Nguyễn Minh Anh'</code> khi lưu sessionStorage.</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">0.5</td>
+        <td style="text-align: center;"><span class="badge badge-pass">XUẤT SẮC</span></td>
+        <td>Trang <code>register.html</code> kiểm tra mật khẩu khớp realtime. <strong>Đã khắc phục:</strong> Lưu thông tin người dùng thực nhập từ form (họ tên, email, phone) vào <code>sessionStorage</code> và hồ sơ mua hàng <code>hds_profile_v1</code>; các màn hình chào mừng hiển thị đúng tên vừa đăng ký.</td>
       </tr>
       <tr>
         <td style="text-align: center;">1.7</td>
@@ -515,13 +515,13 @@
           • <em>Cho phép chọn hình thức chi trả trực tuyến / tiền mặt</em> (0.5đ)
         </td>
         <td style="text-align: center;">1.25</td>
-        <td style="text-align: center; font-weight: bold; color: #b45309;">1.0</td>
-        <td style="text-align: center;"><span class="badge badge-partial">ĐẠT 1 PHẦN</span></td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">1.25</td>
+        <td style="text-align: center;"><span class="badge badge-pass">HOÀN HẢO</span></td>
         <td>
           + Tự hiển thị thông tin người mua: Đạt.<br>
           + Chọn địa chỉ có sẵn hoặc nhập mới: Đạt tốt.<br>
           + Chọn hình thức thanh toán COD / Online: Đạt tốt.<br>
-          <strong>Trừ 0.25đ:</strong> Vào thẳng <code>checkout.html</code> khi chưa login không bị chặn/redirect mà tự lấy profile mặc định.
+          <strong>Đã khắc phục:</strong> Bắt buộc đăng nhập tại <code>checkout.html</code> — truy cập trực tiếp khi chưa login bị chặn và chuyển hướng về <code>login.html?redirect=checkout</code> (kiểm chứng headless 29/10).
         </td>
       </tr>
       <tr>
@@ -536,15 +536,15 @@
         <td style="text-align: center;">1.9</td>
         <td><strong>Cho phép xem lại lịch sử mua hàng của người mua</strong> (nhóm theo đơn hàng)</td>
         <td style="text-align: center;">0.5</td>
-        <td style="text-align: center; font-weight: bold; color: #b45309;">0.3</td>
-        <td style="text-align: center;"><span class="badge badge-partial">ĐẠT 1 PHẦN</span></td>
-        <td>Trang <code>cart.html</code> hiển thị nhóm theo đơn hàng rõ ràng. <strong>Trừ 0.2đ:</strong> Đơn hàng mới đặt ở mục 1.8 chưa được tự động nạp vào danh sách lịch sử trong <code>cart.html</code> (vẫn fix mảng demo).</td>
+        <td style="text-align: center; font-weight: bold; color: #15803d;">0.5</td>
+        <td style="text-align: center;"><span class="badge badge-pass">XUẤT SẮC</span></td>
+        <td>Trang <code>cart.html</code> hiển thị nhóm theo đơn hàng rõ ràng. <strong>Đã khắc phục:</strong> Đơn vừa đặt được nạp tự động vào lịch sử từ <code>localStorage</code> (<code>hds_order_history_v1</code>), gộp giữa đơn mới và đơn demo, hiển thị đúng ngày, địa chỉ, tổng tiền (đã kiểm chứng headless 29/10).</td>
       </tr>
       <tr style="background: #f1f5f9; font-weight: bold;">
         <td colspan="2" style="text-align: right; text-transform: uppercase;">Cộng Điểm Phần 1 (Người Dùng Cuối):</td>
         <td style="text-align: center;">5.0</td>
-        <td style="text-align: center; color: #1e3a8a; font-size: 10.5pt;">4.2</td>
-        <td colspan="2">Tỷ lệ hoàn thành: <strong>84%</strong> (4.2 / 5.0)</td>
+        <td style="text-align: center; color: #15803d; font-size: 10.5pt;">4.75</td>
+        <td colspan="2">Tỷ lệ hoàn thành: <strong>95%</strong> (4.75 / 5.0)</td>
       </tr>
     </tbody>
   </table>
@@ -648,25 +648,31 @@
   <div class="score-summary-card">
     <div class="score-detail-text">
       <strong>KẾT QUẢ ĐÁNH GIÁ CHUNG TOÀN BỘ ĐỒ ÁN:</strong><br>
-      • Điểm Chức năng Người dùng cuối (End-User): <strong>4.2 / 5.0 điểm</strong> (84.0%)<br>
+      • Điểm Chức năng Người dùng cuối (End-User): <strong>4.75 / 5.0 điểm</strong> (95.0%)<br>
       • Điểm Chức năng Quản trị hệ thống (Web-Admin): <strong>5.0 / 5.0 điểm</strong> (100.0%)<br>
-      • Điểm trừ do lỗi nhỏ / thiếu ràng buộc: <strong>-0.8 điểm</strong><br>
-      • <strong>TỔNG ĐIỂM XẾP HẠNG: 9.2 / 10.0 ĐIỂM</strong> (Tương đương 11.0 / 12 điểm thang mở rộng)
+      • Điểm trừ còn lại (phân trang tìm kiếm nâng cao): <strong>-0.25 điểm</strong><br>
+      • <strong>TỔNG ĐIỂM XẾP HẠNG: 9.75 / 10.0 ĐIỂM</strong> (Tương đương 11.7 / 12 điểm thang mở rộng)
     </div>
     <div class="score-number-box">
-      <div class="big-score">9.2</div>
+      <div class="big-score">9.75</div>
       <div class="score-scale">THANG ĐIỂM 10</div>
     </div>
   </div>
 
-  <!-- CẢNH BÁO NGUY CƠ BỊ TRỪ ĐIỂM TRỰC TIẾP -->
   <div class="callout callout-danger">
-    <strong>CÁC LỖI CẦN LƯU Ý ĐẶC BIỆT TRÁNH BỊ TRỪ ĐIỂM KHI BẢO VỆ OFFLINE:</strong>
+    <strong>CÁC RỦI CƠ ĐÃ ĐƯỢC KHẮC PHỤC (29/10/2026) — DETAIL BẰNG CHỨNG KIỂM THỰC TẾ:</strong>
     <ul class="clean-list">
-      <li><strong>Nguy cơ mất ảnh khi chấm Offline:</strong> Đa số ảnh trong <code>product-data.js</code> là URL Unsplash/Shopee. Nếu laptop giảng viên không có Internet, ảnh sẽ bị vỡ. Cần thay bằng đường dẫn ảnh nội bộ trong <code>assets/img/</code>.</li>
-      <li><strong>Thiếu kiểm tra đăng nhập tại Checkout:</strong> Vào thẳng <code>checkout.html</code> không bị chuyển hướng đăng nhập. Cần thêm đoạn mã kiểm tra <code>AuthManager.isLoggedIn()</code>.</li>
-      <li><strong>Chưa đồng bộ đơn mới vào lịch sử đơn hàng:</strong> Khi đặt hàng xong, đơn mới chưa hiện trong danh sách <code>cart.html</code> do hàm <code>getOrders()</code> chỉ đọc mảng tĩnh.</li>
-      <li><strong>Tìm kiếm nâng cao thiếu phân trang:</strong> Trang <code>#view-advanced-search</code> hiển thị toàn bộ kết quả mà chưa có phân trang như yêu cầu barem.</li>
+      <li><strong>✔ Ảnh cục bộ 100% khi chấm Offline:</strong> Cả 54 sản phẩm dùng 61 ảnh nội bộ trong <code>assets/img/products/</code> (hp01…dc08, avatar, banner); đã thay toàn bộ URL Unsplash/Shopee/Bing trong <code>product-data.js</code>, <code>school-supplies.js</code>, <code>order-store.js</code>, A11, trang profile/cart/banner. Không còn bất kỳ URL ảnh ngoài nào trong website.</li>
+      <li><strong>✔ Guard đăng nhập tại Checkout:</strong> Truy cập trực tiếp <code>checkout.html</code> khi chưa đăng nhập bị chặn → toast "Vui lòng đăng nhập" + chuyển hướng <code>login.html?redirect=checkout</code> (kiểm chứng headless Chrome 29/10).</li>
+      <li><strong>✔ Đồng bộ đơn mới vào lịch sử:</strong> Đơn vừa đặt được nạp từ <code>hds_last_order_v1</code> → <code>hds_order_history_v1</code>, hiển thị đầy đủ trong <code>cart.html</code> cùng đơn demo cũ (đã kiểm chứng headless Chrome 29/10).</li>
+      <li><strong>✔ Thông tin đăng ký thật:</strong> Form đăng ký dùng chính tên/email/phone người dùng nhập (không còn gán cứng "Nguyễn Minh Anh"), lưu vào hồ sơ mua hàng.</li>
+    </ul>
+  </div>
+  <div class="callout callout-warning">
+    <strong>RỦI CƠ DUY NHẤT CÒN LẠI TRƯỚC KHI BẢO VỆ:</strong>
+    <ul class="clean-list">
+      <li><strong>Tìm kiếm nâng cao chưa có phân trang:</strong> Màn hình <code>#view-advanced-search</code> (trang chủ) hiển thị toàn bộ kết quả, chưa phân trang như barem mục 1.5 — mất tối đa 0.25đ.</li>
+      <li><strong>Google Fonts online:</strong> font Be Vietnam Pro tải từ CDN; nếu chấm offline sẽ fallback về font hệ thống (không vỡ chữ tiếng Việt, chỉ khác kiểu chữ). Có thể tải font vào <code>assets/fonts/</code> để đạt 100% offline.</li>
     </ul>
   </div>
 
@@ -707,19 +713,19 @@
   <!-- KPI STATS CARDS -->
   <div class="kpi-row">
     <div class="kpi-card">
-      <div class="kpi-val" style="color: #15803d;">13 / 17</div>
-      <div class="kpi-label">Tiêu chí Đạt Tối Đa (76.5%)</div>
+      <div class="kpi-val" style="color: #15803d;">16 / 17</div>
+      <div class="kpi-label">Tiêu chí Đạt Tối Đa (94.1%)</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-val" style="color: #b45309;">4 / 17</div>
-      <div class="kpi-label">Tiêu chí Đạt 1 Phần (23.5%)</div>
+      <div class="kpi-val" style="color: #b45309;">1 / 17</div>
+      <div class="kpi-label">Tiêu chí Đạt 1 Phần (5.9%)</div>
     </div>
     <div class="kpi-card">
       <div class="kpi-val" style="color: #dc2626;">0 / 17</div>
       <div class="kpi-label">Tiêu chí Thất Bại (0.0%)</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-val" style="color: #1e3a8a;">92.0%</div>
+      <div class="kpi-val" style="color: #1e3a8a;">97.5%</div>
       <div class="kpi-label">Tỷ lệ đáp ứng Barem</div>
     </div>
   </div>
@@ -767,16 +773,16 @@
       <tr>
         <td style="text-align: center;">TC-05</td>
         <td>Auth guard thanh toán</td>
-        <td>Mở tab ẩn danh vào thẳng <code>checkout.html</code></td>
-        <td>Không chặn, tự lấy profile mặc định</td>
-        <td style="text-align: center;"><span class="badge badge-partial">WARN</span></td>
+        <td>Truy cập tab ẩn danh vào thẳng <code>checkout.html</code></td>
+        <td>Chặn &amp; redirect về <code>login.html</code></td>
+        <td style="text-align: center;"><span class="badge badge-pass">PASS</span></td>
       </tr>
       <tr>
         <td style="text-align: center;">TC-06</td>
         <td>Đồng bộ lịch sử mua hàng</td>
         <td>Đặt đơn mới rồi vào <code>cart.html</code></td>
-        <td>Chỉ hiện đơn demo cũ, thiếu đơn mới</td>
-        <td style="text-align: center;"><span class="badge badge-partial">WARN</span></td>
+        <td>Đơn HD mới hiện trong lịch sử</td>
+        <td style="text-align: center;"><span class="badge badge-pass">PASS</span></td>
       </tr>
       <tr>
         <td style="text-align: center;">TC-07</td>
@@ -839,35 +845,18 @@
 
   <!-- HƯỚNG DẪN FIX CODE 5 PHÚT ĐỂ ĐẠT 10.0 / 10.0 -->
   <div class="callout callout-warning">
-    <strong>HƯỚNG DẪN SỬA NHANH (QUICK FIX) ĐỂ ĐẠT ĐIỂM TỐI ĐA 10.0 / 10.0:</strong>
+    <strong>HƯỚNG DẪN SỬA NHANH (QUICK FIX) ĐỂ ĐẠT ĐIỂM TỐI ĐA 10.0 / 10.0 — CHỈ CÒN 1 LỖI:</strong>
     
-    <div style="margin-top: 5px;"><strong>1. Thêm Auth Guard tại trang Checkout (<code>page/customer/checkout.html</code>):</strong></div>
-    Thêm đoạn script sau vào đầu thẻ <code>&lt;body&gt;</code> của file <code>checkout.html</code>:
-    <pre class="code-fix">&lt;script&gt;
-  const user = sessionStorage.getItem('hds_auth_user');
-  if (!user) {
-    alert('Vui lòng đăng nhập trước khi tiến hành thanh toán đơn hàng!');
-    window.location.href = '../auth/login.html?redirect=checkout';
-  }
-&lt;/script&gt;</pre>
-
-    <div style="margin-top: 4px;"><strong>2. Đồng bộ đơn mới đặt vào Lịch sử đơn hàng (<code>page/customer/customer.js</code>):</strong></div>
-    Trong hàm <code>getOrders()</code> của file <code>customer.js</code> (khoảng dòng 291), thêm đoạn đọc đơn mới:
-    <pre class="code-fix">const lastOrder = readJSON(LAST_ORDER_KEY, null);
-if (lastOrder && !DEMO_ORDERS.some(o => o.code === lastOrder.code)) {
-  orders.unshift({
-    code: lastOrder.code,
-    status: 'shipping',
-    statusLabel: 'Đang xử lý',
-    date: formatDate(lastOrder.date),
-    items: lastOrder.items.map(it => ({ id: it.id, quantity: it.quantity })),
-    address: lastOrder.address
-  });
-}</pre>
-
-    <div style="margin-top: 4px;"><strong>3. Sửa lỗi họ tên khi submit Đăng ký (<code>page/auth/auth.js</code>):</strong></div>
-    Tại dòng 76 của <code>auth.js</code>, sửa thành:
-    <pre class="code-fix">name: (fullnameInput && fullnameInput.value.trim()) || 'Khách hàng mới',</pre>
+    <div style="margin-top: 5px;"><strong>Thêm phân trang cho Tìm kiếm nâng cao (<code>page/homepage/main.html</code> + <code>homepage.js</code>, barem 1.5 — mất 0.25đ):</strong></div>
+    Trong <code>homepage.js</code>, phần render kết quả <code>#view-advanced-search</code>, chia kết quả thành trang 6 sản phẩm và thêm nút điều hướng (giống trang danh mục <code>products/.html</code>):
+    <pre class="code-fix">const PAGE_SIZE = 6;
+let advPage = 1;
+const pages = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
+advPage = Math.min(advPage, pages);
+const slice = results.slice((advPage - 1) * PAGE_SIZE, advPage * PAGE_SIZE);
+renderAdvancedResults(slice);
+renderAdvancedPagination(pages, advPage, page =&gt; { advPage = page; update(); });</pre>
+    Sau khi bổ sung, máy tính điểm của học phần chỉ còn 1 tiêu chí đạt một phần → đạt <strong>10.0 / 10.0</strong>.
   </div>
 
   <div style="text-align: center; font-size: 8.5pt; color: #64748b; margin-top: 10px;">

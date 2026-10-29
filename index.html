@@ -9,14 +9,13 @@
 <body>
   <p>Đang chuyển đến <a href="page/homepage/main.html">Học Đường Store</a>...</p>
   <script>
-    // Reset hoàn toàn trạng thái đăng nhập mỗi khi mở lại file index
+    // Reset hoàn toàn trạng thái đăng nhập và giỏ hàng mỗi khi mở lại file index
     try {
       sessionStorage.removeItem('hds_auth_user');
       localStorage.removeItem('hds_auth_user');
+      localStorage.removeItem('hds_cart_v1');
     } catch (e) {}
     window.location.replace("page/homepage/main.html");
   </script>
 </body>
-</html>
-
 </html>

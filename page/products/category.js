@@ -101,7 +101,10 @@ document.addEventListener("DOMContentLoaded", () => {
     grid.querySelectorAll(".store-product-cart").forEach(button => {
       button.addEventListener("click", () => {
         const productId = Number(button.dataset.productId);
-        if (window.StoreCart) window.StoreCart.add(productId, 1);
+        if (window.StoreCart) {
+          window.StoreCart.add(productId, 1);
+          if (window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) return;
+        }
         button.classList.add("added");
         button.textContent = "✓ Đã thêm vào giỏ";
         if (window.showSiteToast) window.showSiteToast("Đã thêm sản phẩm vào giỏ hàng!");

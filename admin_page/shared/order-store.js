@@ -23,15 +23,15 @@
   };
 
   const IMAGES = {
-    backpack: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=120&q=80',
-    art: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=120&q=80',
-    watercolor: 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=120&q=80',
-    notebook: 'https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&w=120&q=80',
-    book: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=120&q=80',
-    pen: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=120&q=80',
-    pencilCase: 'https://images.unsplash.com/photo-1560785496-3c9d27877182?auto=format&fit=crop&w=120&q=80',
-    ruler: 'https://images.unsplash.com/photo-1596495578065-6e0763fa1178?auto=format&fit=crop&w=120&q=80',
-    paper: 'https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=120&q=80'
+    backpack: '../../assets/img/products/hp04.jpg',
+    art: '../../assets/img/products/mt06.jpg',
+    watercolor: '../../assets/img/products/sp08.jpg',
+    notebook: '../../assets/img/products/vg03.jpg',
+    book: '../../assets/img/products/adminbook.jpg',
+    pen: '../../assets/img/products/sp01.jpg',
+    pencilCase: '../../assets/img/products/adminpencilcase.jpg',
+    ruler: '../../assets/img/products/adminruler.jpg',
+    paper: '../../assets/img/products/mt03.jpg',
   };
 
   const CUSTOMERS = {

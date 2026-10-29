@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
       price: 8000,
       oldPrice: 10000,
       stock: 150,
-      image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=85"
+      image: "../../assets/img/products/ss-thuocke.jpg"
     },
     {
       code: "DC02",
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
       price: 45000,
       oldPrice: 55000,
       stock: 80,
-      image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=600&q=85"
+      image: "../../assets/img/products/ss-hopbut.jpg"
     },
     {
       code: "DC03",
@@ -23,21 +23,21 @@ document.addEventListener("DOMContentLoaded", () => {
       price: 185000,
       oldPrice: 210000,
       stock: 35,
-      image: "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=600&q=85"
+      image: "../../assets/img/products/tb01.jpg"
     },
     {
       code: "DC04",
       name: "Gôm tẩy trắng sạch",
       price: 5000,
       stock: 200,
-      image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=85"
+      image: "../../assets/img/products/mt06.jpg"
     },
     {
       code: "DC05",
       name: "Đồ chuốt bút chì",
       price: 12000,
       stock: 100,
-      image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=85"
+      image: "../../assets/img/products/mt06.jpg"
     },
     {
       code: "DC06",
@@ -45,21 +45,21 @@ document.addEventListener("DOMContentLoaded", () => {
       price: 25000,
       oldPrice: 30000,
       stock: 60,
-      image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=85"
+      image: "../../assets/img/products/dc06.jpg"
     },
     {
       code: "DC07",
       name: "Kéo học sinh đầu tròn",
       price: 18000,
       stock: 75,
-      image: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=600&q=85"
+      image: "../../assets/img/products/sp08.jpg"
     },
     {
       code: "DC08",
       name: "Keo dán giấy học sinh",
       price: 15000,
       stock: 90,
-      image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=85"
+      image: "../../assets/img/products/mt06.jpg"
     }
   ];
 

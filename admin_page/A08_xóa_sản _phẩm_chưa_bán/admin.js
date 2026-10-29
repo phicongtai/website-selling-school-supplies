@@ -59,3 +59,24 @@ confirmButton.addEventListener("click", () => {
   backdrop.hidden = true;
   pageMessage.textContent = "Sản phẩm SP48 đã được xóa khỏi danh sách trên trang này.";
 });
+
+
+// Cập nhật ngày realtime trên topbar
+(function () {
+  function updateTopbarDate() {
+    const dateEls = document.querySelectorAll('#current-date-text, .topbar-date span');
+    if (dateEls.length) {
+      const now = new Date();
+      const day = String(now.getDate()).padStart(2, '0');
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const year = now.getFullYear();
+      const text = 'Hôm nay, ' + day + '/' + month + '/' + year;
+      dateEls.forEach(el => { el.textContent = text; });
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateTopbarDate);
+  } else {
+    updateTopbarDate();
+  }
+})();

@@ -1,3 +1,16 @@
+:root {
+  --admin-font-family: var(--font-family-base, 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  --admin-fs-h1: 26px;
+  --admin-fs-h2: 16px;
+  --admin-fs-h3: 14px;
+  --admin-fs-body: 13.5px;
+  --admin-fs-label: 12.5px;
+  --admin-fs-caption: 12px;
+  --admin-fs-badge: 11.5px;
+  --admin-fs-table-th: 11px;
+  --admin-fs-btn: 13.5px;
+}
+
 /* ==========================================================================
    A02: QUẢN LÝ NGƯỜI DÙNG (USER MANAGEMENT)
    Dự án: Web Bán Đồ Dùng Học Tập - Học Đường Store
@@ -5,7 +18,8 @@
    ========================================================================== */
 
 /* Layout tổng thể */
-.admin-page-container {
+.admin-page-container,
+.admin-page {
   display: flex;
   min-height: 100vh;
   width: 100%;
@@ -147,6 +161,30 @@ img.brand-mark {
   font-size: 14px;
   font-weight: 700;
   flex-shrink: 0;
+}
+
+
+.sidebar-account > span:last-child {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sidebar-account > span:last-child strong {
+  font-size: 13px;
+  font-weight: var(--fw-semibold, 600);
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-account > span:last-child small {
+  font-size: 11px;
+  color: #9ca3af;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .account-details {

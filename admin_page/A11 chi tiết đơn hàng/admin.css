@@ -46,7 +46,7 @@
   gap: 8px;
   flex-wrap: wrap;
   color: var(--od-muted);
-  font-size: 12px;
+  font-size: 13.5px;
   line-height: 1.5;
 }
 
@@ -74,7 +74,7 @@
   align-items: center;
   gap: 6px;
   color: var(--od-muted);
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
   transition: color var(--transition-fast);
 }
@@ -399,7 +399,7 @@
   place-items: center;
   color: #8a4512;
   background: #ffdbcc;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -484,7 +484,7 @@
   color: var(--od-green);
   background: var(--od-green-soft);
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1.5;
   white-space: nowrap;
@@ -537,7 +537,7 @@
 
 .od-total-amount small {
   color: var(--od-muted);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.4;
 }
 
@@ -941,7 +941,7 @@
   color: var(--od-muted);
   background: #fff;
   border-radius: 8px;
-  font-size: 10.5px;
+  font-size: 12.5px;
   line-height: 1.5;
 }
 
@@ -966,7 +966,7 @@
   color: var(--od-muted);
   background: #efeded;
   border-radius: 4px;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.6;
   white-space: nowrap;
 }
@@ -1397,8 +1397,8 @@
   }
 
   .od-step-copy { gap: 1px; padding-top: 1px; }
-  .od-step-title { font-size: 9px; line-height: 1.3; }
-  .od-step-note { font-size: 8px; line-height: 1.35; }
+  .od-step-title { font-size: 12px; line-height: 1.3; }
+  .od-step-note { font-size: 11.5px; line-height: 1.35; }
 
   .od-transition {
     gap: 8px;
@@ -1406,12 +1406,12 @@
   }
 
   .od-transition-label { font-size: 13px; }
-  .od-select select { height: 34px; font-size: 10px; }
+  .od-select select { height: 34px; font-size: 12px; }
 
   .od-lock-note {
     gap: 6px;
     padding: 8px;
-    font-size: 9px;
+    font-size: 12px;
     line-height: 1.5;
   }
 

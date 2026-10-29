@@ -315,7 +315,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const updateBadges = () => window.StoreCart.updateBadges();
 
   window.addToCart = (id, quantity = 1) => {
-    window.StoreCart.add(id, quantity);
+    const res = window.StoreCart.add(id, quantity);
+    if (window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) return;
     renderCartDrawer();
     showToast("Đã thêm sản phẩm vào giỏ hàng!");
   };
@@ -338,8 +339,11 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="cart-drawer-empty">
           <span class="cart-drawer-empty-icon" aria-hidden="true">${CART_ICON}</span>
           <strong>Giỏ hàng đang trống</strong>
-          <p>Thêm vài dụng cụ học tập xinh xắn để bắt đầu đơn hàng của bạn nhé.</p>
-          <a class="btn btn-primary" href="../homepage/main.html#view-category" onclick="closeCartDrawer()">Mua sắm ngay</a>
+          <p>${(window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) ? 'Bạn chưa đăng nhập. Vui lòng đăng nhập để bắt đầu chọn mua sản phẩm.' : 'Thêm vài dụng cụ học tập xinh xắn để bắt đầu đơn hàng của bạn nhé.'}</p>
+          <div style="display: flex; gap: 8px; justify-content: center; margin-top: 12px;">
+            ${(window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) ? '<a class="btn btn-primary" href="../auth/login.html">Đăng nhập ngay</a>' : ''}
+            <a class="btn ${(window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) ? 'btn-outlined' : 'btn-primary'}" href="../homepage/main.html#view-category" onclick="closeCartDrawer()">Mua sắm ngay</a>
+          </div>
         </div>
       `;
     } else {
