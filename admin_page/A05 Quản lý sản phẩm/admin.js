@@ -524,7 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const code = document.getElementById('new-product-code').value.trim();
     const category = document.getElementById('new-product-category').value;
     const name = document.getElementById('new-product-name').value.trim();
-    const price = parseInt(document.getElementById('new-product-price').value, 10) || 0;
+    const price = parseInt(document.getElementById('new-product-price').value.replace(/\./g, ''), 10) || 0;
     const stock = parseInt(document.getElementById('new-product-stock').value, 10) || 0;
     const status = document.getElementById('new-product-status').value;
 

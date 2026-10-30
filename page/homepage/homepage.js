@@ -90,6 +90,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const getCategoryCheckboxes = () => Array.from(document.querySelectorAll('.filter-categories input[type="checkbox"]'));
 
+  const parsePriceNumber = val => {
+    if (val == null || val === '') return NaN;
+    const clean = String(val).replace(/\./g, '').trim();
+    if (!clean) return NaN;
+    const num = Number(clean);
+    return Number.isFinite(num) ? num : NaN;
+  };
+
+  const formatPrice = val => {
+    if (val == null || val === '') return '';
+    let digits = String(val).replace(/\D/g, '');
+    if (!digits) return '';
+    if (digits.length > 1 && digits.startsWith('0')) {
+      digits = digits.replace(/^0+/, '') || '0';
+    }
+    return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
+
   const updateCategoryUrl = ({ categories, min, max, sort, sale, hot }) => {
     const url = new URL(window.location.href);
     url.hash = 'view-category';
@@ -119,8 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const minInput = document.getElementById('filterMinPrice');
     const maxInput = document.getElementById('filterMaxPrice');
-    const min = Math.max(0, Number(minInput?.value) || 0);
-    const rawMax = Number(maxInput?.value);
+    const parsedMin = parsePriceNumber(minInput?.value);
+    const min = Number.isFinite(parsedMin) ? Math.max(0, parsedMin) : 0;
+    const rawMax = parsePriceNumber(maxInput?.value);
     const max = Number.isFinite(rawMax) && rawMax > 0 ? Math.max(rawMax, min) : Infinity;
     const sortValue = document.getElementById('categorySortSelect')?.value || 'default';
     const saleOnly = Boolean(document.querySelector('.filter-offers input[data-filter="sale"]')?.checked);
@@ -220,8 +239,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const shouldSyncUrl = !options || options.syncUrl !== false;
     const keyword = document.getElementById('advKeyword')?.value.toLowerCase().trim() || '';
     const category = document.getElementById('advCategory')?.value || 'all';
-    const minPrice = Math.max(0, parseInt(document.getElementById('advMinPrice')?.value, 10) || 0);
-    const parsedMaxPrice = parseInt(document.getElementById('advMaxPrice')?.value, 10);
+    const minPriceVal = parsePriceNumber(document.getElementById('advMinPrice')?.value);
+    const minPrice = Number.isFinite(minPriceVal) ? Math.max(0, minPriceVal) : 0;
+    const parsedMaxPrice = parsePriceNumber(document.getElementById('advMaxPrice')?.value);
     const maxPrice = Number.isFinite(parsedMaxPrice) && parsedMaxPrice > 0
       ? Math.max(parsedMaxPrice, minPrice)
       : Infinity;
@@ -253,15 +273,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (keyword) keyword.value = '';
     if (category) category.value = 'all';
     if (minPrice) minPrice.value = '0';
-    if (maxPrice) maxPrice.value = '5000000';
+    if (maxPrice) maxPrice.value = '5.000.000';
     window.applyAdvancedSearch();
   };
 
   window.applyPricePreset = (min, max) => {
     const minInput = document.getElementById('advMinPrice');
     const maxInput = document.getElementById('advMaxPrice');
-    if (minInput) minInput.value = String(min);
-    if (maxInput) maxInput.value = String(max);
+    if (minInput) minInput.value = formatPrice(min);
+    if (maxInput) maxInput.value = formatPrice(max);
     window.applyAdvancedSearch();
   };
 
@@ -509,8 +529,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const sortSelect = document.getElementById('categorySortSelect');
     const saleInput = document.querySelector('.filter-offers input[data-filter="sale"]');
     const hotInput = document.querySelector('.filter-offers input[data-filter="hot"]');
-    if (minInput) minInput.value = pageParams.get('min') || '';
-    if (maxInput) maxInput.value = pageParams.get('max') || '';
+    if (minInput) minInput.value = formatPrice(pageParams.get('min') || '');
+    if (maxInput) maxInput.value = formatPrice(pageParams.get('max') || '');
     if (sortSelect) sortSelect.value = pageParams.get('sort') || 'default';
     if (saleInput) saleInput.checked = pageParams.get('sale') === '1';
     if (hotInput) hotInput.checked = pageParams.get('hot') === '1';
@@ -523,10 +543,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxPrice = document.getElementById('advMaxPrice');
     if (keyword) keyword.value = searchParam || '';
     if (category) category.value = pageParams.get('cat') || 'all';
-    if (minPrice) minPrice.value = pageParams.get('min') || '0';
-    if (maxPrice) maxPrice.value = pageParams.get('max') || '5000000';
+    if (minPrice) minPrice.value = formatPrice(pageParams.get('min') || '0');
+    if (maxPrice) maxPrice.value = formatPrice(pageParams.get('max') || '5000000');
     window.applyAdvancedSearch({ syncUrl: false });
   };
+
+  ['advMinPrice', 'advMaxPrice', 'filterMinPrice', 'filterMaxPrice'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.attachPriceFormatter) window.attachPriceFormatter(el);
+  });
 
   if (searchParam !== null || hashView === 'view-advanced-search') {
     restoreAdvancedSearch();

@@ -406,3 +406,105 @@ window.closeCartDrawer = function() {
     drawer.classList.remove('open');
   }
 };
+
+/* ==========================================================================
+   ĐỊNH DẠNG TỰ ĐỘNG CÁC Ô NHẬP GIÁ / TIỀN (PHÂN TÁCH HÀNG NGHÌN BẰNG DẤU CHẤM)
+   Ví dụ: 5000 -> 5.000 | 5000000 -> 5.000.000
+   ========================================================================== */
+(function () {
+  function formatPriceString(val) {
+    if (val == null || val === '') return '';
+    let digits = String(val).replace(/\D/g, '');
+    if (!digits) return '';
+    if (digits.length > 1 && digits.startsWith('0')) {
+      digits = digits.replace(/^0+/, '') || '0';
+    }
+    return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  }
+
+  function attachPriceFormatter(input) {
+    if (!input || input.dataset.priceBound) return;
+    input.dataset.priceBound = 'true';
+
+    if (input.type === 'number') {
+      input.type = 'text';
+      input.inputMode = 'numeric';
+    }
+
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Backspace') {
+        const pos = input.selectionStart;
+        if (pos === input.selectionEnd && pos > 0 && input.value[pos - 1] === '.') {
+          input.setSelectionRange(pos - 1, pos - 1);
+        }
+      }
+    });
+
+    input.addEventListener('input', function () {
+      const start = input.selectionStart || 0;
+      const oldVal = input.value;
+      let digitsBefore = (oldVal.slice(0, start).match(/\d/g) || []).length;
+      let rawDigits = oldVal.replace(/\D/g, '');
+
+      if (!rawDigits) {
+        input.value = '';
+        return;
+      }
+      if (rawDigits.length > 1 && rawDigits.startsWith('0')) {
+        const stripped = rawDigits.replace(/^0+/, '');
+        const zeroesRemoved = rawDigits.length - stripped.length;
+        rawDigits = stripped || '0';
+        digitsBefore = Math.max(0, digitsBefore - zeroesRemoved);
+      }
+
+      const formatted = rawDigits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      input.value = formatted;
+
+      let newCursor = 0;
+      let digitsCount = 0;
+      for (let i = 0; i < formatted.length; i++) {
+        if (/\d/.test(formatted[i])) digitsCount++;
+        if (digitsCount >= digitsBefore) {
+          newCursor = i + 1;
+          break;
+        }
+      }
+      if (digitsCount < digitsBefore || newCursor === 0) newCursor = formatted.length;
+      input.setSelectionRange(newCursor, newCursor);
+    });
+
+    if (input.value) {
+      input.value = formatPriceString(input.value);
+    }
+  }
+
+  function initAllPriceInputs() {
+    const selectors = [
+      '#advMinPrice',
+      '#advMaxPrice',
+      '#filterMinPrice',
+      '#filterMaxPrice',
+      '#new-product-price',
+      '#price',
+      'input[name="total"]',
+      'input[data-price-input]'
+    ];
+    document.querySelectorAll(selectors.join(', ')).forEach(attachPriceFormatter);
+  }
+
+  window.formatPriceString = formatPriceString;
+  window.attachPriceFormatter = attachPriceFormatter;
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAllPriceInputs);
+  } else {
+    initAllPriceInputs();
+  }
+
+  document.addEventListener('focusin', function (e) {
+    const el = e.target;
+    if (el && el.matches && el.matches('#advMinPrice, #advMaxPrice, #filterMinPrice, #filterMaxPrice, #new-product-price, #price, input[name="total"], input[data-price-input]')) {
+      attachPriceFormatter(el);
+    }
+  });
+})();

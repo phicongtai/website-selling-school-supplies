@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 6. XEM TRƯỚC GIÁ BÁN THỜI GIAN THỰC
   if (priceInput && pricePreviewText) {
     priceInput.addEventListener('input', () => {
-      const val = parseInt(priceInput.value, 10);
+      const val = parseInt(priceInput.value.replace(/\./g, ''), 10);
       if (!isNaN(val) && val > 0) {
         pricePreviewText.textContent = `Giá niêm yết: ${formatVnd(val)}`;
         pricePreviewText.style.color = 'var(--color-primary, #FF6900)';
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const name = productNameInput.value.trim();
       const category = categorySelect.value;
       const stock = parseInt(stockInput.value, 10);
-      const price = parseInt(priceInput.value, 10);
+      const price = parseInt(priceInput.value.replace(/\./g, ''), 10);
       const sku = skuInput.value.trim() || `HD-SP${nextCodeNum}`;
       const description = descriptionInput ? descriptionInput.value.trim() : '';
       const brand = brandInput ? brandInput.value.trim() : 'Học Đường';

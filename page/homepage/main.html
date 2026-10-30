@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -171,9 +171,9 @@
           <div class="filter-group">
             <div class="filter-title"><span>Khoảng giá</span><span>VNĐ</span></div>
             <div class="filter-price-row">
-              <input id="filterMinPrice" type="number" min="0" step="1000" placeholder="Từ" aria-label="Giá tối thiểu">
+              <input id="filterMinPrice" type="text" inputmode="numeric" placeholder="Từ" aria-label="Giá tối thiểu">
               <span>–</span>
-              <input id="filterMaxPrice" type="number" min="0" step="1000" placeholder="Đến" aria-label="Giá tối đa">
+              <input id="filterMaxPrice" type="text" inputmode="numeric" placeholder="Đến" aria-label="Giá tối đa">
             </div>
             <button type="button" class="filter-apply" onclick="filterCategoryProducts()">Áp dụng khoảng giá</button>
           </div>
@@ -253,14 +253,14 @@
           <div class="adv-field">
             <label for="advMinPrice">Giá tối thiểu</label>
             <div class="adv-input-wrap">
-              <input type="number" id="advMinPrice" value="0" min="0" step="1000" placeholder="0">
+              <input type="text" inputmode="numeric" id="advMinPrice" value="0" placeholder="0">
               <span>₫</span>
             </div>
           </div>
           <div class="adv-field">
             <label for="advMaxPrice">Giá tối đa</label>
             <div class="adv-input-wrap">
-              <input type="number" id="advMaxPrice" value="5000000" min="0" step="1000" placeholder="Không giới hạn">
+              <input type="text" inputmode="numeric" id="advMaxPrice" value="5.000.000" placeholder="Không giới hạn">
               <span>₫</span>
             </div>
           </div>

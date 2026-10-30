@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
       date: new Date().toISOString().slice(0, 10),
       address: String(data.get('address')).trim(),
       location: data.get('location'),
-      total: Number(data.get('total')),
+      total: Number(String(data.get('total')).replace(/\./g, '')),
       status: 'pending',
       payment: 'Tiền mặt khi nhận hàng (COD)',
       note: '',

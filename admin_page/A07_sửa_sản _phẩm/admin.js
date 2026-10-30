@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
     categorySelect.value = product.category || 'Bút viết';
   }
   stockInput.value = product.stock !== undefined ? product.stock : 100;
-  priceInput.value = product.price || 0;
+  priceInput.value = product.price ? String(product.price).replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '0';
   if (pricePreviewText) {
     pricePreviewText.textContent = `Giá niêm yết: ${formatVnd(product.price || 0)}`;
     pricePreviewText.style.color = 'var(--color-primary, #FF6900)';
@@ -396,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 6. XỬ LÝ SỰ KIỆN GIÁ BÁN THỜI GIAN THỰC
   if (priceInput && pricePreviewText) {
     priceInput.addEventListener('input', () => {
-      const val = parseInt(priceInput.value, 10);
+      const val = parseInt(priceInput.value.replace(/\./g, ''), 10);
       if (!isNaN(val) && val > 0) {
         pricePreviewText.textContent = `Giá niêm yết: ${formatVnd(val)}`;
         pricePreviewText.style.color = 'var(--color-primary, #FF6900)';
@@ -462,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const name = productNameInput.value.trim();
       const category = categorySelect.value;
       const stock = parseInt(stockInput.value, 10);
-      const price = parseInt(priceInput.value, 10);
+      const price = parseInt(priceInput.value.replace(/\./g, ''), 10);
       const sku = skuInput.value.trim() || `HD-${product.code}`;
       const description = descriptionInput ? descriptionInput.value.trim() : '';
       const brand = brandInput ? brandInput.value.trim() : 'Học Đường';
