@@ -8,15 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const category = document.body.dataset.productCategory || "pens";
-  const products = window.StoreCatalog.products.filter(item => item.category === category);
-  const categoryName = window.StoreCatalog.categories[category];
+  // Sản phẩm đã được viết tĩnh trong HTML của từng trang (trang 1 / trang 2 là
+  // hai file khác nhau), JS chỉ đóng vai trò lọc – sắp xếp trên các thẻ tĩnh đó.
   const grid = document.getElementById("productGrid");
   const count = document.getElementById("resultCount");
   const sort = document.getElementById("sortSelect");
   const search = document.getElementById("searchInput");
-  const previousButton = document.getElementById("prevPage");
-  const nextButton = document.getElementById("nextPage");
+  const emptyState = document.getElementById("categoryEmptyState");
   const categoryLinks = {
     "pens.html": "pens",
     "notebooks.html": "notebooks",
@@ -26,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "computers.html": "computers"
   };
 
-  if (!categoryName || !grid || !count || !sort || !search || !previousButton || !nextButton) {
+  if (!grid || !count || !sort || !search) {
     throw new Error("Thiếu dữ liệu hoặc thành phần cần thiết cho trang danh mục sản phẩm.");
   }
 
@@ -44,105 +42,61 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  let page = 1;
-  let totalPages = 1;
-  const perPage = 6;
-  const money = value => new Intl.NumberFormat("vi-VN").format(value) + " ₫";
+  const cards = Array.from(grid.querySelectorAll(".store-product-card"));
+  cards.forEach((card, index) => {
+    if (card.dataset.order === undefined) card.dataset.order = String(index);
+  });
+
+  const sorters = {
+    "low": (a, b) => (Number(a.dataset.price) || 0) - (Number(b.dataset.price) || 0),
+    "high": (a, b) => (Number(b.dataset.price) || 0) - (Number(a.dataset.price) || 0),
+    "name": (a, b) => (a.dataset.title || "").localeCompare(b.dataset.title || "", "vi"),
+    "popular": (a, b) => Number(a.dataset.order) - Number(b.dataset.order)
+  };
 
   function render() {
-    let filtered = products.filter(product =>
-      `${product.code} ${product.title}`.toLocaleLowerCase("vi")
-        .includes(search.value.trim().toLocaleLowerCase("vi"))
-    );
+    // YÊU CẦU: từ khóa tìm kiếm chỉ để showcasing — KHÔNG lọc thật.
+    // Luôn hiển thị toàn bộ sản phẩm đã viết tĩnh trong trang này,
+    // nửa còn lại nằm ở file Trang 2.
+    cards.forEach(card => {
+      card.classList.remove("is-hidden");
+      card.style.display = "";
+    });
 
-    if (sort.value === "low") filtered.sort((a, b) => a.price - b.price);
-    if (sort.value === "high") filtered.sort((a, b) => b.price - a.price);
-    if (sort.value === "name") {
-      filtered.sort((a, b) => a.title.localeCompare(b.title, "vi"));
+    const sorter = sorters[sort.value];
+    if (sorter) {
+      cards.sort(sorter).forEach(card => grid.appendChild(card));
     }
 
-    totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
-    page = Math.min(page, totalPages);
-    const visibleProducts = filtered.slice((page - 1) * perPage, page * perPage);
-
-    count.textContent = filtered.length
-      ? `Hiển thị ${(page - 1) * perPage + 1}–${Math.min(page * perPage, filtered.length)} của ${filtered.length} sản phẩm`
-      : "Không tìm thấy sản phẩm phù hợp";
-
-    grid.innerHTML = visibleProducts.map(product => `
-      <article class="store-product-card">
-        <a class="store-product-image-link" href="product-detail.html?id=${encodeURIComponent(product.code)}">
-          <div class="store-product-visual">
-            <span class="store-product-tag">${categoryName}</span>
-            ${product.hot ? '<span class="store-product-tag store-product-hot">Hot</span>' : ""}
-            <img src="${product.image}" alt="${product.title}" loading="lazy">
-          </div>
-        </a>
-        <div class="store-product-code">Mã: ${product.code}</div>
-        <a class="store-product-name" href="product-detail.html?id=${encodeURIComponent(product.code)}">${product.title}</a>
-        <div class="store-product-meta">
-          <strong class="store-product-price">${money(product.price)}</strong>
-          ${product.oldPrice
-            ? `<span class="store-product-old-price">${money(product.oldPrice)}</span>`
-            : `<span class="store-product-stock">Kho: ${product.stock}</span>`}
-        </div>
-        <button class="store-product-cart" type="button" data-product-id="${product.id}">🛒 Thêm vào giỏ</button>
-      </article>
-    `).join("");
-
-    document.querySelectorAll(".page-number").forEach(button => {
-      const buttonPage = Number(button.dataset.page);
-      button.classList.toggle("active", buttonPage === page);
-      button.hidden = buttonPage > totalPages;
-    });
-    previousButton.disabled = page === 1;
-    nextButton.disabled = page === totalPages;
-
-    grid.querySelectorAll(".store-product-cart").forEach(button => {
-      button.addEventListener("click", () => {
-        const productId = Number(button.dataset.productId);
-        if (window.StoreCart) {
-          window.StoreCart.add(productId, 1);
-          if (window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) return;
-        }
-        button.classList.add("added");
-        button.textContent = "✓ Đã thêm vào giỏ";
-        if (window.showSiteToast) window.showSiteToast("Đã thêm sản phẩm vào giỏ hàng!");
-        window.setTimeout(() => {
-          button.classList.remove("added");
-          button.textContent = "🛒 Thêm vào giỏ";
-        }, 1200);
-      });
-    });
+    const body = document.body;
+    const catalog = window.StoreCatalog && window.StoreCatalog.products;
+    const categoryKey = body.dataset.productCategory;
+    const total = catalog && categoryKey
+      ? catalog.filter(item => item.category === categoryKey).length
+      : cards.length;
+    const isPageTwo = body.dataset.catalogPage === "2";
+    count.textContent = `Hiển thị ${cards.length} / ${total} sản phẩm (Trang ${isPageTwo ? "2" : "1"}/2)`;
+    if (emptyState) emptyState.hidden = true;
   }
 
-  sort.addEventListener("change", () => {
-    page = 1;
-    render();
-  });
-  search.addEventListener("input", () => {
-    page = 1;
-    render();
-  });
-  document.getElementById("searchButton").addEventListener("click", () => {
-    page = 1;
-    render();
-    search.focus();
-  });
-  document.querySelectorAll(".page-number").forEach(button => {
-    button.addEventListener("click", () => {
-      page = Number(button.dataset.page);
+  sort.addEventListener("change", render);
+  search.addEventListener("input", render);
+  document.getElementById("searchButton")?.addEventListener("click", () => {
+    // Người dùng bấm "Tìm kiếm": hiện hiệu ứng loading giả rồi bật lại toàn bộ danh sách.
+    count.textContent = "Đang tải sản phẩm...";
+    window.showFakeLoading(grid, () => {
       render();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      search.focus();
     });
   });
-  previousButton.addEventListener("click", () => {
-    page = Math.max(1, page - 1);
-    render();
-  });
-  nextButton.addEventListener("click", () => {
-    page = Math.min(totalPages, page + 1);
-    render();
+
+  // Thêm giỏ hàng (delegation): giỏ hàng đang ở chế độ CỐ ĐỊNH nên mọi lần
+  // bấm đều bị chặn và chỉ hiển thị thông báo (xử lý trong cart.js).
+  grid.addEventListener("click", event => {
+    const button = event.target.closest(".store-product-cart");
+    if (!button) return;
+    const productId = Number(button.dataset.productId);
+    if (window.StoreCart) window.StoreCart.add(productId, 1);
   });
 
   render();

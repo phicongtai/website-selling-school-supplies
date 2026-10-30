@@ -29,7 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const categoryPage = categoryPages[product.category] || "../homepage/main.html";
 
   document.title = `${product.title} | Học Đường Store`;
-  document.getElementById("productCategory").textContent = categoryName;
+  const productCategoryEl = document.getElementById("productCategory");
+  if (productCategoryEl) productCategoryEl.textContent = categoryName;
   document.getElementById("productCategorySummary").textContent = categoryName;
   if (categoryLink) {
     categoryLink.textContent = categoryName;
@@ -41,7 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
     breadcrumbName.textContent = `${product.code} ${product.title}`;
   }
 
-  document.getElementById("productCode").textContent = `Mã: ${product.code}`;
+  const productCodeEl = document.getElementById("productCode");
+  if (productCodeEl) productCodeEl.textContent = `Mã: ${product.code}`;
   document.getElementById("productCodeSummary").textContent = product.code;
   document.getElementById("productName").textContent = product.title;
 
@@ -71,9 +73,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("productPack").textContent = product.pack || "1 sản phẩm";
   document.getElementById("stockText").textContent = `Còn ${product.stock} sản phẩm trong kho`;
-  document.getElementById("descriptionTitle").textContent = `Trải nghiệm ${product.title}`;
-  document.getElementById("descriptionText").textContent =
-    product.description || `${product.title} (${product.code}) là lựa chọn phù hợp cho nhu cầu học tập hằng ngày.`;
+  // Khối "Mô tả chi tiết / Thông số kỹ thuật" đã được bỏ khỏi giao diện,
+  // chỉ cập nhật nếu phần tử còn tồn tại.
+  const descriptionTitleEl = document.getElementById("descriptionTitle");
+  const descriptionTextEl = document.getElementById("descriptionText");
+  if (descriptionTitleEl) descriptionTitleEl.textContent = `Trải nghiệm ${product.title}`;
+  if (descriptionTextEl) {
+    descriptionTextEl.textContent =
+      product.description || `${product.title} (${product.code}) là lựa chọn phù hợp cho nhu cầu học tập hằng ngày.`;
+  }
   document.getElementById("productDescription").textContent =
     product.description || `${product.title} phù hợp cho nhu cầu học tập hằng ngày.`;
 
@@ -109,22 +117,16 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("addToCart").addEventListener("click", () => {
     const amount = getQuantity();
     if (amount !== null) {
-      if (window.StoreCart) {
-        window.StoreCart.add(product.id, amount);
-        if (window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) return;
-      }
-      notice.textContent = `Đã thêm ${amount} × ${product.title} vào giỏ hàng.`;
-      if (window.showSiteToast) window.showSiteToast("Đã thêm sản phẩm vào giỏ hàng!");
+      // Giỏ hàng CỐ ĐỊNH: cart.js chặn thêm mới và tự hiện toast thông báo.
+      if (window.StoreCart) window.StoreCart.add(product.id, amount);
+      notice.textContent = "Đã thêm sản phẩm vào giỏ hàng!";
     }
   });
 
   document.getElementById("buyNow").addEventListener("click", () => {
     const amount = getQuantity();
     if (amount !== null) {
-      if (window.StoreCart) {
-        window.StoreCart.add(product.id, amount);
-        if (window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) return;
-      }
+      if (window.StoreCart) window.StoreCart.add(product.id, amount);
       window.location.href = '../customer/checkout.html';
     }
   });
@@ -150,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (relatedHeading) relatedHeading.textContent = relatedTitle;
 
   document.getElementById("relatedProducts").innerHTML = relatedProducts.map(item => `
-    <a class="related-card" href="product-detail.html?id=${encodeURIComponent(item.code)}">
+    <a class="related-card" href="product-${String(item.code).toLowerCase()}.html">
       <img src="${item.image}" alt="${item.title}" loading="lazy">
       <small>${item.code}</small>
       <strong>${item.title}</strong>

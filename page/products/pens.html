@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -17,7 +17,7 @@
   <script src="product-data.js" defer></script>
   <script src="category.js" defer></script>
 </head>
-<body data-product-category="pens">
+<body data-product-category="pens" data-catalog-page="1">
 <div class="top-bar">
   <div class="container top-bar-inner">
     <span>🎉 Giảm giá 20% cho đơn hàng đầu tiên với mã: <strong>WELCOME2026</strong></span>
@@ -29,14 +29,13 @@
     <div class="homepage-header-row">
       <a href="../homepage/main.html" class="brand-logo">
         <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
-        <span class="brand-text"><span class="brand-title">Học Đường Store</span><span class="brand-slogan">Vibrant &amp; Minimal</span></span>
+        <span class="brand-text"><span class="brand-title">Học Đường Store</span></span>
       </a>
       <div class="header-search store-search">
         <div class="store-search-field">
           <input id="searchInput" class="store-search-input" type="search" placeholder="Tìm kiếm dụng cụ học tập, bút viết, tập vở..." aria-label="Tìm kiếm sản phẩm">
           <button id="searchButton" class="store-search-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>Tìm kiếm</span></button>
         </div>
-        <div class="store-search-hint"><a href="../homepage/main.html#view-advanced-search">Tìm kiếm nâng cao</a></div>
       </div>
       <div class="header-actions homepage-header-actions">
   <button class="action-btn" onclick="openCartDrawer()" title="Giỏ hàng">
@@ -100,13 +99,102 @@
 
     <section class="category-results">
       <div class="results-heading">
-        <div><h1>Bút viết <span>Chính hãng</span></h1><p id="resultCount">Hiển thị 1–6 của 8 sản phẩm</p></div>
+        <div><h1>Bút viết <span>Chính hãng</span></h1><p id="resultCount">Hiển thị 5 / 10 sản phẩm (Trang 1/2)</p></div>
         <label for="sortSelect">Sắp xếp:
           <select id="sortSelect"><option value="popular">Phổ biến nhất</option><option value="low">Giá thấp đến cao</option><option value="high">Giá cao đến thấp</option><option value="name">Tên sản phẩm</option></select>
         </label>
       </div>
-      <div class="product-grid" id="productGrid"></div>
-      <nav class="pagination" aria-label="Phân trang"><button id="prevPage" disabled>‹ Trước</button><button class="page-number active" data-page="1">1</button><button class="page-number" data-page="2">2</button><button id="nextPage">Sau ›</button></nav>
+      <div class="product-grid" id="productGrid">
+<!--PRODUCTS:1-->
+<article class="store-product-card" data-id="1" data-code="HP01" data-title="Set 10 Bút Gel Morandi Vintage Tone Pastel 0.5mm" data-category="pens" data-price="65000" data-old-price="85000">
+  <a class="store-product-image-link" href="product-hp01.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Bút viết</span>
+      <img src="../../assets/img/products/hp01.jpg" alt="Set 10 Bút Gel Morandi Vintage Tone Pastel 0.5mm" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: HP01</div>
+  <a class="store-product-name" href="product-hp01.html">Set 10 Bút Gel Morandi Vintage Tone Pastel 0.5mm</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">65.000₫</strong>
+    <span class="store-product-old-price">85.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="1">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="2" data-code="HP02" data-title="Bút Máy Pilot Kakuno Ngòi F Nhật Bản" data-category="pens" data-price="195000" data-old-price="230000">
+  <a class="store-product-image-link" href="product-hp02.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Bút viết</span>
+      <img src="../../assets/img/products/hp02.jpg" alt="Bút Máy Pilot Kakuno Ngòi F Nhật Bản" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: HP02</div>
+  <a class="store-product-name" href="product-hp02.html">Bút Máy Pilot Kakuno Ngòi F Nhật Bản</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">195.000₫</strong>
+    <span class="store-product-old-price">230.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="2">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="8" data-code="SP01" data-title="Bút gel đen 0.5mm (hộp 10 cây)" data-category="pens" data-price="45000" data-old-price="55000">
+  <a class="store-product-image-link" href="product-sp01.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Bút viết</span>
+      <img src="../../assets/img/products/sp01.jpg" alt="Bút gel đen 0.5mm (hộp 10 cây)" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: SP01</div>
+  <a class="store-product-name" href="product-sp01.html">Bút gel đen 0.5mm (hộp 10 cây)</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">45.000₫</strong>
+    <span class="store-product-old-price">55.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="8">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="9" data-code="SP02" data-title="Bút bi xanh êm tay (vỉ 5 cây)" data-category="pens" data-price="25000">
+  <a class="store-product-image-link" href="product-sp02.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Bút viết</span>
+      <img src="../../assets/img/products/sp02.jpg" alt="Bút bi xanh êm tay (vỉ 5 cây)" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: SP02</div>
+  <a class="store-product-name" href="product-sp02.html">Bút bi xanh êm tay (vỉ 5 cây)</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">25.000₫</strong>
+    <span class="store-product-stock">Kho: 120</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="9">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="10" data-code="SP03" data-title="Bút máy luyện chữ học sinh" data-category="pens" data-price="89000" data-old-price="110000" data-hot="1">
+  <a class="store-product-image-link" href="product-sp03.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Bút viết</span>
+      <span class="store-product-tag store-product-hot">Hot</span>
+      <img src="../../assets/img/products/sp03.jpg" alt="Bút máy luyện chữ học sinh" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: SP03</div>
+  <a class="store-product-name" href="product-sp03.html">Bút máy luyện chữ học sinh</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">89.000₫</strong>
+    <span class="store-product-old-price">110.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="10">🛒 Thêm vào giỏ</button>
+</article>
+<!--/PRODUCTS:1-->
+      </div>
+      <div class="empty-products" id="categoryEmptyState" hidden>
+        <span>⌕</span>
+        <strong>Không tìm thấy sản phẩm</strong>
+        <p>Thử thay đổi từ khóa hoặc bỏ bớt bộ lọc để xem thêm sản phẩm.</p>
+      </div>
+      <nav class="pagination" aria-label="Phân trang">
+        <span class="page-number is-disabled" aria-disabled="true">‹ Trước</span>
+        <span class="page-number active" aria-current="page">1</span>
+        <a class="page-number" href="pens-2.html">2</a>
+        <a class="page-number" href="pens-2.html">Sau ›</a>
+      </nav>
     </section>
   </div>
 </main>

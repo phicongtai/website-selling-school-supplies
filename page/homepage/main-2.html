@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Học Đường Store | Đồ dùng học tập &amp; sáng tạo - Trang 2</title>
+  <!-- Google Fonts: Be Vietnam Pro (Đồng bộ font chữ toàn dự án) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="homepage.css">
+  <script src="../../assets/js/site.js" defer></script>
+  <script src="../../assets/js/cart.js" defer></script>
+</head>
+<body data-catalog-page="2">
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <span>🎉 Giảm giá 20% cho đơn hàng đầu tiên với mã: <strong>WELCOME2026</strong></span>
+      <span>Hotline hỗ trợ: 1900 6868</span>
+    </div>
+  </div>
+
+  <!-- STICKY HEADER -->
+ <header class="main-header homepage-header">
+    <div class="container homepage-header-container">
+      <div class="homepage-header-row">
+        <a href="#" class="brand-logo" onclick="navigateToView('view-home'); return false;">
+          <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
+          <div class="brand-text">
+            <span class="brand-title">Học Đường Store</span>
+                      </div>
+        </a>
+
+        <div class="header-search store-search">
+          <div class="store-search-field">
+            <input type="search" id="headerSearchInput" class="store-search-input" placeholder="Tìm kiếm dụng cụ học tập, bút viết, tập vở..." aria-label="Tìm kiếm sản phẩm">
+            <button class="store-search-button" type="button" onclick="headerSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>Tìm kiếm</span></button>
+          </div>
+          <div class="live-search-dropdown" id="liveSearchDropdown"></div>
+        </div>
+
+        <div class="header-actions homepage-header-actions">
+          <button class="action-btn" onclick="openCartDrawer()" title="Giỏ hàng">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            <span class="action-badge cart-count-badge" hidden style="display: none;">0</span>
+          </button>
+
+          <div class="header-auth-slot" id="headerAuthSlot">
+            <div class="header-auth-group">
+              <a class="header-auth-btn header-auth-login" href="../auth/login.html" title="Đăng nhập tài khoản">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                <span>Đăng nhập</span>
+              </a>
+              <a class="header-auth-btn header-auth-register" href="../auth/register.html" title="Đăng ký tài khoản">
+                <span>Đăng ký</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="main-nav homepage-nav">
+        <a href="#" class="nav-link active" data-target="view-home" aria-current="page" onclick="navigateToView('view-home'); return false;">Trang chủ</a>
+        <a href="#" class="nav-link" data-target="view-category" onclick="navigateToView('view-category'); return false;">Sản phẩm</a>
+        <a href="../products/pens.html" class="nav-link">Bút viết</a>
+        <a href="../products/notebooks.html" class="nav-link">Vở & giấy</a>
+        <a href="../products/backpacks.html" class="nav-link">Cặp & balo</a>
+        <a href="../products/school-supplies.html" class="nav-link">Dụng cụ học tập</a>
+        <a href="../products/art.html" class="nav-link">Dụng cụ vẽ & mỹ thuật</a>
+        <a href="../products/computers.html" class="nav-link">Máy tính & thiết bị học tập</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==================== 1. MAN HINH TRANG CHU ==================== -->
+  <main id="view-home" class="app-view active">
+    <!-- Hero Banner Section -->
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge-wrap">
+            <span class="tag-label" style="background-color: #fff1eb; color: #ff6900; border-radius: 20px; padding: 6px 16px; font-weight: 700;">MÙA TỰU TRƯỜNG 2026</span>
+          </div>
+          <h1 class="hero-title" style="font-size: 2.8rem; font-weight: 800; line-height: 1.2;">Khai giảng rực rỡ – Đồ dùng học tập cho mọi lứa tuổi</h1>
+          <p class="hero-description" style="color: #666; font-size: 1rem; line-height: 1.6;">Trang bị tinh gọn, khơi nguồn sáng tạo. Thiết kế tối giản tiêu chuẩn quốc tế giúp học sinh và sinh viên tập trung tối đa vào tri thức.</p>
+          
+          <div class="hero-actions" style="display: flex; gap: 12px; align-items: center; margin-top: 10px;">
+            <button class="btn btn-primary" onclick="navigateToView('view-category')" style="background-color: #ff6900; color: #fff; padding: 12px 24px; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">Mua ngay &rarr;</button>
+            <button class="btn btn-secondary" onclick="navigateToView('view-advanced-search')" style="background-color: #f1f2f6; color: #333; padding: 12px 24px; border-radius: 8px; font-weight: 600;">Xem ưu đãi</button>
+          </div>
+
+          <!-- Carousel Dots -->
+          <div class="carousel-dots" style="display: flex; gap: 6px; margin-top: 24px;">
+            <span style="width: 24px; height: 8px; background-color: #ff6900; border-radius: 4px; display: inline-block;"></span>
+            <span style="width: 8px; height: 8px; background-color: #d1d5db; border-radius: 50%; display: inline-block;"></span>
+            <span style="width: 8px; height: 8px; background-color: #d1d5db; border-radius: 50%; display: inline-block;"></span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-image-card" style="border-radius: 24px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+            <img src="../../assets/img/promo-cai-giang.jpg" alt="Khai giảng rực rỡ" style="width: 100%; height: 420px; object-fit: cover;">
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Danh mục trực quan -->
+    <section class="section container">
+      <h2>Danh Mục Nổi Bật</h2>
+      <div class="category-grid">
+        <a class="category-card" href="../products/pens.html"><div class="category-icon-box"><img src="../../assets/icons/cat-pen.svg" alt="" width="24" height="24"></div><strong>Bút Viết</strong></a>
+        <a class="category-card" href="../products/notebooks.html"><div class="category-icon-box"><img src="../../assets/icons/cat-book.svg" alt="" width="24" height="24"></div><strong>Sổ &amp; Vở</strong></a>
+        <a class="category-card" href="../products/backpacks.html"><div class="category-icon-box"><img src="../../assets/icons/cat-backpack.svg" alt="" width="24" height="24"></div><strong>Balo &amp; Cặp</strong></a>
+        <a class="category-card" href="main.html?categories=cases#view-category"><div class="category-icon-box"><img src="../../assets/icons/bag.svg" alt="" width="24" height="24"></div><strong>Hộp Bút</strong></a>
+        <a class="category-card" href="../products/art.html"><div class="category-icon-box"><img src="../../assets/icons/cat-palette.svg" alt="" width="24" height="24"></div><strong>Dụng Cụ Vẽ &amp; Mỹ Thuật</strong></a>
+        <a class="category-card" href="../products/school-supplies.html"><div class="category-icon-box"><img src="../../assets/icons/cat-ruler.svg" alt="" width="24" height="24"></div><strong>Dụng Cụ Học Tập</strong></a>
+        <a class="category-card" href="../products/computers.html"><div class="category-icon-box"><img src="../../assets/icons/cat-calculator.svg" alt="" width="24" height="24"></div><strong>Máy Tính &amp; Thiết Bị Học Tập</strong></a>
+      </div>
+    </section>
+
+    <!-- Lưới sản phẩm nổi bật -->
+    <section class="section container">
+      <h2>Sản Phẩm Nổi Bật</h2>
+      <div class="products-grid" id="homeProductsGrid"></div>
+    </section>
+  </main>
+
+  <!-- ==================== 2. MAN HINH SAN PHAM THEO PHAN LOAI ==================== -->
+  <main id="view-category" class="app-view">
+    <div class="container section">
+      <div class="page-heading">
+        <div>
+          <span class="page-eyebrow">Khám phá bộ sưu tập</span>
+          <h2>Danh Mục Sản Phẩm</h2>
+          <p>Chọn nhóm sản phẩm phù hợp hoặc kết hợp bộ lọc để tìm nhanh hơn.</p>
+        </div>
+        <a class="page-heading-link" href="#" onclick="navigateToView('view-advanced-search'); return false;">Tìm kiếm nâng cao →</a>
+      </div>
+
+      <div class="category-layout">
+        <!-- Sidebar Lọc -->
+        <aside class="filter-sidebar" aria-label="Bộ lọc sản phẩm">
+          <div class="filter-sidebar-head">
+            <div>
+              <span class="filter-kicker">Bộ lọc</span>
+              <h3>Tinh chỉnh kết quả</h3>
+            </div>
+            <button type="button" class="filter-reset" onclick="resetHomeFilters()">Xóa</button>
+          </div>
+
+          <div class="filter-group">
+            <div class="filter-title"><span>Danh mục</span><span id="filterCategoryHint">Tất cả</span></div>
+            <div class="filter-options filter-categories">
+              <label class="filter-option"><input type="checkbox" data-category="pens" onchange="filterCategoryProducts()"><span>Bút viết</span><span class="filter-count" data-category-count="pens">10</span></label>
+              <label class="filter-option"><input type="checkbox" data-category="notebooks" onchange="filterCategoryProducts()"><span>Sổ &amp; vở</span><span class="filter-count" data-category-count="notebooks">9</span></label>
+              <label class="filter-option"><input type="checkbox" data-category="backpacks" onchange="filterCategoryProducts()"><span>Balo &amp; cặp</span><span class="filter-count" data-category-count="backpacks">9</span></label>
+              <label class="filter-option"><input type="checkbox" data-category="cases" onchange="filterCategoryProducts()"><span>Hộp bút</span><span class="filter-count" data-category-count="cases">1</span></label>
+              <label class="filter-option"><input type="checkbox" data-category="art" onchange="filterCategoryProducts()"><span>Mỹ thuật</span><span class="filter-count" data-category-count="art">8</span></label>
+              <label class="filter-option"><input type="checkbox" data-category="school-supplies" onchange="filterCategoryProducts()"><span>Dụng cụ học tập</span><span class="filter-count" data-category-count="school-supplies">9</span></label>
+              <label class="filter-option"><input type="checkbox" data-category="computers" onchange="filterCategoryProducts()"><span>Máy tính &amp; thiết bị</span><span class="filter-count" data-category-count="computers">8</span></label>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <div class="filter-title"><span>Khoảng giá</span><span>VNĐ</span></div>
+            <div class="filter-price-row">
+              <input id="filterMinPrice" type="text" inputmode="numeric" placeholder="Từ" aria-label="Giá tối thiểu">
+              <span>–</span>
+              <input id="filterMaxPrice" type="text" inputmode="numeric" placeholder="Đến" aria-label="Giá tối đa">
+            </div>
+            <button type="button" class="filter-apply" onclick="filterCategoryProducts()">Áp dụng khoảng giá</button>
+          </div>
+
+          <div class="filter-group">
+            <div class="filter-title"><span>Ưu đãi</span></div>
+            <div class="filter-options filter-offers">
+              <label class="filter-option"><input type="checkbox" data-filter="sale" onchange="filterCategoryProducts()"><span>Đang giảm giá</span><span class="filter-count" data-offer-count="sale">0</span></label>
+              <label class="filter-option"><input type="checkbox" data-filter="hot" onchange="filterCategoryProducts()"><span>Sản phẩm nổi bật</span><span class="filter-count" data-offer-count="hot">0</span></label>
+            </div>
+          </div>
+
+          <div class="filter-summary" id="filterSummary">Đang hiển thị tất cả sản phẩm.</div>
+        </aside>
+
+        <!-- Danh sách -->
+        <div class="category-results">
+          <div class="results-toolbar">
+            <div>
+              <h3 id="categoryResultTitle">Tất cả sản phẩm</h3>
+              <p id="categoryResultCount">Đang tải sản phẩm...</p>
+            </div>
+            <label class="sort-control">Sắp xếp
+              <select id="categorySortSelect" onchange="filterCategoryProducts()">
+                <option value="default">Phổ biến</option>
+                <option value="price-asc">Giá thấp → cao</option>
+                <option value="price-desc">Giá cao → thấp</option>
+                <option value="name">Tên A → Z</option>
+              </select>
+            </label>
+          </div>
+          <div class="products-grid" id="categoryProductsGrid">
+<!--STATIC-CARDS:CAT-2-->
+<article class="store-product-card" data-id="28" data-code="CB05" data-title="Balo nhiều ngăn đi học" data-category="backpacks" data-price="329000" data-old-price="390000" data-order="0">
+  <a class="store-product-image-link" href="../products/product-cb05.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Cặp &amp; balo</span>
+      <img src="../../assets/img/products/cb05.jpg" alt="Balo nhiều ngăn đi học" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: CB05</div>
+  <a class="store-product-name" href="../products/product-cb05.html">Balo nhiều ngăn đi học</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">329.000₫</strong>
+    <span class="store-product-old-price">390.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(28)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="29" data-code="CB06" data-title="Túi tote đựng sách vở" data-category="backpacks" data-price="99000" data-order="1">
+  <a class="store-product-image-link" href="../products/product-cb06.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Cặp &amp; balo</span>
+      <img src="../../assets/img/products/cb06.jpg" alt="Túi tote đựng sách vở" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: CB06</div>
+  <a class="store-product-name" href="../products/product-cb06.html">Túi tote đựng sách vở</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">99.000₫</strong>
+    <span class="store-product-stock">Kho: 80</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(29)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="30" data-code="CB07" data-title="Balo thể thao đa năng" data-category="backpacks" data-price="279000" data-order="2">
+  <a class="store-product-image-link" href="../products/product-cb07.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Cặp &amp; balo</span>
+      <img src="../../assets/img/products/cb07.jpg" alt="Balo thể thao đa năng" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: CB07</div>
+  <a class="store-product-name" href="../products/product-cb07.html">Balo thể thao đa năng</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">279.000₫</strong>
+    <span class="store-product-stock">Kho: 25</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(30)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="31" data-code="CB08" data-title="Cặp đeo chéo đựng tài liệu" data-category="backpacks" data-price="159000" data-old-price="189000" data-order="3">
+  <a class="store-product-image-link" href="../products/product-cb08.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Cặp &amp; balo</span>
+      <img src="../../assets/img/products/cb08.jpg" alt="Cặp đeo chéo đựng tài liệu" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: CB08</div>
+  <a class="store-product-name" href="../products/product-cb08.html">Cặp đeo chéo đựng tài liệu</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">159.000₫</strong>
+    <span class="store-product-old-price">189.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(31)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="32" data-code="MT01" data-title="Bộ bút chì màu 48 màu cao cấp" data-category="art" data-price="145000" data-old-price="180000" data-order="4">
+  <a class="store-product-image-link" href="../products/product-mt01.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ vẽ &amp; mỹ thuật</span>
+      <img src="../../assets/img/products/sp03.jpg" alt="Bộ bút chì màu 48 màu cao cấp" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: MT01</div>
+  <a class="store-product-name" href="../products/product-mt01.html">Bộ bút chì màu 48 màu cao cấp</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">145.000₫</strong>
+    <span class="store-product-old-price">180.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(32)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="33" data-code="MT02" data-title="Bộ cọ vẽ 12 cây lông tổng hợp" data-category="art" data-price="89000" data-old-price="110000" data-order="5">
+  <a class="store-product-image-link" href="../products/product-mt02.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ vẽ &amp; mỹ thuật</span>
+      <img src="../../assets/img/products/mt02.jpg" alt="Bộ cọ vẽ 12 cây lông tổng hợp" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: MT02</div>
+  <a class="store-product-name" href="../products/product-mt02.html">Bộ cọ vẽ 12 cây lông tổng hợp</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">89.000₫</strong>
+    <span class="store-product-old-price">110.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(33)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="34" data-code="MT03" data-title="Sổ sketch A4 giấy 160gsm" data-category="art" data-price="75000" data-hot="1" data-order="6">
+  <a class="store-product-image-link" href="../products/product-mt03.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ vẽ &amp; mỹ thuật</span>
+      <span class="store-product-tag store-product-hot">Hot</span>
+      <img src="../../assets/img/products/mt03.jpg" alt="Sổ sketch A4 giấy 160gsm" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: MT03</div>
+  <a class="store-product-name" href="../products/product-mt03.html">Sổ sketch A4 giấy 160gsm</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">75.000₫</strong>
+    <span class="store-product-stock">Kho: 65</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(34)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="35" data-code="MT04" data-title="Bộ màu acrylic 24 màu kèm cọ" data-category="art" data-price="165000" data-old-price="195000" data-order="7">
+  <a class="store-product-image-link" href="../products/product-mt04.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ vẽ &amp; mỹ thuật</span>
+      <img src="../../assets/img/products/mt04.jpg" alt="Bộ màu acrylic 24 màu kèm cọ" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: MT04</div>
+  <a class="store-product-name" href="../products/product-mt04.html">Bộ màu acrylic 24 màu kèm cọ</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">165.000₫</strong>
+    <span class="store-product-old-price">195.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(35)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="36" data-code="MT05" data-title="Bảng pha màu gỗ 2 mặt" data-category="art" data-price="55000" data-order="8">
+  <a class="store-product-image-link" href="../products/product-mt05.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ vẽ &amp; mỹ thuật</span>
+      <img src="../../assets/img/products/mt05.jpg" alt="Bảng pha màu gỗ 2 mặt" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: MT05</div>
+  <a class="store-product-name" href="../products/product-mt05.html">Bảng pha màu gỗ 2 mặt</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">55.000₫</strong>
+    <span class="store-product-stock">Kho: 70</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(36)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="37" data-code="MT06" data-title="Giá vẽ gỗ A3 điều chỉnh độ cao" data-category="art" data-price="420000" data-old-price="520000" data-order="9">
+  <a class="store-product-image-link" href="../products/product-mt06.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ vẽ &amp; mỹ thuật</span>
+      <img src="../../assets/img/products/mt06.jpg" alt="Giá vẽ gỗ A3 điều chỉnh độ cao" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: MT06</div>
+  <a class="store-product-name" href="../products/product-mt06.html">Giá vẽ gỗ A3 điều chỉnh độ cao</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">420.000₫</strong>
+    <span class="store-product-old-price">520.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(37)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="38" data-code="MT07" data-title="Bộ marker phác thảo 24 màu" data-category="art" data-price="225000" data-old-price="280000" data-order="10">
+  <a class="store-product-image-link" href="../products/product-mt07.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ vẽ &amp; mỹ thuật</span>
+      <img src="../../assets/img/products/sp08.jpg" alt="Bộ marker phác thảo 24 màu" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: MT07</div>
+  <a class="store-product-name" href="../products/product-mt07.html">Bộ marker phác thảo 24 màu</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">225.000₫</strong>
+    <span class="store-product-old-price">280.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(38)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="39" data-code="TB01" data-title="Máy tính khoa học Casio FX-580VN X" data-category="computers" data-price="685000" data-old-price="750000" data-order="11">
+  <a class="store-product-image-link" href="../products/product-tb01.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb01.jpg" alt="Máy tính khoa học Casio FX-580VN X" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB01</div>
+  <a class="store-product-name" href="../products/product-tb01.html">Máy tính khoa học Casio FX-580VN X</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">685.000₫</strong>
+    <span class="store-product-old-price">750.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(39)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="40" data-code="TB02" data-title="Máy tính bảng học tập 10.1 inch" data-category="computers" data-price="3290000" data-old-price="3790000" data-order="12">
+  <a class="store-product-image-link" href="../products/product-tb02.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb02.jpg" alt="Máy tính bảng học tập 10.1 inch" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB02</div>
+  <a class="store-product-name" href="../products/product-tb02.html">Máy tính bảng học tập 10.1 inch</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">3.290.000₫</strong>
+    <span class="store-product-old-price">3.790.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(40)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="41" data-code="TB03" data-title="Laptop học tập 14 inch mỏng nhẹ" data-category="computers" data-price="11900000" data-old-price="13500000" data-hot="1" data-order="13">
+  <a class="store-product-image-link" href="../products/product-tb03.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <span class="store-product-tag store-product-hot">Hot</span>
+      <img src="../../assets/img/products/tb03.jpg" alt="Laptop học tập 14 inch mỏng nhẹ" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB03</div>
+  <a class="store-product-name" href="../products/product-tb03.html">Laptop học tập 14 inch mỏng nhẹ</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">11.900.000₫</strong>
+    <span class="store-product-old-price">13.500.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(41)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="42" data-code="TB04" data-title="Bàn phím cơ không dây cho học tập" data-category="computers" data-price="450000" data-old-price="550000" data-order="14">
+  <a class="store-product-image-link" href="../products/product-tb04.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb04.jpg" alt="Bàn phím cơ không dây cho học tập" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB04</div>
+  <a class="store-product-name" href="../products/product-tb04.html">Bàn phím cơ không dây cho học tập</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">450.000₫</strong>
+    <span class="store-product-old-price">550.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(42)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="43" data-code="TB05" data-title="Chuột không dây im lặng" data-category="computers" data-price="189000" data-old-price="250000" data-order="15">
+  <a class="store-product-image-link" href="../products/product-tb05.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb05.jpg" alt="Chuột không dây im lặng" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB05</div>
+  <a class="store-product-name" href="../products/product-tb05.html">Chuột không dây im lặng</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">189.000₫</strong>
+    <span class="store-product-old-price">250.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(43)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="44" data-code="TB06" data-title="Tai nghe học online chống ồn" data-category="computers" data-price="299000" data-old-price="390000" data-order="16">
+  <a class="store-product-image-link" href="../products/product-tb06.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb06.jpg" alt="Tai nghe học online chống ồn" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB06</div>
+  <a class="store-product-name" href="../products/product-tb06.html">Tai nghe học online chống ồn</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">299.000₫</strong>
+    <span class="store-product-old-price">390.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(44)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="45" data-code="TB07" data-title="Đèn bàn LED chống cận điều chỉnh" data-category="computers" data-price="329000" data-old-price="420000" data-order="17">
+  <a class="store-product-image-link" href="../products/product-tb07.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb07.jpg" alt="Đèn bàn LED chống cận điều chỉnh" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB07</div>
+  <a class="store-product-name" href="../products/product-tb07.html">Đèn bàn LED chống cận điều chỉnh</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">329.000₫</strong>
+    <span class="store-product-old-price">420.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(45)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="46" data-code="TB08" data-title="Giá đỡ laptop nhôm gấp gọn" data-category="computers" data-price="159000" data-old-price="210000" data-order="18">
+  <a class="store-product-image-link" href="../products/product-tb08.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb08.jpg" alt="Giá đỡ laptop nhôm gấp gọn" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB08</div>
+  <a class="store-product-name" href="../products/product-tb08.html">Giá đỡ laptop nhôm gấp gọn</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">159.000₫</strong>
+    <span class="store-product-old-price">210.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(46)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="47" data-code="DC01" data-title="Thước kẻ nhựa 20cm" data-category="school-supplies" data-price="8000" data-old-price="10000" data-order="19">
+  <a class="store-product-image-link" href="../products/product-dc01.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/dc01.jpg" alt="Thước kẻ nhựa 20cm" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC01</div>
+  <a class="store-product-name" href="../products/product-dc01.html">Thước kẻ nhựa 20cm</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">8.000₫</strong>
+    <span class="store-product-old-price">10.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(47)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="48" data-code="DC02" data-title="Hộp bút học sinh đa năng" data-category="school-supplies" data-price="45000" data-old-price="55000" data-order="20">
+  <a class="store-product-image-link" href="../products/product-dc02.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/dc02.jpg" alt="Hộp bút học sinh đa năng" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC02</div>
+  <a class="store-product-name" href="../products/product-dc02.html">Hộp bút học sinh đa năng</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">45.000₫</strong>
+    <span class="store-product-old-price">55.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(48)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="49" data-code="DC03" data-title="Máy tính cầm tay học sinh" data-category="school-supplies" data-price="185000" data-old-price="210000" data-order="21">
+  <a class="store-product-image-link" href="../products/product-dc03.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/tb01.jpg" alt="Máy tính cầm tay học sinh" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC03</div>
+  <a class="store-product-name" href="../products/product-dc03.html">Máy tính cầm tay học sinh</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">185.000₫</strong>
+    <span class="store-product-old-price">210.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(49)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="50" data-code="DC04" data-title="Gôm tẩy trắng sạch" data-category="school-supplies" data-price="5000" data-order="22">
+  <a class="store-product-image-link" href="../products/product-dc04.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/dc04.jpg" alt="Gôm tẩy trắng sạch" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC04</div>
+  <a class="store-product-name" href="../products/product-dc04.html">Gôm tẩy trắng sạch</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">5.000₫</strong>
+    <span class="store-product-stock">Kho: 200</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(50)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="51" data-code="DC05" data-title="Đồ chuốt bút chì" data-category="school-supplies" data-price="12000" data-order="23">
+  <a class="store-product-image-link" href="../products/product-dc05.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/dc05.jpg" alt="Đồ chuốt bút chì" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC05</div>
+  <a class="store-product-name" href="../products/product-dc05.html">Đồ chuốt bút chì</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">12.000₫</strong>
+    <span class="store-product-stock">Kho: 100</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(51)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="52" data-code="DC06" data-title="Compa học sinh kèm bút chì" data-category="school-supplies" data-price="25000" data-old-price="30000" data-order="24">
+  <a class="store-product-image-link" href="../products/product-dc06.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/dc06.jpg" alt="Compa học sinh kèm bút chì" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC06</div>
+  <a class="store-product-name" href="../products/product-dc06.html">Compa học sinh kèm bút chì</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">25.000₫</strong>
+    <span class="store-product-old-price">30.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(52)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="53" data-code="DC07" data-title="Kéo học sinh đầu tròn" data-category="school-supplies" data-price="18000" data-order="25">
+  <a class="store-product-image-link" href="../products/product-dc07.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/sp08.jpg" alt="Kéo học sinh đầu tròn" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC07</div>
+  <a class="store-product-name" href="../products/product-dc07.html">Kéo học sinh đầu tròn</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">18.000₫</strong>
+    <span class="store-product-stock">Kho: 75</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(53)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="54" data-code="DC08" data-title="Keo dán giấy học sinh" data-category="school-supplies" data-price="15000" data-order="26">
+  <a class="store-product-image-link" href="../products/product-dc08.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/mt06.jpg" alt="Keo dán giấy học sinh" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC08</div>
+  <a class="store-product-name" href="../products/product-dc08.html">Keo dán giấy học sinh</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">15.000₫</strong>
+    <span class="store-product-stock">Kho: 90</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(54)">🛒 Thêm vào giỏ</button>
+</article>
+<!--/STATIC-CARDS:CAT-2-->
+</div>
+          <div class="empty-products" id="categoryEmptyState" hidden>
+  <span>⌕</span>
+  <strong>Không tìm thấy sản phẩm</strong>
+  <p>Thử thay đổi từ khóa hoặc bỏ bớt bộ lọc để xem thêm sản phẩm.</p>
+</div>
+<nav class="pagination" aria-label="Phân trang danh mục">
+<a class="page-number" href="main.html#view-category">‹ Trước</a>
+<a class="page-number" href="main.html#view-category">1</a>
+<span class="page-number active" aria-current="page">2</span>
+<span class="page-number is-disabled" aria-disabled="true">Sau ›</span>
+</nav>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== 3. MAN HINH CHI TIET SAN PHAM ==================== -->
+  <main id="view-detail" class="app-view">
+    <div class="container section" id="detailContainer"></div>
+  </main>
+
+  <!-- ==================== 4 & 5. MAN HINH TIM KIEM NANG CAO ==================== -->
+  <main id="view-advanced-search" class="app-view">
+    <div class="container section">
+      <div class="page-heading">
+        <div>
+          <span class="page-eyebrow">Tìm kiếm thông minh</span>
+          <h2>Bộ Lọc Tìm Kiếm Nâng Cao</h2>
+          <p>Kết hợp từ khóa, danh mục và khoảng giá để tìm đúng sản phẩm.</p>
+        </div>
+        <a class="page-heading-link" href="#" onclick="navigateToView('view-category'); return false;">← Về danh mục</a>
+      </div>
+
+      <section class="advanced-search-panel" aria-label="Bộ lọc tìm kiếm nâng cao">
+        <form class="advanced-search-form" id="advancedSearchForm" onsubmit="event.preventDefault(); applyAdvancedSearch();">
+          <div class="adv-field">
+            <label for="advKeyword">Từ khóa</label>
+            <div class="adv-input-wrap">
+              <span aria-hidden="true">⌕</span>
+              <input type="search" id="advKeyword" placeholder="Tên hoặc mã sản phẩm...">
+            </div>
+          </div>
+          <div class="adv-field">
+            <label for="advCategory">Danh mục</label>
+            <select id="advCategory">
+              <option value="all">Tất cả danh mục</option>
+              <option value="pens">Bút viết</option>
+              <option value="notebooks">Sổ &amp; vở</option>
+              <option value="backpacks">Balo &amp; cặp</option>
+              <option value="cases">Hộp bút</option>
+              <option value="art">Mỹ thuật</option>
+              <option value="school-supplies">Dụng cụ học tập</option>
+              <option value="computers">Máy tính &amp; thiết bị học tập</option>
+            </select>
+          </div>
+          <div class="adv-field">
+            <label for="advMinPrice">Giá tối thiểu</label>
+            <div class="adv-input-wrap">
+              <input type="text" inputmode="numeric" id="advMinPrice" value="0" placeholder="0">
+              <span>₫</span>
+            </div>
+          </div>
+          <div class="adv-field">
+            <label for="advMaxPrice">Giá tối đa</label>
+            <div class="adv-input-wrap">
+              <input type="text" inputmode="numeric" id="advMaxPrice" value="5.000.000" placeholder="Không giới hạn">
+              <span>₫</span>
+            </div>
+          </div>
+          <div class="adv-actions">
+            <button type="submit" class="btn btn-primary">Áp dụng bộ lọc</button>
+            <button type="button" class="btn btn-ghost" onclick="resetAdvancedSearch()">Đặt lại</button>
+          </div>
+        </form>
+
+        <div class="adv-presets">
+          <span>Gợi ý nhanh:</span>
+          <button type="button" onclick="applyPricePreset(0, 50000)">Dưới 50.000 ₫</button>
+          <button type="button" onclick="applyPricePreset(50000, 200000)">50.000 – 200.000 ₫</button>
+          <button type="button" onclick="applyPricePreset(200000, 500000)">200.000 – 500.000 ₫</button>
+          <button type="button" onclick="applyPricePreset(500000, 5000000)">Trên 500.000 ₫</button>
+        </div>
+      </section>
+
+      <div class="results-toolbar">
+        <div>
+          <h3>Kết quả tìm kiếm</h3>
+          <p id="advResultCount">Đang tải kết quả...</p>
+        </div>
+      </div>
+      <div class="products-grid" id="advResultGrid">
+<!--STATIC-CARDS:ADV-2-->
+<article class="store-product-card" data-id="28" data-code="CB05" data-title="Balo nhiều ngăn đi học" data-category="backpacks" data-price="329000" data-old-price="390000" data-order="0">
+  <a class="store-product-image-link" href="../products/product-cb05.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Cặp &amp; balo</span>
+      <img src="../../assets/img/products/cb05.jpg" alt="Balo nhiều ngăn đi học" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: CB05</div>
+  <a class="store-product-name" href="../products/product-cb05.html">Balo nhiều ngăn đi học</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">329.000₫</strong>
+    <span class="store-product-old-price">390.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(28)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="29" data-code="CB06" data-title="Túi tote đựng sách vở" data-category="backpacks" data-price="99000" data-order="1">
+  <a class="store-product-image-link" href="../products/product-cb06.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Cặp &amp; balo</span>
+      <img src="../../assets/img/products/cb06.jpg" alt="Túi tote đựng sách vở" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: CB06</div>
+  <a class="store-product-name" href="../products/product-cb06.html">Túi tote đựng sách vở</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">99.000₫</strong>
+    <span class="store-product-stock">Kho: 80</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(29)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="30" data-code="CB07" data-title="Balo thể thao đa năng" data-category="backpacks" data-price="279000" data-order="2">
+  <a class="store-product-image-link" href="../products/product-cb07.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Cặp &amp; balo</span>
+      <img src="../../assets/img/products/cb07.jpg" alt="Balo thể thao đa năng" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: CB07</div>
+  <a class="store-product-name" href="../products/product-cb07.html">Balo thể thao đa năng</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">279.000₫</strong>
+    <span class="store-product-stock">Kho: 25</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(30)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="31" data-code="CB08" data-title="Cặp đeo chéo đựng tài liệu" data-category="backpacks" data-price="159000" data-old-price="189000" data-order="3">
+  <a class="store-product-image-link" href="../products/product-cb08.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Cặp &amp; balo</span>
+      <img src="../../assets/img/products/cb08.jpg" alt="Cặp đeo chéo đựng tài liệu" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: CB08</div>
+  <a class="store-product-name" href="../products/product-cb08.html">Cặp đeo chéo đựng tài liệu</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">159.000₫</strong>
+    <span class="store-product-old-price">189.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(31)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="32" data-code="MT01" data-title="Bộ bút chì màu 48 màu cao cấp" data-category="art" data-price="145000" data-old-price="180000" data-order="4">
+  <a class="store-product-image-link" href="../products/product-mt01.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ vẽ &amp; mỹ thuật</span>
+      <img src="../../assets/img/products/sp03.jpg" alt="Bộ bút chì màu 48 màu cao cấp" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: MT01</div>
+  <a class="store-product-name" href="../products/product-mt01.html">Bộ bút chì màu 48 màu cao cấp</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">145.000₫</strong>
+    <span class="store-product-old-price">180.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(32)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="33" data-code="MT02" data-title="Bộ cọ vẽ 12 cây lông tổng hợp" data-category="art" data-price="89000" data-old-price="110000" data-order="5">
+  <a class="store-product-image-link" href="../products/product-mt02.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ vẽ &amp; mỹ thuật</span>
+      <img src="../../assets/img/products/mt02.jpg" alt="Bộ cọ vẽ 12 cây lông tổng hợp" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: MT02</div>
+  <a class="store-product-name" href="../products/product-mt02.html">Bộ cọ vẽ 12 cây lông tổng hợp</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">89.000₫</strong>
+    <span class="store-product-old-price">110.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(33)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="34" data-code="MT03" data-title="Sổ sketch A4 giấy 160gsm" data-category="art" data-price="75000" data-hot="1" data-order="6">
+  <a class="store-product-image-link" href="../products/product-mt03.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ vẽ &amp; mỹ thuật</span>
+      <span class="store-product-tag store-product-hot">Hot</span>
+      <img src="../../assets/img/products/mt03.jpg" alt="Sổ sketch A4 giấy 160gsm" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: MT03</div>
+  <a class="store-product-name" href="../products/product-mt03.html">Sổ sketch A4 giấy 160gsm</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">75.000₫</strong>
+    <span class="store-product-stock">Kho: 65</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(34)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="35" data-code="MT04" data-title="Bộ màu acrylic 24 màu kèm cọ" data-category="art" data-price="165000" data-old-price="195000" data-order="7">
+  <a class="store-product-image-link" href="../products/product-mt04.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ vẽ &amp; mỹ thuật</span>
+      <img src="../../assets/img/products/mt04.jpg" alt="Bộ màu acrylic 24 màu kèm cọ" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: MT04</div>
+  <a class="store-product-name" href="../products/product-mt04.html">Bộ màu acrylic 24 màu kèm cọ</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">165.000₫</strong>
+    <span class="store-product-old-price">195.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(35)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="36" data-code="MT05" data-title="Bảng pha màu gỗ 2 mặt" data-category="art" data-price="55000" data-order="8">
+  <a class="store-product-image-link" href="../products/product-mt05.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ vẽ &amp; mỹ thuật</span>
+      <img src="../../assets/img/products/mt05.jpg" alt="Bảng pha màu gỗ 2 mặt" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: MT05</div>
+  <a class="store-product-name" href="../products/product-mt05.html">Bảng pha màu gỗ 2 mặt</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">55.000₫</strong>
+    <span class="store-product-stock">Kho: 70</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(36)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="37" data-code="MT06" data-title="Giá vẽ gỗ A3 điều chỉnh độ cao" data-category="art" data-price="420000" data-old-price="520000" data-order="9">
+  <a class="store-product-image-link" href="../products/product-mt06.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ vẽ &amp; mỹ thuật</span>
+      <img src="../../assets/img/products/mt06.jpg" alt="Giá vẽ gỗ A3 điều chỉnh độ cao" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: MT06</div>
+  <a class="store-product-name" href="../products/product-mt06.html">Giá vẽ gỗ A3 điều chỉnh độ cao</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">420.000₫</strong>
+    <span class="store-product-old-price">520.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(37)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="38" data-code="MT07" data-title="Bộ marker phác thảo 24 màu" data-category="art" data-price="225000" data-old-price="280000" data-order="10">
+  <a class="store-product-image-link" href="../products/product-mt07.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ vẽ &amp; mỹ thuật</span>
+      <img src="../../assets/img/products/sp08.jpg" alt="Bộ marker phác thảo 24 màu" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: MT07</div>
+  <a class="store-product-name" href="../products/product-mt07.html">Bộ marker phác thảo 24 màu</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">225.000₫</strong>
+    <span class="store-product-old-price">280.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(38)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="39" data-code="TB01" data-title="Máy tính khoa học Casio FX-580VN X" data-category="computers" data-price="685000" data-old-price="750000" data-order="11">
+  <a class="store-product-image-link" href="../products/product-tb01.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb01.jpg" alt="Máy tính khoa học Casio FX-580VN X" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB01</div>
+  <a class="store-product-name" href="../products/product-tb01.html">Máy tính khoa học Casio FX-580VN X</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">685.000₫</strong>
+    <span class="store-product-old-price">750.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(39)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="40" data-code="TB02" data-title="Máy tính bảng học tập 10.1 inch" data-category="computers" data-price="3290000" data-old-price="3790000" data-order="12">
+  <a class="store-product-image-link" href="../products/product-tb02.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb02.jpg" alt="Máy tính bảng học tập 10.1 inch" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB02</div>
+  <a class="store-product-name" href="../products/product-tb02.html">Máy tính bảng học tập 10.1 inch</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">3.290.000₫</strong>
+    <span class="store-product-old-price">3.790.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(40)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="41" data-code="TB03" data-title="Laptop học tập 14 inch mỏng nhẹ" data-category="computers" data-price="11900000" data-old-price="13500000" data-hot="1" data-order="13">
+  <a class="store-product-image-link" href="../products/product-tb03.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <span class="store-product-tag store-product-hot">Hot</span>
+      <img src="../../assets/img/products/tb03.jpg" alt="Laptop học tập 14 inch mỏng nhẹ" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB03</div>
+  <a class="store-product-name" href="../products/product-tb03.html">Laptop học tập 14 inch mỏng nhẹ</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">11.900.000₫</strong>
+    <span class="store-product-old-price">13.500.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(41)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="42" data-code="TB04" data-title="Bàn phím cơ không dây cho học tập" data-category="computers" data-price="450000" data-old-price="550000" data-order="14">
+  <a class="store-product-image-link" href="../products/product-tb04.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb04.jpg" alt="Bàn phím cơ không dây cho học tập" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB04</div>
+  <a class="store-product-name" href="../products/product-tb04.html">Bàn phím cơ không dây cho học tập</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">450.000₫</strong>
+    <span class="store-product-old-price">550.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(42)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="43" data-code="TB05" data-title="Chuột không dây im lặng" data-category="computers" data-price="189000" data-old-price="250000" data-order="15">
+  <a class="store-product-image-link" href="../products/product-tb05.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb05.jpg" alt="Chuột không dây im lặng" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB05</div>
+  <a class="store-product-name" href="../products/product-tb05.html">Chuột không dây im lặng</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">189.000₫</strong>
+    <span class="store-product-old-price">250.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(43)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="44" data-code="TB06" data-title="Tai nghe học online chống ồn" data-category="computers" data-price="299000" data-old-price="390000" data-order="16">
+  <a class="store-product-image-link" href="../products/product-tb06.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb06.jpg" alt="Tai nghe học online chống ồn" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB06</div>
+  <a class="store-product-name" href="../products/product-tb06.html">Tai nghe học online chống ồn</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">299.000₫</strong>
+    <span class="store-product-old-price">390.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(44)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="45" data-code="TB07" data-title="Đèn bàn LED chống cận điều chỉnh" data-category="computers" data-price="329000" data-old-price="420000" data-order="17">
+  <a class="store-product-image-link" href="../products/product-tb07.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb07.jpg" alt="Đèn bàn LED chống cận điều chỉnh" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB07</div>
+  <a class="store-product-name" href="../products/product-tb07.html">Đèn bàn LED chống cận điều chỉnh</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">329.000₫</strong>
+    <span class="store-product-old-price">420.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(45)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="46" data-code="TB08" data-title="Giá đỡ laptop nhôm gấp gọn" data-category="computers" data-price="159000" data-old-price="210000" data-order="18">
+  <a class="store-product-image-link" href="../products/product-tb08.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb08.jpg" alt="Giá đỡ laptop nhôm gấp gọn" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB08</div>
+  <a class="store-product-name" href="../products/product-tb08.html">Giá đỡ laptop nhôm gấp gọn</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">159.000₫</strong>
+    <span class="store-product-old-price">210.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(46)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="47" data-code="DC01" data-title="Thước kẻ nhựa 20cm" data-category="school-supplies" data-price="8000" data-old-price="10000" data-order="19">
+  <a class="store-product-image-link" href="../products/product-dc01.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/dc01.jpg" alt="Thước kẻ nhựa 20cm" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC01</div>
+  <a class="store-product-name" href="../products/product-dc01.html">Thước kẻ nhựa 20cm</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">8.000₫</strong>
+    <span class="store-product-old-price">10.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(47)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="48" data-code="DC02" data-title="Hộp bút học sinh đa năng" data-category="school-supplies" data-price="45000" data-old-price="55000" data-order="20">
+  <a class="store-product-image-link" href="../products/product-dc02.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/dc02.jpg" alt="Hộp bút học sinh đa năng" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC02</div>
+  <a class="store-product-name" href="../products/product-dc02.html">Hộp bút học sinh đa năng</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">45.000₫</strong>
+    <span class="store-product-old-price">55.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(48)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="49" data-code="DC03" data-title="Máy tính cầm tay học sinh" data-category="school-supplies" data-price="185000" data-old-price="210000" data-order="21">
+  <a class="store-product-image-link" href="../products/product-dc03.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/tb01.jpg" alt="Máy tính cầm tay học sinh" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC03</div>
+  <a class="store-product-name" href="../products/product-dc03.html">Máy tính cầm tay học sinh</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">185.000₫</strong>
+    <span class="store-product-old-price">210.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(49)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="50" data-code="DC04" data-title="Gôm tẩy trắng sạch" data-category="school-supplies" data-price="5000" data-order="22">
+  <a class="store-product-image-link" href="../products/product-dc04.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/dc04.jpg" alt="Gôm tẩy trắng sạch" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC04</div>
+  <a class="store-product-name" href="../products/product-dc04.html">Gôm tẩy trắng sạch</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">5.000₫</strong>
+    <span class="store-product-stock">Kho: 200</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(50)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="51" data-code="DC05" data-title="Đồ chuốt bút chì" data-category="school-supplies" data-price="12000" data-order="23">
+  <a class="store-product-image-link" href="../products/product-dc05.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/dc05.jpg" alt="Đồ chuốt bút chì" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC05</div>
+  <a class="store-product-name" href="../products/product-dc05.html">Đồ chuốt bút chì</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">12.000₫</strong>
+    <span class="store-product-stock">Kho: 100</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(51)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="52" data-code="DC06" data-title="Compa học sinh kèm bút chì" data-category="school-supplies" data-price="25000" data-old-price="30000" data-order="24">
+  <a class="store-product-image-link" href="../products/product-dc06.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/dc06.jpg" alt="Compa học sinh kèm bút chì" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC06</div>
+  <a class="store-product-name" href="../products/product-dc06.html">Compa học sinh kèm bút chì</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">25.000₫</strong>
+    <span class="store-product-old-price">30.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(52)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="53" data-code="DC07" data-title="Kéo học sinh đầu tròn" data-category="school-supplies" data-price="18000" data-order="25">
+  <a class="store-product-image-link" href="../products/product-dc07.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/sp08.jpg" alt="Kéo học sinh đầu tròn" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC07</div>
+  <a class="store-product-name" href="../products/product-dc07.html">Kéo học sinh đầu tròn</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">18.000₫</strong>
+    <span class="store-product-stock">Kho: 75</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(53)">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="54" data-code="DC08" data-title="Keo dán giấy học sinh" data-category="school-supplies" data-price="15000" data-order="26">
+  <a class="store-product-image-link" href="../products/product-dc08.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/mt06.jpg" alt="Keo dán giấy học sinh" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC08</div>
+  <a class="store-product-name" href="../products/product-dc08.html">Keo dán giấy học sinh</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">15.000₫</strong>
+    <span class="store-product-stock">Kho: 90</span>
+  </div>
+  <button class="store-product-cart" type="button" onclick="addToCart(54)">🛒 Thêm vào giỏ</button>
+</article>
+<!--/STATIC-CARDS:ADV-2-->
+</div>
+        <div class="empty-products" id="advEmptyState" hidden>
+  <span>⌕</span>
+  <strong>Không tìm thấy sản phẩm</strong>
+  <p>Thử thay đổi từ khóa hoặc bỏ bớt bộ lọc để xem thêm sản phẩm.</p>
+</div>
+<nav class="pagination" aria-label="Phân trang tìm kiếm">
+<a class="page-number" href="main.html#view-advanced-search">‹ Trước</a>
+<a class="page-number" href="main.html#view-advanced-search">1</a>
+<span class="page-number active" aria-current="page">2</span>
+<span class="page-number is-disabled" aria-disabled="true">Sau ›</span>
+</nav>
+    </div>
+  </main>
+
+  <!-- FLOATING DOCK -->
+  <div class="floating-dock-container">
+    <div class="floating-dock">
+      <button class="dock-item active" onclick="navigateToView('view-home')" aria-label="Trang chủ">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </button>
+      <button class="dock-item" onclick="navigateToView('view-category')" aria-label="Danh mục">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+      </button>
+      <button class="dock-item" onclick="navigateToView('view-advanced-search')" aria-label="Tìm kiếm nâng cao">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </button>
+      <button class="dock-item" onclick="openCartDrawer()" aria-label="Giỏ hàng">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- CART DRAWER -->
+  <div class="cart-drawer-overlay" id="cartDrawerOverlay">
+    <div class="cart-drawer">
+      <div class="cart-drawer-header">
+        <h3>Giỏ Hàng Của Bạn <span class="cart-drawer-count" id="cartDrawerCount">0</span></h3>
+        <button onclick="closeCartDrawer()" aria-label="Đóng giỏ hàng">✕</button>
+      </div>
+      <div class="cart-drawer-body" id="cartDrawerBody" aria-live="polite"></div>
+      <div class="cart-drawer-footer">
+        <a class="cart-drawer-add" href="../homepage/main.html#view-category" onclick="closeCartDrawer()">
+          <span aria-hidden="true">+</span> Thêm sản phẩm khác
+        </a>
+        <div class="cart-drawer-total-row">
+          <span>Tổng tiền:</span>
+          <span id="cartDrawerTotal">0 ₫</span>
+        </div>
+        <div class="cart-drawer-actions">
+          <a class="btn btn-secondary" href="../customer/cart.html">Xem giỏ hàng</a>
+          <a class="btn btn-primary" href="../customer/checkout.html">Thanh toán ngay</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <footer class="main-footer homepage-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-col footer-about">
+        <a href="main.html" class="brand-logo" style="margin-bottom: 4px; color: #fff;">
+          <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
+          <span class="brand-title" style="color: #fff;">Học Đường Store</span>
+        </a>
+        <p>Hệ thống cung cấp đồ dùng học tập, văn phòng phẩm sáng tạo tối giản chuẩn công thái học cho học sinh, sinh viên toàn quốc.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Danh Mục</h4>
+        <div class="footer-links">
+          <a href="../products/pens.html">Bút viết &amp; Mực</a>
+          <a href="../products/notebooks.html">Sổ tay &amp; Giấy vở</a>
+          <a href="../products/backpacks.html">Balo &amp; Cặp sách</a>
+          <a href="../products/school-supplies.html">Dụng cụ học tập</a>
+          <a href="../products/art.html">Dụng cụ mỹ thuật</a>
+          <a href="../products/computers.html">Máy tính &amp; thiết bị</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Hỗ Trợ</h4>
+        <div class="footer-links">
+          <a href="#">Chính sách giao hàng</a>
+          <a href="#">Đổi trả trong 30 ngày</a>
+          <a href="#">Bảo hành sản phẩm</a>
+          <a href="#">Trung tâm trợ giúp</a>
+        </div>
+      </div>
+      <div class="footer-col footer-newsletter">
+        <h4>Bản Tin Khuyến Mãi</h4>
+        <p>Nhận thông báo ưu đãi và sản phẩm mới sớm nhất.</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); this.reset(); window.showSiteToast && window.showSiteToast('Đăng ký nhận tin thành công!');">
+          <input type="email" placeholder="Email của bạn..." required>
+          <button type="submit" class="btn btn-primary btn-sm">Gửi</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Học Đường Store. Chuẩn mực phong cách tối giản học đường.</p>
+      <div class="payment-methods">
+        <span class="payment-badge">COD</span>
+        <span class="payment-badge">VNPAY</span>
+        <span class="payment-badge">MOMO</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <script src="../products/product-data.js"></script>
+  <script src="homepage.js"></script>
+</body>
+</html>

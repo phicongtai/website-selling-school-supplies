@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png">
-
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="stylesheet" href="../homepage/homepage.css">
   <script src="../../assets/js/site.js" defer></script>
@@ -18,7 +17,7 @@
   <script src="product-data.js" defer></script>
   <script src="category.js" defer></script>
 </head>
-<body data-product-category="computers">
+<body data-product-category="computers" data-catalog-page="1">
 <div class="top-bar">
   <div class="container top-bar-inner">
     <span>🎉 Giảm giá 20% cho đơn hàng đầu tiên với mã: <strong>WELCOME2026</strong></span>
@@ -30,14 +29,13 @@
     <div class="homepage-header-row">
       <a href="../homepage/main.html" class="brand-logo">
         <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
-        <span class="brand-text"><span class="brand-title">Học Đường Store</span><span class="brand-slogan">Vibrant &amp; Minimal</span></span>
+        <span class="brand-text"><span class="brand-title">Học Đường Store</span></span>
       </a>
       <div class="header-search store-search">
         <div class="store-search-field">
           <input id="searchInput" class="store-search-input" type="search" placeholder="Tìm kiếm máy tính, laptop, thiết bị học tập..." aria-label="Tìm kiếm sản phẩm">
           <button id="searchButton" class="store-search-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>Tìm kiếm</span></button>
         </div>
-        <div class="store-search-hint"><a href="../homepage/main.html#view-advanced-search">Tìm kiếm nâng cao</a></div>
       </div>
       <div class="header-actions homepage-header-actions">
   <button class="action-btn" onclick="openCartDrawer()" title="Giỏ hàng">
@@ -76,14 +74,7 @@
 </header>
 
 <main class="category-page">
-  <div class="breadcrumb">
-    <a href="../homepage/main.html">⌂ Trang chủ</a>
-    <span>/</span>
-    <a href="../homepage/main.html#view-category">Sản phẩm</a>
-    <span>/</span>
-    <strong>Máy tính &amp; thiết bị học tập</strong>
-  </div>
-
+  <div class="breadcrumb"><a href="../homepage/main.html">⌂ Trang chủ</a><span>/</span><a href="../homepage/main.html#view-category">Sản phẩm</a><span>/</span><strong>Máy tính &amp; thiết bị học tập</strong></div>
   <div class="category-layout">
     <aside class="category-sidebar">
       <div class="sidebar-title">
@@ -101,36 +92,93 @@
       <a class="category-option selected" href="computers.html"><span>Máy tính &amp; thiết bị học tập</span><span>8</span></a>
 
       <div class="shipping-note">
-        <strong><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align: -2px; margin-right: 4px;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>GIAO HÀNG SIÊU TỐC</strong>
+        <strong><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align: -2px; margin-right: 4px;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>GIAO HÀNG SIÊU TỐC</strong>
         <p>Đồng giá vận chuyển toàn quốc chỉ từ 15.000đ cho đơn hàng học cụ.</p>
       </div>
     </aside>
 
     <section class="category-results">
       <div class="results-heading">
-        <div>
-          <h1>Máy tính &amp; thiết bị học tập <span>Chính hãng</span></h1>
-          <p id="resultCount">Đang tải sản phẩm...</p>
-        </div>
-
-        <label for="sortSelect">
-          Sắp xếp:
-          <select id="sortSelect">
-            <option value="popular">Phổ biến nhất</option>
-            <option value="low">Giá thấp đến cao</option>
-            <option value="high">Giá cao đến thấp</option>
-            <option value="name">Tên sản phẩm</option>
-          </select>
+        <div><h1>Máy tính &amp; thiết bị học tập <span>Chính hãng</span></h1><p id="resultCount">Hiển thị 4 / 8 sản phẩm (Trang 1/2)</p></div>
+        <label for="sortSelect">Sắp xếp:
+          <select id="sortSelect"><option value="popular">Phổ biến nhất</option><option value="low">Giá thấp đến cao</option><option value="high">Giá cao đến thấp</option><option value="name">Tên sản phẩm</option></select>
         </label>
       </div>
-
-      <div class="product-grid" id="productGrid"></div>
-
+      <div class="product-grid" id="productGrid">
+<!--PRODUCTS:1-->
+<article class="store-product-card" data-id="39" data-code="TB01" data-title="Máy tính khoa học Casio FX-580VN X" data-category="computers" data-price="685000" data-old-price="750000">
+  <a class="store-product-image-link" href="product-tb01.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb01.jpg" alt="Máy tính khoa học Casio FX-580VN X" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB01</div>
+  <a class="store-product-name" href="product-tb01.html">Máy tính khoa học Casio FX-580VN X</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">685.000₫</strong>
+    <span class="store-product-old-price">750.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="39">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="40" data-code="TB02" data-title="Máy tính bảng học tập 10.1 inch" data-category="computers" data-price="3290000" data-old-price="3790000">
+  <a class="store-product-image-link" href="product-tb02.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb02.jpg" alt="Máy tính bảng học tập 10.1 inch" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB02</div>
+  <a class="store-product-name" href="product-tb02.html">Máy tính bảng học tập 10.1 inch</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">3.290.000₫</strong>
+    <span class="store-product-old-price">3.790.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="40">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="41" data-code="TB03" data-title="Laptop học tập 14 inch mỏng nhẹ" data-category="computers" data-price="11900000" data-old-price="13500000" data-hot="1">
+  <a class="store-product-image-link" href="product-tb03.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <span class="store-product-tag store-product-hot">Hot</span>
+      <img src="../../assets/img/products/tb03.jpg" alt="Laptop học tập 14 inch mỏng nhẹ" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB03</div>
+  <a class="store-product-name" href="product-tb03.html">Laptop học tập 14 inch mỏng nhẹ</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">11.900.000₫</strong>
+    <span class="store-product-old-price">13.500.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="41">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="42" data-code="TB04" data-title="Bàn phím cơ không dây cho học tập" data-category="computers" data-price="450000" data-old-price="550000">
+  <a class="store-product-image-link" href="product-tb04.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Máy tính &amp; thiết bị học tập</span>
+      <img src="../../assets/img/products/tb04.jpg" alt="Bàn phím cơ không dây cho học tập" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: TB04</div>
+  <a class="store-product-name" href="product-tb04.html">Bàn phím cơ không dây cho học tập</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">450.000₫</strong>
+    <span class="store-product-old-price">550.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="42">🛒 Thêm vào giỏ</button>
+</article>
+<!--/PRODUCTS:1-->
+      </div>
+      <div class="empty-products" id="categoryEmptyState" hidden>
+        <span>⌕</span>
+        <strong>Không tìm thấy sản phẩm</strong>
+        <p>Thử thay đổi từ khóa hoặc bỏ bớt bộ lọc để xem thêm sản phẩm.</p>
+      </div>
       <nav class="pagination" aria-label="Phân trang">
-        <button id="prevPage" disabled>‹ Trước</button>
-        <button class="page-number active" data-page="1">1</button>
-        <button class="page-number" data-page="2">2</button>
-        <button id="nextPage">Sau ›</button>
+        <span class="page-number is-disabled" aria-disabled="true">‹ Trước</span>
+        <span class="page-number active" aria-current="page">1</span>
+        <a class="page-number" href="computers-2.html">2</a>
+        <a class="page-number" href="computers-2.html">Sau ›</a>
       </nav>
     </section>
   </div>

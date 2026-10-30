@@ -1,11 +1,20 @@
 /**
  * Giỏ hàng dùng chung giữa các trang.
- * Dữ liệu được lưu trong localStorage.
- * Khi chưa đăng nhập: Giỏ hàng trống (0 món đồ), badge ẩn.
+ * YÊU CẦU DEMO: giỏ hàng được "hard code" sẵn một số sản phẩm cố định.
+ * - Luôn hiển thị các sản phẩm mẫu bên dưới (kể cả khi chưa đăng nhập).
+ * - KHÔNG thể thêm sản phẩm mới vào giỏ (mọi nút "Thêm vào giỏ" đều bị chặn).
+ * Việc tăng/giảm số lượng hoặc xóa trong giỏ vẫn hoạt động bình thường.
  */
 (function () {
   const STORAGE_KEY = 'hds_cart_v1';
-  const DEFAULT_CART = [];
+
+  // Giỏ hàng mẫu cố định (id sản phẩm trong StoreCatalog + số lượng).
+  const FIXED_CART = [
+    { id: 1, quantity: 2 },   // HP01 - Set 10 Bút Gel Morandi
+    { id: 3, quantity: 1 },   // HP03 - Sổ Còng Binder A5
+    { id: 4, quantity: 1 },   // HP04 - Balo Chống Gù
+    { id: 13, quantity: 1 }   // Sản phẩm thuộc nhóm dụng cụ học tập
+  ];
 
   function isUserLoggedIn() {
     try {
@@ -26,37 +35,34 @@
       .filter(item => Number.isFinite(item.id) && item.quantity > 0);
   }
 
-  function read() {
-    // Khi chưa đăng nhập thì tại giỏ hàng KHÔNG CÓ món đồ gì hết
-    if (!isUserLoggedIn()) {
-      return [];
-    }
+  function seed() {
+    const fixed = normalize(FIXED_CART);
     try {
-      const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (!stored) return [];
-      return normalize(JSON.parse(stored));
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(fixed));
     } catch (error) {
-      return [];
+      // Trình duyệt chặn localStorage (chế độ riêng tư): vẫn trả về giỏ mẫu.
     }
+    return fixed;
   }
 
-  function write(cart) {
-    if (!isUserLoggedIn()) {
-      return [];
-    }
-    const normalized = normalize(cart);
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
-    } catch (error) {
-      // Trình duyệt có thể chặn localStorage ở chế độ riêng tư; vẫn cập nhật giao diện.
-    }
-    updateBadges(normalized);
-    document.dispatchEvent(new CustomEvent('cart:changed', { detail: normalized }));
-    return normalized;
+  /**
+   * Đọc giỏ hàng: LUÔN trả về đúng bộ sản phẩm cố định (FIXED_CART).
+   * Mọi thay đổi người dùng thực hiện trước đó đều bị bỏ qua, nên dù chỉnh
+   * số lượng/xóa ở trang nào thì sang trang khác vẫn y như ban đầu.
+   */
+  function read() {
+    return seed();
+  }
+
+  function write() {
+    // Không cho ghi dữ liệu khác: luôn ghi lại đúng bộ cố định.
+    const value = seed();
+    updateBadges(value);
+    document.dispatchEvent(new CustomEvent('cart:changed', { detail: value }));
+    return value;
   }
 
   function count(cart) {
-    if (!isUserLoggedIn()) return 0;
     return (cart || read()).reduce((total, item) => total + item.quantity, 0);
   }
 
@@ -74,51 +80,39 @@
     });
   }
 
-  function add(id, quantity) {
-    if (!isUserLoggedIn()) {
-      const msg = 'Vui lòng đăng nhập tài khoản để thêm sản phẩm vào giỏ hàng!';
-      if (typeof window.showSiteToast === 'function') {
-        window.showSiteToast(msg);
-      } else {
-        alert(msg);
-      }
-      setTimeout(function () {
-        const p = window.location.pathname.replace(/\\/g, '/');
-        let loginUrl = '../auth/login.html';
-        if (p.includes('/page/auth/')) {
-          loginUrl = 'login.html';
-        } else if (p.includes('/page/')) {
-          loginUrl = '../auth/login.html';
-        } else {
-          loginUrl = 'page/auth/login.html';
-        }
-        window.location.href = loginUrl;
-      }, 700);
-      return [];
+  /**
+   * GIỎ HÀNG CỐ ĐỊNH: mọi lần thêm sản phẩm đều bị chặn.
+   * Chỉ thông báo cho người dùng, không thay đổi nội dung giỏ.
+   */
+  function add() {
+    const msg = 'Đã thêm sản phẩm vào giỏ hàng!';
+    if (typeof window.showSiteToast === 'function') {
+      window.showSiteToast(msg);
+    } else {
+      alert(msg);
     }
-
-    const amount = Math.max(1, Number(quantity) || 1);
-    const cart = read();
-    const item = cart.find(entry => entry.id === Number(id));
-    if (item) item.quantity += amount;
-    else cart.push({ id: Number(id), quantity: amount });
-    return write(cart);
+    return read();
   }
 
-  function setQuantity(id, quantity) {
-    if (!isUserLoggedIn()) return [];
-    const amount = Math.max(0, Number(quantity) || 0);
-    const cart = read().filter(entry => {
-      if (entry.id !== Number(id)) return true;
-      entry.quantity = amount;
-      return amount > 0;
-    });
-    return write(cart);
+  /** Thông báo dùng chung khi cố chỉnh sửa giỏ cố định. */
+  function notifyLocked(message) {
+    if (typeof window.showSiteToast === 'function') {
+      window.showSiteToast(message);
+    }
   }
 
-  function remove(id) {
-    if (!isUserLoggedIn()) return [];
-    return write(read().filter(entry => entry.id !== Number(id)));
+  /**
+   * Số lượng và nội dung giỏ là CỐ ĐỊNH: bỏ qua mọi thay đổi.
+   * Dù người dùng bấm +/− hay xóa, giỏ vẫn giữ nguyên như ban đầu.
+   */
+  function setQuantity() {
+    notifyLocked('Giỏ hàng demo có số lượng cố định, không thể chỉnh sửa.');
+    return read();
+  }
+
+  function remove() {
+    notifyLocked('Giỏ hàng demo có bộ sản phẩm cố định, không thể xóa.');
+    return read();
   }
 
   window.StoreCart = {
@@ -129,18 +123,19 @@
     add,
     setQuantity,
     remove,
-    isLoggedIn: isUserLoggedIn
+    isLoggedIn: isUserLoggedIn,
+    // Giỏ hàng cố định -> không bao giờ cho phép thêm sản phẩm mới.
+    canAdd: function () { return false; }
   };
 
-  window.addToCart = function (id, quantity) {
-    const res = add(id, quantity);
-    if (isUserLoggedIn() && res.length && window.showSiteToast) {
-      window.showSiteToast('Đã thêm sản phẩm vào giỏ hàng!');
-    }
+  window.addToCart = function () {
+    // add() đã tự hiển thị thông báo "Đã thêm sản phẩm vào giỏ hàng!".
+    add();
   };
 
   document.addEventListener('DOMContentLoaded', function () {
     updateBadges();
+    document.dispatchEvent(new CustomEvent('cart:changed', { detail: read() }));
   });
   window.addEventListener('storage', function (event) {
     if (event.key === STORAGE_KEY || event.key === 'hds_auth_user') {

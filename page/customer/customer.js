@@ -222,21 +222,21 @@
     const editable = Boolean(options && options.editable);
     const quantity = item.quantity;
     const qtyMarkup = editable
-      ? `<div class="c-qty" aria-label="Số lượng sản phẩm">
-           <button type="button" data-qty="-1" data-id="${product.id}" aria-label="Giảm số lượng">−</button>
-           <input type="number" min="1" max="99" value="${quantity}" data-qty-input data-id="${product.id}" aria-label="Số lượng ${escapeHTML(product.title)}">
-           <button type="button" data-qty="1" data-id="${product.id}" aria-label="Tăng số lượng">+</button>
+      ? `<div class="c-qty" aria-label="Số lượng sản phẩm (cố định)">
+           <button type="button" data-qty="-1" data-id="${product.id}" aria-label="Giảm số lượng" disabled>−</button>
+           <input type="number" min="1" max="99" value="${quantity}" data-qty-input data-id="${product.id}" aria-label="Số lượng ${escapeHTML(product.title)}" disabled>
+           <button type="button" data-qty="1" data-id="${product.id}" aria-label="Tăng số lượng" disabled>+</button>
          </div>`
       : `<span class="c-item-qty-static">SL: ${quantity}</span>`;
 
     const removeMarkup = editable
-      ? `<button class="c-item-remove" type="button" data-remove="${product.id}" title="Xóa sản phẩm" aria-label="Xóa ${escapeHTML(product.title)} khỏi giỏ hàng">${ICONS.trash}</button>`
+      ? `<button class="c-item-remove" type="button" data-remove="${product.id}" title="Giỏ hàng cố định" aria-label="Xóa ${escapeHTML(product.title)} khỏi giỏ hàng" disabled>${ICONS.trash}</button>`
       : '<span aria-hidden="true"></span>';
 
     return `<div class="c-order-item">
       <div class="c-item-thumb"><img src="${product.image}" alt="${escapeHTML(product.title)}" loading="lazy"></div>
       <div class="c-item-main">
-        <a href="../products/product-detail.html?id=${encodeURIComponent(product.code)}">${escapeHTML(product.title)}</a>
+        <a href="../products/product-${String(product.code).toLowerCase()}.html">${escapeHTML(product.title)}</a>
         <div class="c-item-meta"><span>Mã: ${product.code}</span><span>${escapeHTML(product.pack || '1 sản phẩm')}</span></div>
       </div>
       ${qtyMarkup}
@@ -439,7 +439,7 @@
       const removeButton = event.target.closest('[data-remove]');
       if (removeButton) {
         window.StoreCart.remove(Number(removeButton.dataset.remove));
-        toast('Đã xóa sản phẩm khỏi giỏ hàng.');
+        toast('Giỏ hàng demo có bộ sản phẩm cố định, không thể xóa.');
         render();
         return;
       }
@@ -842,7 +842,7 @@
       return `<div class="c-order-item">
         <div class="c-item-thumb"><img src="${item.image || (product && product.image) || ''}" alt="${escapeHTML(item.title)}" loading="lazy"></div>
         <div class="c-item-main">
-          <a href="../products/product-detail.html?id=${encodeURIComponent(item.code || '')}">${escapeHTML(item.title)}</a>
+          <a href="../products/product-${String(item.code || '').toLowerCase()}.html">${escapeHTML(item.title)}</a>
           <div class="c-item-meta"><span>Mã: ${escapeHTML(item.code || '')}</span><span>${escapeHTML(item.pack || '1 sản phẩm')}</span></div>
         </div>
         <span class="c-item-qty-static">SL: ${item.quantity}</span>

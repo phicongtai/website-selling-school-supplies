@@ -412,11 +412,7 @@ th, td {
 .store-search-button:hover { background: var(--color-primary-700); color: var(--text-white); }
 .store-search-button:active { transform: scale(.97); }
 .store-search-hint {
-  display: block;
-  margin: 4px 4px 0 0;
-  color: var(--text-muted);
-  font-size: var(--fs-xs);
-  text-align: right;
+  display: none !important;
 }
 
 .store-product-card {
@@ -1146,6 +1142,10 @@ h6, .h6 {
   max-height: 36px !important;
   flex: 0 0 36px !important;
   flex-shrink: 0 !important;
+}
+
+.brand-slogan {
+  display: none !important;
   aspect-ratio: 1 / 1 !important;
   border-radius: 50% !important;
   display: inline-flex !important;
@@ -1166,6 +1166,10 @@ h6, .h6 {
   max-height: 36px !important;
   flex: 0 0 36px !important;
   flex-shrink: 0 !important;
+}
+
+.brand-slogan {
+  display: none !important;
   aspect-ratio: 1 / 1 !important;
   border-radius: 8px !important;
   display: inline-flex !important;
@@ -1185,6 +1189,10 @@ h6, .h6 {
   max-height: 38px !important;
   flex: 0 0 38px !important;
   flex-shrink: 0 !important;
+}
+
+.brand-slogan {
+  display: none !important;
   aspect-ratio: 1 / 1 !important;
   border-radius: 8px !important;
   display: inline-flex !important;
@@ -1204,6 +1212,10 @@ h6, .h6 {
   max-height: 44px !important;
   flex: 0 0 44px !important;
   flex-shrink: 0 !important;
+}
+
+.brand-slogan {
+  display: none !important;
   aspect-ratio: 1 / 1 !important;
   border-radius: 8px !important;
   display: inline-flex !important;
@@ -1228,10 +1240,18 @@ img.brand-logo-box {
   flex-shrink: 0 !important;
 }
 
+.brand-slogan {
+  display: none !important;
+}
+
 .topbar-right {
   display: flex !important;
   align-items: center !important;
   flex-shrink: 0 !important;
+}
+
+.brand-slogan {
+  display: none !important;
 }
 
 @media (max-width: 860px) {
@@ -1474,5 +1494,9 @@ img.brand-logo-box {
 
 .action-badge[hidden],
 .cart-count-badge[hidden] {
+  display: none !important;
+}
+
+.brand-slogan {
   display: none !important;
 }

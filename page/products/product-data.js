@@ -94,3 +94,68 @@ window.StoreCatalog = {
   });
   window.StoreCatalog.imageBase = base;
 })();
+
+/* ============================================================================*
+   CHUẨN HÓA TÌM KIẾM: bỏ dấu tiếng Việt (bút -> but, thước -> thuoc, đ -> d)
+   để bộ lọc không phân biệt có/không dấu khi so khớp từ khóa. */
+window.normalizeViText = window.normalizeViText || function (text) {
+  return String(text == null ? "" : text)
+    .toLocaleLowerCase("vi")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d");
+};
+
+// Hiệu ứng "đang tải" giả dùng chung cho trang chủ và trang danh mục.
+// Thay các sản phẩm thật bằng các thẻ skeleton lấp lánh (shimmer) như
+// Shopee/Lazada trong ~0.9s, sau đó mới bật lại toàn bộ danh sách.
+window.showFakeLoading = function (grid, done, delay) {
+  if (!grid) {
+    if (typeof done === "function") done();
+    return;
+  }
+  delay = delay || 900;
+
+  if (!document.getElementById("fakeLoadingStyle")) {
+    const style = document.createElement("style");
+    style.id = "fakeLoadingStyle";
+    style.textContent = [
+      ".fake-skeleton-card{background:#fff;border-radius:16px;padding:10px;box-shadow:0 1px 8px rgba(42,56,42,.06);overflow:hidden}",
+      ".fake-skeleton{background:linear-gradient(100deg,#eef0ee 30%,#e0e4e0 50%,#eef0ee 70%);background-size:220% 100%;animation:fakeSkeletonShimmer 1.15s linear infinite;border-radius:10px}",
+      ".fake-skeleton-thumb{aspect-ratio:1/1;width:100%;margin-bottom:12px}",
+      ".fake-skeleton-line{height:12px;margin-top:10px;border-radius:6px}",
+      ".fake-skeleton-price{height:16px;margin-top:14px}",
+      "@keyframes fakeSkeletonShimmer{0%{background-position:120% 0}100%{background-position:-120% 0}}",
+      "@media (prefers-reduced-motion: reduce){.fake-skeleton{animation:none}}"
+    ].join("");
+    document.head.appendChild(style);
+  }
+
+  // Dọn skeleton còn sót (nếu người dùng bấm liên tiếp).
+  Array.from(grid.querySelectorAll(".fake-skeleton-card")).forEach(node => node.remove());
+
+  const realCards = Array.from(grid.children).filter(node => !node.classList.contains("fake-skeleton-card"));
+  realCards.forEach(card => { card.style.display = "none"; });
+
+  const fragment = document.createDocumentFragment();
+  for (let i = 0; i < realCards.length; i += 1) {
+    const skeleton = document.createElement("div");
+    skeleton.className = "fake-skeleton-card";
+    skeleton.setAttribute("aria-hidden", "true");
+    skeleton.innerHTML =
+      '<div class="fake-skeleton fake-skeleton-thumb"></div>' +
+      '<div class="fake-skeleton fake-skeleton-line" style="width:55%"></div>' +
+      '<div class="fake-skeleton fake-skeleton-line" style="width:92%"></div>' +
+      '<div class="fake-skeleton fake-skeleton-line" style="width:78%"></div>' +
+      '<div class="fake-skeleton fake-skeleton-line fake-skeleton-price" style="width:45%"></div>';
+    fragment.appendChild(skeleton);
+  }
+  grid.appendChild(fragment);
+
+  if (window.showFakeLoading._timer) window.clearTimeout(window.showFakeLoading._timer);
+  window.showFakeLoading._timer = window.setTimeout(() => {
+    grid.querySelectorAll(".fake-skeleton-card").forEach(node => node.remove());
+    realCards.forEach(card => { card.style.display = ""; });
+    if (typeof done === "function") done();
+  }, delay);
+};

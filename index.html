@@ -9,8 +9,9 @@
 <body>
   <p>Đang chuyển đến <a href="page/homepage/main.html">Học Đường Store</a>...</p>
   <script>
-    // Reset hoàn toàn trạng thái đăng nhập và giỏ hàng mỗi khi mở lại file index
+    // Khi ấn vào index: Đưa về trạng thái chưa đăng nhập và giỏ hàng trống
     try {
+      sessionStorage.setItem('hds_logged_out', 'true');
       sessionStorage.removeItem('hds_auth_user');
       localStorage.removeItem('hds_auth_user');
       localStorage.removeItem('hds_cart_v1');

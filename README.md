@@ -91,7 +91,7 @@ Các chức năng chính:
 - **Floating dock** ở góc màn hình với 4 lối tắt: trang chủ, danh mục, tìm kiếm, giỏ hàng.
 - **Toast thông báo** khi thêm sản phẩm hoặc đăng ký nhận tin.
 
-> Trang chủ có một phiên bản chi tiết sản phẩm SPA riêng (`renderProductDetail`) dùng `id` số. Trang `page/products/product-detail.html` là phiên bản chi tiết đầy đủ hơn, dùng `code` sản phẩm. Hai cách triển khai này cùng tồn tại trong dự án.
+> Trang chủ có một phiên bản chi tiết sản phẩm SPA riêng (`renderProductDetail`) dùng `id` số. Ngoài ra mỗi sản phẩm có **một trang HTML tĩnh riêng** (`page/products/product-<mã>.html`, ví dụ `product-hp01.html`) — nội dung viết cứng trong HTML, JS chỉ xử lý giỏ hàng/số lượng, không render dữ liệu.
 
 #### Trang danh mục sản phẩm — `page/products/`
 
@@ -104,13 +104,13 @@ Các chức năng chính:
 - Đếm số sản phẩm của từng danh mục trên sidebar.
 - Danh mục **Hộp bút** (`cases`) không có trang riêng; chỉ xuất hiện trong bộ lọc của trang chủ.
 
-#### Trang chi tiết sản phẩm — `page/products/product-detail.html`
+#### Trang chi tiết sản phẩm — `page/products/product-<mã>.html`
 
-- Nhận tham số `?id=` là **mã sản phẩm** (ví dụ `HP01`) hoặc **id số** (ví dụ `1`).
-- Hiển thị ảnh, danh mục, breadcrumb, mã, tên, giá, giá cũ, phần trăm giảm, quy cách đóng gói, tồn kho và mô tả.
-- Chọn số lượng trong khoảng `1..stock`, có nút tăng/giảm và thông báo lỗi khi vượt tồn kho.
-- Nút **Thêm vào giỏ hàng** cập nhật `window.StoreCart` và hiển thị toast.
-- Nút **Mua ngay** hiện chỉ hiển thị thông báo tổng tiền, chưa chuyển sang trang thanh toán.
+- **54 trang HTML tĩnh**, mỗi sản phẩm một file (ví dụ `product-hp04.html`), không dùng JS để render dữ liệu.
+- Nội dung viết cứng trong HTML: ảnh, danh mục, breadcrumb, mã, tên, giá, giá cũ, phần trăm giảm, quy cách đóng gói, tồn kho, mô tả và 4 sản phẩm cùng loại.
+- `product-page.js` chỉ xử lý tương tác: nút tăng/giảm số lượng (giới hạn `1..stock`), **Thêm vào giỏ hàng** và **Mua ngay**; thông tin sản phẩm đọc từ `data-*` trên `<body>`.
+- Mọi link sản phẩm trong site (trang chủ, 12 trang danh mục, giỏ hàng, đơn hàng) đều trỏ thẳng tới các trang tĩnh này.
+- `product-detail.html` + `product-detail.js` là phiên bản cũ dùng `?id=` (vẫn còn trong dự án nhưng không còn được liên kết tới).
 - Khối **sản phẩm cùng loại** (tối đa 4); nếu danh mục chỉ có một sản phẩm, tự gợi ý sản phẩm nổi bật khác.
 - Nhãn **Best/Hot** hiển thị theo thuộc tính `hot` của sản phẩm.
 
@@ -346,8 +346,10 @@ website-selling-school-supplies/
 │   │   ├── computers.html         # Danh mục Máy tính & thiết bị học tập
 │   │   ├── category.js            # Tìm kiếm, sắp xếp, phân trang, thêm giỏ cho danh mục
 │   │   ├── category.css           # Layout trang danh mục
-│   │   ├── product-detail.html    # Trang chi tiết sản phẩm
-│   │   ├── product-detail.js      # Render chi tiết, số lượng, sản phẩm liên quan
+│   │   ├── product-hp01.html      # Trang chi tiết tĩnh (mỗi sản phẩm 1 file, tổng 54)
+│   │   ├── product-page.js        # Tương tác giỏ hàng cho trang chi tiết tĩnh
+│   │   ├── product-detail.html    # Trang chi tiết cũ dùng ?id= (không còn liên kết)
+│   │   ├── product-detail.js      # Render chi tiết cho trang cũ
 │   │   ├── product-detail.css     # Style trang chi tiết
 │   │   └── README.txt             # Ghi chú lịch sử chỉnh sửa trang sản phẩm
 │   ├── auth/
@@ -406,7 +408,7 @@ Mỗi thư mục `A01`–`A12` đều có bộ ba `index.html`, `admin.js`, `adm
 | Danh mục Dụng cụ học tập | `page/products/school-supplies.html` | |
 | Danh mục Mỹ thuật | `page/products/art.html` | |
 | Danh mục Máy tính & thiết bị | `page/products/computers.html` | |
-| Chi tiết sản phẩm | `page/products/product-detail.html?id=HP01` | Nhận `code` hoặc `id` |
+| Chi tiết sản phẩm | `page/products/product-hp01.html` | Mỗi sản phẩm 1 trang tĩnh (`product-<mã>.html`) |
 | Giỏ hàng & đơn hàng | `page/customer/cart.html` | `?tab=orders` để cuộn tới danh sách đơn |
 | Thanh toán | `page/customer/checkout.html` | |
 | Đặt hàng thành công | `page/customer/order-success.html` | |
@@ -934,7 +936,7 @@ Khi thêm sản phẩm admin, cần cập nhật đồng bộ ở cả ba file n
 3. **Admin không được bảo vệ**: có thể mở trực tiếp bất kỳ trang A02–A12 mà không cần đăng nhập.
 4. **Dữ liệu storefront và admin tách rời**: sản phẩm/đơn hàng ở storefront không tự đồng bộ sang admin.
 5. **Admin reset khi F5**: A02, A03/A04, A05/A06/A07 và cụm A10–A12 khôi phục dữ liệu mẫu khi tải lại.
-6. **Hai phiên bản chi tiết sản phẩm**: SPA trong trang chủ và trang `product-detail.html` có logic khác nhau.
+6. **Ba cách xem chi tiết sản phẩm**: SPA trong trang chủ, 54 trang tĩnh `product-*.html` (đang dùng), và trang cũ `product-detail.html?id=` (không còn liên kết).
 7. **Nút “Mua ngay” chưa điều hướng**: chỉ hiển thị thông báo tổng tiền.
 8. **Thanh toán chưa thật**: không kết nối VNPAY/MoMo/COD thật, không trừ tồn kho.
 9. **Ảnh sản phẩm**: phần lớn là URL bên ngoài; một số ảnh không khớp chính xác tên sản phẩm.

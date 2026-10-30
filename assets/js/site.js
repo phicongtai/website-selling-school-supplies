@@ -104,19 +104,19 @@
             <div class="cart-drawer-item" data-cart-item="${product.id}">
               <img class="cart-drawer-thumb" src="${product.image}" alt="${escapeHTML(product.title)}" loading="lazy">
               <div class="cart-drawer-info">
-                <a class="cart-drawer-name" href="${detailPrefix}product-detail.html?id=${encodeURIComponent(product.code)}">${escapeHTML(product.title)}</a>
+                <a class="cart-drawer-name" href="${detailPrefix}product-${String(product.code).toLowerCase()}.html">${escapeHTML(product.title)}</a>
                 <div class="cart-drawer-unit">${money(product.price)} / sản phẩm</div>
                 <div class="cart-drawer-controls">
                   <div class="cart-drawer-qty" role="group" aria-label="Số lượng ${escapeHTML(product.title)}">
-                    <button type="button" data-cart-dec aria-label="${item.quantity > 1 ? 'Giảm số lượng' : 'Xóa sản phẩm'}">−</button>
+                    <button type="button" data-cart-dec aria-label="Giảm số lượng" disabled>−</button>
                     <span>${item.quantity}</span>
-                    <button type="button" data-cart-inc aria-label="Tăng số lượng" ${item.quantity >= 99 ? 'disabled' : ''}>+</button>
+                    <button type="button" data-cart-inc aria-label="Tăng số lượng" disabled>+</button>
                   </div>
                   <strong class="cart-drawer-line-total">${money(lineTotal)}</strong>
                 </div>
               </div>
               <div class="cart-drawer-side">
-                <button class="cart-drawer-remove" type="button" data-cart-remove aria-label="Xóa ${escapeHTML(product.title)} khỏi giỏ hàng" title="Xóa sản phẩm">${TRASH_ICON}</button>
+                <button class="cart-drawer-remove" type="button" data-cart-remove aria-label="Xóa ${escapeHTML(product.title)} khỏi giỏ hàng" title="Giỏ hàng cố định" disabled>${TRASH_ICON}</button>
               </div>
             </div>`;
         }).join('');
@@ -190,6 +190,9 @@
     });
   }
 
+  // Immediate call to sync header auth on script execution
+  try { initHeaderAuth(); } catch (e) {}
+
   if (document.readyState === 'complete') {
     initCartDrawer();
   } else {
@@ -211,14 +214,30 @@
      QUẢN LÝ XÁC THỰC NGƯỜI DÙNG & ĐỒNG BỘ GIAO DIỆN HEADER (AuthManager)
      ========================================================================== */
   const AUTH_STORAGE_KEY = 'hds_auth_user';
+  const LOGGED_OUT_KEY = 'hds_logged_out';
+
+  const HARDCODED_USER = {
+    name: 'Nguyễn Minh Anh',
+    email: 'minhanh@email.com',
+    avatar: (window.location.pathname.replace(/\\/g, '/').includes('/page/') ? '../../assets/img/avatar.jpg' : 'assets/img/avatar.jpg')
+  };
 
   const AuthManager = {
     getUser: function () {
       try {
+        if (sessionStorage.getItem(LOGGED_OUT_KEY) === 'true') {
+          return null;
+        }
         const raw = sessionStorage.getItem(AUTH_STORAGE_KEY);
-        if (!raw) return null;
+        if (!raw || raw === 'null') {
+          return null;
+        }
         const parsed = JSON.parse(raw);
-        return Object.assign({}, parsed);
+        return Object.assign({}, parsed, {
+          name: 'Nguyễn Minh Anh',
+          email: 'minhanh@email.com',
+          avatar: parsed.avatar || HARDCODED_USER.avatar
+        });
       } catch (err) {
         return null;
       }
@@ -227,12 +246,15 @@
       return this.getUser() !== null;
     },
     login: function (data) {
-      const user = Object.assign({
-        name: 'Khách hàng mới',
+      try {
+        sessionStorage.removeItem(LOGGED_OUT_KEY);
+      } catch (e) {}
+      const user = Object.assign({}, HARDCODED_USER, data || {}, {
+        name: 'Nguyễn Minh Anh',
         email: 'minhanh@email.com',
-        avatar: '../../assets/img/avatar.jpg',
+        avatar: HARDCODED_USER.avatar,
         loginTime: new Date().toISOString()
-      }, data || {});
+      });
       sessionStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
       try { localStorage.removeItem(AUTH_STORAGE_KEY); } catch (e) {}
       if (window.StoreCart && typeof window.StoreCart.updateBadges === 'function') { window.StoreCart.updateBadges(); }
@@ -240,17 +262,24 @@
     },
     logout: function () {
       try {
+        sessionStorage.setItem(LOGGED_OUT_KEY, 'true');
         sessionStorage.removeItem(AUTH_STORAGE_KEY);
         localStorage.removeItem(AUTH_STORAGE_KEY);
         localStorage.removeItem('hds_cart_v1');
       } catch (e) {}
       if (window.StoreCart && typeof window.StoreCart.updateBadges === 'function') { window.StoreCart.updateBadges(); }
+      if (typeof initHeaderAuth === 'function') {
+        initHeaderAuth();
+      }
+      if (typeof syncProfileLabels === 'function') {
+        syncProfileLabels();
+      }
       if (window.showSiteToast) {
         window.showSiteToast('Đã đăng xuất tài khoản.');
       }
       setTimeout(function () {
         const path = window.location.pathname.replace(/\\/g, '/');
-        if (path.includes('/page/customer/profile.html')) {
+        if (path.includes('/page/customer/profile.html') || path.includes('/page/customer/checkout.html')) {
           window.location.href = '../homepage/main.html';
         } else {
           window.location.reload();

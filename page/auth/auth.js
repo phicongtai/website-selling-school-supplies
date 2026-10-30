@@ -15,11 +15,9 @@ if (loginForm) {
   loginForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
-    const loginName = (document.getElementById('username') || {}).value || '';
-    const loginEmail = (document.getElementById('email') || {}).value || '';
     const userData = {
-      name: loginName.trim() || 'Khách hàng mới',
-      email: loginEmail.trim() || 'minhanh@email.com',
+      name: 'Nguyễn Minh Anh',
+      email: 'minhanh@email.com',
       avatar: '../../assets/img/avatar.jpg',
       loginTime: new Date().toISOString()
     };
@@ -27,11 +25,12 @@ if (loginForm) {
     if (window.AuthManager) {
       window.AuthManager.login(userData);
     } else {
+      sessionStorage.removeItem('hds_logged_out');
       sessionStorage.setItem('hds_auth_user', JSON.stringify(userData));
     }
 
     if (window.showSiteToast) {
-      window.showSiteToast('Đăng nhập thành công! Chào mừng ' + userData.name);
+      window.showSiteToast('Đăng nhập thành công! Chào mừng Nguyễn Minh Anh');
     }
     const urlParams = new URLSearchParams(window.location.search);
     const redirect = urlParams.get('redirect');
@@ -53,11 +52,11 @@ if (registerForm) {
   const status = document.getElementById('confirm-status');
 
   function checkPasswords() {
+    if (!password || !confirm || !confirmField || !status) return true;
     const mismatch = confirm.value.length > 0 && password.value !== confirm.value;
     confirmField.classList.toggle('invalid', mismatch);
     status.textContent = mismatch ? 'Chưa khớp' : (confirm.value ? 'Khớp' : '');
     status.style.color = mismatch ? '#c82020' : '#16804a';
-    confirm.setCustomValidity(mismatch ? 'Mật khẩu không khớp' : '');
     return !mismatch;
   }
 
@@ -68,44 +67,24 @@ if (registerForm) {
 
   registerForm.addEventListener('submit', function (event) {
     event.preventDefault();
-    if (!checkPasswords()) {
-      confirm.reportValidity();
-      return;
-    }
 
-    const fullnameInput = document.getElementById('fullname');
-    const usernameInput = document.getElementById('username');
-    const emailInput = document.getElementById('email');
-    const phoneInput = document.getElementById('phone');
-    const registeredName = (fullnameInput && fullnameInput.value.trim())
-      || (usernameInput && usernameInput.value.trim())
-      || 'Khách hàng mới';
-    const registeredEmail = (emailInput && emailInput.value.trim()) || 'minhanh@email.com';
-    const registeredPhone = (phoneInput && phoneInput.value.trim()) || '0912 234 567';
     const userData = {
-      name: registeredName,
-      email: registeredEmail,
-      phone: registeredPhone,
+      name: 'Nguyễn Minh Anh',
+      email: 'minhanh@email.com',
+      phone: '0901 234 567',
       avatar: '../../assets/img/avatar.jpg',
       loginTime: new Date().toISOString()
     };
-    // Luu ho so nguoi mua theo thong tin vua dang ky (customer.js doc PROFILE_KEY)
-    try {
-      localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify({
-        name: registeredName,
-        email: registeredEmail,
-        phone: registeredPhone
-      }));
-    } catch (err) {}
 
     if (window.AuthManager) {
       window.AuthManager.login(userData);
     } else {
+      sessionStorage.removeItem('hds_logged_out');
       sessionStorage.setItem('hds_auth_user', JSON.stringify(userData));
     }
 
     if (window.showSiteToast) {
-      window.showSiteToast('Đăng ký tài khoản thành công! Chào mừng ' + registeredName);
+      window.showSiteToast('Đăng ký tài khoản thành công! Chào mừng Nguyễn Minh Anh');
     }
     const urlParams = new URLSearchParams(window.location.search);
     const redirect = urlParams.get('redirect');
@@ -122,7 +101,7 @@ if (registerForm) {
 document.querySelectorAll('.social-row button').forEach(function (button) {
   button.addEventListener('click', function () {
     const socialUser = {
-      name: 'Khách hàng mới',
+      name: 'Nguyễn Minh Anh',
       email: 'minhanh@email.com',
       avatar: '../../assets/img/avatar.jpg',
       loginTime: new Date().toISOString()
@@ -130,10 +109,11 @@ document.querySelectorAll('.social-row button').forEach(function (button) {
     if (window.AuthManager) {
       window.AuthManager.login(socialUser);
     } else {
+      sessionStorage.removeItem('hds_logged_out');
       sessionStorage.setItem('hds_auth_user', JSON.stringify(socialUser));
     }
     if (window.showSiteToast) {
-      window.showSiteToast('Đăng nhập thành công! Chào mừng ' + (socialUser.name || userData.name || 'Khách hàng mới'));
+      window.showSiteToast('Đăng nhập thành công! Chào mừng Nguyễn Minh Anh');
     }
     const urlParams = new URLSearchParams(window.location.search);
     const redirect = urlParams.get('redirect');

@@ -1,4 +1,3 @@
-﻿
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -10,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png">
-
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="stylesheet" href="../homepage/homepage.css">
   <script src="../../assets/js/site.js" defer></script>
@@ -19,7 +17,7 @@
   <script src="product-data.js" defer></script>
   <script src="category.js" defer></script>
 </head>
-<body data-product-category="notebooks">
+<body data-product-category="notebooks" data-catalog-page="1">
 <div class="top-bar">
   <div class="container top-bar-inner">
     <span>🎉 Giảm giá 20% cho đơn hàng đầu tiên với mã: <strong>WELCOME2026</strong></span>
@@ -31,14 +29,13 @@
     <div class="homepage-header-row">
       <a href="../homepage/main.html" class="brand-logo">
         <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
-        <span class="brand-text"><span class="brand-title">Học Đường Store</span><span class="brand-slogan">Vibrant &amp; Minimal</span></span>
+        <span class="brand-text"><span class="brand-title">Học Đường Store</span></span>
       </a>
       <div class="header-search store-search">
         <div class="store-search-field">
           <input id="searchInput" class="store-search-input" type="search" placeholder="Tìm kiếm vở, giấy kiểm tra, sổ tay..." aria-label="Tìm kiếm sản phẩm">
           <button id="searchButton" class="store-search-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>Tìm kiếm</span></button>
         </div>
-        <div class="store-search-hint"><a href="../homepage/main.html#view-advanced-search">Tìm kiếm nâng cao</a></div>
       </div>
       <div class="header-actions homepage-header-actions">
   <button class="action-btn" onclick="openCartDrawer()" title="Giỏ hàng">
@@ -77,14 +74,7 @@
 </header>
 
 <main class="category-page">
-  <div class="breadcrumb">
-    <a href="../homepage/main.html">⌂ Trang chủ</a>
-    <span>/</span>
-    <a href="../homepage/main.html#view-category">Sản phẩm</a>
-    <span>/</span>
-    <strong>Vở &amp; giấy</strong>
-  </div>
-
+  <div class="breadcrumb"><a href="../homepage/main.html">⌂ Trang chủ</a><span>/</span><a href="../homepage/main.html#view-category">Sản phẩm</a><span>/</span><strong>Vở &amp; giấy</strong></div>
   <div class="category-layout">
     <aside class="category-sidebar">
       <div class="sidebar-title">
@@ -102,36 +92,107 @@
       <a class="category-option" href="computers.html"><span>Máy tính &amp; thiết bị học tập</span><span>8</span></a>
 
       <div class="shipping-note">
-        <strong><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align: -2px; margin-right: 4px;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>GIAO HÀNG SIÊU TỐC</strong>
+        <strong><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align: -2px; margin-right: 4px;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>GIAO HÀNG SIÊU TỐC</strong>
         <p>Đồng giá vận chuyển toàn quốc chỉ từ 15.000đ cho đơn hàng học cụ.</p>
       </div>
     </aside>
 
     <section class="category-results">
       <div class="results-heading">
-        <div>
-          <h1>Vở &amp; giấy <span>Chính hãng</span></h1>
-          <p id="resultCount">Đang tải sản phẩm...</p>
-        </div>
-
-        <label for="sortSelect">
-          Sắp xếp:
-          <select id="sortSelect">
-            <option value="popular">Phổ biến nhất</option>
-            <option value="low">Giá thấp đến cao</option>
-            <option value="high">Giá cao đến thấp</option>
-            <option value="name">Tên sản phẩm</option>
-          </select>
+        <div><h1>Vở &amp; giấy <span>Chính hãng</span></h1><p id="resultCount">Hiển thị 5 / 9 sản phẩm (Trang 1/2)</p></div>
+        <label for="sortSelect">Sắp xếp:
+          <select id="sortSelect"><option value="popular">Phổ biến nhất</option><option value="low">Giá thấp đến cao</option><option value="high">Giá cao đến thấp</option><option value="name">Tên sản phẩm</option></select>
         </label>
       </div>
-
-      <div class="product-grid" id="productGrid"></div>
-
+      <div class="product-grid" id="productGrid">
+<!--PRODUCTS:1-->
+<article class="store-product-card" data-id="3" data-code="HP03" data-title="Sổ Còng Binder A5 Bìa Da Pastel Kèm Ruột Caro" data-category="notebooks" data-price="89000" data-old-price="120000">
+  <a class="store-product-image-link" href="product-hp03.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Vở &amp; giấy</span>
+      <img src="../../assets/img/products/hp03.jpg" alt="Sổ Còng Binder A5 Bìa Da Pastel Kèm Ruột Caro" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: HP03</div>
+  <a class="store-product-name" href="product-hp03.html">Sổ Còng Binder A5 Bìa Da Pastel Kèm Ruột Caro</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">89.000₫</strong>
+    <span class="store-product-old-price">120.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="3">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="16" data-code="VG01" data-title="Vở học sinh 200 trang" data-category="notebooks" data-price="18000" data-old-price="22000">
+  <a class="store-product-image-link" href="product-vg01.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Vở &amp; giấy</span>
+      <img src="../../assets/img/products/vg01.jpg" alt="Vở học sinh 200 trang" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: VG01</div>
+  <a class="store-product-name" href="product-vg01.html">Vở học sinh 200 trang</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">18.000₫</strong>
+    <span class="store-product-old-price">22.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="16">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="17" data-code="VG02" data-title="Vở ô ly học sinh 96 trang" data-category="notebooks" data-price="12000">
+  <a class="store-product-image-link" href="product-vg02.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Vở &amp; giấy</span>
+      <img src="../../assets/img/products/vg02.jpg" alt="Vở ô ly học sinh 96 trang" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: VG02</div>
+  <a class="store-product-name" href="product-vg02.html">Vở ô ly học sinh 96 trang</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">12.000₫</strong>
+    <span class="store-product-stock">Kho: 180</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="17">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="18" data-code="VG03" data-title="Sổ tay lò xo A5" data-category="notebooks" data-price="35000" data-old-price="42000">
+  <a class="store-product-image-link" href="product-vg03.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Vở &amp; giấy</span>
+      <img src="../../assets/img/products/vg03.jpg" alt="Sổ tay lò xo A5" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: VG03</div>
+  <a class="store-product-name" href="product-vg03.html">Sổ tay lò xo A5</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">35.000₫</strong>
+    <span class="store-product-old-price">42.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="18">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="19" data-code="VG04" data-title="Giấy kiểm tra học sinh" data-category="notebooks" data-price="10000">
+  <a class="store-product-image-link" href="product-vg04.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Vở &amp; giấy</span>
+      <img src="../../assets/img/products/vg04.jpg" alt="Giấy kiểm tra học sinh" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: VG04</div>
+  <a class="store-product-name" href="product-vg04.html">Giấy kiểm tra học sinh</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">10.000₫</strong>
+    <span class="store-product-stock">Kho: 200</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="19">🛒 Thêm vào giỏ</button>
+</article>
+<!--/PRODUCTS:1-->
+      </div>
+      <div class="empty-products" id="categoryEmptyState" hidden>
+        <span>⌕</span>
+        <strong>Không tìm thấy sản phẩm</strong>
+        <p>Thử thay đổi từ khóa hoặc bỏ bớt bộ lọc để xem thêm sản phẩm.</p>
+      </div>
       <nav class="pagination" aria-label="Phân trang">
-        <button id="prevPage" disabled>‹ Trước</button>
-        <button class="page-number active" data-page="1">1</button>
-        <button class="page-number" data-page="2">2</button>
-        <button id="nextPage">Sau ›</button>
+        <span class="page-number is-disabled" aria-disabled="true">‹ Trước</span>
+        <span class="page-number active" aria-current="page">1</span>
+        <a class="page-number" href="notebooks-2.html">2</a>
+        <a class="page-number" href="notebooks-2.html">Sau ›</a>
       </nav>
     </section>
   </div>

@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     grid.innerHTML = shown.map(p => `
       <article class="store-product-card">
         <a class="store-product-image-link"
-           href="product-detail.html?id=${p.code}">
+           href="product-${String(p.code).toLowerCase()}.html">
           <div class="store-product-visual">
             <span class="store-product-tag">Dụng cụ học tập</span>
             <img
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="store-product-code">Mã: ${p.code}</div>
 
         <a class="store-product-name"
-           href="product-detail.html?id=${p.code}">
+           href="product-${String(p.code).toLowerCase()}.html">
           ${p.name}
         </a>
 

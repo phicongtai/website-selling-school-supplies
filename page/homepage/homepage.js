@@ -49,42 +49,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (viewId === 'view-detail' && param) {
       renderProductDetail(param);
     } else if (viewId === 'view-category') {
-      window.filterCategoryProducts();
+      window.filterCategoryProducts({ syncUrl: false, silent: true });
     }
 
     updateViewUrl(viewId);
   };
 
-  // 3. RENDER LIVE SEARCH (TÌM KIẾM CƠ BẢN)
-  const headerSearchInput = document.getElementById('headerSearchInput');
-  const liveSearchDropdown = document.getElementById('liveSearchDropdown');
-
+  // 3. TÌM KIẾM CƠ BẢN ĐÃ VÔ HIỆU HÓA: chỉ đóng gợi ý, không lọc gì cả.
   if (headerSearchInput) {
-    headerSearchInput.addEventListener('input', (e) => {
-      const term = e.target.value.toLowerCase().trim();
-      if (!term) {
-        liveSearchDropdown.classList.remove('open');
-        return;
-      }
-
-      const matches = products.filter(p =>
-        `${p.code} ${p.title}`.toLowerCase().includes(term)
-      ).slice(0, 4);
-      if (matches.length > 0) {
-        liveSearchDropdown.innerHTML = matches.map(p => `
-          <a class="live-search-item" href="../products/product-detail.html?id=${encodeURIComponent(p.code)}">
-            <img src="${p.image}" alt="${p.title}">
-            <div>
-              <div style="font-size:0.8rem; font-weight:600;">${p.title}</div>
-              <div style="font-size:0.75rem; color:#8A3500; font-weight:700;">${formatMoney(p.price)}</div>
-            </div>
-          </a>
-        `).join('');
-        liveSearchDropdown.classList.add('open');
-      } else {
-        liveSearchDropdown.innerHTML = `<div style="padding:8px; font-size:0.8rem; color:#757575;">Không tìm thấy sản phẩm</div>`;
-        liveSearchDropdown.classList.add('open');
-      }
+    headerSearchInput.addEventListener('input', () => {
+      if (liveSearchDropdown) liveSearchDropdown.classList.remove('open');
     });
   }
 
@@ -128,77 +102,80 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Lọc sản phẩm theo danh mục, khoảng giá và ưu đãi.
-  window.filterCategoryProducts = (options = {}) => {
-    const shouldSyncUrl = !options || options.syncUrl !== false;
-    const selectedCategories = getCategoryCheckboxes()
-      .filter(checkbox => checkbox.checked)
-      .map(checkbox => checkbox.dataset.category);
-
-    const minInput = document.getElementById('filterMinPrice');
-    const maxInput = document.getElementById('filterMaxPrice');
-    const parsedMin = parsePriceNumber(minInput?.value);
-    const min = Number.isFinite(parsedMin) ? Math.max(0, parsedMin) : 0;
-    const rawMax = parsePriceNumber(maxInput?.value);
-    const max = Number.isFinite(rawMax) && rawMax > 0 ? Math.max(rawMax, min) : Infinity;
-    const sortValue = document.getElementById('categorySortSelect')?.value || 'default';
-    const saleOnly = Boolean(document.querySelector('.filter-offers input[data-filter="sale"]')?.checked);
-    const hotOnly = Boolean(document.querySelector('.filter-offers input[data-filter="hot"]')?.checked);
-
-    let filtered = products.filter(product => {
-      const matchCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category);
-      const matchPrice = product.price >= min && product.price <= max;
-      const matchSale = !saleOnly || Boolean(product.oldPrice);
-      const matchHot = !hotOnly || Boolean(product.hot);
-      return matchCategory && matchPrice && matchSale && matchHot;
+  // Lọc sản phẩm trên lưới HTML tĩnh (sản phẩm đã viết sẵn trong trang,
+  // phân trang là các file khác nhau nên JS không render lại danh sách).
+  // YÊU CẦU: danh mục / khoảng giá / ưu đãi chỉ để showcasing.
+  // Luôn hiển thị toàn bộ sản phẩm đã được viết tĩnh trong trang này,
+  // nửa còn lại nằm ở file Trang 2 (không có lọc thực sự).
+  const revealCategoryResults = () => {
+    const grid = document.getElementById('categoryProductsGrid');
+    if (!grid) return;
+    const cards = Array.from(grid.querySelectorAll('.store-product-card'));
+    cards.forEach((card, index) => {
+      if (card.dataset.order === undefined) card.dataset.order = String(index);
     });
 
-    if (sortValue === 'price-asc') filtered.sort((a, b) => a.price - b.price);
-    if (sortValue === 'price-desc') filtered.sort((a, b) => b.price - a.price);
-    if (sortValue === 'name') filtered.sort((a, b) => a.title.localeCompare(b.title, 'vi'));
+    const total = (window.StoreCatalog && window.StoreCatalog.products) ? window.StoreCatalog.products.length : cards.length;
+    const sortValue = document.getElementById('categorySortSelect')?.value || 'default';
+    const sorters = {
+      'price-asc': (a, b) => (Number(a.dataset.price) || 0) - (Number(b.dataset.price) || 0),
+      'price-desc': (a, b) => (Number(b.dataset.price) || 0) - (Number(a.dataset.price) || 0),
+      'name': (a, b) => (a.dataset.title || '').localeCompare(b.dataset.title || '', 'vi'),
+      'default': (a, b) => Number(a.dataset.order) - Number(b.dataset.order)
+    };
+    if (sorters[sortValue]) {
+      cards.sort(sorters[sortValue]).forEach(card => grid.appendChild(card));
+    }
+    cards.forEach(card => {
+      card.classList.remove('is-hidden');
+      card.style.display = '';
+    });
 
-    renderProductList('categoryProductsGrid', filtered);
-
-    const categoryNames = selectedCategories.map(category => window.StoreCatalog.categories[category]);
+    const isPageTwo = document.body.dataset.catalogPage === '2';
     const resultTitle = document.getElementById('categoryResultTitle');
     const resultCount = document.getElementById('categoryResultCount');
     const categoryHint = document.getElementById('filterCategoryHint');
     const summary = document.getElementById('filterSummary');
+    const emptyState = document.getElementById('categoryEmptyState');
 
     if (resultTitle) {
-      resultTitle.textContent = categoryNames.length === 1
-        ? categoryNames[0]
-        : (categoryNames.length > 1 ? 'Sản phẩm đã chọn' : 'Tất cả sản phẩm');
+      resultTitle.textContent = 'Tất cả sản phẩm';
     }
     if (resultCount) {
-      resultCount.textContent = filtered.length
-        ? `Hiển thị ${filtered.length} sản phẩm`
-        : 'Không tìm thấy sản phẩm phù hợp';
+      resultCount.textContent = `Hiển thị ${cards.length} / ${total} sản phẩm (Trang ${isPageTwo ? '2' : '1'}/2)`;
     }
+    if (emptyState) emptyState.hidden = true;
     if (categoryHint) {
-      categoryHint.textContent = selectedCategories.length ? `${selectedCategories.length} nhóm` : 'Tất cả';
+      categoryHint.textContent = 'Tất cả';
     }
     if (summary) {
-      const filters = [];
-      if (categoryNames.length) filters.push(categoryNames.join(', '));
-      if (min > 0 || Number.isFinite(max)) {
-        filters.push(`${formatMoney(min)} – ${Number.isFinite(max) ? formatMoney(max) : 'không giới hạn'}`);
-      }
-      if (saleOnly) filters.push('Đang giảm giá');
-      if (hotOnly) filters.push('Nổi bật');
-      summary.textContent = filters.length
-        ? `Đang lọc: ${filters.join(' · ')}.`
-        : 'Đang hiển thị tất cả sản phẩm.';
+      summary.textContent = 'Danh sách được chia đều: một nửa ở Trang 1, một nửa ở Trang 2.';
+    }
+  };
+
+  window.filterCategoryProducts = (options = {}) => {
+    const shouldSyncUrl = !options || options.syncUrl !== false;
+    const grid = document.getElementById('categoryProductsGrid');
+    if (!grid) return;
+
+    const silent = Boolean(options && options.silent === true);
+    if (!silent) {
+      // Người dùng bấm "Áp dụng bộ lọc" / "Xóa": hiện loading giả rồi bật lại toàn bộ danh sách.
+      const resultCount = document.getElementById('categoryResultCount');
+      if (resultCount) resultCount.textContent = 'Đang tải sản phẩm...';
+      window.showFakeLoading(grid, revealCategoryResults);
+    } else {
+      revealCategoryResults();
     }
 
     if (shouldSyncUrl) {
       updateCategoryUrl({
-        categories: selectedCategories,
-        min,
-        max,
-        sort: sortValue,
-        sale: saleOnly,
-        hot: hotOnly
+        categories: [],
+        min: 0,
+        max: Infinity,
+        sort: document.getElementById('categorySortSelect')?.value || 'default',
+        sale: false,
+        hot: false
       });
     }
   };
@@ -235,34 +212,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  window.applyAdvancedSearch = (options = {}) => {
-    const shouldSyncUrl = !options || options.syncUrl !== false;
-    const keyword = document.getElementById('advKeyword')?.value.toLowerCase().trim() || '';
-    const category = document.getElementById('advCategory')?.value || 'all';
-    const minPriceVal = parsePriceNumber(document.getElementById('advMinPrice')?.value);
-    const minPrice = Number.isFinite(minPriceVal) ? Math.max(0, minPriceVal) : 0;
-    const parsedMaxPrice = parsePriceNumber(document.getElementById('advMaxPrice')?.value);
-    const maxPrice = Number.isFinite(parsedMaxPrice) && parsedMaxPrice > 0
-      ? Math.max(parsedMaxPrice, minPrice)
-      : Infinity;
+  // YÊU CẦU: tìm kiếm nâng cao chỉ để showcasing — KHÔNG lọc thật.
+  // Kết quả luôn là toàn bộ sản phẩm viết tĩnh trong trang (nửa còn lại ở Trang 2).
+  const revealAdvResults = () => {
+    const grid = document.getElementById('advResultGrid');
+    if (!grid) return;
+    const cards = Array.from(grid.querySelectorAll('.store-product-card'));
 
-    const filtered = products.filter(p => {
-      const matchKey = !keyword || `${p.code} ${p.title}`.toLowerCase().includes(keyword);
-      const matchCat = category === 'all' || p.category === category;
-      const matchPrice = p.price >= minPrice && p.price <= maxPrice;
-      return matchKey && matchCat && matchPrice;
+    // Bất kể từ khóa / danh mục / khoảng giá nhập gì, luôn hiện toàn bộ danh sách.
+    cards.forEach(card => {
+      card.classList.remove('is-hidden');
+      card.style.display = '';
     });
 
-    renderProductList('advResultGrid', filtered);
+    const total = (window.StoreCatalog && window.StoreCatalog.products) ? window.StoreCatalog.products.length : cards.length;
+    const isPageTwo = document.body.dataset.catalogPage === '2';
     const resultCount = document.getElementById('advResultCount');
+    const emptyState = document.getElementById('advEmptyState');
     if (resultCount) {
-      resultCount.textContent = filtered.length
-        ? `Tìm thấy ${filtered.length} sản phẩm phù hợp`
-        : 'Không tìm thấy sản phẩm phù hợp với bộ lọc.';
+      resultCount.textContent = `Hiển thị ${cards.length} / ${total} sản phẩm (Trang ${isPageTwo ? '2' : '1'}/2)`;
     }
+    if (emptyState) emptyState.hidden = true;
+  };
 
-    if (!options || options.navigate !== false) navigateToView('view-advanced-search');
-    if (shouldSyncUrl) updateAdvancedUrl({ keyword, category, minPrice, maxPrice });
+  window.applyAdvancedSearch = (options = {}) => {
+    const grid = document.getElementById('advResultGrid');
+    if (!grid) return;
+    const silent = Boolean(options && (options.silent === true || options.navigate === false));
+
+    // Người dùng bấm "Tìm kiếm" / "Áp dụng bộ lọc": hiện hiệu ứng loading giả
+    // rồi mới bật toàn bộ kết quả (việc lọc bị vô hiệu hóa).
+    if (!silent) {
+      navigateToView('view-advanced-search');
+      const resultCount = document.getElementById('advResultCount');
+      if (resultCount) resultCount.textContent = 'Đang tải sản phẩm...';
+      window.showFakeLoading(grid, revealAdvResults);
+      return;
+    }
+    revealAdvResults();
   };
 
   window.resetAdvancedSearch = () => {
@@ -334,11 +321,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // 6. GIỎ HÀNG & MODAL XEM NHANH
   const updateBadges = () => window.StoreCart.updateBadges();
 
-  window.addToCart = (id, quantity = 1) => {
-    const res = window.StoreCart.add(id, quantity);
-    if (window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) return;
+  window.addToCart = () => {
+    // Giỏ hàng CỐ ĐỊNH: cart.js chặn thêm mới và tự hiện toast thông báo.
+    window.StoreCart.add();
     renderCartDrawer();
-    showToast("Đã thêm sản phẩm vào giỏ hàng!");
   };
 
   const CART_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>';
@@ -377,19 +363,19 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="cart-drawer-item" data-cart-item="${p.id}">
             <img class="cart-drawer-thumb" src="${p.image}" alt="${p.title}" loading="lazy">
             <div class="cart-drawer-info">
-              <a class="cart-drawer-name" href="../products/product-detail.html?id=${encodeURIComponent(p.code)}">${p.title}</a>
+              <a class="cart-drawer-name" href="../products/product-${String(p.code).toLowerCase()}.html">${p.title}</a>
               <div class="cart-drawer-unit">${formatMoney(p.price)} / sản phẩm</div>
               <div class="cart-drawer-controls">
                 <div class="cart-drawer-qty" role="group" aria-label="Số lượng ${p.title}">
-                  <button type="button" data-cart-dec aria-label="${item.quantity > 1 ? 'Giảm số lượng' : 'Xóa sản phẩm'}">−</button>
+                  <button type="button" data-cart-dec aria-label="Giảm số lượng" disabled>−</button>
                   <span>${item.quantity}</span>
-                  <button type="button" data-cart-inc aria-label="Tăng số lượng" ${item.quantity >= 99 ? 'disabled' : ''}>+</button>
+                  <button type="button" data-cart-inc aria-label="Tăng số lượng" disabled>+</button>
                 </div>
                 <strong class="cart-drawer-line-total">${formatMoney(lineTotal)}</strong>
               </div>
             </div>
             <div class="cart-drawer-side">
-              <button class="cart-drawer-remove" type="button" data-cart-remove aria-label="Xóa ${p.title} khỏi giỏ hàng" title="Xóa sản phẩm">${TRASH_ICON}</button>
+              <button class="cart-drawer-remove" type="button" data-cart-remove aria-label="Xóa ${p.title} khỏi giỏ hàng" title="Giỏ hàng cố định" disabled>${TRASH_ICON}</button>
             </div>
           </div>
         `;
@@ -476,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     el.innerHTML = list.map(p => `
       <article class="store-product-card">
-        <a class="store-product-image-link" href="../products/product-detail.html?id=${encodeURIComponent(p.code)}">
+        <a class="store-product-image-link" href="../products/product-${String(p.code).toLowerCase()}.html">
           <div class="store-product-visual">
             <span class="store-product-tag">${window.StoreCatalog.categories[p.category]}</span>
             ${p.hot ? '<span class="store-product-tag store-product-hot">Hot</span>' : ''}
@@ -484,7 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </a>
         <div class="store-product-code">Mã: ${p.code}</div>
-        <a class="store-product-name" href="../products/product-detail.html?id=${encodeURIComponent(p.code)}">${p.title}</a>
+        <a class="store-product-name" href="../products/product-${String(p.code).toLowerCase()}.html">${p.title}</a>
         <div class="store-product-meta">
           <strong class="store-product-price">${formatMoney(p.price)}</strong>
           ${p.oldPrice
@@ -508,8 +494,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   renderProductList('homeProductsGrid', featuredProducts);
-  window.filterCategoryProducts({ syncUrl: false });
-  window.applyAdvancedSearch({ syncUrl: false, navigate: false });
+  window.filterCategoryProducts({ syncUrl: false, silent: true });
+  window.applyAdvancedSearch({ syncUrl: false, navigate: false, silent: true });
   updateBadges();
 
   // Khôi phục màn hình hiện tại sau khi reload.
