@@ -12,6 +12,14 @@
   const ORDER_HISTORY_KEY = 'hds_order_history_v1';
   const DRAFT_ORDER_CODE = 'HD1011010';
 
+  // Luôn dọn dẹp dữ liệu lưu tạm để bảo đảm dữ liệu gốc chuẩn không bị sửa
+  try {
+    localStorage.removeItem(PROFILE_KEY);
+    localStorage.removeItem(ADDRESS_KEY);
+    sessionStorage.removeItem(PROFILE_KEY);
+    sessionStorage.removeItem(ADDRESS_KEY);
+  } catch (e) {}
+
   const DEFAULT_PROFILE = {
     name: 'Nguyễn Minh Anh',
     email: 'minhanh@email.com',
@@ -96,7 +104,10 @@
     }
   };
 
-  const getProfile = () => Object.assign({}, DEFAULT_PROFILE, readJSON(PROFILE_KEY, {}) || {});
+  const getProfile = () => {
+    // Dữ liệu gốc chuẩn cố định không bị sửa
+    return Object.assign({}, DEFAULT_PROFILE);
+  };
 
   const cloneAddresses = list => list.map(item => Object.assign({}, item));
 
@@ -107,13 +118,8 @@
   };
 
   const getAddresses = () => {
-    const stored = readJSON(ADDRESS_KEY, null);
-    if (!Array.isArray(stored)) {
-      const seeded = cloneAddresses(DEFAULT_ADDRESSES);
-      writeJSON(ADDRESS_KEY, seeded);
-      return seeded;
-    }
-    return normalizeDefault(cloneAddresses(stored));
+    // Dữ liệu danh sách địa chỉ gốc chuẩn cố định không bị sửa
+    return cloneAddresses(DEFAULT_ADDRESSES);
   };
 
   const saveAddresses = list => writeJSON(ADDRESS_KEY, normalizeDefault(cloneAddresses(list)));
@@ -956,21 +962,23 @@
     fields.addEventListener('submit', event => {
       if (!event.target.matches('#profileForm')) return;
       event.preventDefault();
-      const formData = new FormData(event.target);
-      const profile = getProfile();
-      fieldDefinitions.forEach(field => {
-        const value = formData.get(field.key);
-        profile[field.key] = value == null ? profile[field.key] : String(value).trim();
-      });
-      if (!profile.name || !profile.email) {
-        toast('Vui lòng nhập họ tên và email.');
-        return;
+
+      const submitBtn = event.target.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span>Đang lưu...</span>`;
       }
-      writeJSON(PROFILE_KEY, profile);
-      editingProfile = false;
-      syncProfileLabels();
-      renderProfile();
+
       toast('Đã cập nhật hồ sơ cá nhân.');
+
+      // Fake: Sau khi ấn lưu, tự động reload lại hiển thị thông tin gốc không bị sửa
+      setTimeout(() => {
+        try {
+          localStorage.removeItem(PROFILE_KEY);
+          sessionStorage.removeItem(PROFILE_KEY);
+        } catch (e) {}
+        window.location.reload();
+      }, 600);
     });
 
     const renderAddresses = () => {
@@ -1073,22 +1081,28 @@
 
         const remove = event.target.closest('[data-delete-address]');
         if (remove) {
-          const id = remove.dataset.deleteAddress;
           if (!window.confirm('Bạn chắc chắn muốn xóa địa chỉ này?')) return;
-          const list = getAddresses().filter(address => address.id !== id);
-          saveAddresses(list);
-          renderAddresses();
           toast('Đã xóa địa chỉ nhận hàng.');
+          setTimeout(() => {
+            try {
+              localStorage.removeItem(ADDRESS_KEY);
+              sessionStorage.removeItem(ADDRESS_KEY);
+            } catch (e) {}
+            window.location.reload();
+          }, 600);
           return;
         }
 
         const makeDefault = event.target.closest('[data-default-address]');
         if (makeDefault) {
-          const id = makeDefault.dataset.defaultAddress;
-          const list = getAddresses().map(address => Object.assign({}, address, { isDefault: address.id === id }));
-          saveAddresses(list);
-          renderAddresses();
           toast('Đã cập nhật địa chỉ mặc định.');
+          setTimeout(() => {
+            try {
+              localStorage.removeItem(ADDRESS_KEY);
+              sessionStorage.removeItem(ADDRESS_KEY);
+            } catch (e) {}
+            window.location.reload();
+          }, 600);
           return;
         }
 
@@ -1112,28 +1126,23 @@
 
         const idField = document.getElementById('addressId');
         const id = idField ? idField.value : '';
-        const list = getAddresses();
-        const address = {
-          id: id || `addr-${Date.now()}`,
-          name: document.getElementById('addrName').value.trim(),
-          phone: document.getElementById('addrPhone').value.trim(),
-          type: document.getElementById('addrType').value,
-          street: document.getElementById('addrStreet').value.trim(),
-          ward: document.getElementById('addrWard').value,
-          district: document.getElementById('addrDistrict').value,
-          province: document.getElementById('addrProvince').value,
-          isDefault: document.getElementById('addrDefault').checked
-        };
-
-        let next = list.filter(item => item.id !== address.id);
-        next.push(address);
-        if (address.isDefault) {
-          next = next.map(item => Object.assign({}, item, { isDefault: item.id === address.id }));
+        const submitBtn = addressForm.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `<span>Đang lưu...</span>`;
         }
-        saveAddresses(next);
+
         closeModal();
-        renderAddresses();
         toast(id ? 'Đã cập nhật địa chỉ nhận hàng.' : 'Đã thêm địa chỉ nhận hàng mới.');
+
+        // Fake: Sau khi thêm/sửa, reload lại hiển thị danh sách địa chỉ gốc không bị sửa
+        setTimeout(() => {
+          try {
+            localStorage.removeItem(ADDRESS_KEY);
+            sessionStorage.removeItem(ADDRESS_KEY);
+          } catch (e) {}
+          window.location.reload();
+        }, 600);
       });
     }
 

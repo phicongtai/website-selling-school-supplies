@@ -157,7 +157,38 @@
             </button>
           </header>
 
-          <div class="c-profile-fields" id="profileFields"></div>
+                    <div class="c-profile-fields" id="profileFields">
+            <div class="c-profile-field">
+              <div><span>Họ và tên</span><strong>Nguyễn Minh Anh</strong></div>
+              <button class="c-icon-btn" type="button" data-edit-field="name" title="Chỉnh sửa Họ và tên" aria-label="Chỉnh sửa Họ và tên">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>
+              </button>
+            </div>
+            <div class="c-profile-field">
+              <div><span>Ngày sinh</span><strong>12/03/2008</strong></div>
+              <button class="c-icon-btn" type="button" data-edit-field="birthday" title="Chỉnh sửa Ngày sinh" aria-label="Chỉnh sửa Ngày sinh">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>
+              </button>
+            </div>
+            <div class="c-profile-field">
+              <div><span>Email</span><strong>minhanh@email.com</strong></div>
+              <button class="c-icon-btn" type="button" data-edit-field="email" title="Chỉnh sửa Email" aria-label="Chỉnh sửa Email">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>
+              </button>
+            </div>
+            <div class="c-profile-field">
+              <div><span>Số điện thoại</span><strong>0912 234 567</strong></div>
+              <button class="c-icon-btn" type="button" data-edit-field="phone" title="Chỉnh sửa Số điện thoại" aria-label="Chỉnh sửa Số điện thoại">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>
+              </button>
+            </div>
+            <div class="c-profile-field c-profile-field--wide">
+              <div><span>Mã học sinh</span><strong>HS-2026-0158</strong></div>
+              <button class="c-icon-btn" type="button" data-edit-field="studentId" title="Chỉnh sửa Mã học sinh" aria-label="Chỉnh sửa Mã học sinh">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>
+              </button>
+            </div>
+          </div>
         </section>
 
         <section class="c-card c-section-card" id="addresses" aria-labelledby="addressBookTitle">
@@ -173,7 +204,46 @@
           </header>
           <p class="c-section-sub">Địa chỉ mặc định sẽ được sử dụng khi thanh toán để giúp bạn đặt hàng nhanh hơn.</p>
 
-          <div class="c-addresses" id="profileAddressList"></div>
+                    <div class="c-addresses" id="profileAddressList">
+            <article class="c-saved-address is-default">
+              <div class="c-saved-address-head">
+                <div class="c-saved-address-person">
+                  <strong>Nguyễn Minh Anh</strong>
+                  <span class="c-dot">·</span>
+                  <span>0912 234 567</span>
+                  <span class="c-badge">Mặc định</span>
+                  <span class="c-badge c-badge--soft">Nhà riêng</span>
+                </div>
+                <div class="c-addr-actions">
+                  <button class="c-icon-btn" type="button" data-edit-address="addr-1" title="Chỉnh sửa địa chỉ" aria-label="Chỉnh sửa địa chỉ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg></button>
+                  <button class="c-icon-btn c-icon-btn--danger" type="button" data-delete-address="addr-1" title="Xóa địa chỉ" aria-label="Xóa địa chỉ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v5M14 11v5"></path></svg></button>
+                </div>
+              </div>
+              <p>12 Nguyễn Huệ, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh</p>
+              <span class="c-addr-default-text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Địa chỉ mặc định</span>
+            </article>
+            <article class="c-saved-address">
+              <div class="c-saved-address-head">
+                <div class="c-saved-address-person">
+                  <strong>Nguyễn Minh Anh</strong>
+                  <span class="c-dot">·</span>
+                  <span>0912 234 567</span>
+                  <span class="c-badge c-badge--soft">Trường học</span>
+                </div>
+                <div class="c-addr-actions">
+                  <button class="c-icon-btn" type="button" data-edit-address="addr-2" title="Chỉnh sửa địa chỉ" aria-label="Chỉnh sửa địa chỉ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg></button>
+                  <button class="c-icon-btn c-icon-btn--danger" type="button" data-delete-address="addr-2" title="Xóa địa chỉ" aria-label="Xóa địa chỉ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v5M14 11v5"></path></svg></button>
+                </div>
+              </div>
+              <p>45 Lê Văn Việt, Phường Hiệp Phú, TP. Thủ Đức, TP. Hồ Chí Minh</p>
+              <button class="c-set-default" type="button" data-default-address="addr-2">Đặt làm mặc định</button>
+            </article>
+            <div class="c-address-dashed">
+              <span class="c-icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
+              <p>Bạn có thể lưu thêm địa chỉ nhận hàng để thanh toán nhanh hơn trong những lần sau.</p>
+              <button type="button" data-add-address><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Thêm địa chỉ</button>
+            </div>
+          </div>
         </section>
 
         <p class="c-fineprint">
