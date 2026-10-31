@@ -227,7 +227,7 @@
                   </div>
                 </div>
 
-                <!-- Giá bán & Mã SKU -->
+                <!-- Giá niêm yết & Mức giảm giá (%) -->
                 <div class="field-grid">
                   <div class="form-group">
                     <label class="form-label" for="price">Giá bán lẻ (VNĐ) <span class="required">*</span></label>
@@ -236,6 +236,27 @@
                       <span>VNĐ</span>
                     </div>
                     <small class="field-price-preview" id="price-preview-text">Giá niêm yết: 0₫</small>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="discount">Mức giảm giá (%)</label>
+                    <div class="input-with-suffix discount-control">
+                      <input class="form-control" id="discount" name="discount" type="number" min="0" max="99" step="1" placeholder="0" value="0">
+                      <span>%</span>
+                    </div>
+                    <small class="field-discount-preview" id="discount-preview-text">Không áp dụng giảm giá (0%)</small>
+                  </div>
+                </div>
+
+                <!-- Giá bán sau giảm & Mã SKU -->
+                <div class="field-grid">
+                  <div class="form-group">
+                    <label class="form-label" for="final-price">Giá bán thực tế sau giảm (VNĐ)</label>
+                    <div class="input-with-suffix final-price-control">
+                      <input class="form-control" id="final-price" name="final-price" type="text" readonly placeholder="0">
+                      <span>VNĐ</span>
+                    </div>
+                    <small class="field-final-preview" id="final-price-preview-text">Giá bán ưu đãi hiển thị đến khách hàng</small>
                   </div>
 
                   <div class="form-group">

@@ -175,6 +175,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const stockInput = document.getElementById('stock');
   const priceInput = document.getElementById('price');
   const pricePreviewText = document.getElementById('price-preview-text');
+  const discountInput = document.getElementById('discount');
+  const discountPreviewText = document.getElementById('discount-preview-text');
+  const finalPriceInput = document.getElementById('final-price');
+  const finalPricePreviewText = document.getElementById('final-price-preview-text');
   const skuInput = document.getElementById('sku');
   const descriptionInput = document.getElementById('description');
   const brandInput = document.getElementById('brand');
@@ -256,19 +260,76 @@ document.addEventListener('DOMContentLoaded', () => {
     categorySelect.addEventListener('change', updateSkuRecommendation);
   }
 
-  // 6. XEM TRƯỚC GIÁ BÁN THỜI GIAN THỰC
-  if (priceInput && pricePreviewText) {
-    priceInput.addEventListener('input', () => {
-      const val = parseInt(priceInput.value.replace(/\./g, ''), 10);
-      if (!isNaN(val) && val > 0) {
-        pricePreviewText.textContent = `Giá niêm yết: ${formatVnd(val)}`;
+  // 6. XEM TRƯỚC GIÁ BÁN VÀ % GIẢM GIÁ THỜI GIAN THỰC
+  function formatNumber(num) {
+    return String(num).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  }
+
+  function updatePricingCalculation() {
+    const rawPrice = parseInt((priceInput ? priceInput.value : '0').replace(/\./g, ''), 10) || 0;
+    let discountPct = parseInt(discountInput ? discountInput.value : '0', 10);
+    if (isNaN(discountPct) || discountPct < 0) discountPct = 0;
+    if (discountPct > 99) discountPct = 99;
+    if (discountInput && discountInput.value !== '' && discountInput.value != discountPct) {
+      discountInput.value = discountPct;
+    }
+
+    const discountAmount = Math.round((rawPrice * discountPct) / 100);
+    const finalPrice = Math.max(0, rawPrice - discountAmount);
+
+    if (pricePreviewText) {
+      if (rawPrice > 0) {
+        pricePreviewText.textContent = `Giá gốc niêm yết: ${formatVnd(rawPrice)}`;
         pricePreviewText.style.color = 'var(--color-primary, #FF6900)';
       } else {
         pricePreviewText.textContent = 'Giá niêm yết: 0₫';
         pricePreviewText.style.color = '#6b7280';
       }
+    }
+
+    if (discountPreviewText) {
+      if (discountPct > 0) {
+        discountPreviewText.textContent = `Tiết kiệm: ${formatVnd(discountAmount)} (-${discountPct}%)`;
+        discountPreviewText.style.color = '#ea580c';
+      } else {
+        discountPreviewText.textContent = 'Không áp dụng giảm giá (0%)';
+        discountPreviewText.style.color = '#9ca3af';
+      }
+    }
+
+    if (finalPriceInput) {
+      finalPriceInput.value = formatNumber(finalPrice);
+    }
+
+    if (finalPricePreviewText) {
+      if (discountPct > 0) {
+        finalPricePreviewText.textContent = `Giá ưu đãi Storefront: ${formatVnd(finalPrice)}`;
+        finalPricePreviewText.style.color = '#15803d';
+      } else {
+        finalPricePreviewText.textContent = 'Giá bán ưu đãi hiển thị đến khách hàng';
+        finalPricePreviewText.style.color = '#6b7280';
+      }
+    }
+  }
+
+  if (priceInput) {
+    priceInput.addEventListener('input', () => {
+      let raw = priceInput.value.replace(/\D/g, '');
+      if (raw) {
+        priceInput.value = formatNumber(parseInt(raw, 10));
+      } else {
+        priceInput.value = '';
+      }
+      updatePricingCalculation();
     });
   }
+
+  if (discountInput) {
+    discountInput.addEventListener('input', () => {
+      updatePricingCalculation();
+    });
+  }
+  updatePricingCalculation();
 
   // 7. XỬ LÝ CHỌN ẢNH TỪ BỘ MẪU SẴN (HOMEPAGE ASSETS)
   let selectedImageUrl = '../../assets/img/product-1.jpg';
