@@ -117,11 +117,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 confirmButton.addEventListener("click", () => {
-  productStatus.textContent = "Đã ẩn";
-  statusBadge.classList.add("is-hidden");
-  openButton.disabled = true;
-  openButton.classList.add("row-delete-disabled");
-  openButton.setAttribute("aria-label", "Sản phẩm SP01 đã được ẩn");
+  // Chức năng giả lập: Đóng hộp thoại và thông báo, không đổi trạng thái
   backdrop.hidden = true;
   toast.hidden = false;
   pageMessage.textContent = "Sản phẩm SP01 đã được ẩn khỏi storefront. Lịch sử 42 đơn hàng vẫn được bảo toàn.";

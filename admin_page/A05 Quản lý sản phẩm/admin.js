@@ -265,14 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const catVal = categoryFilter.value;
     const statusVal = statusFilter.value;
 
-    const filtered = products.filter(p => {
-      const matchSearch = p.code.toLowerCase().includes(searchTerm) ||
-                          p.name.toLowerCase().includes(searchTerm) ||
-                          p.category.toLowerCase().includes(searchTerm);
-      const matchCat = (catVal === 'all') || (p.category === catVal);
-      const matchStatus = (statusVal === 'all') || (p.status === statusVal);
-      return matchSearch && matchCat && matchStatus;
-    });
+    // Chức năng Tìm kiếm & Lọc là mô phỏng giao diện tượng trưng — luôn hiển thị đầy đủ danh sách
+    const filtered = products;
 
     tableBody.innerHTML = '';
 
@@ -402,11 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Phân nhánh logic nghiệp vụ theo Figma:
     // Nếu sản phẩm CHƯA BÁN (Đã bán === 0): Mở modal xác nhận xóa vĩnh viễn (A08)
     // Nếu sản phẩm ĐÃ BÁN (Đã bán > 0): Mở modal bảo vệ đơn hàng, chỉ cho phép ẩn (A09)
-    if (p.sold === 0) {
-      openDeleteModal(p);
-    } else {
-      openProtectModal(p);
-    }
+    openDeleteModal(p);
   });
 
   // Modal Xóa chưa bán (A08)
@@ -444,13 +434,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const removedCode = activeProductTarget.code;
     const removedName = activeProductTarget.name;
 
-    products = products.filter(p => p.code !== removedCode);
-    saveSessionProducts();
-
+    // Chức năng xóa giả lập: Đóng modal và hiển thị thông báo, giữ nguyên dữ liệu gốc
     closeDeleteModal();
-    updateStats();
-    renderProducts();
-    showToast('Đã xóa sản phẩm', `Sản phẩm ${removedCode} (${removedName}) đã được xóa vĩnh viễn.`);
+    showToast('Đã xóa sản phẩm', `Sản phẩm ${removedCode} (${removedName}) đã được xóa khỏi danh sách.`);
   });
 
   // Modal Bảo vệ đơn hàng / Ẩn sản phẩm đã bán (A09)
@@ -481,17 +467,11 @@ document.addEventListener('DOMContentLoaded', () => {
   confirmHideBtn.addEventListener('click', () => {
     if (!activeProductTarget) return;
 
-    const isCurrentlyHidden = (activeProductTarget.status === 'hidden');
-    activeProductTarget.status = isCurrentlyHidden ? 'active' : 'hidden';
-    saveSessionProducts();
-
     const targetCode = activeProductTarget.code;
-    const actionText = isCurrentlyHidden ? 'hiển thị trở lại' : 'ẩn khỏi Storefront';
 
+    // Chức năng giả lập: Đóng modal và hiển thị thông báo, bảo toàn trạng thái
     closeProtectModal();
-    updateStats();
-    renderProducts();
-    showToast('Cập nhật trạng thái', `Sản phẩm ${targetCode} đã được ${actionText}. Lịch sử đơn hàng được bảo toàn.`);
+    showToast('Cập nhật trạng thái', `Sản phẩm ${targetCode} đã được bảo toàn lịch sử đơn hàng.`);
   });
 
   // 9. THÊM SẢN PHẨM MỚI (MODAL FORM)
@@ -564,12 +544,8 @@ document.addEventListener('DOMContentLoaded', () => {
       iconType
     };
 
-    products.unshift(newProd);
-    saveSessionProducts();
-
+    // Chức năng thêm sản phẩm giả lập: Đóng modal và hiển thị thông báo, giữ nguyên bảng dữ liệu gốc
     closeAddModal();
-    updateStats();
-    renderProducts();
     showToast('Thêm sản phẩm thành công', `Đã thêm sản phẩm mới ${code} - ${name} vào danh mục.`);
   });
 
@@ -592,18 +568,89 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 10. BỘ LỌC VÀ TÌM KIẾM
-  searchInput.addEventListener('input', renderProducts);
-  categoryFilter.addEventListener('change', renderProducts);
-  statusFilter.addEventListener('change', renderProducts);
+  // 10. BỘ LỌC VÀ TÌM KIẾM (Chức năng giả/mô phỏng: có animation nhưng không lọc dữ liệu)
+  let animTimer = null;
+  function triggerTableAnimation(callback) {
+    if (tableBody) {
+      tableBody.style.transition = 'opacity 0.22s ease, filter 0.22s ease';
+      tableBody.style.opacity = '0.35';
+      tableBody.style.filter = 'blur(0.6px)';
+    }
+    if (animTimer) clearTimeout(animTimer);
+    animTimer = setTimeout(() => {
+      if (tableBody) {
+        tableBody.style.opacity = '1';
+        tableBody.style.filter = 'none';
+      }
+      if (typeof callback === 'function') callback();
+      renderProducts();
+    }, 280);
+  }
 
-  btnRefresh.addEventListener('click', () => {
-    searchInput.value = '';
-    categoryFilter.value = 'all';
-    statusFilter.value = 'all';
-    renderProducts();
-    showToast('Đã làm mới danh sách', 'Dữ liệu sản phẩm hiển thị đã được làm mới.');
-  });
+  function triggerSearchAnimation() {
+    const searchIconSvg = document.querySelector('.search-input-wrapper .search-icon svg') || document.querySelector('.search-input-wrapper svg');
+    if (searchIconSvg) {
+      searchIconSvg.style.transition = 'transform 0.35s ease';
+      searchIconSvg.style.transform = 'rotate(180deg)';
+    }
+    triggerTableAnimation(() => {
+      if (searchIconSvg) {
+        searchIconSvg.style.transform = 'rotate(0deg)';
+      }
+    });
+  }
+
+  let searchDebounce = null;
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      if (searchDebounce) clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(() => {
+        triggerSearchAnimation();
+      }, 200);
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (searchDebounce) clearTimeout(searchDebounce);
+        triggerSearchAnimation();
+      }
+    });
+  }
+
+  if (categoryFilter) {
+    categoryFilter.addEventListener('change', () => {
+      triggerTableAnimation();
+    });
+  }
+
+  if (statusFilter) {
+    statusFilter.addEventListener('change', () => {
+      triggerTableAnimation();
+    });
+  }
+
+  if (btnRefresh) {
+    btnRefresh.addEventListener('click', () => {
+      if (searchInput) searchInput.value = '';
+      if (categoryFilter) categoryFilter.value = 'all';
+      if (statusFilter) statusFilter.value = 'all';
+
+      const refreshSvg = btnRefresh.querySelector('svg');
+      if (refreshSvg) {
+        refreshSvg.style.transition = 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)';
+        refreshSvg.style.transform = 'rotate(360deg)';
+      }
+
+      triggerTableAnimation(() => {
+        if (refreshSvg) {
+          refreshSvg.style.transition = 'none';
+          refreshSvg.style.transform = 'rotate(0deg)';
+        }
+      });
+      showToast('Đã làm mới danh sách', 'Dữ liệu sản phẩm hiển thị đã được làm mới.');
+    });
+  }
 
   // 11. XUẤT DANH SÁCH RA FILE CSV (HỖ TRỢ TIẾNG VIỆT EXCEL)
   btnExportExcel.addEventListener('click', () => {
@@ -649,22 +696,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnPrevPage = document.getElementById('btn-prev-page');
   const btnPage1 = document.getElementById('btn-page-1');
 
+  let pageAnimTimer = null;
   function reloadToPage1() {
-    // Reset các bộ lọc và tìm kiếm về mặc định
-    if (searchInput) searchInput.value = '';
-    if (categoryFilter) categoryFilter.value = 'all';
-    if (statusFilter) statusFilter.value = 'all';
-
-    // Hiệu ứng mờ nhẹ trước khi reload
+    // Hiệu ứng chuyển trang mượt mà (chức năng mô phỏng/fake giống làm mới)
     if (tableBody) {
-      tableBody.style.transition = 'opacity 150ms ease';
+      tableBody.style.transition = 'opacity 0.22s ease, filter 0.22s ease';
       tableBody.style.opacity = '0.35';
+      tableBody.style.filter = 'blur(0.6px)';
     }
 
-    // Reload trang về lại trang 1 mà không hiện thông báo toast
-    setTimeout(() => {
-      window.location.reload();
-    }, 150);
+    if (pageAnimTimer) clearTimeout(pageAnimTimer);
+    pageAnimTimer = setTimeout(() => {
+      if (tableBody) {
+        tableBody.style.opacity = '1';
+        tableBody.style.filter = 'none';
+      }
+      renderProducts();
+    }, 280);
   }
 
   if (btnNextPage) {

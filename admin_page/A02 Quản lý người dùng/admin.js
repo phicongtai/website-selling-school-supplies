@@ -151,19 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
     const selectedStatus = statusFilter ? statusFilter.value : 'all';
 
-    const filtered = usersData.filter(user => {
-      const matchSearch = 
-        user.code.toLowerCase().includes(searchTerm) ||
-        user.name.toLowerCase().includes(searchTerm) ||
-        user.username.toLowerCase().includes(searchTerm) ||
-        user.email.toLowerCase().includes(searchTerm) ||
-        user.phone.toLowerCase().includes(searchTerm);
-
-      const matchStatus = 
-        selectedStatus === 'all' || user.status === selectedStatus;
-
-      return matchSearch && matchStatus;
-    });
+    // Chức năng Tìm kiếm & Lọc là mô phỏng giao diện tượng trưng — luôn hiển thị đầy đủ danh sách
+    const filtered = usersData;
 
     if (!tbody) return;
     tbody.innerHTML = '';
@@ -252,17 +241,60 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * 4. Tìm kiếm & Lọc
+   * 4. Tìm kiếm & Lọc (Chức năng giả/mô phỏng: có animation nhưng không lọc dữ liệu)
    */
+  let animTimer = null;
+  function triggerTableAnimation(callback) {
+    if (tbody) {
+      tbody.style.transition = 'opacity 0.22s ease, filter 0.22s ease';
+      tbody.style.opacity = '0.35';
+      tbody.style.filter = 'blur(0.6px)';
+    }
+    if (animTimer) clearTimeout(animTimer);
+    animTimer = setTimeout(() => {
+      if (tbody) {
+        tbody.style.opacity = '1';
+        tbody.style.filter = 'none';
+      }
+      if (typeof callback === 'function') callback();
+      renderTable();
+    }, 280);
+  }
+
+  function triggerSearchAnimation() {
+    const searchIconSvg = document.querySelector('.search-input-wrapper .search-icon svg');
+    if (searchIconSvg) {
+      searchIconSvg.style.transition = 'transform 0.35s ease';
+      searchIconSvg.style.transform = 'rotate(180deg)';
+    }
+    triggerTableAnimation(() => {
+      if (searchIconSvg) {
+        searchIconSvg.style.transform = 'rotate(0deg)';
+      }
+    });
+  }
+
+  let searchDebounce = null;
   if (searchInput) {
     searchInput.addEventListener('input', () => {
-      renderTable();
+      if (searchDebounce) clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(() => {
+        triggerSearchAnimation();
+      }, 200);
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (searchDebounce) clearTimeout(searchDebounce);
+        triggerSearchAnimation();
+      }
     });
   }
 
   if (statusFilter) {
     statusFilter.addEventListener('change', () => {
-      renderTable();
+      triggerTableAnimation();
     });
   }
 
@@ -270,12 +302,25 @@ document.addEventListener('DOMContentLoaded', () => {
     btnRefresh.addEventListener('click', () => {
       if (searchInput) searchInput.value = '';
       if (statusFilter) statusFilter.value = 'all';
-      // Khôi phục lại dữ liệu gốc từ DEFAULT_USERS
-      sessionStorage.removeItem('hd_temp_users');
+      try {
+        sessionStorage.removeItem('hd_temp_users');
+      } catch (e) {}
       usersData = DEFAULT_USERS.map(u => ({ ...u }));
       updateStats();
-      renderTable();
-      showToast('Đã làm mới danh sách người dùng về dữ liệu gốc');
+
+      const refreshSvg = btnRefresh.querySelector('svg');
+      if (refreshSvg) {
+        refreshSvg.style.transition = 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)';
+        refreshSvg.style.transform = 'rotate(360deg)';
+      }
+
+      triggerTableAnimation(() => {
+        if (refreshSvg) {
+          refreshSvg.style.transition = 'none';
+          refreshSvg.style.transform = 'rotate(0deg)';
+        }
+      });
+      showToast('Đã làm mới danh sách người dùng');
     });
   }
 
@@ -308,27 +353,18 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast('Đã tải xuống file Excel danh sách người dùng');
     });
   }
-  // 6. Xử lý phân trang (Next / Prev / Page 1): Bấm là reload về lại trang 1
+
+  // 6. Xử lý phân trang (Chức năng fake: có animation giống làm mới)
   const prevPageBtn = document.getElementById('prev-page-btn');
   const nextPageBtn = document.getElementById('next-page-btn');
   const pageBtns = document.querySelectorAll('.pagination-btns .page-btn');
-
-  function reloadA02Page1(label) {
-    if (tableBody) {
-      tableBody.style.transition = 'opacity 200ms ease';
-      tableBody.style.opacity = '0.35';
-    }
-    setTimeout(() => {
-      window.location.reload();
-    }, 150);
-  }
 
   if (prevPageBtn) {
     prevPageBtn.removeAttribute('disabled');
     prevPageBtn.style.cursor = 'pointer';
     prevPageBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      reloadA02Page1('Trang trước');
+      triggerTableAnimation();
     });
   }
 
@@ -337,14 +373,15 @@ document.addEventListener('DOMContentLoaded', () => {
     nextPageBtn.style.cursor = 'pointer';
     nextPageBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      reloadA02Page1('Trang sau');
+      triggerTableAnimation();
     });
   }
 
   pageBtns.forEach(btn => {
+    btn.style.cursor = 'pointer';
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      reloadA02Page1(`Trang ${btn.textContent.trim()}`);
+      triggerTableAnimation();
     });
   });
 

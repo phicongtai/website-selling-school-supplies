@@ -49,13 +49,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 confirmButton.addEventListener("click", () => {
-  const soldCount = Number(document.querySelector(".sold-count strong").textContent);
-  if (soldCount !== 0) {
-    pageMessage.textContent = "Không thể xóa sản phẩm đã phát sinh đơn hàng.";
-    return;
-  }
-
-  productRow.remove();
+  // Chức năng xóa giả lập: Đóng hộp thoại, giữ nguyên dòng sản phẩm
   backdrop.hidden = true;
   pageMessage.textContent = "Sản phẩm SP48 đã được xóa khỏi danh sách trên trang này.";
 });

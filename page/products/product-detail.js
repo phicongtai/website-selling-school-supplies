@@ -117,9 +117,17 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("addToCart").addEventListener("click", () => {
     const amount = getQuantity();
     if (amount !== null) {
-      // Giỏ hàng CỐ ĐỊNH: cart.js chặn thêm mới và tự hiện toast thông báo.
       if (window.StoreCart) window.StoreCart.add(product.id, amount);
-      notice.textContent = "Đã thêm sản phẩm vào giỏ hàng!";
+      const isLoggedIn = window.StoreCart && typeof window.StoreCart.isLoggedIn === 'function' ? window.StoreCart.isLoggedIn() : false;
+      if (notice) {
+        if (isLoggedIn) {
+          notice.textContent = "Đã thêm sản phẩm vào giỏ hàng!";
+          notice.style.color = "var(--color-primary-700)";
+        } else {
+          notice.textContent = "Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!";
+          notice.style.color = "#dc2626";
+        }
+      }
     }
   });
 

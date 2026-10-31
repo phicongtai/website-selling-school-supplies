@@ -137,19 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
     const selectedStatus = statusFilter ? statusFilter.value : 'all';
 
-    const filtered = usersData.filter(user => {
-      const matchSearch =
-        user.code.toLowerCase().includes(searchTerm) ||
-        user.name.toLowerCase().includes(searchTerm) ||
-        user.username.toLowerCase().includes(searchTerm) ||
-        user.email.toLowerCase().includes(searchTerm) ||
-        user.phone.toLowerCase().includes(searchTerm);
-
-      const matchStatus =
-        selectedStatus === 'all' || user.status === selectedStatus;
-
-      return matchSearch && matchStatus;
-    });
+    // Chức năng Tìm kiếm & Lọc là mô phỏng giao diện tượng trưng — luôn hiển thị đầy đủ danh sách
+    const filtered = usersData;
 
     if (!tbody) return;
     tbody.innerHTML = '';
@@ -274,102 +263,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3200);
   }
 
-  // 8. Submit Form Thêm Người Dùng: LƯU TẠM THỜI VÀ TRẢ VỀ TRANG A02
+  // 8. Submit Form Thêm Người Dùng: Mô phỏng giao diện (Chức năng giả, không thêm vào danh sách)
   if (formAddUser) {
     formAddUser.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      let isValid = true;
-      document.querySelectorAll('.modal-field').forEach(f => f.classList.remove('has-error'));
-
-      const username = modalUsername ? modalUsername.value.trim() : '';
-      if (!username || username.length < 4) {
-        const field = document.getElementById('field-username');
-        if (field) field.classList.add('has-error');
-        isValid = false;
+      // Mô phỏng giao diện: Khi ấn Thêm người dùng, không thêm dữ liệu thực tế vào bảng
+      // Bảng danh sách người dùng giữ nguyên vẹn 8 tài khoản gốc
+      if (modalA03) {
+        modalA03.classList.remove('open');
       }
 
-      // Kiểm tra trùng username
-      if (usersData.some(u => (u.username || '').toLowerCase() === username.toLowerCase())) {
-        const errEl = document.getElementById('err-username');
-        if (errEl) errEl.textContent = 'Tên đăng nhập đã tồn tại trong hệ thống';
-        const field = document.getElementById('field-username');
-        if (field) field.classList.add('has-error');
-        isValid = false;
-      }
-
-      const fullname = modalFullname ? modalFullname.value.trim() : '';
-      if (!fullname) {
-        const field = document.getElementById('field-fullname');
-        if (field) field.classList.add('has-error');
-        isValid = false;
-      }
-
-      const email = modalEmail ? modalEmail.value.trim() : '';
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!email || !emailRegex.test(email)) {
-        const field = document.getElementById('field-email');
-        if (field) field.classList.add('has-error');
-        isValid = false;
-      }
-
-      const phone = modalPhone ? modalPhone.value.trim().replace(/\s+/g, '') : '';
-      const phoneRegex = /^0\d{9}$/;
-      if (!phone || !phoneRegex.test(phone)) {
-        const field = document.getElementById('field-phone');
-        if (field) field.classList.add('has-error');
-        isValid = false;
-      }
-
-      const pwd = modalPassword ? modalPassword.value : '';
-      if (!pwd || pwd.length < 6) {
-        const field = document.getElementById('field-password');
-        if (field) field.classList.add('has-error');
-        isValid = false;
-      }
-
-      const confirmPwd = modalConfirmPassword ? modalConfirmPassword.value : '';
-      if (confirmPwd !== pwd) {
-        const field = document.getElementById('field-confirm-password');
-        if (field) field.classList.add('has-error');
-        isValid = false;
-      }
-
-      if (!isValid) {
-        showToast('Vui lòng kiểm tra và điền đầy đủ các thông tin bắt buộc', 'error');
-        return;
-      }
-
-      // Tạo người dùng mới
-      const avatarClasses = ['avatar-na', 'avatar-qb', 'avatar-ct', 'avatar-nh', 'avatar-gh', 'avatar-tt'];
-      const randomAvatarClass = avatarClasses[Math.floor(Math.random() * avatarClasses.length)];
-
-      const newUser = {
-        code: modalUserCode ? modalUserCode.value.trim().toUpperCase() : calculateNextCode(),
-        name: fullname,
-        username: username.toLowerCase(),
-        email: email,
-        phone: modalPhone ? modalPhone.value.trim() : phone,
-        role: modalRole ? modalRole.value : 'customer',
-        status: modalStatus ? modalStatus.value : 'active',
-        avatar: getInitials(fullname),
-        avatarClass: randomAvatarClass,
-        createdAt: new Date().toISOString()
-      };
-
-      // Đưa lên đầu danh sách hiển thị
-      usersData.unshift(newUser);
-
-      // Lưu tạm thời cho phiên làm việc để A02 hiển thị
-      sessionStorage.setItem('hd_temp_users', JSON.stringify(usersData));
-
-      // Lưu thông báo thành công cho A02
-      sessionStorage.setItem('hd_toast_message', JSON.stringify({
-        text: `Đã thêm thành công người dùng ${fullname} (${newUser.code})!`,
-        type: 'success'
-      }));
-
-      // Thoát và trả về trang A02
+      // Đóng modal và chuyển về trang A02 mà không lưu người dùng mới
       returnToA02();
     });
   }
@@ -400,14 +305,84 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 10. Tìm kiếm & Lọc trên bảng
-  if (searchInput) searchInput.addEventListener('input', renderTable);
-  if (statusFilter) statusFilter.addEventListener('change', renderTable);
+  // 10. Tìm kiếm & Lọc trên bảng (Chức năng giả/mô phỏng: có animation nhưng không lọc dữ liệu)
+  let animTimer = null;
+  function triggerTableAnimation(callback) {
+    if (tbody) {
+      tbody.style.transition = 'opacity 0.22s ease, filter 0.22s ease';
+      tbody.style.opacity = '0.35';
+      tbody.style.filter = 'blur(0.6px)';
+    }
+    if (animTimer) clearTimeout(animTimer);
+    animTimer = setTimeout(() => {
+      if (tbody) {
+        tbody.style.opacity = '1';
+        tbody.style.filter = 'none';
+      }
+      if (typeof callback === 'function') callback();
+      renderTable();
+    }, 280);
+  }
+
+  function triggerSearchAnimation() {
+    const searchIconSvg = document.querySelector('.search-input-wrapper .search-icon svg');
+    if (searchIconSvg) {
+      searchIconSvg.style.transition = 'transform 0.35s ease';
+      searchIconSvg.style.transform = 'rotate(180deg)';
+    }
+    triggerTableAnimation(() => {
+      if (searchIconSvg) {
+        searchIconSvg.style.transform = 'rotate(0deg)';
+      }
+    });
+  }
+
+  let searchDebounce = null;
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      if (searchDebounce) clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(() => {
+        triggerSearchAnimation();
+      }, 200);
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (searchDebounce) clearTimeout(searchDebounce);
+        triggerSearchAnimation();
+      }
+    });
+  }
+
+  if (statusFilter) {
+    statusFilter.addEventListener('change', () => {
+      triggerTableAnimation();
+    });
+  }
+
   if (btnRefresh) {
     btnRefresh.addEventListener('click', () => {
       if (searchInput) searchInput.value = '';
       if (statusFilter) statusFilter.value = 'all';
-      renderTable();
+      try {
+        sessionStorage.removeItem('hd_temp_users');
+      } catch (e) {}
+      usersData = DEFAULT_USERS.map(u => ({ ...u }));
+      updateStats();
+
+      const refreshSvg = btnRefresh.querySelector('svg');
+      if (refreshSvg) {
+        refreshSvg.style.transition = 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)';
+        refreshSvg.style.transform = 'rotate(360deg)';
+      }
+
+      triggerTableAnimation(() => {
+        if (refreshSvg) {
+          refreshSvg.style.transition = 'none';
+          refreshSvg.style.transform = 'rotate(0deg)';
+        }
+      });
       showToast('Đã làm mới danh sách người dùng');
     });
   }
@@ -438,6 +413,37 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast('Đã tải xuống file Excel danh sách người dùng');
     });
   }
+
+  // Xử lý phân trang (Chức năng fake: có animation giống làm mới)
+  const prevPageBtn = document.getElementById('prev-page-btn');
+  const nextPageBtn = document.getElementById('next-page-btn');
+  const pageBtns = document.querySelectorAll('.pagination-btns .page-btn');
+
+  if (prevPageBtn) {
+    prevPageBtn.removeAttribute('disabled');
+    prevPageBtn.style.cursor = 'pointer';
+    prevPageBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      triggerTableAnimation();
+    });
+  }
+
+  if (nextPageBtn) {
+    nextPageBtn.removeAttribute('disabled');
+    nextPageBtn.style.cursor = 'pointer';
+    nextPageBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      triggerTableAnimation();
+    });
+  }
+
+  pageBtns.forEach(btn => {
+    btn.style.cursor = 'pointer';
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      triggerTableAnimation();
+    });
+  });
 });
 
 // Xử lý đăng xuất an toàn

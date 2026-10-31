@@ -384,22 +384,8 @@ document.addEventListener('DOMContentLoaded', () => {
         grades: selectedGrades
       };
 
-      // Thêm vào đầu danh sách (Unshift) để sản phẩm mới nổi bật ngay dòng đầu tiên
-      const currentList = getProductList();
-      currentList.unshift(newProduct);
-
-      // Lưu lại vào sessionStorage để A05 tự động hiển thị
-      try {
-        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(currentList));
-        sessionStorage.setItem('hocduong_admin_toast', JSON.stringify({
-          title: 'Thêm sản phẩm thành công',
-          desc: `Mặt hàng [${proposedCode}] ${name} đã được thêm vào hệ thống.`
-        }));
-      } catch (err) {
-        console.error('Không thể lưu sản phẩm vào sessionStorage:', err);
-      }
-
-      // Trở về ngay trang danh sách A05
+      // Mô phỏng giao diện: Khi ấn Thêm sản phẩm, không thêm dữ liệu thực tế vào bảng
+      // Bảng danh sách sản phẩm bên ngoài giữ nguyên vẹn các sản phẩm gốc
       window.location.href = '../A05 Quản lý sản phẩm/index.html';
     });
   }

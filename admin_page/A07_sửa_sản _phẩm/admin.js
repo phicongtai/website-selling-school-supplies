@@ -484,32 +484,8 @@ document.addEventListener('DOMContentLoaded', () => {
         iconType = 'palette';
       }
 
-      // Cập nhật sản phẩm trực tiếp vào productList
-      product.name = name;
-      product.category = category;
-      product.stock = stock;
-      product.price = price;
-      product.sku = sku;
-      product.description = description;
-      product.brand = brand;
-      product.unit = unit;
-      product.grades = selectedGrades;
-      product.status = status;
-      product.image = currentImageUrl;
-      product.iconType = iconType;
-
-      // Lưu lại vào sessionStorage để A05 tự động hiển thị dữ liệu đã sửa
-      try {
-        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(productList));
-        sessionStorage.setItem('hocduong_admin_toast', JSON.stringify({
-          title: 'Cập nhật thành công',
-          desc: `Đã cập nhật thông tin sản phẩm [${product.code}] ${name} thành công.`
-        }));
-      } catch (err) {
-        console.error('Không thể lưu thay đổi vào sessionStorage:', err);
-      }
-
-      // Trở về ngay trang danh sách A05
+      // Mô phỏng giao diện: Khi ấn Lưu thay đổi, không sửa đổi dữ liệu thực tế bên ngoài
+      // Dữ liệu bảng bên ngoài giữ nguyên hoàn toàn
       window.location.href = '../A05 Quản lý sản phẩm/index.html';
     });
   }

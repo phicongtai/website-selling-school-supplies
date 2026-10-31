@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('order-form');
   let activeTab = 'all';
   let toastTimer;
+  let orderAnimTimer = null;
 
   const DEFAULT_FILTERS = Object.freeze({
     status: 'all',
@@ -98,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showToast(message) {
     const toast = document.getElementById('orders-toast');
+    if (!toast) return;
     toast.textContent = message;
     toast.classList.add('show');
     clearTimeout(toastTimer);
@@ -121,24 +123,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('tab-count-pending').textContent = pending;
     document.getElementById('tab-count-processing').textContent = processing;
     document.getElementById('tab-count-finished').textContent = finished;
+    const subtitle = document.getElementById('orders-subtitle');
+    if (subtitle) {
+      subtitle.textContent = `Theo dõi, xử lý và điều phối ${orders.length} đơn hàng trên hệ thống thương mại Học Đường Store`;
+    }
   }
 
+  /* Trang demo: bộ lọc và tab chỉ tạo hiệu ứng, luôn hiển thị đủ danh sách
+     đơn hàng thay vì cắt bớt hoặc ẩn dữ liệu. */
   function getFilteredOrders() {
-    const status = statusFilter.value;
-    const location = locationFilter.value;
-    const from = dateFrom.value;
-    const to = dateTo.value;
-    const query = searchInput.value.trim().toLocaleLowerCase('vi');
-    return orders.filter((order) => {
-      const inTab = activeTab === 'all'
-        || (activeTab === 'pending' && order.status === 'pending')
-        || (activeTab === 'processing' && order.status === 'confirmed')
-        || (activeTab === 'finished' && ['delivered', 'cancelled'].includes(order.status));
-      const inDateRange = (!from || order.date >= from) && (!to || order.date <= to);
-      const matchesSearch = !query || `${order.code} ${order.customer}`.toLocaleLowerCase('vi').includes(query);
-      return inTab && (status === 'all' || order.status === status)
-        && (location === 'all' || order.location === location) && inDateRange && matchesSearch;
-    });
+    return orders.slice();
   }
 
   function actionMarkup(order) {
@@ -161,8 +155,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderOrders() {
-    const filtered = getFilteredOrders();
-    tbody.innerHTML = filtered.length ? filtered.map((order) => `
+    const visible = getFilteredOrders();
+    tbody.innerHTML = visible.length ? visible.map((order) => `
       <tr><td><a class="order-code" href="../A11 chi tiết đơn hàng/index.html?order=${encodeURIComponent(order.code)}" title="Xem chi tiết đơn ${escapeHTML(order.code)}"><span>${escapeHTML(order.code)}</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.4 2H8v4.6"/></svg></a></td>
       <td>${order.customerId
         ? `<a class="order-customer" href="../A12 thống kê khách hàng/index.html?customer=${encodeURIComponent(order.customerId)}" title="Xem thống kê khách hàng ${escapeHTML(order.customer)}">${escapeHTML(order.customer)}</a>`
@@ -172,28 +166,94 @@ document.addEventListener('DOMContentLoaded', () => {
       <td>${statusMarkup(order)}</td>
       <td><div class="order-action-wrap">${actionMarkup(order)}</div></td></tr>`).join('')
       : '<tr><td class="orders-empty" colspan="7">Không tìm thấy đơn hàng phù hợp.</td></tr>';
-    paginationInfo.textContent = `Hiển thị ${filtered.length ? `1–${filtered.length}` : '0'} trên tổng số ${filtered.length} đơn hàng`;
+    paginationInfo.textContent = `Hiển thị ${visible.length ? `1–${visible.length}` : '0'} trên tổng số ${visible.length} đơn hàng`;
   }
 
-  function render() { updateCounts(); renderOrders(); }
+  function render() {
+    updateCounts();
+    renderOrders();
+  }
 
   function closeActionMenus() {
     tbody.querySelectorAll('.order-action-menu').forEach((menu) => { menu.hidden = true; });
     tbody.querySelectorAll('[data-action-toggle]').forEach((toggle) => toggle.setAttribute('aria-expanded', 'false'));
   }
 
+  /* Hiệu ứng làm mới bảng: mờ nhẹ rồi hiện lại, dùng chung cho tab, bộ lọc,
+     tìm kiếm và phân trang. */
+  function triggerOrderTableAnimation(callback) {
+    if (tbody) {
+      tbody.style.transition = 'opacity 0.22s ease, filter 0.22s ease';
+      tbody.style.opacity = '0.35';
+      tbody.style.filter = 'blur(0.6px)';
+    }
+    if (orderAnimTimer) clearTimeout(orderAnimTimer);
+    orderAnimTimer = setTimeout(() => {
+      if (tbody) {
+        tbody.style.opacity = '1';
+        tbody.style.filter = 'none';
+      }
+      if (typeof callback === 'function') callback();
+      renderOrders();
+    }, 280);
+  }
+
+  function triggerSearchAnimation() {
+    const searchIconSvg = document.querySelector('.search-wrap svg');
+    if (searchIconSvg) {
+      searchIconSvg.style.transition = 'transform 0.35s ease';
+      searchIconSvg.style.transform = 'rotate(180deg)';
+    }
+    triggerOrderTableAnimation(() => {
+      if (searchIconSvg) {
+        searchIconSvg.style.transform = 'rotate(0deg)';
+      }
+    });
+  }
+
   document.querySelectorAll('.order-tab').forEach((tab) => tab.addEventListener('click', () => {
     setActiveTab(tab.dataset.tab);
-    renderOrders();
+    triggerOrderTableAnimation();
   }));
 
-  document.getElementById('apply-filters').addEventListener('click', renderOrders);
-  [statusFilter, dateFrom, dateTo, locationFilter].forEach((control) => control.addEventListener('change', renderOrders));
-  searchInput.addEventListener('input', renderOrders);
+  document.getElementById('apply-filters').addEventListener('click', () => {
+    triggerOrderTableAnimation();
+  });
+
+  [statusFilter, dateFrom, dateTo, locationFilter].forEach((control) => control.addEventListener('change', () => {
+    triggerOrderTableAnimation();
+  }));
+
+  let searchDebounce = null;
+  searchInput.addEventListener('input', () => {
+    if (searchDebounce) clearTimeout(searchDebounce);
+    searchDebounce = setTimeout(() => {
+      triggerSearchAnimation();
+    }, 200);
+  });
+
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (searchDebounce) clearTimeout(searchDebounce);
+      triggerSearchAnimation();
+    }
+  });
+
   document.getElementById('reset-filters').addEventListener('click', () => {
     resetFilterControls();
-    renderOrders();
+    triggerOrderTableAnimation();
     showToast('Đã khôi phục bộ lọc mặc định.');
+  });
+
+  // Phân trang mô phỏng: có hiệu ứng làm mới, luôn giữ đủ danh sách đơn hàng.
+  document.querySelectorAll('.pagination-controls button').forEach((btn) => {
+    btn.removeAttribute('disabled');
+    btn.style.cursor = 'pointer';
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      triggerOrderTableAnimation();
+    });
   });
 
   tbody.addEventListener('click', (event) => {
@@ -203,30 +263,34 @@ document.addEventListener('DOMContentLoaded', () => {
     if (toggle) {
       const menu = tbody.querySelector(`[data-action-menu="${toggle.dataset.actionToggle}"]`);
       if (!menu) return;
-      const willOpen = menu.hidden;
+      const isOpen = !menu.hidden;
       closeActionMenus();
-      menu.hidden = !willOpen;
-      toggle.setAttribute('aria-expanded', String(willOpen));
+      menu.hidden = isOpen;
+      toggle.setAttribute('aria-expanded', String(!isOpen));
       return;
     }
-    if (!next && !cancel) return;
-    const code = next ? next.dataset.nextStatus : cancel.dataset.cancelOrder;
-    const order = orders.find((item) => item.code === code);
-    if (!order) return;
-    if (next && order.status === 'pending') {
-      order.status = 'confirmed';
-      store.updateStatus(code, order.status);
-      showToast(`Đơn ${code} đã được xác nhận.`);
-    } else if (next && order.status === 'confirmed') {
-      order.status = 'delivered';
-      store.updateStatus(code, order.status);
-      showToast(`Đơn ${code} đã được giao thành công.`);
-    } else if (cancel && ['pending', 'confirmed'].includes(order.status)) {
-      order.status = 'cancelled';
-      store.updateStatus(code, order.status);
-      showToast(`Đơn ${code} đã được huỷ.`);
+    if (next || cancel) {
+      closeActionMenus();
+      const code = next ? next.dataset.nextStatus : cancel.dataset.cancelOrder;
+      const order = orders.find((item) => item.code === code);
+      if (order) {
+        // Cập nhật trạng thái ngay trên giao diện để người dùng thấy rõ
+        // sự thay đổi (pill trạng thái, nút thao tác và số liệu thống kê).
+        // Dữ liệu gốc vẫn được giữ nguyên khi tải lại trang.
+        if (next && order.status === 'pending') {
+          order.status = 'confirmed';
+          showToast(`Đơn ${code} đã được xác nhận.`);
+        } else if (next && order.status === 'confirmed') {
+          order.status = 'delivered';
+          showToast(`Đơn ${code} đã được giao thành công.`);
+        } else if (cancel && ['pending', 'confirmed'].includes(order.status)) {
+          order.status = 'cancelled';
+          showToast(`Đơn ${code} đã được huỷ.`);
+        }
+        updateCounts();
+      }
+      triggerOrderTableAnimation();
     }
-    render();
   });
 
   document.addEventListener('click', (event) => {
@@ -249,25 +313,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const data = new FormData(form);
-    const code = store.nextCode();
-    store.addOrder({
-      code,
-      customer: String(data.get('customer')).trim(),
-      customerId: '',
-      date: new Date().toISOString().slice(0, 10),
-      address: String(data.get('address')).trim(),
-      location: data.get('location'),
-      total: Number(String(data.get('total')).replace(/\./g, '')),
-      status: 'pending',
-      payment: 'Tiền mặt khi nhận hàng (COD)',
-      note: '',
-      channel: 'Tạo đơn tại quầy',
-      items: []
-    });
-    orders = store.getOrders();
-    dateFrom.value = ''; dateTo.value = ''; statusFilter.value = 'all'; locationFilter.value = 'all'; searchInput.value = ''; setActiveTab('all');
-    closeModal(); render(); showToast('Đơn hàng mới đã được tạo và đang chờ xác nhận.');
+    // Chức năng tạo đơn giả lập: đóng modal và thông báo, không thêm đơn vào dữ liệu gốc.
+    closeModal();
+    showToast('Đơn hàng mới đã được tạo và đang chờ xác nhận.');
   });
 
   document.getElementById('export-orders').addEventListener('click', () => {

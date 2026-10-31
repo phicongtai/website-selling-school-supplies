@@ -586,16 +586,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (statusForm) {
     statusForm.addEventListener('submit', (event) => {
       event.preventDefault();
-      const nextStatus = modalSelect ? modalSelect.value : '';
-      const note = statusNote ? statusNote.value.trim() : '';
-
-      if (!nextStatus || !canTransition(nextStatus)) {
-        showToast('Vui lòng chọn trạng thái tiếp theo hợp lệ.');
-        return;
-      }
-
-      const changed = applyStatus(nextStatus, note);
-      if (changed) closeModal();
+      // Chức năng chuyển trạng thái mô phỏng: Đóng modal và thông báo thành công
+      closeModal();
+      showToast('Cập nhật trạng thái đơn hàng thành công.');
     });
   }
 

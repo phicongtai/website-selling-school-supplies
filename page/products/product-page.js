@@ -43,8 +43,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const amount = getQuantity();
     if (amount === null) return;
     // Giỏ hàng CỐ ĐỊNH: cart.js chặn thêm mới và tự hiện toast thông báo.
-    if (window.StoreCart) window.StoreCart.add(productId, amount);
-    if (notice) notice.textContent = 'Đã thêm sản phẩm vào giỏ hàng!';
+    const added = window.StoreCart ? window.StoreCart.add(productId, amount) : null;
+    const isLoggedIn = window.StoreCart && typeof window.StoreCart.isLoggedIn === 'function' ? window.StoreCart.isLoggedIn() : false;
+    if (notice) {
+      if (isLoggedIn) {
+        notice.textContent = 'Đã thêm sản phẩm vào giỏ hàng!';
+        notice.style.color = 'var(--color-primary-700)';
+      } else {
+        notice.textContent = 'Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!';
+        notice.style.color = '#dc2626';
+      }
+    }
   });
 
   document.getElementById('buyNow')?.addEventListener('click', () => {

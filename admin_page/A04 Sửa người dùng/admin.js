@@ -143,19 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
     const selectedStatus = statusFilter ? statusFilter.value : 'all';
 
-    const filtered = usersData.filter(user => {
-      const matchSearch =
-        user.code.toLowerCase().includes(searchTerm) ||
-        user.name.toLowerCase().includes(searchTerm) ||
-        user.username.toLowerCase().includes(searchTerm) ||
-        user.email.toLowerCase().includes(searchTerm) ||
-        user.phone.toLowerCase().includes(searchTerm);
-
-      const matchStatus =
-        selectedStatus === 'all' || user.status === selectedStatus;
-
-      return matchSearch && matchStatus;
-    });
+    // Chức năng Tìm kiếm & Lọc là mô phỏng giao diện tượng trưng — luôn hiển thị đầy đủ danh sách
+    const filtered = usersData;
 
     if (!tbody) return;
     tbody.innerHTML = '';
@@ -288,69 +277,13 @@ document.addEventListener('DOMContentLoaded', () => {
     formEditUser.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      let isValid = true;
-      document.querySelectorAll('.modal-field').forEach(f => f.classList.remove('has-error'));
-
-      const fullname = modalFullname ? modalFullname.value.trim() : '';
-      if (!fullname) {
-        const field = document.getElementById('field-fullname');
-        if (field) field.classList.add('has-error');
-        isValid = false;
+      // Mô phỏng giao diện: Khi ấn Cập nhật thông tin, không sửa đổi dữ liệu thực tế bên ngoài.
+      // Dữ liệu bảng bên ngoài giữ nguyên hoàn toàn.
+      if (modalA04) {
+        modalA04.classList.remove('open');
       }
 
-      const email = modalEmail ? modalEmail.value.trim() : '';
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!email || !emailRegex.test(email)) {
-        const field = document.getElementById('field-email');
-        if (field) field.classList.add('has-error');
-        isValid = false;
-      }
-
-      const phone = modalPhone ? modalPhone.value.trim().replace(/\s+/g, '') : '';
-      const phoneRegex = /^0\d{9}$/;
-      if (!phone || !phoneRegex.test(phone)) {
-        const field = document.getElementById('field-phone');
-        if (field) field.classList.add('has-error');
-        isValid = false;
-      }
-
-      const pwd = modalPassword ? modalPassword.value : '';
-      if (pwd && pwd.length < 6) {
-        const field = document.getElementById('field-password');
-        if (field) field.classList.add('has-error');
-        isValid = false;
-      }
-
-      if (!isValid) {
-        showToast('Vui lòng kiểm tra và điền đầy đủ các thông tin bắt buộc', 'error');
-        return;
-      }
-
-      // Cập nhật thông tin người dùng
-      const newPhoneFormatted = modalPhone ? modalPhone.value.trim() : phone;
-      currentUser.name = fullname;
-      currentUser.email = email;
-      currentUser.phone = newPhoneFormatted;
-      currentUser.role = modalRole ? modalRole.value : 'customer';
-      currentUser.status = modalStatus ? modalStatus.value : 'active';
-      currentUser.avatar = getInitials(fullname);
-
-      // Cập nhật vào mảng hiển thị
-      const idx = usersData.findIndex(u => (u.code || '').toUpperCase() === currentUser.code.toUpperCase());
-      if (idx !== -1) {
-        usersData[idx] = { ...currentUser };
-      }
-
-      // Lưu tạm thời cho phiên làm việc để A02 hiển thị số mới
-      sessionStorage.setItem('hd_temp_users', JSON.stringify(usersData));
-
-      // Lưu thông báo thành công cho A02
-      sessionStorage.setItem('hd_toast_message', JSON.stringify({
-        text: `Đã cập nhật thông tin người dùng ${fullname} (${currentUser.code}) thành công!`,
-        type: 'success'
-      }));
-
-      // Thoát và trả về trang A02
+      // Đóng modal và chuyển về trang A02 mà không lưu thay đổi vào danh sách
       returnToA02();
     });
   }
@@ -401,14 +334,84 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 11. Tìm kiếm & Lọc trên bảng
-  if (searchInput) searchInput.addEventListener('input', renderTable);
-  if (statusFilter) statusFilter.addEventListener('change', renderTable);
+  // 11. Tìm kiếm & Lọc trên bảng (Chức năng giả/mô phỏng: có animation nhưng không lọc dữ liệu)
+  let animTimer = null;
+  function triggerTableAnimation(callback) {
+    if (tbody) {
+      tbody.style.transition = 'opacity 0.22s ease, filter 0.22s ease';
+      tbody.style.opacity = '0.35';
+      tbody.style.filter = 'blur(0.6px)';
+    }
+    if (animTimer) clearTimeout(animTimer);
+    animTimer = setTimeout(() => {
+      if (tbody) {
+        tbody.style.opacity = '1';
+        tbody.style.filter = 'none';
+      }
+      if (typeof callback === 'function') callback();
+      renderTable();
+    }, 280);
+  }
+
+  function triggerSearchAnimation() {
+    const searchIconSvg = document.querySelector('.search-input-wrapper .search-icon svg');
+    if (searchIconSvg) {
+      searchIconSvg.style.transition = 'transform 0.35s ease';
+      searchIconSvg.style.transform = 'rotate(180deg)';
+    }
+    triggerTableAnimation(() => {
+      if (searchIconSvg) {
+        searchIconSvg.style.transform = 'rotate(0deg)';
+      }
+    });
+  }
+
+  let searchDebounce = null;
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      if (searchDebounce) clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(() => {
+        triggerSearchAnimation();
+      }, 200);
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (searchDebounce) clearTimeout(searchDebounce);
+        triggerSearchAnimation();
+      }
+    });
+  }
+
+  if (statusFilter) {
+    statusFilter.addEventListener('change', () => {
+      triggerTableAnimation();
+    });
+  }
+
   if (btnRefresh) {
     btnRefresh.addEventListener('click', () => {
       if (searchInput) searchInput.value = '';
       if (statusFilter) statusFilter.value = 'all';
-      renderTable();
+      try {
+        sessionStorage.removeItem('hd_temp_users');
+      } catch (e) {}
+      usersData = DEFAULT_USERS.map(u => ({ ...u }));
+      updateStats();
+
+      const refreshSvg = btnRefresh.querySelector('svg');
+      if (refreshSvg) {
+        refreshSvg.style.transition = 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)';
+        refreshSvg.style.transform = 'rotate(360deg)';
+      }
+
+      triggerTableAnimation(() => {
+        if (refreshSvg) {
+          refreshSvg.style.transition = 'none';
+          refreshSvg.style.transform = 'rotate(0deg)';
+        }
+      });
       showToast('Đã làm mới danh sách người dùng');
     });
   }
@@ -439,6 +442,37 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast('Đã tải xuống file Excel danh sách người dùng');
     });
   }
+
+  // Xử lý phân trang (Chức năng fake: có animation giống làm mới)
+  const prevPageBtn = document.getElementById('prev-page-btn');
+  const nextPageBtn = document.getElementById('next-page-btn');
+  const pageBtns = document.querySelectorAll('.pagination-btns .page-btn');
+
+  if (prevPageBtn) {
+    prevPageBtn.removeAttribute('disabled');
+    prevPageBtn.style.cursor = 'pointer';
+    prevPageBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      triggerTableAnimation();
+    });
+  }
+
+  if (nextPageBtn) {
+    nextPageBtn.removeAttribute('disabled');
+    nextPageBtn.style.cursor = 'pointer';
+    nextPageBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      triggerTableAnimation();
+    });
+  }
+
+  pageBtns.forEach(btn => {
+    btn.style.cursor = 'pointer';
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      triggerTableAnimation();
+    });
+  });
 });
 
 // Xử lý đăng xuất an toàn

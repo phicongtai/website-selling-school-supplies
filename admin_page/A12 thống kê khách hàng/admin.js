@@ -371,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }));
 
         const orders = [...seeded, ...liveOrdersFor(customer, knownCodes)]
-          .filter((order) => order.status === 'delivered' && isInRange(order.date))
+          .filter((order) => order.status === 'delivered')
           .sort((a, b) => toTimestamp(a.date) - toTimestamp(b.date));
 
         const total = orders.reduce((sum, order) => sum + order.total, 0);
@@ -605,12 +605,23 @@ document.addEventListener('DOMContentLoaded', () => {
     state.from = from;
     state.to = to;
 
-    // Sau khi lọc, mở sẵn chi tiết của 2 khách hàng đứng đầu.
-    const report = buildReport();
-    state.expanded = new Set(report.visibleRanking.slice(0, 2).map((customer) => customer.id));
+    // Hiệu ứng chuyển cảnh mô phỏng mượt mà (fade + blur) giống làm mới
+    if (customerList) {
+      customerList.style.transition = 'opacity 0.22s ease, filter 0.22s ease';
+      customerList.style.opacity = '0.35';
+      customerList.style.filter = 'blur(0.6px)';
+    }
 
-    renderAll();
-    showToast(`Đã áp dụng bộ lọc từ ${formatDateVN(from)} đến ${formatDateVN(to)}.`);
+    setTimeout(() => {
+      if (customerList) {
+        customerList.style.opacity = '1';
+        customerList.style.filter = 'none';
+      }
+      const report = buildReport();
+      state.expanded = new Set(report.visibleRanking.slice(0, 2).map((customer) => customer.id));
+      renderAll();
+      showToast(`Đã áp dụng bộ lọc từ ${formatDateVN(from)} đến ${formatDateVN(to)}.`);
+    }, 280);
   }
 
   if (applyFilterBtn) {
