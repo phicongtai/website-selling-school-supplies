@@ -37,7 +37,7 @@
   const CUSTOMERS = {
     KH001: {
       id: 'KH001', name: 'Nguyễn Minh Anh', initials: 'NA', avatarClass: 'av-blue',
-      email: 'minhanh@email.com', phone: '0901 234 567', city: 'TP. Hồ Chí Minh',
+      email: 'minhanh@email.com', phone: '0912 234 567', city: 'TP. Hồ Chí Minh',
       membership: 'Thành viên thân thiết', accountType: 'Khách hàng học sinh - Hoạt động'
     },
     KH002: {
@@ -74,13 +74,14 @@
   const BASE_ORDERS = [
     {
       code: 'DH1001', customerId: 'KH001', customer: 'Nguyễn Minh Anh', email: 'minhanh@email.com',
-      phone: '0901 234 567', date: '2026-10-02', createdAt: '02/10/2026 · 09:15', createdTime: '09:15',
+      phone: '0912 234 567', date: '2026-10-02', createdAt: '02/10/2026 · 09:15', createdTime: '09:15',
       status: 'delivered', total: 479000, address: 'Quận 1, TP. Hồ Chí Minh', location: 'Hồ Chí Minh',
       payment: 'Tiền mặt khi nhận hàng (COD)', note: 'Giao giờ hành chính, gọi trước khi đến.',
       channel: 'Storefront Học Sinh',
       items: [
-        item('SP10', 'Hộp bút chì màu 36 màu', 'Dụng cụ vẽ & mỹ thuật', 159000, 1, IMAGES.art),
-        item('SP02', 'Bộ sách tham khảo lớp 10', 'Sách & vở', 320000, 1, IMAGES.book)
+        item('CB01', 'Balo học sinh chống thấm', 'Cặp & balo', 289000, 1, IMAGES.backpack),
+        item('MT01', 'Bộ bút chì màu 48 màu cao cấp', 'Dụng cụ vẽ & mỹ thuật', 145000, 1, IMAGES.art),
+        item('DC02', 'Hộp bút học sinh đa năng', 'Dụng cụ học tập', 45000, 1, IMAGES.pen)
       ]
     },
     {
@@ -108,14 +109,13 @@
     },
     {
       code: 'DH1004', customerId: 'KH001', customer: 'Nguyễn Minh Anh', email: 'minhanh@email.com',
-      phone: '0901 234 567', date: '2026-10-05', createdAt: '05/10/2026 · 08:05', createdTime: '08:05',
+      phone: '0912 234 567', date: '2026-10-05', createdAt: '05/10/2026 · 08:05', createdTime: '08:05',
       status: 'delivered', total: 304000, address: 'TP. Thủ Đức, TP. Hồ Chí Minh', location: 'Hồ Chí Minh',
       payment: 'Chuyển khoản ngân hàng', note: 'Giao tại sảnh chung cư.',
       channel: 'Storefront Học Sinh',
       items: [
-        item('SP11', 'Bộ sách bài tập bổ trợ', 'Sách & vở', 165000, 1, IMAGES.book),
-        item('SP08', 'Vở ô ly nâng cao 200 trang', 'Sách & vở', 84000, 1, IMAGES.notebook),
-        item('SP04', 'Bộ bút bi Thiên Long', 'Bút viết', 55000, 1, IMAGES.pen)
+        item('CB08', 'Cặp đeo chéo đựng tài liệu', 'Cặp & balo', 159000, 1, IMAGES.backpack),
+        item('MT01', 'Bộ bút chì màu 48 màu cao cấp', 'Dụng cụ vẽ & mỹ thuật', 145000, 1, IMAGES.art)
       ]
     },
     {

@@ -206,20 +206,20 @@
      ----------------------------------------------------------------------- */
   const DEMO_ORDERS = [
     {
-      code: 'HD1011064',
-      status: 'shipping',
-      statusLabel: 'Đang giao',
-      date: '09/01/2026',
-      items: [{ id: 32, quantity: 1 }, { id: 31, quantity: 1 }],
-      eta: '12/01/2026'
-    },
-    {
-      code: 'HD1011001',
+      code: 'DH1004',
       status: 'completed',
       statusLabel: 'Hoàn thành',
-      date: '28/12/2025',
-      items: [{ id: 24, quantity: 1 }, { id: 32, quantity: 1 }, { id: 13, quantity: 1 }, { id: 47, quantity: 1 }],
-      eta: '31/12/2025',
+      date: '05/10/2026',
+      items: [{ id: 31, quantity: 1 }, { id: 32, quantity: 1 }],
+      eta: '05/10/2026'
+    },
+    {
+      code: 'DH1001',
+      status: 'completed',
+      statusLabel: 'Hoàn thành',
+      date: '02/10/2026',
+      items: [{ id: 24, quantity: 1 }, { id: 32, quantity: 1 }, { id: 48, quantity: 1 }],
+      eta: '02/10/2026',
       collapsed: true
     }
   ];

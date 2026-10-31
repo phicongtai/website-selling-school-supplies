@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
       initials: 'NA',
       avatarClass: 'av-blue',
       email: 'minhanh@email.com',
-      phone: '0901 234 567',
+      phone: '0912 234 567',
       city: 'TP. Hồ Chí Minh',
       orders: [
         {
@@ -113,8 +113,9 @@ document.addEventListener('DOMContentLoaded', () => {
           status: 'delivered',
           total: 479000,
           products: [
-            { name: 'Hộp bút chì màu 36 màu', code: 'SP10' },
-            { name: 'Bộ sách tham khảo lớp 10', code: 'SP02' }
+            { name: 'Balo học sinh chống thấm', code: 'CB01' },
+            { name: 'Bộ bút chì màu 48 màu cao cấp', code: 'MT01' },
+            { name: 'Hộp bút học sinh đa năng', code: 'DC02' }
           ]
         },
         {
@@ -123,8 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
           status: 'delivered',
           total: 304000,
           products: [
-            { name: 'Vở ô ly nâng cao 200 trang', code: 'SP08' },
-            { name: 'Bộ bút bi Thiên Long', code: 'SP04' }
+            { name: 'Cặp đeo chéo đựng tài liệu', code: 'CB08' },
+            { name: 'Bộ bút chì màu 48 màu cao cấp', code: 'MT01' }
           ]
         },
         {
