@@ -63,9 +63,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let usersData = loadCurrentUsers();
 
-  // 2. Xác định người dùng cần sửa từ URL query param (VD: ?code=U01 hoặc ?id=U01)
-  const urlParams = new URLSearchParams(window.location.search);
-  const targetCode = urlParams.get('code') || urlParams.get('id') || 'U01';
+  // 2. Xác định người dùng từ mã cố định trong HTML, tên file u01..u08 hoặc URL query param
+  let targetCode = '';
+  const modalCodeInput = document.getElementById('modal-user-code');
+  if (modalCodeInput && modalCodeInput.value) {
+    targetCode = modalCodeInput.value.trim().toUpperCase();
+  }
+  if (!targetCode) {
+    const pageMatch = window.location.pathname.match(/(u\d+)\.html/i);
+    if (pageMatch) targetCode = pageMatch[1].toUpperCase();
+  }
+  if (!targetCode) {
+    const urlParams = new URLSearchParams(window.location.search);
+    targetCode = urlParams.get('code') || urlParams.get('id') || 'U01';
+  }
 
   let currentUser = usersData.find(u => (u.code || '').toUpperCase() === targetCode.toUpperCase());
   if (!currentUser) {

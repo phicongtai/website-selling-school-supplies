@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </td>
         <td class="col-actions">
           <div class="action-buttons-wrap">
-            <a href="../A07_sửa_sản _phẩm/index.html?code=${encodeURIComponent(p.code)}" class="btn-table-icon btn-edit" title="Chỉnh sửa sản phẩm ${p.code}" aria-label="Chỉnh sửa sản phẩm ${p.code}">
+            <a href="../A07_sửa_sản _phẩm/${p.code.toLowerCase()}.html" class="btn-table-icon btn-edit" title="Chỉnh sửa sản phẩm ${p.code}" aria-label="Chỉnh sửa sản phẩm ${p.code}">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>

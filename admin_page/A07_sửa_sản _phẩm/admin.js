@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Set 10 Bút Gel Morandi Vintage Tone Pastel 0.5mm',
       category: 'Bút viết',
       price: 65000,
+      discount: 18,
       status: 'active',
       sold: 342,
       stock: 450,
@@ -23,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
       image: '../../assets/img/product-1.jpg',
       iconType: 'pen',
       sku: 'HD-PEN-001',
-      description: 'Set 10 bút gel màu Morandi cao cấp ngòi 0.5mm êm mượt, mực nhanh khô chống lem, thiết kế thân nhám cầm êm tay.',
+      description: '- Bút gel màu Morandi thanh lịch, ngòi 0.5mm êm ái, mau khô không lem giấy.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Morandi Stationery',
       unit: 'Hộp / Set',
       grades: ['Tiểu học', 'THCS', 'THPT', 'Đại học']
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Bút Máy Pilot Kakuno Ngòi F Nhật Bản',
       category: 'Bút viết',
       price: 195000,
+      discount: 10,
       status: 'active',
       sold: 156,
       stock: 120,
@@ -40,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
       image: '../../assets/img/product-2.jpg',
       iconType: 'pen',
       sku: 'HD-PEN-002',
-      description: 'Bút máy chính hãng Pilot Kakuno ngòi thép không gỉ cỡ F, thân bút công thái học hỗ trợ định hình tay cầm bút chuẩn.',
+      description: '- Bút máy học sinh Nhật Bản ngòi thép định hình tay cầm chuẩn.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Pilot Pen Japan',
       unit: 'Cây / Chiếc',
       grades: ['Tiểu học', 'THCS']
@@ -50,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Sổ Còng Binder A5 Bìa Da Pastel Kèm Ruột Caro',
       category: 'Sổ & vở',
       price: 89000,
+      discount: 15,
       status: 'active',
       sold: 240,
       stock: 200,
@@ -57,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
       image: '../../assets/img/product-3.jpg',
       iconType: 'book',
       sku: 'HD-BOOK-003',
-      description: 'Sổ còng sắt 6 lỗ bìa da mềm cao cấp kích thước A5, đi kèm 80 tờ ruột ô vuông Caro 100gsm chống thấm.',
+      description: '- Sổ còng 6 lỗ tháo lắp dễ dàng, giấy 100gsm chống thấm mực.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Klong',
       unit: 'Quyển / Tập',
       grades: ['THCS', 'THPT', 'Đại học']
@@ -67,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Vở Kẻ Ngang B5 Klong 120 Trang Giấy Dày Chống Lem',
       category: 'Sổ & vở',
       price: 28000,
+      discount: 0,
       status: 'active',
       sold: 480,
       stock: 350,
@@ -74,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
       image: '../../assets/img/product-3.jpg',
       iconType: 'book',
       sku: 'HD-BOOK-004',
-      description: 'Vở B5 kẻ ngang 120 trang giấy định lượng 100gsm không lem khi viết bút máy hay bút dạ highlight.',
+      description: '- Vở B5 kẻ ngang 120 trang giấy định lượng 100gsm không lem khi viết bút máy hay bút dạ highlight.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Klong',
       unit: 'Quyển / Tập',
       grades: ['Tiểu học', 'THCS', 'THPT']
@@ -84,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Balo Chống Gù Lưng Học Sinh Công Thái Học',
       category: 'Cặp & balo',
       price: 389000,
+      discount: 20,
       status: 'active',
       sold: 65,
       stock: 45,
@@ -91,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
       image: '../../assets/img/product-4.jpg',
       iconType: 'backpack',
       sku: 'HD-BAG-005',
-      description: 'Balo chống gù lưng công thái học cho học sinh, đệm lưng lưới tổ ong thoáng khí trợ lực cột sống, vải polyester trượt nước.',
+      description: '- Đệm lưng thoáng khí chống gù, vải Oxford trượt nước.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Học Đường Ergonomics',
       unit: 'Cái',
       grades: ['Tiểu học', 'THCS']
@@ -101,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Balo Đi Học Canvas Hàn Quốc Trơn Unisex',
       category: 'Cặp & balo',
       price: 215000,
+      discount: 12,
       status: 'active',
       sold: 98,
       stock: 80,
@@ -108,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
       image: '../../assets/img/product-5.jpg',
       iconType: 'backpack',
       sku: 'HD-BAG-006',
-      description: 'Balo canvas Hàn Quốc phong cách tối giản, ngăn chống sốc laptop 15.6 inch, quai đeo êm ái chống mỏi.',
+      description: '- Balo canvas Hàn Quốc phong cách tối giản, ngăn chống sốc laptop 15.6 inch.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Korean Style',
       unit: 'Cái',
       grades: ['THPT', 'Đại học']
@@ -118,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Hộp Bút Vải Canvas Mở Rộng 3 Tầng Ngăn Lớn',
       category: 'Hộp bút',
       price: 58000,
+      discount: 10,
       status: 'active',
       sold: 175,
       stock: 110,
@@ -125,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
       image: '../../assets/img/product-6.jpg',
       iconType: 'palette',
       sku: 'HD-CASE-007',
-      description: 'Hộp bút vải canvas dung lượng lớn 3 ngăn khóa kéo riêng biệt, chứa được hơn 50 bút viết và máy tính cầm tay.',
+      description: '- Sức chứa hơn 40 cây bút cùng thước kẻ và máy tính bỏ túi.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Deli',
       unit: 'Cái',
       grades: ['Tiểu học', 'THCS', 'THPT', 'Đại học']
@@ -135,6 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
       name: 'Bộ Màu Nước 36 Màu Kèm Cọ Bút Nước & Khay Pha Hộp Thiếc',
       category: 'Dụng cụ mỹ thuật',
       price: 175000,
+      discount: 0,
       status: 'active',
       sold: 0,
       stock: 60,
@@ -142,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
       image: '../../assets/img/product-7.jpg',
       iconType: 'palette',
       sku: 'HD-ART-008',
-      description: 'Hộp màu nước bánh nén 36 màu tươi sáng, độ bão hòa cao, kèm cọ vẽ ngậm nước chuyên nghiệp và khay pha màu hộp thiếc cao cấp.',
+      description: '- Bột màu nén cao cấp hạt siêu mịn trong hộp thiếc cao cấp.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Deli Art',
       unit: 'Bộ',
       grades: ['Tiểu học', 'THCS', 'THPT', 'Đại học']
@@ -191,9 +199,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const productList = getProductList();
 
-  // 2. TRÍCH XUẤT THAM SỐ TRUY VẤN MÃ SẢN PHẨM ?code=...
-  const urlParams = new URLSearchParams(window.location.search);
-  const targetCode = urlParams.get('code') || 'SP01';
+  // 2. XÁC ĐỊNH MÃ SẢN PHẨM TỪ BADGE TĨNH TRONG HTML, TÊN FILE HOẶC URL ?code=...
+  let targetCode = '';
+  const badgeCode = document.getElementById('product-badge-code');
+  if (badgeCode && badgeCode.textContent) {
+    const m = badgeCode.textContent.match(/SP\d+/i);
+    if (m) targetCode = m[0].toUpperCase();
+  }
+  if (!targetCode) {
+    const pageMatch = window.location.pathname.match(/(sp\d+)\.html/i);
+    if (pageMatch) targetCode = pageMatch[1].toUpperCase();
+  }
+  if (!targetCode) {
+    const urlParams = new URLSearchParams(window.location.search);
+    targetCode = urlParams.get('code') || 'SP01';
+  }
 
   // Tìm sản phẩm cần chỉnh sửa
   let product = productList.find(p => p.code.toUpperCase() === targetCode.toUpperCase());
@@ -305,29 +325,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Điền thông tin cơ bản
-  productNameInput.value = product.name || '';
-  if (categorySelect) {
+  // Điền thông tin cơ bản (ưu tiên giữ nguyên nếu HTML đã có sẵn dữ liệu tĩnh hoàn chỉnh)
+  if (productNameInput && !productNameInput.value) {
+    productNameInput.value = product.name || '';
+  }
+  if (categorySelect && (!categorySelect.value || categorySelect.value === '')) {
     categorySelect.value = product.category || 'Bút viết';
   }
-  stockInput.value = product.stock !== undefined ? product.stock : 100;
-  priceInput.value = product.price ? String(product.price).replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '0';
-  if (pricePreviewText) {
-    pricePreviewText.textContent = `Giá niêm yết: ${formatVnd(product.price || 0)}`;
-    pricePreviewText.style.color = 'var(--color-primary, #FF6900)';
+  if (stockInput && !stockInput.value) {
+    stockInput.value = product.stock !== undefined ? product.stock : 100;
   }
-  if (discountInput) {
-    discountInput.value = product.discount !== undefined ? product.discount : (product.code === 'SP01' ? 18 : 0);
+  if (priceInput && (!priceInput.value || priceInput.value === '0')) {
+    priceInput.value = product.price ? String(product.price).replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '0';
+  }
+  if (discountInput && (!discountInput.value || discountInput.value === '0')) {
+    discountInput.value = product.discount !== undefined ? product.discount : 0;
   }
   updatePricingCalculation();
-  skuInput.value = product.sku || `HD-${product.code}`;
-  if (descriptionInput) {
+  if (skuInput && !skuInput.value) {
+    skuInput.value = product.sku || `HD-${product.code}`;
+  }
+  if (descriptionInput && !descriptionInput.value) {
     descriptionInput.value = product.description || `Sản phẩm ${product.name} chính hãng chất lượng cao, an toàn cho học sinh.`;
   }
-  if (brandInput) {
+  if (brandInput && !brandInput.value) {
     brandInput.value = product.brand || 'Học Đường';
   }
-  if (unitSelect) {
+  if (unitSelect && (!unitSelect.value || unitSelect.value === '')) {
     unitSelect.value = product.unit || 'Cây / Chiếc';
   }
 
@@ -345,9 +369,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const ordersCount = product.ordersCount !== undefined ? product.ordersCount : Math.round(soldQty / 4) + 5;
 
   if (metricHeadingTitle) metricHeadingTitle.textContent = `Chỉ số giao dịch của ${product.code}`;
-  if (metricSoldOrders) metricSoldOrders.textContent = `${soldQty} đơn`;
-  if (metricRevenueVal) metricRevenueVal.textContent = formatVnd(revenue);
-  if (metricReviewsCount) metricReviewsCount.textContent = `${ordersCount} lượt phản hồi`;
+  if (metricSoldOrders && (!metricSoldOrders.textContent || metricSoldOrders.textContent === '0 đơn')) {
+    metricSoldOrders.textContent = `${soldQty} đơn`;
+  }
+  if (metricRevenueVal && (!metricRevenueVal.textContent || metricRevenueVal.textContent === '0₫')) {
+    metricRevenueVal.textContent = formatVnd(revenue);
+  }
+  if (metricReviewsCount && (!metricReviewsCount.textContent || metricReviewsCount.textContent === '0 lượt phản hồi')) {
+    metricReviewsCount.textContent = `${ordersCount} lượt phản hồi`;
+  }
 
   // Cập nhật khung hình ảnh
   let currentImageUrl = product.image || '../../assets/img/product-1.jpg';

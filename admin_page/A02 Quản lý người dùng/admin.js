@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </td>
         <td>
           <div class="action-links">
-            <a href="../A04 Sửa người dùng/index.html?code=${user.code}" class="action-link edit" style="text-decoration: none;">Sửa</a>
+            <a href="../A04 Sửa người dùng/${user.code.toLowerCase()}.html" class="action-link edit" style="text-decoration: none;">Sửa</a>
             <button type="button" class="action-link ${isActive ? 'lock' : 'unlock'}" data-code="${user.code}">
               ${isActive ? 'Khoá' : 'Mở khoá'}
             </button>

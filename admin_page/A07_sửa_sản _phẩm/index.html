@@ -153,7 +153,7 @@
                 <strong id="breadcrumb-current-code">Sửa sản phẩm SP01</strong>
               </nav>
               <h1 class="page-title">Chỉnh sửa thông tin sản phẩm</h1>
-              <p class="page-subtitle" id="page-subtitle">Chỉnh sửa sản phẩm: <strong id="heading-product-name">Balo chống gù tiểu học</strong></p>
+              <p class="page-subtitle" id="page-subtitle">Chỉnh sửa sản phẩm: <strong id="heading-product-name">Set 10 Bút Gel Morandi Vintage Tone Pastel 0.5mm</strong></p>
               <div class="product-identifiers">
                 <span class="product-code" id="product-badge-code">Mã: SP01</span>
                 <span class="badge-status badge-active" id="product-badge-status">
@@ -199,7 +199,7 @@
                 <!-- Tên sản phẩm -->
                 <div class="form-group">
                   <label class="form-label" for="product-name">Tên sản phẩm <span class="required">*</span></label>
-                  <input class="form-control" id="product-name" name="productName" type="text" required maxlength="120" placeholder="Nhập tên sản phẩm...">
+                  <input class="form-control" id="product-name" name="productName" type="text" required maxlength="120" placeholder="Nhập tên sản phẩm..." value="Set 10 Bút Gel Morandi Vintage Tone Pastel 0.5mm">
                   <small class="field-hint">Tên sản phẩm nêu rõ chủng loại, thương hiệu và quy cách chính.</small>
                 </div>
 
@@ -209,7 +209,7 @@
                     <label class="form-label" for="category">Phân loại danh mục <span class="required">*</span></label>
                     <select class="form-control" id="category" name="category" required>
                       <option value="" disabled>-- Chọn danh mục mặt hàng --</option>
-                      <option value="Bút viết">Bút viết (Bút bi, bút gel, bút chì, bút máy)</option>
+                      <option value="Bút viết" selected>Bút viết (Bút bi, bút gel, bút chì, bút máy)</option>
                       <option value="Sổ & vở">Sổ &amp; vở (Vở ô ly, sổ kẻ ngang, binder)</option>
                       <option value="Cặp & balo">Cặp &amp; balo (Balo chống gù, túi canvas)</option>
                       <option value="Hộp bút">Hộp bút (Hộp bút vải, hộp đa năng)</option>
@@ -221,7 +221,7 @@
                   <div class="form-group">
                     <label class="form-label" for="stock">Số lượng tồn kho <span class="required">*</span></label>
                     <div class="input-with-suffix">
-                      <input class="form-control" id="stock" name="stock" type="number" min="0" step="1" required placeholder="0">
+                      <input class="form-control" id="stock" name="stock" type="number" min="0" step="1" required placeholder="0" value="450">
                       <span>kiện / cái</span>
                     </div>
                   </div>
@@ -232,19 +232,19 @@
                   <div class="form-group">
                     <label class="form-label" for="price">Giá bán lẻ (VNĐ) <span class="required">*</span></label>
                     <div class="input-with-suffix price-control">
-                      <input class="form-control" id="price" name="price" type="text" inputmode="numeric" required placeholder="0">
+                      <input class="form-control" id="price" name="price" type="text" inputmode="numeric" required placeholder="0" value="65.000">
                       <span>VNĐ</span>
                     </div>
-                    <small class="field-price-preview" id="price-preview-text">Giá niêm yết: 0₫</small>
+                    <small class="field-price-preview" id="price-preview-text" style="color: var(--color-primary, #FF6900);">Giá gốc niêm yết: 65.000₫</small>
                   </div>
 
                   <div class="form-group">
                     <label class="form-label" for="discount">Mức giảm giá (%)</label>
                     <div class="input-with-suffix discount-control">
-                      <input class="form-control" id="discount" name="discount" type="number" min="0" max="99" step="1" placeholder="0" value="0">
+                      <input class="form-control" id="discount" name="discount" type="number" min="0" max="99" step="1" placeholder="0" value="18">
                       <span>%</span>
                     </div>
-                    <small class="field-discount-preview" id="discount-preview-text">Không áp dụng giảm giá (0%)</small>
+                    <small class="field-discount-preview" id="discount-preview-text" style="color: #ea580c;">Tiết kiệm: 11.700₫ (-18%)</small>
                   </div>
                 </div>
 
@@ -253,22 +253,24 @@
                   <div class="form-group">
                     <label class="form-label" for="final-price">Giá bán thực tế sau giảm (VNĐ)</label>
                     <div class="input-with-suffix final-price-control">
-                      <input class="form-control" id="final-price" name="final-price" type="text" readonly placeholder="0">
+                      <input class="form-control" id="final-price" name="final-price" type="text" readonly placeholder="0" value="53.300">
                       <span>VNĐ</span>
                     </div>
-                    <small class="field-final-preview" id="final-price-preview-text">Giá bán ưu đãi hiển thị đến khách hàng</small>
+                    <small class="field-final-preview" id="final-price-preview-text" style="color: #15803d;">Giá ưu đãi Storefront: 53.300₫</small>
                   </div>
 
                   <div class="form-group">
                     <label class="form-label" for="sku">Mã SKU quản lý kho nội bộ</label>
-                    <input class="form-control muted-control" id="sku" name="sku" type="text" placeholder="Mã SKU">
+                    <input class="form-control muted-control" id="sku" name="sku" type="text" placeholder="Mã SKU" value="HD-PEN-001">
                   </div>
                 </div>
 
                 <!-- Mô tả chi tiết -->
                 <div class="form-group description-group">
                   <label class="form-label" for="description">Mô tả chi tiết sản phẩm</label>
-                  <textarea class="form-control" id="description" name="description" rows="5" placeholder="Nhập tóm tắt đặc tính, xuất xứ, chất liệu và công năng của sản phẩm..."></textarea>
+                  <textarea class="form-control" id="description" name="description" rows="5" placeholder="Nhập tóm tắt đặc tính, xuất xứ, chất liệu và công năng của sản phẩm...">- Bút gel màu Morandi thanh lịch, ngòi 0.5mm êm ái, mau khô không lem giấy.
+- Sản phẩm chính hãng, phù hợp nhu cầu học tập.
+- Được đóng gói cẩn thận trước khi giao hàng.</textarea>
                 </div>
               </section>
 
@@ -277,19 +279,19 @@
                 <div class="section-heading">
                   <h2 id="heading-metrics">
                     <span class="section-icon chart-icon" aria-hidden="true">▥</span>
-                    <span id="metric-heading-title">Chỉ số giao dịch của sản phẩm</span>
+                    <span id="metric-heading-title">Chỉ số giao dịch của SP01</span>
                   </h2>
                   <span class="required-note">30 ngày qua</span>
                 </div>
                 <div class="metric-grid">
                   <article class="metric-tile">
                     <span class="metric-label">Tổng lượt bán</span>
-                    <strong id="metric-sold-orders">0 đơn</strong>
+                    <strong id="metric-sold-orders">342 đơn</strong>
                     <span class="metric-trend">↗ +12.4% tuần này</span>
                   </article>
                   <article class="metric-tile">
                     <span class="metric-label">Doanh thu sản phẩm</span>
-                    <strong class="metric-revenue" id="metric-revenue-val">0₫</strong>
+                    <strong class="metric-revenue" id="metric-revenue-val">18.228.600₫</strong>
                     <span class="metric-label">Chiếm 8.5% danh mục</span>
                   </article>
                   <article class="metric-tile">
@@ -320,7 +322,7 @@
                     <label class="form-label" for="unit">Đơn vị tính</label>
                     <select class="form-control" id="unit" name="unit">
                       <option value="Cây / Chiếc">Cây / Chiếc</option>
-                      <option value="Hộp / Set">Hộp / Set</option>
+                      <option value="Hộp / Set" selected>Hộp / Set</option>
                       <option value="Quyển / Tập">Quyển / Tập</option>
                       <option value="Cái">Cái</option>
                       <option value="Bộ">Bộ</option>
@@ -333,8 +335,8 @@
                   <div class="target-grade-pills">
                     <label class="grade-pill"><input type="checkbox" name="grades" value="Tiểu học" checked><span>Tiểu học</span></label>
                     <label class="grade-pill"><input type="checkbox" name="grades" value="THCS" checked><span>THCS</span></label>
-                    <label class="grade-pill"><input type="checkbox" name="grades" value="THPT"><span>THPT</span></label>
-                    <label class="grade-pill"><input type="checkbox" name="grades" value="Đại học"><span>Đại học / Sinh viên</span></label>
+                    <label class="grade-pill"><input type="checkbox" name="grades" value="THPT" checked><span>THPT</span></label>
+                    <label class="grade-pill"><input type="checkbox" name="grades" value="Đại học" checked><span>Đại học / Sinh viên</span></label>
                   </div>
                 </div>
               </section>
@@ -363,7 +365,7 @@
                 <div class="sample-gallery-wrap">
                   <span class="sample-gallery-title">Hoặc chọn nhanh mẫu ảnh thực tế:</span>
                   <div class="sample-gallery-items">
-                    <button type="button" class="sample-thumb" data-img="../../assets/img/product-1.jpg" title="Set bút Morandi">
+                    <button type="button" class="sample-thumb" data-img="../../assets/img/product-1.jpg" class="sample-thumb active" title="Set bút Morandi">
                       <img src="../../assets/img/product-1.jpg" alt="Mẫu bút 1">
                     </button>
                     <button type="button" class="sample-thumb" data-img="../../assets/img/product-2.jpg" title="Bút máy Pilot">

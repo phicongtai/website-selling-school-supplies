@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FF6900">
+  <title>A04: Sửa người dùng - Học Đường Store Admin</title>
+  <!-- Google Fonts: Be Vietnam Pro (Đồng bộ font chữ toàn dự án) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png">
+
+  <!-- Kế thừa Design System & Tokens toàn cục của dự án -->
+  <link rel="stylesheet" href="../../assets/css/style.css">
+
+  <!-- Kế thừa Khung layout chuẩn Admin từ trang A02 -->
+  <link rel="stylesheet" href="../A02 Quản lý người dùng/admin.css">
+
+  <!-- CSS riêng cho Modal Sửa người dùng A04 -->
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <div class="admin-page-container">
+
+    <!-- 1. SIDEBAR ĐIỀU HƯỚNG BÊN TRÁI (260PX) -->
+    <aside class="admin-sidebar" aria-label="Điều hướng quản trị">
+      <!-- Logo Thương hiệu -->
+      <a class="sidebar-brand" href="../A02 Quản lý người dùng/index.html" aria-label="Học Đường Store Admin">
+        <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store Admin" class="brand-mark" width="36" height="36">
+        <div class="brand-copy">
+          <strong>Học Đường Store Admin</strong>
+          <small>Hệ thống Quản trị Nội bộ</small>
+        </div>
+      </a>
+
+      <!-- Menu chuyển module quản trị -->
+      <nav class="sidebar-nav" aria-label="Menu quản trị">
+        <!-- Người dùng (Active) -->
+        <a class="active" href="../A02 Quản lý người dùng/index.html" aria-current="page">
+          <svg width="18" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M14.68 8.64V6.05H12.09V4.32H14.68V1.73H16.41V4.32H19V6.05H16.41V8.64H14.68ZM6.91 6.91C5.96 6.91 5.15 6.57 4.47 5.89C3.79 5.22 3.45 4.4 3.45 3.45C3.45 2.5 3.79 1.69 4.47 1.01C5.15 0.34 5.96 0 6.91 0C7.86 0 8.67 0.34 9.35 1.01C10.03 1.69 10.36 2.5 10.36 3.45C10.36 4.4 10.03 5.22 9.35 5.89C8.67 6.57 7.86 6.91 6.91 6.91ZM0 13.82V11.4C0 10.91 0.13 10.46 0.38 10.05C0.63 9.64 0.96 9.33 1.38 9.11C2.27 8.67 3.18 8.33 4.1 8.11C5.02 7.88 5.96 7.77 6.91 7.77C7.86 7.77 8.79 7.88 9.72 8.11C10.64 8.33 11.54 8.67 12.44 9.11C12.85 9.33 13.19 9.64 13.44 10.05C13.69 10.46 13.82 10.91 13.82 11.4V13.82H0Z" fill="currentColor"/>
+          </svg>
+          <span>Người dùng</span>
+        </a>
+
+        <!-- Sản phẩm -->
+        <a href="../A05 Quản lý sản phẩm/index.html">
+          <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M1.7 17C1.23 17 0.83 16.83 0.5 16.5C0.17 16.17 0 15.77 0 15.3V5.95C0 5.48 0.17 5.08 0.5 4.75C0.83 4.42 1.23 4.25 1.7 4.25H5.95V1.7C5.95 1.23 6.12 0.83 6.45 0.5C6.78 0.17 7.18 0 7.65 0H9.35C9.82 0 10.22 0.17 10.55 0.5C10.88 0.83 11.05 1.23 11.05 1.7V4.25H15.3C15.77 4.25 16.17 4.42 16.5 4.75C16.83 5.08 17 5.48 17 5.95V15.3C17 15.77 16.83 16.17 16.5 16.5C16.17 16.83 15.77 17 15.3 17H1.7ZM1.7 15.3H15.3V5.95H1.7V15.3ZM7.65 4.25H9.35V1.7H7.65V4.25Z" fill="currentColor"/>
+          </svg>
+          <span>Sản phẩm</span>
+        </a>
+
+        <!-- Đơn hàng -->
+        <a href="../A10 Quản lí đơn hàng/index.html">
+          <svg width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M1.4 17C1.02 17 0.69 16.87 0.41 16.59C0.14 16.31 0 15.98 0 15.6V4.25C0 3.87 0.14 3.54 0.41 3.26C0.69 2.98 1.02 2.83 1.4 2.83H3.5V2.12C3.5 1.53 3.71 1.03 4.13 0.62C4.55 0.21 5.06 0 5.65 0H8.35C8.94 0 9.45 0.21 9.87 0.62C10.29 1.03 10.5 1.53 10.5 2.12V2.83H12.6C12.98 2.83 13.31 2.98 13.59 3.26C13.86 3.54 14 3.87 14 4.25V15.6C14 15.98 13.86 16.31 13.59 16.59C13.31 16.87 12.98 17 12.6 17H1.4ZM4.9 2.83H9.1V2.12C9.1 1.91 9.03 1.73 8.88 1.59C8.74 1.44 8.56 1.37 8.35 1.37H5.65C5.44 1.37 5.26 1.44 5.12 1.59C4.97 1.73 4.9 1.91 4.9 2.12V2.83Z" fill="currentColor"/>
+          </svg>
+          <span>Đơn hàng</span>
+        </a>
+
+        <!-- Thống kê -->
+        <a href="../A12 thống kê khách hàng/index.html">
+          <svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M0 10V4.67L5.33 0L9.33 4L14.67 0V2.67L9.33 6.67L5.33 2.67L0 7.33V10Z" fill="currentColor"/>
+          </svg>
+          <span>Thống kê</span>
+        </a>
+      </nav>
+
+      <!-- Tài khoản quản trị & Đăng xuất -->
+      <div class="sidebar-account">
+        <div class="account-info">
+          <span class="account-avatar" aria-hidden="true">A</span>
+          <div class="account-details">
+            <span class="account-name" id="sidebar-user-name">Quản trị viên Hệ thống</span>
+            <small class="account-email">admin@hocduong.vn</small>
+          </div>
+        </div>
+        <a class="sidebar-logout" href="../A01 Đăng nhập quản trị/index.html">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M1.33 14C0.97 14 0.65 13.87 0.39 13.61C0.13 13.35 0 13.03 0 12.67V1.33C0 0.97 0.13 0.65 0.39 0.39C0.65 0.13 0.97 0 1.33 0H6.67V1.33H1.33V12.67H6.67V14H1.33ZM10 10.67L8.93 9.6L10.87 7.67H4.67V6.33H10.87L8.93 4.4L10 3.33L13.67 7L10 10.67Z" fill="currentColor"/>
+          </svg>
+          <span>Đăng xuất</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- 2. NỘI DUNG CHÍNH (SHELL NỀN TẢNG BẢNG QUẢN LÝ NGƯỜI DÙNG) -->
+    <div class="admin-shell">
+
+      <!-- Topbar Header -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <div class="topbar-breadcrumb">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M11.8 3 20 6.2v5.3c0 4.6-3.2 8.4-8.2 10.2-5-1.8-8.2-5.6-8.2-10.2V6.2L11.8 3Z" stroke="#686868" stroke-width="1.8" stroke-linejoin="round"/>
+              <circle cx="17.5" cy="16.5" r="4.2" fill="#fff" stroke="#686868" stroke-width="1.5"/>
+              <path d="M16.3 16.3v-.8a1.2 1.2 0 0 1 2.4 0v.8m-2.8 0h3.2v2.4h-3.2v-2.4Z" stroke="#686868" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Bảng điều khiển</span>
+            <span>/</span>
+            <strong>Quản trị</strong>
+          </div>
+          <span class="topbar-divider" aria-hidden="true"></span>
+          <div class="status-badge">
+            <span class="status-dot-green" aria-hidden="true"></span>
+            <span>HỆ THỐNG TRỰC TUYẾN</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="topbar-date">
+            <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M1.33 14.67C0.97 14.67 0.65 14.54 0.39 14.28C0.13 14.02 0 13.7 0 13.33V2.67C0 2.3 0.13 1.98 0.39 1.72C0.65 1.46 0.97 1.33 1.33 1.33H2.67V0H4V1.33H9.33V0H10.67V1.33H12C12.37 1.33 12.69 1.46 12.95 1.72C13.21 1.98 13.33 2.3 13.33 2.67V13.33C13.33 13.7 13.21 14.02 12.95 14.28C12.69 14.54 12.37 14.67 12 14.67H1.33ZM1.33 13.33H12V5.33H1.33V13.33Z" fill="#5A4136"/>
+            </svg>
+            <span id="current-date-text">Hôm nay, 24/10/2024</span>
+          </div>
+
+          <a class="storefront-link" href="../../page/homepage/main.html" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M1.33 12C0.97 12 0.65 11.87 0.39 11.61C0.13 11.35 0 11.03 0 10.67V1.33C0 0.97 0.13 0.65 0.39 0.39C0.65 0.13 0.97 0 1.33 0H6V1.33H1.33V10.67H10.67V6H12V10.67C12 11.03 11.87 11.35 11.61 11.61C11.35 11.87 11.03 12 10.67 12H1.33ZM4.47 8.47L3.53 7.53L9.73 1.33H7.33V0H12V4.67H10.67V2.27L4.47 8.47Z" fill="currentColor"/>
+            </svg>
+            <span>Xem trang Storefront</span>
+          </a>
+
+          <button class="topbar-icon-btn" type="button" aria-label="Thông báo hệ thống">
+            <svg width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M6.67 16.67C6.12 16.67 5.65 16.47 5.26 16.08C4.87 15.69 4.67 15.22 4.67 14.67H8.67C8.67 15.22 8.47 15.69 8.08 16.08C7.69 16.47 7.22 16.67 6.67 16.67ZM1.33 13.33V12L2.67 10.67V6.67C2.67 5.38 3.06 4.28 3.84 3.38C4.62 2.48 5.56 1.93 6.67 1.77V1.33C6.67 0.97 6.8 0.65 7.06 0.39C7.32 0.13 7.63 0 8 0C8.37 0 8.68 0.13 8.94 0.39C9.2 0.65 9.33 0.97 9.33 1.33V1.77C10.44 1.93 11.38 2.48 12.16 3.38C12.94 4.28 13.33 5.38 13.33 6.67V10.67L14.67 12V13.33H1.33Z" fill="#5A4136"/>
+            </svg>
+            <span class="badge-dot" aria-hidden="true"></span>
+          </button>
+
+          <button class="topbar-avatar-btn" type="button" aria-label="Hồ sơ quản trị">A</button>
+        </div>
+      </header>
+
+      <!-- Main Page Body -->
+      <main class="admin-main">
+        
+        <!-- Breadcrumbs -->
+        <nav class="main-breadcrumbs" aria-label="Đường dẫn trang">
+          <span>Quản trị</span>
+          <span>/</span>
+          <span>Người dùng</span>
+          <span>/</span>
+          <strong>Danh sách tài khoản</strong>
+        </nav>
+
+        <!-- Tiêu đề trang & Nút Thêm mới -->
+        <div class="page-title-row">
+          <div class="page-title-group">
+            <h1 class="page-title">Quản lý người dùng</h1>
+            <p class="page-subtitle">
+              Quản lý và kiểm soát tài khoản học sinh, sinh viên và khách hàng trong hệ thống 
+              (Tổng số: <span class="highlight-text" id="total-users-text">8 tài khoản</span>)
+            </p>
+          </div>
+          <a href="../A03 Thêm người dùng/index.html" class="btn-add-user" style="text-decoration: none;">
+            <svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M14.68 8.64V6.05H12.09V4.32H14.68V1.73H16.41V4.32H19V6.05H16.41V8.64H14.68ZM6.91 6.91C5.96 6.91 5.15 6.57 4.47 5.89C3.79 5.22 3.45 4.4 3.45 3.45C3.45 2.5 3.79 1.69 4.47 1.01C5.15 0.34 5.96 0 6.91 0C7.86 0 8.67 0.34 9.35 1.01C10.03 1.69 10.36 2.5 10.36 3.45C10.36 4.4 10.03 5.22 9.35 5.89C8.67 6.57 7.86 6.91 6.91 6.91ZM0 13.82V11.4C0 10.91 0.13 10.46 0.38 10.05C0.63 9.64 0.96 9.33 1.38 9.11C2.27 8.67 3.18 8.33 4.1 8.11C5.02 7.88 5.96 7.77 6.91 7.77C7.86 7.77 8.79 7.88 9.72 8.11C10.64 8.33 11.54 8.67 12.44 9.11C12.85 9.33 13.19 9.64 13.44 10.05C13.69 10.46 13.82 10.91 13.82 11.4V13.82H0Z" fill="white"/>
+            </svg>
+            <span>+ Thêm người dùng</span>
+          </a>
+        </div>
+
+        <!-- 4 Thẻ Thống kê -->
+        <section class="stats-grid" aria-label="Thống kê tài khoản">
+          <!-- Card 1 -->
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Tổng số thành viên</span>
+              <span class="stat-value" id="stat-total-val">8</span>
+            </div>
+            <div class="stat-icon-wrapper total" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Đang hoạt động</span>
+              <span class="stat-value" id="stat-active-val">6</span>
+            </div>
+            <div class="stat-icon-wrapper active" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Tài khoản bị khoá</span>
+              <span class="stat-value" id="stat-locked-val">2</span>
+            </div>
+            <div class="stat-icon-wrapper locked" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Tỷ lệ tương tác</span>
+              <span class="stat-value">75%</span>
+            </div>
+            <div class="stat-icon-wrapper rate" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                <polyline points="17 6 23 6 23 12"></polyline>
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <!-- Bảng Danh Sách Người Dùng & Công cụ -->
+        <section class="table-card" aria-label="Bảng danh sách người dùng">
+          <!-- Toolbar Lọc & Tìm kiếm -->
+          <div class="table-toolbar">
+            <div class="toolbar-left">
+              <div class="search-wrap">
+                <span class="search-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </span>
+                <input type="search" id="user-search-input" placeholder="Tìm theo tên, email, tên đăng nhập..." aria-label="Tìm kiếm người dùng">
+              </div>
+
+              <select class="filter-select" id="status-filter" aria-label="Lọc theo trạng thái">
+                <option value="all">Tất cả trạng thái</option>
+                <option value="active" selected>Đang hoạt động</option>
+                <option value="locked">Đã khoá</option>
+              </select>
+            </div>
+
+            <div class="toolbar-right">
+              <button type="button" class="btn-toolbar-action" id="btn-refresh">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M23 4v6h-6"></path>
+                  <path d="M1 20v-6h6"></path>
+                  <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                </svg>
+                <span>Làm mới</span>
+              </button>
+
+              <button type="button" class="btn-toolbar-action" id="btn-export-excel">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Xuất Excel</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="table-responsive">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 80px;">MÃ</th>
+                  <th scope="col">HỌ TÊN</th>
+                  <th scope="col">TÊN ĐĂNG NHẬP</th>
+                  <th scope="col">EMAIL</th>
+                  <th scope="col">SỐ ĐIỆN THOẠI</th>
+                  <th scope="col" style="width: 140px;">TRẠNG THÁI</th>
+                  <th scope="col" style="width: 140px;">THAO TÁC</th>
+                </tr>
+              </thead>
+              <tbody id="users-tbody">
+                <!-- Dữ liệu render bởi admin.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Phân trang -->
+          <div class="table-pagination">
+            <span class="pagination-info" id="pagination-info">Hiển thị 8 trên tổng số 8 người dùng</span>
+            <div class="pagination-btns">
+              <button type="button" class="page-btn" id="prev-page-btn" aria-label="Trang trước">&lt;</button>
+              <button type="button" class="page-btn active" aria-label="Trang 1">1</button>
+              <button type="button" class="page-btn" id="next-page-btn" aria-label="Trang sau">&gt;</button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+  </div>
+
+  <!-- 3. MODAL A04 SỬA NGƯỜI DÙNG (MỞ SẴN THEO FIGMA FRAME 1:5843) -->
+  <div class="modal-overlay open" id="modal-a04" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <!-- Header Modal -->
+      <div class="modal-header">
+        <div class="modal-header-copy">
+          <div class="modal-title-row">
+            <div class="modal-icon-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+            </div>
+            <h2 class="modal-title" id="modal-title">Sửa thông tin người dùng</h2>
+          </div>
+          <p class="modal-subtitle">
+            Cập nhật tài khoản: <strong id="modal-subtitle-user">Trần Quốc Bảo (U02)</strong>
+          </p>
+        </div>
+        <a href="../A02 Quản lý người dùng/index.html" class="modal-close-btn" id="btn-close-modal" aria-label="Đóng hộp thoại">✕</a>
+      </div>
+
+      <!-- Form Sửa Người Dùng -->
+      <form id="form-edit-user" class="modal-form" novalidate>
+        <!-- Hàng 1: Mã & Tên đăng nhập -->
+        <div class="modal-row">
+          <div class="modal-field">
+            <label for="modal-user-code">
+              Mã người dùng
+              <span class="tip">Không đổi</span>
+            </label>
+            <input type="text" id="modal-user-code" readonly value="U02">
+          </div>
+          <div class="modal-field">
+            <label for="modal-username">
+              Tên đăng nhập
+              <span class="tip">Cố định</span>
+            </label>
+            <input type="text" id="modal-username" readonly value="quocbao">
+          </div>
+        </div>
+
+        <!-- Hàng 2: Họ và tên -->
+        <div class="modal-field" id="field-fullname">
+          <label for="modal-fullname">
+            Họ và tên <span class="req">*</span>
+          </label>
+          <input type="text" id="modal-fullname" required value="Trần Quốc Bảo">
+          <span class="field-error-text" id="err-fullname">Vui lòng nhập họ và tên</span>
+        </div>
+
+        <!-- Hàng 3: Email & Số điện thoại -->
+        <div class="modal-row">
+          <div class="modal-field" id="field-email">
+            <label for="modal-email">
+              Địa chỉ Email <span class="req">*</span>
+            </label>
+            <input type="email" id="modal-email" required value="quocbao@email.com" autocomplete="email">
+            <span class="field-error-text" id="err-email">Vui lòng nhập email hợp lệ</span>
+          </div>
+          <div class="modal-field" id="field-phone">
+            <label for="modal-phone">
+              Số điện thoại <span class="req">*</span>
+            </label>
+            <input type="tel" id="modal-phone" required value="0912 345 678" autocomplete="tel">
+            <span class="field-error-text" id="err-phone">Vui lòng nhập SĐT 10 chữ số</span>
+          </div>
+        </div>
+
+        <!-- Hàng 4: Vai trò & Trạng thái -->
+        <div class="modal-row">
+          <div class="modal-field">
+            <label for="modal-role">Vai trò người dùng</label>
+            <select id="modal-role">
+              <option value="customer" selected>Khách hàng / Học viên</option>
+              <option value="staff">Nhân viên bán hàng</option>
+              <option value="admin">Quản trị viên</option>
+            </select>
+          </div>
+          <div class="modal-field">
+            <label for="modal-status">Trạng thái tài khoản</label>
+            <select id="modal-status">
+              <option value="active" selected>Đang hoạt động</option>
+              <option value="locked">Bị khoá</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Hàng 5: Mật khẩu mới (Tùy chọn) -->
+        <div class="modal-field" id="field-password">
+          <label for="modal-password">
+            Mật khẩu mới
+            <span class="tip">Để trống nếu không đổi</span>
+          </label>
+          <div class="modal-input-wrap">
+            <input type="password" id="modal-password" placeholder="Nhập mật khẩu mới nếu muốn thay đổi" autocomplete="new-password">
+            <button type="button" class="btn-toggle-pwd" data-target="modal-password" aria-label="Ẩn/hiện mật khẩu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+          <span class="field-error-text" id="err-password">Mật khẩu mới phải từ 6 ký tự trở lên</span>
+        </div>
+
+        <!-- Footer Nút Bấm -->
+        <div class="modal-footer">
+          <a href="../A02 Quản lý người dùng/index.html" class="btn-cancel" id="btn-cancel-modal">Hủy bỏ</a>
+          <button type="submit" class="btn-save" id="btn-submit-modal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Cập nhật thông tin</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. TOAST THÔNG BÁO TỨC THÌ -->
+  <div class="toast-msg" id="toast" role="status" aria-live="polite">
+    <span id="toast-icon">✓</span>
+    <span id="toast-text">Thông báo hệ thống</span>
+  </div>
+
+  <!-- JS xử lý trang A04 -->
+  <script src="../shared/admin-realtime.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
