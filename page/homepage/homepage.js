@@ -64,6 +64,103 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const getCategoryCheckboxes = () => Array.from(document.querySelectorAll('.filter-categories input[type="checkbox"]'));
 
+  // Dropdown sắp xếp tùy chỉnh: giao diện giống bộ lọc tìm kiếm nâng cao,
+  // mở/đóng có animation và vẫn đồng bộ với <select> ẩn để tái sử dụng logic lọc.
+  const initCategorySortDropdown = () => {
+    const control = document.getElementById('categorySort');
+    const nativeSelect = document.getElementById('categorySortSelect');
+    const trigger = document.getElementById('categorySortTrigger');
+    const valueNode = document.getElementById('categorySortValue');
+    const menu = document.getElementById('categorySortMenu');
+    if (!control || !nativeSelect || !trigger || !valueNode || !menu) return;
+
+    const options = Array.from(menu.querySelectorAll('.sort-dropdown-option'));
+    if (!options.length) return;
+
+    const selectedOption = () => options.find(option => option.dataset.value === nativeSelect.value) || options[0];
+
+    const paint = value => {
+      const active = options.find(option => option.dataset.value === value) || options[0];
+      nativeSelect.value = active.dataset.value;
+      valueNode.textContent = active.textContent.trim();
+      options.forEach(option => {
+        const isSelected = option === active;
+        option.classList.toggle('is-selected', isSelected);
+        option.setAttribute('aria-selected', String(isSelected));
+      });
+    };
+
+    const open = (focusTarget = selectedOption()) => {
+      control.classList.add('is-open');
+      trigger.setAttribute('aria-expanded', 'true');
+      window.requestAnimationFrame(() => focusTarget.focus({ preventScroll: true }));
+    };
+
+    const close = (returnFocus = false) => {
+      control.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      if (returnFocus) trigger.focus({ preventScroll: true });
+    };
+
+    const choose = (option, { emit = true, returnFocus = true } = {}) => {
+      paint(option.dataset.value);
+      close(returnFocus);
+      if (emit) nativeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+    };
+
+    trigger.addEventListener('click', () => {
+      if (control.classList.contains('is-open')) close();
+      else open();
+    });
+
+    trigger.addEventListener('keydown', event => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        open();
+      } else if (event.key === 'Escape') {
+        close();
+      }
+    });
+
+    options.forEach((option, index) => {
+      option.addEventListener('click', () => choose(option));
+      option.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          choose(option);
+        } else if (event.key === 'Escape') {
+          event.preventDefault();
+          close(true);
+        } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+          event.preventDefault();
+          const delta = event.key === 'ArrowDown' ? 1 : -1;
+          options[(index + delta + options.length) % options.length].focus();
+        } else if (event.key === 'Home' || event.key === 'End') {
+          event.preventDefault();
+          options[event.key === 'Home' ? 0 : options.length - 1].focus();
+        } else if (event.key === 'Tab') {
+          close();
+        }
+      });
+    });
+
+    document.addEventListener('click', event => {
+      if (!control.contains(event.target)) close();
+    });
+
+    document.addEventListener('focusin', event => {
+      if (!control.contains(event.target)) close();
+    });
+
+    // Cho phép các luồng khôi phục bộ lọc / đặt lại cập nhật giao diện dropdown.
+    window.setCategorySortValue = (value, { emit = false } = {}) => {
+      paint(value);
+      if (emit) nativeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+    };
+
+    paint(nativeSelect.value || 'default');
+  };
+
   const parsePriceNumber = val => {
     if (val == null || val === '') return NaN;
     const clean = String(val).replace(/\./g, '').trim();
@@ -111,21 +208,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('categoryProductsGrid');
     if (!grid) return;
     const cards = Array.from(grid.querySelectorAll('.store-product-card'));
-    cards.forEach((card, index) => {
-      if (card.dataset.order === undefined) card.dataset.order = String(index);
-    });
 
     const total = (window.StoreCatalog && window.StoreCatalog.products) ? window.StoreCatalog.products.length : cards.length;
-    const sortValue = document.getElementById('categorySortSelect')?.value || 'default';
-    const sorters = {
-      'price-asc': (a, b) => (Number(a.dataset.price) || 0) - (Number(b.dataset.price) || 0),
-      'price-desc': (a, b) => (Number(b.dataset.price) || 0) - (Number(a.dataset.price) || 0),
-      'name': (a, b) => (a.dataset.title || '').localeCompare(b.dataset.title || '', 'vi'),
-      'default': (a, b) => Number(a.dataset.order) - Number(b.dataset.order)
-    };
-    if (sorters[sortValue]) {
-      cards.sort(sorters[sortValue]).forEach(card => grid.appendChild(card));
-    }
+
+    // Sắp xếp chỉ để minh họa giống "Tìm kiếm nâng cao": đổi lựa chọn sẽ hiện
+    // loading giả rồi giữ nguyên thứ tự sản phẩm, không sắp xếp thật.
     cards.forEach(card => {
       card.classList.remove('is-hidden');
       card.style.display = '';
@@ -144,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (resultCount) {
       resultCount.textContent = `Hiển thị ${cards.length} / ${total} sản phẩm (Trang ${isPageTwo ? '2' : '1'}/2)`;
     }
-    if (emptyState) emptyState.hidden = true;
+    if (emptyState) { emptyState.hidden = true; emptyState.style.display = 'none'; }
     if (categoryHint) {
       categoryHint.textContent = 'Tất cả';
     }
@@ -160,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const silent = Boolean(options && options.silent === true);
     if (!silent) {
-      // Người dùng bấm "Áp dụng bộ lọc" / "Xóa": hiện loading giả rồi bật lại toàn bộ danh sách.
+      // Người dùng bấm "Áp dụng" / "Xóa": hiện loading giả rồi bật lại toàn bộ danh sách.
       const resultCount = document.getElementById('categoryResultCount');
       if (resultCount) resultCount.textContent = 'Đang tải sản phẩm...';
       window.showFakeLoading(grid, revealCategoryResults);
@@ -190,7 +277,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const sortSelect = document.getElementById('categorySortSelect');
     if (minInput) minInput.value = '';
     if (maxInput) maxInput.value = '';
-    if (sortSelect) sortSelect.value = 'default';
+    if (sortSelect) {
+      sortSelect.value = 'default';
+      if (window.setCategorySortValue) window.setCategorySortValue('default');
+    }
     window.filterCategoryProducts();
   };
   // 4. BỘ LỌC TÌM KIẾM NÂNG CAO & CATEGORY
@@ -232,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (resultCount) {
       resultCount.textContent = `Hiển thị ${cards.length} / ${total} sản phẩm (Trang ${isPageTwo ? '2' : '1'}/2)`;
     }
-    if (emptyState) emptyState.hidden = true;
+    if (emptyState) { emptyState.hidden = true; emptyState.style.display = 'none'; }
   };
 
   window.applyAdvancedSearch = (options = {}) => {
@@ -240,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!grid) return;
     const silent = Boolean(options && (options.silent === true || options.navigate === false));
 
-    // Người dùng bấm "Tìm kiếm" / "Áp dụng bộ lọc": hiện hiệu ứng loading giả
+    // Người dùng bấm "Tìm kiếm" / "Áp dụng": hiện hiệu ứng loading giả
     // rồi mới bật toàn bộ kết quả (việc lọc bị vô hiệu hóa).
     if (!silent) {
       navigateToView('view-advanced-search');
@@ -493,6 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
     node.textContent = String(count);
   });
 
+  initCategorySortDropdown();
   renderProductList('homeProductsGrid', featuredProducts);
   window.filterCategoryProducts({ syncUrl: false, silent: true });
   window.applyAdvancedSearch({ syncUrl: false, navigate: false, silent: true });
@@ -517,7 +608,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const hotInput = document.querySelector('.filter-offers input[data-filter="hot"]');
     if (minInput) minInput.value = formatPrice(pageParams.get('min') || '');
     if (maxInput) maxInput.value = formatPrice(pageParams.get('max') || '');
-    if (sortSelect) sortSelect.value = pageParams.get('sort') || 'default';
+    if (sortSelect) {
+      sortSelect.value = pageParams.get('sort') || 'default';
+      if (window.setCategorySortValue) window.setCategorySortValue(sortSelect.value);
+    }
     if (saleInput) saleInput.checked = pageParams.get('sale') === '1';
     if (hotInput) hotInput.checked = pageParams.get('hot') === '1';
   };
@@ -547,4 +641,16 @@ document.addEventListener('DOMContentLoaded', () => {
   } else if (hashView === 'view-home') {
     window.navigateToView('view-home');
   }
+
+  window.addEventListener('hashchange', () => {
+    const hash = window.location.hash.replace(/^#/, '');
+    if (hash === 'view-advanced-search') {
+      window.navigateToView('view-advanced-search');
+      window.applyAdvancedSearch({ silent: true, navigate: false });
+    } else if (hash === 'view-category') {
+      window.navigateToView('view-category');
+    } else if (hash === 'view-home') {
+      window.navigateToView('view-home');
+    }
+  });
 });

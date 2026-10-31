@@ -192,14 +192,27 @@
               <h3 id="categoryResultTitle">Tất cả sản phẩm</h3>
               <p id="categoryResultCount">Đang tải sản phẩm...</p>
             </div>
-            <label class="sort-control">Sắp xếp
-              <select id="categorySortSelect" onchange="filterCategoryProducts()">
-                <option value="default">Phổ biến</option>
-                <option value="price-asc">Giá thấp → cao</option>
-                <option value="price-desc">Giá cao → thấp</option>
-                <option value="name">Tên A → Z</option>
-              </select>
-            </label>
+            <div class="sort-control">
+              <span class="sort-control-label" id="categorySortLabel">Sắp xếp</span>
+              <div class="sort-dropdown" id="categorySort">
+                <button type="button" class="sort-dropdown-trigger" id="categorySortTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="categorySortLabel categorySortValue">
+                  <span id="categorySortValue">Phổ biến</span>
+                  <svg class="sort-dropdown-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <ul class="sort-dropdown-menu" id="categorySortMenu" role="listbox" aria-labelledby="categorySortLabel">
+                  <li class="sort-dropdown-option is-selected" role="option" data-value="default" aria-selected="true" tabindex="-1">Phổ biến</li>
+                  <li class="sort-dropdown-option" role="option" data-value="price-asc" aria-selected="false" tabindex="-1">Giá thấp → cao</li>
+                  <li class="sort-dropdown-option" role="option" data-value="price-desc" aria-selected="false" tabindex="-1">Giá cao → thấp</li>
+                  <li class="sort-dropdown-option" role="option" data-value="name" aria-selected="false" tabindex="-1">Tên A → Z</li>
+                </ul>
+                <select id="categorySortSelect" class="sort-dropdown-native" tabindex="-1" aria-hidden="true" onchange="filterCategoryProducts()" hidden>
+                  <option value="default">Phổ biến</option>
+                  <option value="price-asc">Giá thấp → cao</option>
+                  <option value="price-desc">Giá cao → thấp</option>
+                  <option value="name">Tên A → Z</option>
+                </select>
+              </div>
+            </div>
           </div>
           <div class="products-grid" id="categoryProductsGrid">
 <!--STATIC-CARDS:CAT-2-->
@@ -639,13 +652,13 @@
       <div class="page-heading">
         <div>
           <span class="page-eyebrow">Tìm kiếm thông minh</span>
-          <h2>Bộ Lọc Tìm Kiếm Nâng Cao</h2>
+          <h2>Tìm Kiếm Nâng Cao</h2>
           <p>Kết hợp từ khóa, danh mục và khoảng giá để tìm đúng sản phẩm.</p>
         </div>
         <a class="page-heading-link" href="#" onclick="navigateToView('view-category'); return false;">← Về danh mục</a>
       </div>
 
-      <section class="advanced-search-panel" aria-label="Bộ lọc tìm kiếm nâng cao">
+      <section class="advanced-search-panel" aria-label="Tìm kiếm nâng cao">
         <form class="advanced-search-form" id="advancedSearchForm" onsubmit="event.preventDefault(); applyAdvancedSearch();">
           <div class="adv-field">
             <label for="advKeyword">Từ khóa</label>
@@ -682,7 +695,7 @@
             </div>
           </div>
           <div class="adv-actions">
-            <button type="submit" class="btn btn-primary">Áp dụng bộ lọc</button>
+            <button type="submit" class="btn btn-primary">Áp dụng</button>
             <button type="button" class="btn btn-ghost" onclick="resetAdvancedSearch()">Đặt lại</button>
           </div>
         </form>
@@ -1113,7 +1126,7 @@
 </article>
 <!--/STATIC-CARDS:ADV-2-->
 </div>
-        <div class="empty-products" id="advEmptyState" hidden>
+        <div class="empty-products" id="advEmptyState" hidden style="display: none !important;">
   <span>⌕</span>
   <strong>Không tìm thấy sản phẩm</strong>
   <p>Thử thay đổi từ khóa hoặc bỏ bớt bộ lọc để xem thêm sản phẩm.</p>

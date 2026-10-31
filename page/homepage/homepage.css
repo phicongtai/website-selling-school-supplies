@@ -171,6 +171,16 @@ img.brand-icon {
   .nav-link {
     transition: none;
   }
+
+  .sort-dropdown.is-open .sort-dropdown-menu {
+    animation: none;
+  }
+
+  .sort-dropdown-chevron,
+  .sort-dropdown-option,
+  .sort-dropdown-option::after {
+    transition: none;
+  }
 }
 
 /* Header Search & Live Search Dropdown */
@@ -337,12 +347,88 @@ img.brand-icon {
 }
 .results-toolbar h3 { margin: 0 0 4px; font-size: 1.05rem; color: var(--text-headline); }
 .results-toolbar p { margin: 0; color: var(--text-muted); font-size: 0.82rem; }
-.sort-control { display: flex; align-items: center; gap: 8px; color: #666; font-size: 0.8rem; white-space: nowrap; }
-.sort-control select {
-  padding: 9px 12px; border: 1px solid var(--border-medium); border-radius: 8px;
-  background: #fff; color: var(--text-body); font-size: 0.82rem;
+.sort-control {
+  position: relative;
+  display: flex; align-items: center; gap: 10px;
+  color: #666; font-size: 0.8rem; white-space: nowrap;
 }
-.sort-control select:focus { outline: none; border-color: var(--color-primary); }
+.sort-control-label { flex: 0 0 auto; }
+.sort-dropdown { position: relative; min-width: 172px; }
+.sort-dropdown-trigger {
+  width: 100%; min-height: 42px;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid var(--border-medium); border-radius: 9px;
+  background: #fff; color: var(--text-body);
+  font: inherit; font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+.sort-dropdown-trigger:hover,
+.sort-dropdown.is-open .sort-dropdown-trigger {
+  border-color: var(--color-primary);
+  background: #fffdfb;
+}
+.sort-dropdown-trigger:focus-visible {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-50);
+}
+.sort-dropdown-chevron {
+  width: 16px; height: 16px; flex: 0 0 16px;
+  color: #6b7280;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.sort-dropdown.is-open .sort-dropdown-chevron {
+  transform: rotate(180deg);
+  color: var(--color-primary);
+}
+.sort-dropdown-menu {
+  display: none;
+  position: absolute; top: calc(100% + 6px); right: 0; z-index: 30;
+  min-width: 100%; width: max-content; max-width: min(260px, calc(100vw - 32px));
+  margin: 0; padding: 6px; list-style: none;
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12), 0 2px 8px rgba(15, 23, 42, 0.06);
+  transform-origin: top right;
+}
+.sort-dropdown.is-open .sort-dropdown-menu {
+  display: block;
+  animation: sort-dropdown-enter 0.2s ease both;
+}
+@keyframes sort-dropdown-enter {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.sort-dropdown-option {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 9px 11px; border-radius: 8px;
+  color: var(--text-body); font-size: 0.82rem; line-height: 1.35;
+  cursor: pointer; outline: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.sort-dropdown-option::after {
+  content: "✓";
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.sort-dropdown-option:hover,
+.sort-dropdown-option:focus-visible {
+  background: var(--color-primary-50);
+  color: var(--color-primary-800);
+}
+.sort-dropdown-option.is-selected {
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+  font-weight: 700;
+}
+.sort-dropdown-option.is-selected::after { opacity: 1; transform: scale(1); }
+.sort-dropdown-native { display: none; }
 .empty-products {
   grid-column: 1 / -1; padding: 48px 24px; border: 1px dashed var(--border-medium);
   border-radius: var(--radius-lg); background: #fff; text-align: center; color: var(--text-muted);
@@ -531,6 +617,9 @@ body.cart-drawer-open { overflow: hidden; }
   .homepage-header-actions { gap: 12px; }
   .page-heading { flex-direction: column; align-items: flex-start; gap: 8px; }
   .results-toolbar { flex-direction: column; align-items: flex-start; }
+  .sort-control { width: 100%; justify-content: space-between; }
+  .sort-dropdown { flex: 1; min-width: 0; max-width: 230px; }
+  .sort-dropdown-menu { right: auto; left: 0; transform-origin: top left; }
   .advanced-search-form { grid-template-columns: 1fr; }
   .adv-actions { grid-column: auto; flex-wrap: wrap; }
   .category-layout { gap: 18px; }

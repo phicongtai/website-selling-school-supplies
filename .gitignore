@@ -1,0 +1,20 @@
+# Python files and caches
+*.py
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+venv/
+.venv/
+env/
+.env
+
+# Analysis & EFI folders
+ASUS-VivoBook-16X-EFI/
+Acer_Nitro_5_AN515-58_EFI/
+asus_hackintosh_release/
+asus_vivobook_efi_analysis/
+

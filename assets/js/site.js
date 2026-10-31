@@ -258,6 +258,7 @@
       sessionStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
       try { localStorage.removeItem(AUTH_STORAGE_KEY); } catch (e) {}
       if (window.StoreCart && typeof window.StoreCart.updateBadges === 'function') { window.StoreCart.updateBadges(); }
+      document.dispatchEvent(new CustomEvent('cart:changed', { detail: (window.StoreCart ? window.StoreCart.get() : []) }));
       return user;
     },
     logout: function () {
@@ -268,6 +269,7 @@
         localStorage.removeItem('hds_cart_v1');
       } catch (e) {}
       if (window.StoreCart && typeof window.StoreCart.updateBadges === 'function') { window.StoreCart.updateBadges(); }
+      document.dispatchEvent(new CustomEvent('cart:changed', { detail: [] }));
       if (typeof initHeaderAuth === 'function') {
         initHeaderAuth();
       }
@@ -455,6 +457,18 @@ window.closeCartDrawer = function() {
       input.type = 'text';
       input.inputMode = 'numeric';
     }
+
+    // Với các ô có giá trị mặc định (0 / 5.000.000), chọn sẵn toàn bộ nội dung
+    // để khi người dùng nhập số mới, giá trị cũ được thay thế thay vì bị nối thêm.
+    input.addEventListener('focus', function () {
+      const filterIds = ['advMinPrice', 'advMaxPrice', 'filterMinPrice', 'filterMaxPrice'];
+      if (filterIds.indexOf(input.id) !== -1 && (input.value === '0' || input.value === '5.000.000')) {
+        input.select();
+        window.requestAnimationFrame(function () {
+          if (document.activeElement === input) input.select();
+        });
+      }
+    });
 
     input.addEventListener('keydown', function (e) {
       if (e.key === 'Backspace') {

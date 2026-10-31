@@ -83,7 +83,7 @@ Các chức năng chính:
 - **Điều hướng SPA** không tải lại trang, giữ trạng thái trên URL (`hash` + query params) để reload không mất màn hình đang xem.
 - **Tìm kiếm trực tiếp trên header:** gợi ý tối đa 4 sản phẩm theo mã hoặc tên, dropdown đóng khi click ra ngoài.
 - **Bộ lọc danh mục:** chọn nhiều danh mục, khoảng giá, đang giảm giá, sản phẩm nổi bật.
-- **Sắp xếp:** phổ biến, giá thấp → cao, giá cao → thấp, tên A → Z.
+- **Sắp xếp (demo):** phổ biến, giá thấp → cao, giá cao → thấp, tên A → Z. Khi chọn, giao diện cập nhật nhãn và hiển thị loading giả giống “Tìm kiếm nâng cao”, nhưng không thay đổi thứ tự sản phẩm.
 - **Đồng bộ bộ lọc với URL:** `categories`, `min`, `max`, `sort`, `sale`, `hot`, `q`, `cat`.
 - **Đếm số lượng sản phẩm** theo từng danh mục và ưu đãi ngay trên sidebar.
 - **Tìm kiếm nâng cao:** từ khóa, danh mục, khoảng giá, nút đặt lại và 4 preset giá.
@@ -443,7 +443,7 @@ Mỗi thư mục `A01`–`A12` đều có bộ ba `index.html`, `admin.js`, `adm
 | `cat` | mã danh mục / `all` | Danh mục trong tìm kiếm nâng cao |
 | `min` | số | Giá tối thiểu |
 | `max` | số | Giá tối đa |
-| `sort` | `default`, `price-asc`, `price-desc`, `name` | Kiểu sắp xếp |
+| `sort` | `default`, `price-asc`, `price-desc`, `name` | Kiểu sắp xếp trên URL (demo, không đổi thứ tự thực tế) |
 | `sale` | `1` | Chỉ sản phẩm đang giảm giá |
 | `hot` | `1` | Chỉ sản phẩm nổi bật |
 | Hash | `view-home`, `view-category`, `view-detail`, `view-advanced-search` | Màn hình đang hiển thị |
@@ -946,6 +946,7 @@ Khi thêm sản phẩm admin, cần cập nhật đồng bộ ở cả ba file n
 13. **Chưa có test tự động, ESLint, Prettier, CI/CD**.
 14. **Tên thư mục admin không đồng nhất**: có khoảng trắng, dấu tiếng Việt và typo nhỏ.
 15. **README cũ và một số ghi chú nội bộ có thể lỗi thời**; README này là bản mô tả hiện tại.
+16. **Sắp xếp ở trang chủ chỉ là demo**: đổi lựa chọn chỉ cập nhật nhãn/URL và hiện loading giả, không thay đổi thứ tự sản phẩm — giống “Tìm kiếm nâng cao”.
 
 ---
 

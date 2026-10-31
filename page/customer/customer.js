@@ -154,7 +154,11 @@
   };
 
   const syncProfileLabels = () => {
+    const memberCard = document.querySelector('.c-member-card');
     if (!isUserLoggedIn()) {
+      if (memberCard) {
+        memberCard.style.display = 'none';
+      }
       document.querySelectorAll('[data-profile-name]').forEach(node => {
         node.textContent = 'Khách vãng lai';
       });
@@ -168,6 +172,9 @@
         node.textContent = 'Đăng nhập';
       });
       return;
+    }
+    if (memberCard) {
+      memberCard.style.display = '';
     }
     const profile = getProfile();
     document.querySelectorAll('[data-profile-name]').forEach(node => {
@@ -486,6 +493,7 @@
       render();
     });
 
+    document.addEventListener('cart:changed', render);
     render();
 
     if (new URLSearchParams(window.location.search).get('tab') === 'orders') {
