@@ -323,20 +323,8 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast('Đơn hàng mới đã được tạo và đang chờ xác nhận.');
   });
 
-  document.getElementById('export-orders').addEventListener('click', () => {
-    const headers = ['Mã đơn', 'Khách hàng', 'Ngày đặt', 'Địa điểm giao', 'Tổng tiền', 'Tình trạng'];
-    const rows = getFilteredOrders().map((order) => [order.code, order.customer, formatDate(order.date), order.address, order.total, labels[order.status]]);
-    const csv = '\uFEFF' + [headers, ...rows].map((row) => row.map((value) => `"${String(value).replaceAll('"', '""')}"`).join(',')).join('\r\n');
-    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
-    const link = document.createElement('a'); link.href = url;
-    link.download = `danh_sach_don_hang_${new Date().toISOString().slice(0, 10)}.csv`;
-    link.click(); URL.revokeObjectURL(url); showToast(`Đã xuất ${rows.length} đơn hàng ra file CSV.`);
-  });
-
-  const loggedInUser = (() => {
-    try { return sessionStorage.getItem('hd_admin_user'); } catch (error) { return null; }
-  })();
-  if (loggedInUser) document.getElementById('sidebar-user-name').textContent = loggedInUser;
+  const sidebarUserName = document.getElementById('sidebar-user-name');
+  if (sidebarUserName) sidebarUserName.textContent = 'Nguyễn Văn A';
 
   // Trình duyệt có thể khôi phục giá trị đã nhập sau khi F5, nên đặt lại
   // điều khiển lọc trước khi áp dụng tham số tìm kiếm trên URL.

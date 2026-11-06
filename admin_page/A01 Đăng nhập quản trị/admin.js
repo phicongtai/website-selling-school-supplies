@@ -15,12 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const formAlert = document.getElementById('form-alert');
   const rememberCheckbox = document.getElementById('remember-me');
 
-  // Đọc tên đăng nhập đã lưu trước đó nếu có
-  const savedUsername = localStorage.getItem('hd_admin_saved_username');
-  if (savedUsername && usernameInput) {
-    usernameInput.value = savedUsername;
-    if (rememberCheckbox) rememberCheckbox.checked = true;
-    if (passwordInput) passwordInput.focus();
+  // Tên đăng nhập quản trị để trống khi mở trang đăng nhập
+  if (usernameInput) {
+    usernameInput.value = '';
   }
 
   /**
@@ -56,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const username = (usernameInput && usernameInput.value.trim()) ? usernameInput.value.trim() : 'Quản trị viên';
+      const username = 'Nguyễn Văn A';
 
       // Trạng thái đang xác thực
       setLoading(true);

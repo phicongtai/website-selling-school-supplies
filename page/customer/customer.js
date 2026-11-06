@@ -682,22 +682,6 @@
     }
 
     const validateNewAddress = () => {
-      const fields = [
-        { node: document.getElementById('newProvince'), label: 'Tỉnh / Thành phố' },
-        { node: document.getElementById('newDistrict'), label: 'Quận / Huyện' },
-        { node: document.getElementById('newWard'), label: 'Phường / Xã' },
-        { node: document.getElementById('newStreet'), label: 'Số nhà, tên đường' }
-      ];
-      for (const field of fields) {
-        if (!field.node || !String(field.node.value).trim()) {
-          toast(`Vui lòng nhập ${field.label.toLowerCase()}.`);
-          if (field.node) {
-            field.node.focus();
-            field.node.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-          return null;
-        }
-      }
       return {
         name: profile.name,
         phone: profile.phone,

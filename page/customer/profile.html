@@ -265,12 +265,12 @@
       <form id="addressForm">
         <input type="hidden" id="addressId">
         <div class="c-form-grid c-form-grid--2">
-          <label class="c-field"><span>Họ và tên</span><input id="addrName" type="text" autocomplete="name" required></label>
-          <label class="c-field"><span>Số điện thoại</span><input id="addrPhone" type="tel" autocomplete="tel" required></label>
+          <label class="c-field"><span>Họ và tên</span><input id="addrName" type="text" autocomplete="name"></label>
+          <label class="c-field"><span>Số điện thoại</span><input id="addrPhone" type="tel" autocomplete="tel"></label>
         </div>
         <div class="c-form-grid c-form-grid--3">
           <label class="c-field"><span>Tỉnh / Thành phố</span>
-            <select id="addrProvince" required>
+            <select id="addrProvince">
               <option value="">Chọn Tỉnh / TP</option>
               <option>TP. Hồ Chí Minh</option>
               <option>Hà Nội</option>
@@ -280,7 +280,7 @@
             </select>
           </label>
           <label class="c-field"><span>Quận / Huyện</span>
-            <select id="addrDistrict" required>
+            <select id="addrDistrict">
               <option value="">Chọn Quận / Huyện</option>
               <option>Quận 1</option>
               <option>Quận 3</option>
@@ -291,7 +291,7 @@
             </select>
           </label>
           <label class="c-field"><span>Phường / Xã</span>
-            <select id="addrWard" required>
+            <select id="addrWard">
               <option value="">Chọn Phường / Xã</option>
               <option>Phường Bến Nghé</option>
               <option>Phường Bến Thành</option>
@@ -302,7 +302,7 @@
             </select>
           </label>
         </div>
-        <label class="c-field"><span>Số nhà, tên đường, tòa nhà, khu vực...</span><input id="addrStreet" type="text" placeholder="Ví dụ: 12 Nguyễn Huệ" autocomplete="street-address" required></label>
+        <label class="c-field"><span>Số nhà, tên đường, tòa nhà, khu vực...</span><input id="addrStreet" type="text" placeholder="Ví dụ: 12 Nguyễn Huệ" autocomplete="street-address"></label>
         <div class="c-form-grid c-form-grid--2">
           <label class="c-field"><span>Loại địa chỉ</span>
             <select id="addrType">

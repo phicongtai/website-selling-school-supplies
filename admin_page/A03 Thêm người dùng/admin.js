@@ -68,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('user-search-input');
   const statusFilter = document.getElementById('status-filter');
   const btnRefresh = document.getElementById('btn-refresh');
-  const btnExportExcel = document.getElementById('btn-export-excel');
   const totalUsersText = document.getElementById('total-users-text');
   const statTotalVal = document.getElementById('stat-total-val');
   const statActiveVal = document.getElementById('stat-active-val');
@@ -96,12 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const toastText = document.getElementById('toast-text');
   let toastTimer = null;
 
-  // Đọc tên người quản trị
-  const loggedInUser = sessionStorage.getItem('hd_admin_user');
-  if (loggedInUser) {
-    const sidebarUserName = document.getElementById('sidebar-user-name');
-    if (sidebarUserName) sidebarUserName.textContent = loggedInUser;
-  }
+  // Tên tài khoản quản trị cố định
+  const sidebarUserName = document.getElementById('sidebar-user-name');
+  if (sidebarUserName) sidebarUserName.textContent = 'Nguyễn Văn A';
 
   // 2. Tính toán mã người dùng kế tiếp
   function calculateNextCode() {
@@ -381,33 +377,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
       showToast('Đã làm mới danh sách người dùng');
-    });
-  }
-
-  if (btnExportExcel) {
-    btnExportExcel.addEventListener('click', () => {
-      const headers = ['MÃ', 'HỌ TÊN', 'TÊN ĐĂNG NHẬP', 'EMAIL', 'SỐ ĐIỆN THOẠI', 'VAI TRÒ', 'TRẠNG THÁI'];
-      const rows = usersData.map(u => [
-        u.code,
-        `"${u.name}"`,
-        u.username,
-        u.email,
-        u.phone,
-        u.role === 'staff' ? 'Nhân viên' : (u.role === 'admin' ? 'Quản trị viên' : 'Khách hàng'),
-        u.status === 'active' ? 'Hoạt động' : 'Đã khoá'
-      ]);
-
-      const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.setAttribute('href', url);
-      link.setAttribute('download', `danh_sach_nguoi_dung_${new Date().toISOString().slice(0, 10)}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      showToast('Đã tải xuống file Excel danh sách người dùng');
     });
   }
 

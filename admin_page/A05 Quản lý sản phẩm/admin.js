@@ -155,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const statusFilter = document.getElementById('status-filter');
   const selectAllCheckbox = document.getElementById('select-all-checkbox');
   const btnRefresh = document.getElementById('btn-refresh');
-  const btnExportExcel = document.getElementById('btn-export-excel');
   const totalProductsText = document.getElementById('total-products-text');
   const paginationInfoText = document.getElementById('pagination-info-text');
 
@@ -646,35 +645,6 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast('Đã làm mới danh sách', 'Dữ liệu sản phẩm hiển thị đã được làm mới.');
     });
   }
-
-  // 11. XUẤT DANH SÁCH RA FILE CSV (HỖ TRỢ TIẾNG VIỆT EXCEL)
-  btnExportExcel.addEventListener('click', () => {
-    if (products.length === 0) {
-      alert('Không có dữ liệu sản phẩm để xuất!');
-      return;
-    }
-
-    let csvContent = '\uFEFF'; // UTF-8 BOM cho Excel
-    csvContent += 'MÃ SẢN PHẨM,TÊN SẢN PHẨM,DANH MỤC,GIÁ BÁN (VNĐ),TRẠNG THÁI,ĐÃ BÁN,TỒN KHO\n';
-
-    products.forEach(p => {
-      const statusLabel = (p.status === 'active') ? 'Đang bán' : 'Đã ẩn';
-      const cleanName = `"${p.name.replace(/"/g, '""')}"`;
-      const cleanCat = `"${p.category.replace(/"/g, '""')}"`;
-      csvContent += `${p.code},${cleanName},${cleanCat},${p.price},${statusLabel},${p.sold},${p.stock || 0}\n`;
-    });
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.setAttribute('href', url);
-    link.setAttribute('download', `danh_sach_san_pham_hoc_duong_${new Date().toISOString().slice(0, 10)}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    showToast('Xuất tệp thành công', 'File Excel CSV danh sách sản phẩm đã được tải về máy.');
-  });
 
   // 12. CẬP NHẬT NGÀY HIỆN TẠI TRÊN TOPBAR
   const dateEl = document.getElementById('current-date-text');

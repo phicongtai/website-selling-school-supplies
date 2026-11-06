@@ -609,11 +609,8 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ------------------------------------------------------------------------
      10. KHỞI TẠO CHUNG CỦA KHUNG QUẢN TRỊ
      ------------------------------------------------------------------------ */
-  const loggedInUser = (() => {
-    try { return sessionStorage.getItem('hd_admin_user'); } catch (error) { return null; }
-  })();
   const sidebarUserName = $('#sidebar-user-name');
-  if (loggedInUser && sidebarUserName) sidebarUserName.textContent = loggedInUser;
+  if (sidebarUserName) sidebarUserName.textContent = 'Nguyễn Văn A';
 
   renderHeader();
   renderProducts();

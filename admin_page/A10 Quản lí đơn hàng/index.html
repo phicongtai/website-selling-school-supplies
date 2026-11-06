@@ -37,7 +37,7 @@
         <a href="../A12 thống kê khách hàng/index.html"><svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 10V4.67L5.33 0L9.33 4L14.67 0V2.67L9.33 6.67L5.33 2.67L0 7.33V10Z" fill="currentColor"/></svg><span>Thống kê</span></a>
       </nav>
       <div class="sidebar-account">
-        <div class="account-info"><span class="account-avatar" aria-hidden="true">A</span><div class="account-details"><span class="account-name" id="sidebar-user-name">Quản trị viên Hệ thống</span><small class="account-email">admin@hocduong.vn</small></div></div>
+        <div class="account-info"><span class="account-avatar" aria-hidden="true">A</span><div class="account-details"><span class="account-name" id="sidebar-user-name">Nguyễn Văn A</span><small class="account-email">admin@hocduong.vn</small></div></div>
         <a class="sidebar-logout" href="../A01 Đăng nhập quản trị/index.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1.33 14C0.97 14 0.65 13.87 0.39 13.61C0.13 13.35 0 13.03 0 12.67V1.33C0 0.97 0.13 0.65 0.39 0.39C0.65 0.13 0.97 0 1.33 0H6.67V1.33H1.33V12.67H6.67V14H1.33ZM10 10.67L8.93 9.6L10.87 7.67H4.67V6.33H10.87L8.93 4.4L10 3.33L13.67 7L10 10.67Z" fill="currentColor"/></svg><span>Đăng xuất</span></a>
       </div>
     </aside>
@@ -64,7 +64,6 @@
         <section class="orders-heading" aria-labelledby="orders-title">
           <div class="page-title-group"><h1 class="page-title" id="orders-title">Quản lý đơn hàng</h1><p class="page-subtitle" id="orders-subtitle">Theo dõi, xử lý và điều phối 10 đơn hàng trên hệ thống thương mại Học Đường Store</p></div>
           <div class="orders-heading-actions">
-            <button class="orders-button orders-button-light" id="export-orders" type="button" title="Tải danh sách dạng CSV"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/></svg>Xuất danh sách (Excel)</button>
             <button class="orders-button orders-button-primary" id="open-order-modal" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Tạo đơn tại quầy</button>
           </div>
         </section>
@@ -102,8 +101,8 @@
   </div>
 
   <div class="order-modal" id="order-modal" aria-hidden="true"><section class="order-dialog" role="dialog" aria-modal="true" aria-labelledby="order-modal-title"><div class="order-dialog-head"><h2 id="order-modal-title">Tạo đơn hàng tại quầy</h2><button type="button" id="close-order-modal" aria-label="Đóng">×</button></div><form id="order-form" class="order-form">
-    <label>Họ tên khách hàng<input name="customer" required maxlength="80" placeholder="Nguyễn Văn A"></label><label>Địa điểm giao hàng<input name="address" required maxlength="120" placeholder="Quận 1, TP. Hồ Chí Minh"></label>
-    <div class="order-form-row"><label>Khu vực<select name="location" required><option value="Hồ Chí Minh">TP. Hồ Chí Minh</option><option value="Hà Nội">Hà Nội</option><option value="Đà Nẵng">Đà Nẵng</option></select></label><label>Tổng tiền (đ)<input name="total" type="text" inputmode="numeric" required placeholder="199.000"></label></div>
+    <label>Họ tên khách hàng<input name="customer" maxlength="80" placeholder="Nguyễn Văn A"></label><label>Địa điểm giao hàng<input name="address" maxlength="120" placeholder="Quận 1, TP. Hồ Chí Minh"></label>
+    <div class="order-form-row"><label>Khu vực<select name="location"><option value="Hồ Chí Minh">TP. Hồ Chí Minh</option><option value="Hà Nội">Hà Nội</option><option value="Đà Nẵng">Đà Nẵng</option></select></label><label>Tổng tiền (đ)<input name="total" type="text" inputmode="numeric" placeholder="199.000"></label></div>
     <div class="order-form-actions"><button type="button" class="orders-button orders-button-light" id="cancel-order-modal">Huỷ</button><button type="submit" class="orders-button orders-button-primary">Tạo đơn</button></div>
   </form></section></div>
   <div class="orders-toast" id="orders-toast" role="status" aria-live="polite"></div>

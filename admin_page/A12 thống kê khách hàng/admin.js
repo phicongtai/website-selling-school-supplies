@@ -239,7 +239,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (dateToInput && state.to) dateToInput.value = state.to;
 
   const applyFilterBtn = $('#apply-filter');
-  const exportExcelBtn = $('#export-excel');
   const openDataModalBtn = $('#open-data-modal');
   const customerList = $('#customer-list');
 
@@ -259,7 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const dataModal = $('#data-modal');
   const closeDataModalBtn = $('#close-data-modal');
   const cancelDataModalBtn = $('#cancel-data-modal');
-  const modalExportExcelBtn = $('#modal-export-excel');
   const modalRangeText = $('#modal-range-text');
   const modalRevenue = $('#modal-revenue');
   const modalOrders = $('#modal-orders');
@@ -664,80 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ------------------------------------------------------------------------
-     8. XUẤT FILE EXCEL (CSV UTF-8 CÓ BOM)
-     ------------------------------------------------------------------------ */
-  function exportReport() {
-    const report = buildReport();
-
-    if (report.visibleRanking.length === 0) {
-      showToast('Không có dữ liệu để xuất trong khoảng thời gian đã chọn.');
-      return;
-    }
-
-    const headers = [
-      'MÃ KHÁCH HÀNG',
-      'HỌ TÊN',
-      'EMAIL',
-      'SỐ ĐIỆN THOẠI',
-      'THÀNH PHỐ',
-      'HẠNG',
-      'TỔNG CHI TIÊU',
-      'SỐ ĐƠN',
-      'MÃ ĐƠN',
-      'NGÀY ĐẶT',
-      'DANH SÁCH MẶT HÀNG',
-      'TỔNG TIỀN ĐƠN'
-    ];
-
-    const rows = [];
-    report.visibleRanking.forEach((customer, index) => {
-      customer.visibleOrders.forEach((order) => {
-        const productText = order.products
-          .map((product) => `${product.name} (${product.code})`)
-          .join('; ');
-
-        rows.push([
-          customer.id,
-          `"${customer.name}"`,
-          customer.email,
-          `"${customer.phone}"`,
-          `"${customer.city}"`,
-          index + 1,
-          customer.total,
-          customer.orderCount,
-          order.code,
-          formatDateVN(order.date),
-          `"${productText}"`,
-          order.total
-        ]);
-      });
-    });
-
-    const csvContent = '\uFEFF' + [
-      headers.join(','),
-      ...rows.map((row) => row.join(','))
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-
-    link.setAttribute('href', url);
-    link.setAttribute('download', `thong_ke_khach_hang_${state.from}_${state.to}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-
-    showToast('Đã xuất file Excel thống kê khách hàng.');
-    closeDataModal();
-  }
-
-  if (exportExcelBtn) exportExcelBtn.addEventListener('click', exportReport);
-  if (modalExportExcelBtn) modalExportExcelBtn.addEventListener('click', exportReport);
-
-  /* ------------------------------------------------------------------------
-     9. MODAL CHI TIẾT BÁO CÁO
+     8. MODAL CHI TIẾT BÁO CÁO
      ------------------------------------------------------------------------ */
   function openDataModal() {
     if (!dataModal) return;
@@ -782,12 +707,8 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ------------------------------------------------------------------------
      10. KHỞI TẠO CHUNG CỦA KHUNG QUẢN TRỊ
      ------------------------------------------------------------------------ */
-  const loggedInUser = (() => {
-    try { return sessionStorage.getItem('hd_admin_user'); } catch (error) { return null; }
-  })();
-
   const sidebarUserName = $('#sidebar-user-name');
-  if (loggedInUser && sidebarUserName) sidebarUserName.textContent = loggedInUser;
+  if (sidebarUserName) sidebarUserName.textContent = 'Nguyễn Văn A';
 
   // Mở sẵn chi tiết 2 khách hàng đứng đầu giống bản thiết kế.
   const initialReport = buildReport();
