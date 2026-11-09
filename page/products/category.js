@@ -9,10 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Sản phẩm đã được viết tĩnh trong HTML của từng trang (trang 1 / trang 2 là
-  // hai file khác nhau), JS chỉ đóng vai trò lọc – sắp xếp trên các thẻ tĩnh đó.
+  // hai file khác nhau), JS chỉ đóng vai trò hiển thị trên các thẻ tĩnh đó.
   const grid = document.getElementById("productGrid");
   const count = document.getElementById("resultCount");
-  const sort = document.getElementById("sortSelect");
   const search = document.getElementById("searchInput");
   const emptyState = document.getElementById("categoryEmptyState");
   const categoryLinks = {
@@ -24,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "computers.html": "computers"
   };
 
-  if (!grid || !count || !sort || !search) {
+  if (!grid || !count || !search) {
     throw new Error("Thiếu dữ liệu hoặc thành phần cần thiết cho trang danh mục sản phẩm.");
   }
 
@@ -47,12 +46,48 @@ document.addEventListener("DOMContentLoaded", () => {
     if (card.dataset.order === undefined) card.dataset.order = String(index);
   });
 
-  const sorters = {
-    "low": (a, b) => (Number(a.dataset.price) || 0) - (Number(b.dataset.price) || 0),
-    "high": (a, b) => (Number(b.dataset.price) || 0) - (Number(a.dataset.price) || 0),
-    "name": (a, b) => (a.dataset.title || "").localeCompare(b.dataset.title || "", "vi"),
-    "popular": (a, b) => Number(a.dataset.order) - Number(b.dataset.order)
-  };
+  // Sắp xếp: dropdown tự viết (giống trang "Sản phẩm") — chỉ sổ ra để chọn,
+  // không sắp xếp lại danh sách sản phẩm.
+  const sortControl = document.querySelector(".sort-control");
+  const sortDropdown = sortControl ? sortControl.querySelector(".sort-dropdown") : null;
+  const sortTrigger = sortDropdown ? sortDropdown.querySelector(".sort-dropdown-trigger") : null;
+  const sortLabel = sortTrigger ? sortTrigger.querySelector("span") : null;
+  const sortOptions = sortDropdown
+    ? Array.from(sortDropdown.querySelectorAll(".sort-dropdown-option"))
+    : [];
+
+  function closeSortMenu() {
+    if (!sortDropdown) return;
+    sortDropdown.classList.remove("is-open");
+    if (sortTrigger) sortTrigger.setAttribute("aria-expanded", "false");
+  }
+
+  if (sortDropdown && sortTrigger && sortLabel) {
+    sortTrigger.addEventListener("click", () => {
+      const isOpen = sortDropdown.classList.toggle("is-open");
+      sortTrigger.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    sortOptions.forEach(option => {
+      option.addEventListener("click", () => {
+        sortOptions.forEach(item => {
+          const selected = item === option;
+          item.classList.toggle("is-selected", selected);
+          item.setAttribute("aria-selected", String(selected));
+        });
+        sortLabel.textContent = option.textContent.trim();
+        closeSortMenu();
+      });
+    });
+
+    document.addEventListener("click", event => {
+      if (!sortDropdown.contains(event.target)) closeSortMenu();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeSortMenu();
+    });
+  }
 
   function render() {
     // YÊU CẦU: từ khóa tìm kiếm chỉ để showcasing — KHÔNG lọc thật.
@@ -62,11 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
       card.classList.remove("is-hidden");
       card.style.display = "";
     });
-
-    const sorter = sorters[sort.value];
-    if (sorter) {
-      cards.sort(sorter).forEach(card => grid.appendChild(card));
-    }
 
     const body = document.body;
     const catalog = window.StoreCatalog && window.StoreCatalog.products;
@@ -79,7 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (emptyState) emptyState.hidden = true;
   }
 
-  sort.addEventListener("change", render);
   search.addEventListener("input", render);
   document.getElementById("searchButton")?.addEventListener("click", () => {
     // Người dùng bấm "Tìm kiếm": hiện hiệu ứng loading giả rồi bật lại toàn bộ danh sách.

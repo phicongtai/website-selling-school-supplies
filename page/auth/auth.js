@@ -37,6 +37,7 @@ if (loginForm) {
     let target = '../homepage/main.html';
     if (redirect === 'checkout') target = '../customer/checkout.html';
     else if (redirect === 'cart') target = '../customer/cart.html';
+    else if (redirect === 'orders') target = '../customer/orders.html';
     setTimeout(function () {
       window.location.href = target;
     }, 400);
@@ -91,6 +92,7 @@ if (registerForm) {
     let target = '../homepage/main.html';
     if (redirect === 'checkout') target = '../customer/checkout.html';
     else if (redirect === 'cart') target = '../customer/cart.html';
+    else if (redirect === 'orders') target = '../customer/orders.html';
     setTimeout(function () {
       window.location.href = target;
     }, 400);
@@ -120,6 +122,7 @@ document.querySelectorAll('.social-row button').forEach(function (button) {
     let target = '../homepage/main.html';
     if (redirect === 'checkout') target = '../customer/checkout.html';
     else if (redirect === 'cart') target = '../customer/cart.html';
+    else if (redirect === 'orders') target = '../customer/orders.html';
     setTimeout(function () {
       window.location.href = target;
     }, 400);

@@ -326,6 +326,7 @@
     const searchInput = document.getElementById('orderSearch');
     const tabs = Array.from(document.querySelectorAll('[data-order-filter]'));
     const expandedOrders = new Set();
+    const isOrdersPage = document.body.dataset.customerPage === 'orders';
     let activeFilter = 'all';
     let keyword = '';
 
@@ -335,7 +336,7 @@
       }
       const orders = [];
       const cartItems = getCartItems();
-      if (cartItems.length) {
+      if (!isOrdersPage && cartItems.length) {
         orders.push({
           type: 'draft',
           code: DRAFT_ORDER_CODE,
@@ -403,12 +404,23 @@
       });
 
       if (!filtered.length) {
+        const emptyTitle = !isUserLoggedIn()
+          ? 'Bạn chưa đăng nhập'
+          : (keyword ? 'Không tìm thấy đơn hàng' : (isOrdersPage ? 'Chưa có đơn hàng nào' : 'Chưa có đơn hàng phù hợp'));
+        const emptyText = !isUserLoggedIn()
+          ? 'Vui lòng đăng nhập để theo dõi đơn hàng của bạn.'
+          : (keyword
+            ? 'Thử tìm bằng mã đơn hàng hoặc tên sản phẩm khác.'
+            : (isOrdersPage
+              ? 'Bạn chưa có đơn hàng nào. Hãy khám phá sản phẩm và đặt đơn đầu tiên nhé!'
+              : 'Giỏ hàng của bạn đang trống. Khám phá thêm dụng cụ học tập mới nhé!'));
+        const loginHref = isOrdersPage ? '../auth/login.html?redirect=orders' : '../auth/login.html?redirect=cart';
         list.innerHTML = `<div class="c-orders-empty">
           <span class="c-icon-circle">${ICONS.cart}</span>
-          <h3>${!isUserLoggedIn() ? 'Bạn chưa đăng nhập' : (keyword ? 'Không tìm thấy đơn hàng' : 'Chưa có đơn hàng phù hợp')}</h3>
-          <p>${!isUserLoggedIn() ? 'Giỏ hàng của bạn đang trống. Vui lòng đăng nhập để xem giỏ hàng và theo dõi đơn hàng của bạn.' : (keyword ? 'Thử tìm bằng mã đơn hàng hoặc tên sản phẩm khác.' : 'Giỏ hàng của bạn đang trống. Khám phá thêm dụng cụ học tập mới nhé!')}</p>
+          <h3>${emptyTitle}</h3>
+          <p>${emptyText}</p>
           <div style="display:flex; gap:10px; justify-content:center; margin-top:14px;">
-            ${!isUserLoggedIn() ? '<a class="c-btn c-btn--primary" href="../auth/login.html?redirect=cart">Đăng nhập ngay</a>' : ''}
+            ${!isUserLoggedIn() ? `<a class="c-btn c-btn--primary" href="${loginHref}">Đăng nhập ngay</a>` : ''}
             <a class="c-btn ${!isUserLoggedIn() ? 'c-btn--secondary' : 'c-btn--primary'}" href="../homepage/main.html#view-category">Khám phá sản phẩm</a>
           </div>
         </div>`;
@@ -501,12 +513,6 @@
 
     document.addEventListener('cart:changed', render);
     render();
-
-    if (new URLSearchParams(window.location.search).get('tab') === 'orders') {
-      window.setTimeout(() => {
-        list.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 120);
-    }
   };
 
   /* -----------------------------------------------------------------------
