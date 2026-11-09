@@ -100,9 +100,22 @@
     <section class="category-results">
       <div class="results-heading">
         <div><h1>Máy tính &amp; thiết bị học tập <span>Chính hãng</span></h1><p id="resultCount">Hiển thị 4 / 8 sản phẩm (Trang 1/2)</p></div>
-        <label for="sortSelect">Sắp xếp:
-          <select id="sortSelect"><option value="popular">Phổ biến nhất</option><option value="low">Giá thấp đến cao</option><option value="high">Giá cao đến thấp</option><option value="name">Tên sản phẩm</option></select>
-        </label>
+        <!-- Sắp xếp sản phẩm theo giá / tên -->
+        <div class="sort-control">
+          <span class="sort-control-label">Sắp xếp</span>
+          <div class="sort-dropdown">
+            <button type="button" class="sort-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span>Phổ biến</span>
+              <svg class="sort-dropdown-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <ul class="sort-dropdown-menu" role="listbox" aria-label="Sắp xếp">
+              <li class="sort-dropdown-option is-selected" role="option" data-value="default" aria-selected="true" tabindex="-1">Phổ biến</li>
+              <li class="sort-dropdown-option" role="option" data-value="price-asc" aria-selected="false" tabindex="-1">Giá thấp → cao</li>
+              <li class="sort-dropdown-option" role="option" data-value="price-desc" aria-selected="false" tabindex="-1">Giá cao → thấp</li>
+              <li class="sort-dropdown-option" role="option" data-value="name" aria-selected="false" tabindex="-1">Tên A → Z</li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div class="product-grid" id="productGrid">
 <!--PRODUCTS:1-->

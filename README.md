@@ -409,7 +409,7 @@ Mỗi thư mục `A01`–`A12` đều có bộ ba `index.html`, `admin.js`, `adm
 | Danh mục Mỹ thuật | `page/products/art.html` | |
 | Danh mục Máy tính & thiết bị | `page/products/computers.html` | |
 | Chi tiết sản phẩm | `page/products/product-hp01.html` | Mỗi sản phẩm 1 trang tĩnh (`product-<mã>.html`) |
-| Giỏ hàng & đơn hàng | `page/customer/cart.html` | `?tab=orders` để cuộn tới danh sách đơn |
+| Giỏ hàng & đơn hàng | `page/customer/cart.html` | Giỏ hàng & đơn đang chờ thanh toán |
 | Thanh toán | `page/customer/checkout.html` | |
 | Đặt hàng thành công | `page/customer/order-success.html` | |
 | Tài khoản | `page/customer/profile.html` | `#addresses` để tới sổ địa chỉ |

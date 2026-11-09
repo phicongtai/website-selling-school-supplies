@@ -301,7 +301,7 @@
         register: 'register.html',
         admin: adminLink,
         profile: '../customer/profile.html',
-        orders: '../customer/cart.html?tab=orders'
+        orders: '../customer/orders.html'
       };
     } else if (p.includes('/page/customer/')) {
       return {
@@ -309,7 +309,7 @@
         register: '../auth/register.html',
         admin: adminLink,
         profile: 'profile.html',
-        orders: 'cart.html?tab=orders'
+        orders: 'orders.html'
       };
     } else {
       return {
@@ -317,7 +317,7 @@
         register: '../auth/register.html',
         admin: adminLink,
         profile: '../customer/profile.html',
-        orders: '../customer/cart.html?tab=orders'
+        orders: '../customer/orders.html'
       };
     }
   }
