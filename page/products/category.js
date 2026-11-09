@@ -77,6 +77,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         sortLabel.textContent = option.textContent.trim();
         closeSortMenu();
+
+        // Sắp xếp chỉ để minh họa: hiện loading giả rồi giữ nguyên thứ tự
+        // sản phẩm, không sắp xếp thật.
+        if (typeof window.showFakeLoading === "function") {
+          count.textContent = "Đang tải sản phẩm...";
+          window.showFakeLoading(grid, render);
+        }
       });
     });
 
