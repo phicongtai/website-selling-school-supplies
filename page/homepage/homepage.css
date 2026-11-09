@@ -102,6 +102,18 @@ button { cursor: pointer; }
 .homepage-header .brand-title { color: var(--color-primary-800); font-size: 1.2rem; font-weight: 800; }
 .homepage-header .brand-slogan { color: var(--text-main); font-size: 0.8rem; font-weight: 600; }
 .homepage-header .header-search.store-search { max-width: 440px; margin-top: 4px; }
+.homepage-header .store-search-field {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(209, 213, 219, 0.8);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+.homepage-header .header-auth-register {
+  background-color: #ffffff;
+  border-color: rgba(209, 213, 219, 0.85);
+}
+.homepage-header .action-btn {
+  background-color: rgba(255, 255, 255, 0.88);
+}
 .homepage-header-actions { flex: 0 0 auto; gap: 16px; }
 .homepage-user { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 .homepage-user img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
@@ -117,9 +129,11 @@ button { cursor: pointer; }
 }
 .main-header {
   position: sticky; top: 0; z-index: 100;
-  background-color: var(--bg-surface);
+  background: linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.72)), url('../../assets/img/header-bg.jpg') center center / cover no-repeat;
   border-bottom: 1px solid var(--border-light);
   box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 .header-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 16px; }
 
