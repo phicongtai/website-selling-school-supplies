@@ -53,6 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const params = new URLSearchParams(window.location.search);
   const requestedCode = params.get('order');
+  if (/^DH10(0[1-9]|10)$/i.test(requestedCode)) {
+    window.location.replace(requestedCode.toLowerCase() + '.html');
+    return;
+  }
   let order = store.getOrder(requestedCode) || store.getOrder('DH1003') || store.getOrders()[0];
 
   const STATUS = {

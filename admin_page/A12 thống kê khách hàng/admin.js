@@ -416,10 +416,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderOrderRows(orders) {
-    return orders.map((order) => `
+    return orders.map((order) => {
+      const isStatic = /^DH10(0[1-9]|10)$/i.test(order.code);
+      const detailHref = isStatic
+        ? `../A11 chi tiết đơn hàng/${order.code.toLowerCase()}.html`
+        : `../A11 chi tiết đơn hàng/index.html?order=${encodeURIComponent(order.code)}`;
+      return `
       <tr>
         <td>
-          <a class="cs-order-code" href="../A11 chi tiết đơn hàng/index.html?order=${encodeURIComponent(order.code)}" title="Xem chi tiết đơn ${escapeHTML(order.code)}">
+          <a class="cs-order-code" href="${detailHref}" title="Xem chi tiết đơn ${escapeHTML(order.code)}">
             ${escapeHTML(order.code)}
           </a>
         </td>
@@ -427,13 +432,13 @@ document.addEventListener('DOMContentLoaded', () => {
         <td><div class="cs-product-list">${renderProductList(order.products)}</div></td>
         <td class="cs-order-total">${formatCurrency(order.total)}</td>
         <td>
-          <a class="cs-detail-link" href="../A11 chi tiết đơn hàng/index.html?order=${encodeURIComponent(order.code)}">
+          <a class="cs-detail-link" href="${detailHref}">
             Chi tiết
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4"></path></svg>
           </a>
         </td>
-      </tr>
-    `).join('');
+      </tr>`;
+    }).join('');
   }
 
   function renderCustomerCard(customer, rank, totalAccounts) {
