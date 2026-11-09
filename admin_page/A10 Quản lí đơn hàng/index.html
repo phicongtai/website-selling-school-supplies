@@ -91,7 +91,122 @@
             <button class="order-tab" type="button" role="tab" aria-selected="false" data-tab="processing">Đang xử lý (<span id="tab-count-processing">2</span>)</button>
             <button class="order-tab" type="button" role="tab" aria-selected="false" data-tab="finished">Đã kết thúc (<span id="tab-count-finished">4</span>)</button>
           </div><div class="flow-note"><span class="flow-note-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 10V6a4 4 0 0 0-8 0v4"/><path d="M5 10h10v10H5z"/><circle class="flow-note-clock" cx="17.5" cy="17.5" r="4.5"/><path class="flow-note-hands" d="M17.5 15.5v2l1.4 1"/></svg></span><span>Kiểm soát logic: Tiến 1 chiều</span></div></div>
-          <div class="orders-table-wrap"><table class="orders-table"><thead><tr><th scope="col">Mã đơn</th><th scope="col">Khách hàng</th><th scope="col">Ngày đặt</th><th scope="col">Địa điểm giao</th><th scope="col">Tổng tiền</th><th scope="col">Tình trạng</th><th scope="col">Thao tác / Cập trạng thái</th></tr></thead><tbody id="orders-tbody"></tbody></table></div>
+          <div class="orders-table-wrap"><table class="orders-table"><thead><tr><th scope="col">Mã đơn</th><th scope="col">Khách hàng</th><th scope="col">Ngày đặt</th><th scope="col">Địa điểm giao</th><th scope="col">Tổng tiền</th><th scope="col">Tình trạng</th><th scope="col">Thao tác / Cập trạng thái</th></tr></thead><tbody id="orders-tbody">
+            <tr>
+              <td><a class="order-code" href="../A11 chi tiết đơn hàng/dh1001.html" title="Xem chi tiết đơn DH1001"><span>DH1001</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.4 2H8v4.6"/></svg></a></td>
+              <td><a class="order-customer" href="../A12 thống kê khách hàng/index.html?customer=KH001" title="Xem thống kê khách hàng Nguyễn Minh Anh">Nguyễn Minh Anh</a></td>
+              <td><span class="order-date">02/10/2026</span></td>
+              <td>Quận 1, TP. Hồ Chí Minh</td>
+              <td><span class="order-total">479.000đ</span></td>
+              <td><span class="order-status delivered"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="m3.9 6.2 1.5 1.5 2.8-3"/></svg>Đã giao – Thành công</span></td>
+              <td><div class="order-action-wrap"><button class="order-action-toggle is-locked" type="button" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.2" y="7" width="9.6" height="6.6" rx="1.4"/><path d="M5.4 7V5.2a2.6 2.6 0 0 1 5.2 0V7"/></svg><span>Đã hoàn tất</span></button></div></td>
+            </tr>
+            <tr>
+              <td><a class="order-code" href="../A11 chi tiết đơn hàng/dh1002.html" title="Xem chi tiết đơn DH1002"><span>DH1002</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.4 2H8v4.6"/></svg></a></td>
+              <td><a class="order-customer" href="../A12 thống kê khách hàng/index.html?customer=KH002" title="Xem thống kê khách hàng Trần Quốc Bảo">Trần Quốc Bảo</a></td>
+              <td><span class="order-date">03/10/2026</span></td>
+              <td>Cầu Giấy, Hà Nội</td>
+              <td><span class="order-total">623.000đ</span></td>
+              <td><span class="order-status delivered"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="m3.9 6.2 1.5 1.5 2.8-3"/></svg>Đã giao – Thành công</span></td>
+              <td><div class="order-action-wrap"><button class="order-action-toggle is-locked" type="button" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.2" y="7" width="9.6" height="6.6" rx="1.4"/><path d="M5.4 7V5.2a2.6 2.6 0 0 1 5.2 0V7"/></svg><span>Đã hoàn tất</span></button></div></td>
+            </tr>
+            <tr>
+              <td><a class="order-code" href="../A11 chi tiết đơn hàng/dh1003.html" title="Xem chi tiết đơn DH1003"><span>DH1003</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.4 2H8v4.6"/></svg></a></td>
+              <td><a class="order-customer" href="../A12 thống kê khách hàng/index.html?customer=KH003" title="Xem thống kê khách hàng Lê Thị Cẩm Tú">Lê Thị Cẩm Tú</a></td>
+              <td><span class="order-date">04/10/2026</span></td>
+              <td>Số 58 Bạch Đằng, Phường Thạch Thang, Quận Hải Châu, TP. Đà Nẵng</td>
+              <td><span class="order-total">686.000đ</span></td>
+              <td><span class="order-status confirmed"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.4h8v5.3H2z"/><path d="M1.3 2.5h9.4v1.9H1.3z"/><path d="M4.8 7.7h2.4"/></svg>Đã xác nhận</span></td>
+              <td><div class="order-action-wrap"><button class="order-action-toggle" type="button" data-action-toggle="DH1003" aria-expanded="false" aria-haspopup="true"><span>Chuyển: Đã giao</span><span class="order-action-caret" aria-hidden="true">⌄</span></button>
+                <div class="order-action-menu" data-action-menu="DH1003" hidden>
+                  <button class="order-action-option deliver" type="button" data-next-status="DH1003"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.2 8.2 1.9 1.9 3.7-4"/></svg>Đã giao – Thành công</button>
+                  <button class="order-action-option cancel" type="button" data-cancel-order="DH1003"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.8 5.8 4.4 4.4m0-4.4-4.4 4.4"/></svg>Đã huỷ</button>
+                </div></div></td>
+            </tr>
+            <tr>
+              <td><a class="order-code" href="../A11 chi tiết đơn hàng/dh1004.html" title="Xem chi tiết đơn DH1004"><span>DH1004</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.4 2H8v4.6"/></svg></a></td>
+              <td><a class="order-customer" href="../A12 thống kê khách hàng/index.html?customer=KH001" title="Xem thống kê khách hàng Nguyễn Minh Anh">Nguyễn Minh Anh</a></td>
+              <td><span class="order-date">05/10/2026</span></td>
+              <td>TP. Thủ Đức, TP. Hồ Chí Minh</td>
+              <td><span class="order-total">304.000đ</span></td>
+              <td><span class="order-status delivered"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="m3.9 6.2 1.5 1.5 2.8-3"/></svg>Đã giao – Thành công</span></td>
+              <td><div class="order-action-wrap"><button class="order-action-toggle is-locked" type="button" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.2" y="7" width="9.6" height="6.6" rx="1.4"/><path d="M5.4 7V5.2a2.6 2.6 0 0 1 5.2 0V7"/></svg><span>Đã hoàn tất</span></button></div></td>
+            </tr>
+            <tr>
+              <td><a class="order-code" href="../A11 chi tiết đơn hàng/dh1005.html" title="Xem chi tiết đơn DH1005"><span>DH1005</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.4 2H8v4.6"/></svg></a></td>
+              <td><a class="order-customer" href="../A12 thống kê khách hàng/index.html?customer=KH004" title="Xem thống kê khách hàng Võ Ngọc Hân">Võ Ngọc Hân</a></td>
+              <td><span class="order-date">06/10/2026</span></td>
+              <td>Quận 7, TP. Hồ Chí Minh</td>
+              <td><span class="order-total">337.000đ</span></td>
+              <td><span class="order-status pending"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.5v2.8l1.8 1.1"/></svg>Chưa xác nhận</span></td>
+              <td><div class="order-action-wrap"><button class="order-action-toggle" type="button" data-action-toggle="DH1005" aria-expanded="false" aria-haspopup="true"><span>Chưa xác nhận</span><span class="order-action-caret" aria-hidden="true">⌄</span></button>
+                <div class="order-action-menu" data-action-menu="DH1005" hidden>
+                  <button class="order-action-option deliver" type="button" data-next-status="DH1005"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.2 8.2 1.9 1.9 3.7-4"/></svg>Đã xác nhận</button>
+                  <button class="order-action-option cancel" type="button" data-cancel-order="DH1005"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.8 5.8 4.4 4.4m0-4.4-4.4 4.4"/></svg>Đã huỷ</button>
+                </div></div></td>
+            </tr>
+            <tr>
+              <td><a class="order-code" href="../A11 chi tiết đơn hàng/dh1006.html" title="Xem chi tiết đơn DH1006"><span>DH1006</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.4 2H8v4.6"/></svg></a></td>
+              <td><a class="order-customer" href="../A12 thống kê khách hàng/index.html?customer=KH005" title="Xem thống kê khách hàng Đặng Gia Huy">Đặng Gia Huy</a></td>
+              <td><span class="order-date">07/10/2026</span></td>
+              <td>Bình Thạnh, TP. Hồ Chí Minh</td>
+              <td><span class="order-total">264.000đ</span></td>
+              <td><span class="order-status cancelled"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="m4.3 4.3 3.4 3.4m0-3.4L4.3 7.7"/></svg>Đã huỷ</span></td>
+              <td><div class="order-action-wrap"><button class="order-action-toggle is-locked" type="button" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.2" y="7" width="9.6" height="6.6" rx="1.4"/><path d="M5.4 7V5.2a2.6 2.6 0 0 1 5.2 0V7"/></svg><span>Đơn đã huỷ</span></button></div></td>
+            </tr>
+            <tr>
+              <td><a class="order-code" href="../A11 chi tiết đơn hàng/dh1007.html" title="Xem chi tiết đơn DH1007"><span>DH1007</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.4 2H8v4.6"/></svg></a></td>
+              <td><a class="order-customer" href="../A12 thống kê khách hàng/index.html?customer=KH002" title="Xem thống kê khách hàng Trần Quốc Bảo">Trần Quốc Bảo</a></td>
+              <td><span class="order-date">08/10/2026</span></td>
+              <td>Đống Đa, Hà Nội</td>
+              <td><span class="order-total">167.000đ</span></td>
+              <td><span class="order-status confirmed"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.4h8v5.3H2z"/><path d="M1.3 2.5h9.4v1.9H1.3z"/><path d="M4.8 7.7h2.4"/></svg>Đã xác nhận</span></td>
+              <td><div class="order-action-wrap"><button class="order-action-toggle" type="button" data-action-toggle="DH1007" aria-expanded="false" aria-haspopup="true"><span>Chuyển: Đã giao</span><span class="order-action-caret" aria-hidden="true">⌄</span></button>
+                <div class="order-action-menu" data-action-menu="DH1007" hidden>
+                  <button class="order-action-option deliver" type="button" data-next-status="DH1007"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.2 8.2 1.9 1.9 3.7-4"/></svg>Đã giao – Thành công</button>
+                  <button class="order-action-option cancel" type="button" data-cancel-order="DH1007"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.8 5.8 4.4 4.4m0-4.4-4.4 4.4"/></svg>Đã huỷ</button>
+                </div></div></td>
+            </tr>
+            <tr>
+              <td><a class="order-code" href="../A11 chi tiết đơn hàng/dh1008.html" title="Xem chi tiết đơn DH1008"><span>DH1008</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.4 2H8v4.6"/></svg></a></td>
+              <td><a class="order-customer" href="../A12 thống kê khách hàng/index.html?customer=KH006" title="Xem thống kê khách hàng Bùi Thu Trang">Bùi Thu Trang</a></td>
+              <td><span class="order-date">09/10/2026</span></td>
+              <td>Quận 5, TP. Hồ Chí Minh</td>
+              <td><span class="order-total">263.000đ</span></td>
+              <td><span class="order-status pending"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.5v2.8l1.8 1.1"/></svg>Chưa xác nhận</span></td>
+              <td><div class="order-action-wrap"><button class="order-action-toggle" type="button" data-action-toggle="DH1008" aria-expanded="false" aria-haspopup="true"><span>Chưa xác nhận</span><span class="order-action-caret" aria-hidden="true">⌄</span></button>
+                <div class="order-action-menu" data-action-menu="DH1008" hidden>
+                  <button class="order-action-option deliver" type="button" data-next-status="DH1008"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.2 8.2 1.9 1.9 3.7-4"/></svg>Đã xác nhận</button>
+                  <button class="order-action-option cancel" type="button" data-cancel-order="DH1008"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.8 5.8 4.4 4.4m0-4.4-4.4 4.4"/></svg>Đã huỷ</button>
+                </div></div></td>
+            </tr>
+            <tr>
+              <td><a class="order-code" href="../A11 chi tiết đơn hàng/dh1009.html" title="Xem chi tiết đơn DH1009"><span>DH1009</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.4 2H8v4.6"/></svg></a></td>
+              <td><a class="order-customer" href="../A12 thống kê khách hàng/index.html?customer=KH003" title="Xem thống kê khách hàng Lê Thị Cẩm Tú">Lê Thị Cẩm Tú</a></td>
+              <td><span class="order-date">10/10/2026</span></td>
+              <td>Hải Châu, Đà Nẵng</td>
+              <td><span class="order-total">337.000đ</span></td>
+              <td><span class="order-status pending"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.5v2.8l1.8 1.1"/></svg>Chưa xác nhận</span></td>
+              <td><div class="order-action-wrap"><button class="order-action-toggle" type="button" data-action-toggle="DH1009" aria-expanded="false" aria-haspopup="true"><span>Chưa xác nhận</span><span class="order-action-caret" aria-hidden="true">⌄</span></button>
+                <div class="order-action-menu" data-action-menu="DH1009" hidden>
+                  <button class="order-action-option deliver" type="button" data-next-status="DH1009"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.2 8.2 1.9 1.9 3.7-4"/></svg>Đã xác nhận</button>
+                  <button class="order-action-option cancel" type="button" data-cancel-order="DH1009"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.8 5.8 4.4 4.4m0-4.4-4.4 4.4"/></svg>Đã huỷ</button>
+                </div></div></td>
+            </tr>
+            <tr>
+              <td><a class="order-code" href="../A11 chi tiết đơn hàng/dh1010.html" title="Xem chi tiết đơn DH1010"><span>DH1010</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.4 2H8v4.6"/></svg></a></td>
+              <td><a class="order-customer" href="../A12 thống kê khách hàng/index.html?customer=KH001" title="Xem thống kê khách hàng Nguyễn Minh Anh">Nguyễn Minh Anh</a></td>
+              <td><span class="order-date">10/10/2026</span></td>
+              <td>Quận 1, TP. Hồ Chí Minh</td>
+              <td><span class="order-total">199.000đ</span></td>
+              <td><span class="order-status pending"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.5v2.8l1.8 1.1"/></svg>Chưa xác nhận</span></td>
+              <td><div class="order-action-wrap"><button class="order-action-toggle" type="button" data-action-toggle="DH1010" aria-expanded="false" aria-haspopup="true"><span>Chưa xác nhận</span><span class="order-action-caret" aria-hidden="true">⌄</span></button>
+                <div class="order-action-menu" data-action-menu="DH1010" hidden>
+                  <button class="order-action-option deliver" type="button" data-next-status="DH1010"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.2 8.2 1.9 1.9 3.7-4"/></svg>Đã xác nhận</button>
+                  <button class="order-action-option cancel" type="button" data-cancel-order="DH1010"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.8 5.8 4.4 4.4m0-4.4-4.4 4.4"/></svg>Đã huỷ</button>
+                </div></div></td>
+            </tr>
+          </tbody></table></div>
           <footer class="orders-pagination"><span id="pagination-info">Hiển thị 1–10 trên tổng số 10 đơn hàng</span><div class="pagination-controls"><button type="button" disabled aria-label="Trang trước">‹</button><button type="button" class="current-page" aria-current="page">1</button><button type="button" disabled aria-label="Trang sau">›</button></div></footer>
         </section>
 

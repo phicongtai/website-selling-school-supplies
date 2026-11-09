@@ -13,6 +13,14 @@
   <link rel="stylesheet" href="../../assets/css/style.css">
   <link rel="stylesheet" href="../A02 Quản lý người dùng/admin.css">
   <link rel="stylesheet" href="admin.css?v=20261024c">
+  <script>
+    (function() {
+      var match = (new URLSearchParams(window.location.search).get('order') || '').match(/^DH10(0[1-9]|10)$/i);
+      if (match) {
+        window.location.replace(match[0].toLowerCase() + '.html');
+      }
+    })();
+  </script>
 </head>
 <body>
   <div class="admin-page-container">

@@ -161,15 +161,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderOrders() {
     const visible = getFilteredOrders();
-    tbody.innerHTML = visible.length ? visible.map((order) => `
-      <tr><td><a class="order-code" href="../A11 chi tiết đơn hàng/index.html?order=${encodeURIComponent(order.code)}" title="Xem chi tiết đơn ${escapeHTML(order.code)}"><span>${escapeHTML(order.code)}</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.4 2H8v4.6"/></svg></a></td>
+    tbody.innerHTML = visible.length ? visible.map((order) => {
+      const isStatic = /^DH10(0[1-9]|10)$/i.test(order.code);
+      const detailHref = isStatic
+        ? `../A11 chi tiết đơn hàng/${order.code.toLowerCase()}.html`
+        : `../A11 chi tiết đơn hàng/index.html?order=${encodeURIComponent(order.code)}`;
+      return `
+      <tr><td><a class="order-code" href="${detailHref}" title="Xem chi tiết đơn ${escapeHTML(order.code)}"><span>${escapeHTML(order.code)}</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.4 2H8v4.6"/></svg></a></td>
       <td>${order.customerId
         ? `<a class="order-customer" href="../A12 thống kê khách hàng/index.html?customer=${encodeURIComponent(order.customerId)}" title="Xem thống kê khách hàng ${escapeHTML(order.customer)}">${escapeHTML(order.customer)}</a>`
         : `<span class="order-customer">${escapeHTML(order.customer)}</span>`}</td>
       <td><span class="order-date">${formatDate(order.date)}</span></td><td>${escapeHTML(order.address)}</td>
       <td><span class="order-total">${formatMoney(order.total)}</span></td>
       <td>${statusMarkup(order)}</td>
-      <td><div class="order-action-wrap">${actionMarkup(order)}</div></td></tr>`).join('')
+      <td><div class="order-action-wrap">${actionMarkup(order)}</div></td></tr>`;
+    }).join('')
       : '<tr><td class="orders-empty" colspan="7">Không tìm thấy đơn hàng phù hợp.</td></tr>';
     paginationInfo.textContent = `Hiển thị ${visible.length ? `1–${visible.length}` : '0'} trên tổng số ${visible.length} đơn hàng`;
   }
