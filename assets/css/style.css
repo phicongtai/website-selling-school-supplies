@@ -81,7 +81,6 @@
   --bg-surface:             #ffffff;
   --bg-panel:               #ebecef;
   --bg-muted:               #f1f2f6;
-  --bg-dock:                #e9eaee;
 
   /* Đường viền (Borders) */
   --border-light:           #e5e7eb;
@@ -944,40 +943,7 @@ h6, .h6 {
 .badge-danger    { background-color: #fee2e2; color: var(--color-danger); }
 
 /* --------------------------------------------------------------------------
-   10. THANH ĐIỀU HƯỚNG NỔI (FLOATING DOCK / PILL NAV)
-   -------------------------------------------------------------------------- */
-.floating-dock {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: 0.45rem 1rem;
-  background-color: var(--bg-dock);
-  border-radius: var(--radius-full);
-}
-
-.dock-item {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-full);
-  color: var(--color-secondary-600);
-  transition: all var(--transition-fast);
-}
-
-.dock-item:hover {
-  color: var(--color-secondary);
-}
-
-.dock-item.active {
-  background-color: var(--color-primary-800);
-  color: var(--text-white);
-  box-shadow: 0 2px 8px rgba(138, 53, 0, 0.3);
-}
-
-/* --------------------------------------------------------------------------
-   11. VẠCH ĐIỂM NHẤN TRANG TRÍ (ACCENT BARS)
+   10. VẠCH ĐIỂM NHẤN TRANG TRÍ (ACCENT BARS)
    -------------------------------------------------------------------------- */
 .accent-lines {
   display: flex;
@@ -996,7 +962,7 @@ h6, .h6 {
 .accent-bar.bar-tertiary  { width: 45%; background-color: var(--color-tertiary); }
 
 /* --------------------------------------------------------------------------
-   12. CARDS & BỀ MẶT HIỂN THỊ (SURFACES & CONTAINERS)
+   11. CARDS & BỀ MẶT HIỂN THỊ (SURFACES & CONTAINERS)
    -------------------------------------------------------------------------- */
 .card {
   background-color: var(--bg-surface);
@@ -1033,7 +999,7 @@ h6, .h6 {
 }
 
 /* --------------------------------------------------------------------------
-   13. TIỆN ÍCH DÙNG CHUNG (UTILITY CLASSES)
+   12. TIỆN ÍCH DÙNG CHUNG (UTILITY CLASSES)
    -------------------------------------------------------------------------- */
 /* Flexbox Utilities */
 .d-flex         { display: flex; }
