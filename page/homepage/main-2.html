@@ -57,7 +57,7 @@
 
       <nav class="main-nav homepage-nav">
         <a href="#" class="nav-link active" data-target="view-home" aria-current="page" onclick="navigateToView('view-home'); return false;">Trang chủ</a>
-        <a href="#" class="nav-link" data-target="view-category" onclick="navigateToView('view-category'); return false;">Sản phẩm</a>
+        <a href="../products/products.html" class="nav-link">Sản phẩm</a>
         <a href="../products/pens.html" class="nav-link">Bút viết</a>
         <a href="../products/notebooks.html" class="nav-link">Vở & giấy</a>
         <a href="../products/backpacks.html" class="nav-link">Cặp & balo</a>
@@ -81,7 +81,7 @@
           <p class="hero-description" style="color: #666; font-size: 1rem; line-height: 1.6;">Trang bị tinh gọn, khơi nguồn sáng tạo. Thiết kế tối giản tiêu chuẩn quốc tế giúp học sinh và sinh viên tập trung tối đa vào tri thức.</p>
           
           <div class="hero-actions" style="display: flex; gap: 12px; align-items: center; margin-top: 10px;">
-            <button class="btn btn-primary" onclick="navigateToView('view-category')" style="background-color: #ff6900; color: #fff; padding: 12px 24px; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">Mua ngay &rarr;</button>
+            <button class="btn btn-primary" onclick="window.location.href='../products/products.html'" style="background-color: #ff6900; color: #fff; padding: 12px 24px; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">Mua ngay &rarr;</button>
             <button class="btn btn-secondary" onclick="navigateToView('view-advanced-search')" style="background-color: #f1f2f6; color: #333; padding: 12px 24px; border-radius: 8px; font-weight: 600;">Xem ưu đãi</button>
           </div>
 
@@ -107,7 +107,7 @@
         <a class="category-card" href="../products/pens.html"><div class="category-icon-box"><img src="../../assets/icons/cat-pen.svg" alt="" width="24" height="24"></div><strong>Bút Viết</strong></a>
         <a class="category-card" href="../products/notebooks.html"><div class="category-icon-box"><img src="../../assets/icons/cat-book.svg" alt="" width="24" height="24"></div><strong>Sổ &amp; Vở</strong></a>
         <a class="category-card" href="../products/backpacks.html"><div class="category-icon-box"><img src="../../assets/icons/cat-backpack.svg" alt="" width="24" height="24"></div><strong>Balo &amp; Cặp</strong></a>
-        <a class="category-card" href="main.html?categories=cases#view-category"><div class="category-icon-box"><img src="../../assets/icons/bag.svg" alt="" width="24" height="24"></div><strong>Hộp Bút</strong></a>
+        <a class="category-card" href="../products/products.html?categories=cases"><div class="category-icon-box"><img src="../../assets/icons/bag.svg" alt="" width="24" height="24"></div><strong>Hộp Bút</strong></a>
         <a class="category-card" href="../products/art.html"><div class="category-icon-box"><img src="../../assets/icons/cat-palette.svg" alt="" width="24" height="24"></div><strong>Dụng Cụ Vẽ &amp; Mỹ Thuật</strong></a>
         <a class="category-card" href="../products/school-supplies.html"><div class="category-icon-box"><img src="../../assets/icons/cat-ruler.svg" alt="" width="24" height="24"></div><strong>Dụng Cụ Học Tập</strong></a>
         <a class="category-card" href="../products/computers.html"><div class="category-icon-box"><img src="../../assets/icons/cat-calculator.svg" alt="" width="24" height="24"></div><strong>Máy Tính &amp; Thiết Bị Học Tập</strong></a>
@@ -1142,7 +1142,7 @@
       </div>
       <div class="cart-drawer-body" id="cartDrawerBody" aria-live="polite"></div>
       <div class="cart-drawer-footer">
-        <a class="cart-drawer-add" href="../homepage/main.html#view-category" onclick="closeCartDrawer()">
+        <a class="cart-drawer-add" href="../products/products.html" onclick="closeCartDrawer()">
           <span aria-hidden="true">+</span> Thêm sản phẩm khác
         </a>
         <div class="cart-drawer-total-row">

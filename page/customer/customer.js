@@ -636,11 +636,12 @@
     };
 
     const updateTotals = () => {
-      discount = Math.round(subtotal * (voucherButton && voucherButton.dataset.applied === '1' ? 0.2 : 0));
+      // Yêu cầu đồ án: Mã giảm giá chỉ để demo minh họa, giá tiền không bị thay đổi
+      discount = 0;
       if (subtotalNode) subtotalNode.textContent = money(subtotal);
-      if (discountRow) discountRow.hidden = discount <= 0;
-      if (discountNode) discountNode.textContent = `-${money(discount)}`;
-      if (totalNode) totalNode.textContent = money(Math.max(0, subtotal - discount));
+      if (discountRow) discountRow.hidden = true;
+      if (discountNode) discountNode.textContent = '-0 ₫';
+      if (totalNode) totalNode.textContent = money(subtotal);
     };
 
     renderAddresses();
@@ -675,7 +676,7 @@
           voucherButton.textContent = 'Đã áp dụng';
           voucherButton.style.background = 'var(--color-primary)';
           voucherButton.style.color = '#fff';
-          toast('Đã áp dụng mã WELCOME2026 - giảm 20% đơn hàng.');
+          toast('Đã áp dụng mã WELCOME2026 thành công.');
         } else {
           voucherButton.dataset.applied = '0';
           voucherButton.textContent = 'Áp dụng';

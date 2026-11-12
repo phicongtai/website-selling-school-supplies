@@ -769,23 +769,31 @@ textarea.form-control {
 .metadata-card {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .metadata-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  font-size: 12.5px;
+  align-items: baseline;
+  gap: 16px;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .metadata-row span {
   color: #64748b;
+  font-size: 13px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .metadata-row strong {
   color: #1e293b;
   font-weight: 600;
+  font-size: 13px;
+  text-align: right;
+  word-break: break-word;
 }
 
 .text-success {
