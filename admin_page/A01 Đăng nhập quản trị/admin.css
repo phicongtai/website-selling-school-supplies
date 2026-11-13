@@ -260,6 +260,12 @@ img.brand-logo-box {
   opacity: 0.85;
 }
 
+/* Ẩn nút hiện mật khẩu mặc định của trình duyệt (Edge/IE) để không bị 2 icon */
+.login-input::-ms-reveal,
+.login-input::-ms-clear {
+  display: none;
+}
+
 .login-input:hover {
   background-color: #eceaea;
 }
@@ -280,21 +286,43 @@ img.brand-logo-box {
 /* Nút ẩn/hiện mật khẩu */
 .toggle-password-btn {
   position: absolute;
-  right: 10px;
+  right: 6px;
+  width: 32px;
+  height: 32px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 6px;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #5f5e5e;
   border-radius: 4px;
+  line-height: 0;
   transition: color var(--transition-fast, 150ms ease);
 }
 
 .toggle-password-btn:hover {
   color: #1b1c1c;
+}
+
+/* Chỉ hiển thị đúng 1 icon tại một thời điểm */
+.toggle-password-btn svg {
+  display: block;
+  flex: none;
+  pointer-events: none;
+}
+
+.toggle-password-btn .icon-eye-off {
+  display: none;
+}
+
+.toggle-password-btn.is-visible .icon-eye-open {
+  display: none;
+}
+
+.toggle-password-btn.is-visible .icon-eye-off {
+  display: block;
 }
 
 .toggle-password-btn:focus-visible {
