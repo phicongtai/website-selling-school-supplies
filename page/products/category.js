@@ -28,8 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   document.querySelectorAll(".category-option").forEach(link => {
+    const href = link.getAttribute("href") || "";
     const target = Object.entries(categoryLinks)
-      .find(([file]) => link.getAttribute("href").endsWith(file));
+      .find(([file]) => href.endsWith(file) || href.endsWith(file.replace(".html", "-logged.html")));
     const number = link.querySelector("span:last-child");
     if (target && number) {
       number.textContent = String(

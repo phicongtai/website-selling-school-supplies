@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const products = window.StoreCatalog.products;
+  const loggedSuffix = /-logged\.html$/i.test(window.location.pathname.replace(/\\/g, '/')) || document.body?.dataset?.authState === 'logged' ? '-logged' : '';
   const money = value => new Intl.NumberFormat("vi-VN").format(value) + " ₫";
   const params = new URLSearchParams(window.location.search);
   const requestedCode = params.get("id");
@@ -11,22 +12,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!product) {
     document.querySelector(".product-overview").innerHTML =
-      '<p style="padding: 40px; text-align: center; font-size: 18px;">❌ Không tìm thấy sản phẩm. <a href="../homepage/main.html">Quay lại trang chủ</a></p>';
+      `<p style="padding: 40px; text-align: center; font-size: 18px;">❌ Không tìm thấy sản phẩm. <a href="../homepage/main${loggedSuffix}.html">Quay lại trang chủ</a></p>`;
     return;
   }
 
   const categoryName = window.StoreCatalog.categories[product.category] || "Sản phẩm";
   const categoryPages = {
-    pens: "pens.html",
-    notebooks: "notebooks.html",
-    backpacks: "backpacks.html",
-    "school-supplies": "school-supplies.html",
-    art: "art.html",
-    computers: "computers.html",
-    cases: "../homepage/main.html?category=cases"
+    pens: `pens${loggedSuffix}.html`,
+    notebooks: `notebooks${loggedSuffix}.html`,
+    backpacks: `backpacks${loggedSuffix}.html`,
+    "school-supplies": `school-supplies${loggedSuffix}.html`,
+    art: `art${loggedSuffix}.html`,
+    computers: `computers${loggedSuffix}.html`,
+    cases: `../homepage/main${loggedSuffix}.html?category=cases`
   };
   const categoryLink = document.getElementById("categoryLink");
-  const categoryPage = categoryPages[product.category] || "../homepage/main.html";
+  const categoryPage = categoryPages[product.category] || `../homepage/main${loggedSuffix}.html`;
 
   document.title = `${product.title} | Học Đường Store`;
   const productCategoryEl = document.getElementById("productCategory");
@@ -160,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (relatedHeading) relatedHeading.textContent = relatedTitle;
 
   document.getElementById("relatedProducts").innerHTML = relatedProducts.map(item => `
-    <a class="related-card" href="product-${String(item.code).toLowerCase()}.html">
+    <a class="related-card" href="product-${String(item.code).toLowerCase()}${loggedSuffix}.html">
       <img src="${item.image}" alt="${item.title}" loading="lazy">
       <small>${item.code}</small>
       <strong>${item.title}</strong>

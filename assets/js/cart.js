@@ -17,6 +17,13 @@
 
   function isUserLoggedIn() {
     try {
+      const p = window.location.pathname.replace(/\\/g, '/');
+      if (/-logged\.html$/i.test(p) || (document.body && document.body.dataset && document.body.dataset.authState === 'logged')) {
+        return true;
+      }
+      if (!p.includes('/page/customer/')) {
+        return false;
+      }
       if (window.AuthManager && typeof window.AuthManager.isLoggedIn === 'function') {
         return window.AuthManager.isLoggedIn();
       }

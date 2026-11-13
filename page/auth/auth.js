@@ -34,7 +34,7 @@ if (loginForm) {
     }
     const urlParams = new URLSearchParams(window.location.search);
     const redirect = urlParams.get('redirect');
-    let target = '../homepage/main.html';
+    let target = '../homepage/main-logged.html';
     if (redirect === 'checkout') target = '../customer/checkout.html';
     else if (redirect === 'cart') target = '../customer/cart.html';
     else if (redirect === 'orders') target = '../customer/orders.html';
@@ -89,7 +89,7 @@ if (registerForm) {
     }
     const urlParams = new URLSearchParams(window.location.search);
     const redirect = urlParams.get('redirect');
-    let target = '../homepage/main.html';
+    let target = '../homepage/main-logged.html';
     if (redirect === 'checkout') target = '../customer/checkout.html';
     else if (redirect === 'cart') target = '../customer/cart.html';
     else if (redirect === 'orders') target = '../customer/orders.html';
@@ -119,7 +119,7 @@ document.querySelectorAll('.social-row button').forEach(function (button) {
     }
     const urlParams = new URLSearchParams(window.location.search);
     const redirect = urlParams.get('redirect');
-    let target = '../homepage/main.html';
+    let target = '../homepage/main-logged.html';
     if (redirect === 'checkout') target = '../customer/checkout.html';
     else if (redirect === 'cart') target = '../customer/cart.html';
     else if (redirect === 'orders') target = '../customer/orders.html';

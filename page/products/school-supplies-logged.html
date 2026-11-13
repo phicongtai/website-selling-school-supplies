@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dụng cụ học tập | Học Đường Store</title>
+  <!-- Google Fonts: Be Vietnam Pro (Đồng bộ font chữ toàn dự án) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../homepage/homepage.css">
+  <script src="../../assets/js/site.js" defer></script>
+  <script src="../../assets/js/cart.js" defer></script>
+  <link rel="stylesheet" href="category.css">
+  <script src="product-data.js" defer></script>
+  <script src="category.js" defer></script>
+</head>
+<body data-auth-state="logged" data-product-category="school-supplies" data-catalog-page="1">
+<header class="main-header homepage-header">
+  <div class="container homepage-header-container">
+    <div class="homepage-header-row">
+      <a href="../homepage/main-logged.html" class="brand-logo">
+        <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
+        <span class="brand-text"><span class="brand-title">Học Đường Store</span></span>
+      </a>
+      <div class="header-search store-search">
+        <div class="store-search-field">
+          <input id="searchInput" class="store-search-input" type="search" placeholder="Tìm kiếm dụng cụ học tập..." aria-label="Tìm kiếm sản phẩm">
+          <button id="searchButton" class="store-search-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>Tìm kiếm</span></button>
+        </div>
+      </div>
+      <div class="header-actions homepage-header-actions">
+  <button class="action-btn" onclick="openCartDrawer()" title="Giỏ hàng">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+      <circle cx="9" cy="21" r="1"></circle>
+      <circle cx="20" cy="21" r="1"></circle>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+    </svg>
+    <span class="action-badge cart-count-badge">5</span>
+  </button>
+
+  <div class="header-auth-slot" id="headerAuthSlot">
+            <div class="header-user-wrapper">
+              <a class="homepage-user header-user-link" href="../customer/profile.html" title="Tài khoản cá nhân: Nguyễn Minh Anh">
+                <img src="../../assets/img/avatar.jpg" alt="Nguyễn Minh Anh" width="36" height="36">
+                <span>Nguyễn Minh Anh</span>
+              </a>
+              <div class="header-user-dropdown" role="menu">
+                <div class="header-user-dropdown-header">
+                  <strong>Nguyễn Minh Anh</strong>
+                  <small>minhanh@email.com</small>
+                </div>
+                <a href="../customer/profile.html" role="menuitem">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>
+                  <span>Hồ sơ cá nhân</span>
+                </a>
+                <a href="../customer/orders.html" role="menuitem">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                  <span>Đơn hàng của tôi</span>
+                </a>
+                <button type="button" class="logout-item" data-action="logout" role="menuitem">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                  <span>Đăng xuất</span>
+                </button>
+              </div>
+            </div>
+          </div>
+</div>
+    </div>
+    <nav class="main-nav homepage-nav category-nav">
+      <a class="nav-link" href="../homepage/main-logged.html">Trang chủ</a>
+      <a class="nav-link" href="products-logged.html">Sản phẩm</a>
+      <a class="nav-link" href="pens-logged.html">Bút viết</a>
+      <a class="nav-link" href="notebooks-logged.html">Vở &amp; giấy</a>
+      <a class="nav-link" href="backpacks-logged.html">Cặp &amp; balo</a>
+      <a class="nav-link active" aria-current="page" href="school-supplies-logged.html">Dụng cụ học tập</a>
+      <a class="nav-link" href="art-logged.html">Dụng cụ vẽ &amp; mỹ thuật</a>
+      <a class="nav-link" href="computers-logged.html">Máy tính &amp; thiết bị học tập</a>
+    </nav>
+  </div>
+</header>
+
+<main class="category-page">
+  <div class="breadcrumb"><a href="../homepage/main-logged.html">⌂ Trang chủ</a><span>/</span><a href="products-logged.html">Sản phẩm</a><span>/</span><strong>Dụng cụ học tập</strong></div>
+  <div class="category-layout">
+    <aside class="category-sidebar">
+      <div class="sidebar-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--color-primary);"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <strong>Danh mục sản phẩm</strong>
+        <small>7 nhóm</small>
+      </div>
+
+      <a class="category-option" href="products-logged.html"><span>Tất cả sản phẩm</span><span>54</span></a>
+      <a class="category-option" href="pens-logged.html"><span>Bút viết</span><span>10</span></a>
+      <a class="category-option" href="notebooks-logged.html"><span>Vở &amp; giấy</span><span>9</span></a>
+      <a class="category-option" href="backpacks-logged.html"><span>Cặp &amp; balo</span><span>9</span></a>
+      <a class="category-option selected" href="school-supplies-logged.html"><span>Dụng cụ học tập</span><span>9</span></a>
+      <a class="category-option" href="art-logged.html"><span>Dụng cụ vẽ &amp; mỹ thuật</span><span>8</span></a>
+      <a class="category-option" href="computers-logged.html"><span>Máy tính &amp; thiết bị học tập</span><span>8</span></a>
+
+      <div class="shipping-note">
+        <strong><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align: -2px; margin-right: 4px;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>GIAO HÀNG SIÊU TỐC</strong>
+        <p>Đồng giá vận chuyển toàn quốc chỉ từ 15.000đ cho đơn hàng học cụ.</p>
+      </div>
+    </aside>
+
+    <section class="category-results">
+      <div class="results-heading">
+        <div><h1>Dụng cụ học tập <span>Chính hãng</span></h1><p id="resultCount">Hiển thị 5 / 9 sản phẩm (Trang 1/2)</p></div>
+        <!-- Sắp xếp sản phẩm theo giá / tên -->
+        <div class="sort-control">
+          <span class="sort-control-label">Sắp xếp</span>
+          <div class="sort-dropdown">
+            <button type="button" class="sort-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span>Phổ biến</span>
+              <svg class="sort-dropdown-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <ul class="sort-dropdown-menu" role="listbox" aria-label="Sắp xếp">
+              <li class="sort-dropdown-option is-selected" role="option" data-value="default" aria-selected="true" tabindex="-1">Phổ biến</li>
+              <li class="sort-dropdown-option" role="option" data-value="price-asc" aria-selected="false" tabindex="-1">Giá thấp → cao</li>
+              <li class="sort-dropdown-option" role="option" data-value="price-desc" aria-selected="false" tabindex="-1">Giá cao → thấp</li>
+              <li class="sort-dropdown-option" role="option" data-value="name" aria-selected="false" tabindex="-1">Tên A → Z</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="product-grid" id="productGrid">
+<!--PRODUCTS:1-->
+<article class="store-product-card" data-id="7" data-code="HP07" data-title="Bàn học công thái học" data-category="school-supplies" data-price="385000" data-old-price="640000">
+  <a class="store-product-image-link" href="product-hp07-logged.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/hp07.jpg" alt="Bàn học công thái học" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: HP07</div>
+  <a class="store-product-name" href="product-hp07-logged.html">Bàn học công thái học</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">385.000₫</strong>
+    <span class="store-product-old-price">640.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="7">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="47" data-code="DC01" data-title="Thước kẻ nhựa 20cm" data-category="school-supplies" data-price="8000" data-old-price="10000">
+  <a class="store-product-image-link" href="product-dc01-logged.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/dc01.jpg" alt="Thước kẻ nhựa 20cm" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC01</div>
+  <a class="store-product-name" href="product-dc01-logged.html">Thước kẻ nhựa 20cm</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">8.000₫</strong>
+    <span class="store-product-old-price">10.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="47">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="48" data-code="DC02" data-title="Hộp bút học sinh đa năng" data-category="school-supplies" data-price="45000" data-old-price="55000">
+  <a class="store-product-image-link" href="product-dc02-logged.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/dc02.jpg" alt="Hộp bút học sinh đa năng" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC02</div>
+  <a class="store-product-name" href="product-dc02-logged.html">Hộp bút học sinh đa năng</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">45.000₫</strong>
+    <span class="store-product-old-price">55.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="48">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="49" data-code="DC03" data-title="Máy tính cầm tay học sinh" data-category="school-supplies" data-price="185000" data-old-price="210000">
+  <a class="store-product-image-link" href="product-dc03-logged.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/tb01.jpg" alt="Máy tính cầm tay học sinh" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC03</div>
+  <a class="store-product-name" href="product-dc03-logged.html">Máy tính cầm tay học sinh</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">185.000₫</strong>
+    <span class="store-product-old-price">210.000₫</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="49">🛒 Thêm vào giỏ</button>
+</article>
+<article class="store-product-card" data-id="50" data-code="DC04" data-title="Gôm tẩy trắng sạch" data-category="school-supplies" data-price="5000">
+  <a class="store-product-image-link" href="product-dc04-logged.html">
+    <div class="store-product-visual">
+      <span class="store-product-tag">Dụng cụ học tập</span>
+      <img src="../../assets/img/products/dc04.jpg" alt="Gôm tẩy trắng sạch" loading="lazy">
+    </div>
+  </a>
+  <div class="store-product-code">Mã: DC04</div>
+  <a class="store-product-name" href="product-dc04-logged.html">Gôm tẩy trắng sạch</a>
+  <div class="store-product-meta">
+    <strong class="store-product-price">5.000₫</strong>
+    <span class="store-product-stock">Kho: 200</span>
+  </div>
+  <button class="store-product-cart" type="button" data-product-id="50">🛒 Thêm vào giỏ</button>
+</article>
+<!--/PRODUCTS:1-->
+      </div>
+      <div class="empty-products" id="categoryEmptyState" hidden>
+        <span>⌕</span>
+        <strong>Không tìm thấy sản phẩm</strong>
+        <p>Thử thay đổi từ khóa hoặc bỏ bớt bộ lọc để xem thêm sản phẩm.</p>
+      </div>
+      <nav class="pagination" aria-label="Phân trang">
+        <span class="page-number is-disabled" aria-disabled="true">‹ Trước</span>
+        <span class="page-number active" aria-current="page">1</span>
+        <a class="page-number" href="school-supplies-2-logged.html">2</a>
+        <a class="page-number" href="school-supplies-2-logged.html">Sau ›</a>
+      </nav>
+    </section>
+  </div>
+</main>
+
+<footer class="main-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-col footer-about">
+        <a href="../homepage/main-logged.html" class="brand-logo" style="margin-bottom: 4px; color: #fff;">
+          <img src="../../assets/Gemini_Generated_Image_ul14lqul14lqul14.png" alt="Học Đường Store" class="brand-icon" width="38" height="38">
+          <span class="brand-title" style="color: #fff;">Học Đường Store</span>
+        </a>
+        <p>Hệ thống cung cấp đồ dùng học tập, văn phòng phẩm sáng tạo tối giản chuẩn công thái học cho học sinh, sinh viên toàn quốc.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Danh Mục</h4>
+        <div class="footer-links">
+          <a href="pens-logged.html">Bút viết &amp; Mực</a>
+          <a href="notebooks-logged.html">Sổ tay &amp; Giấy vở</a>
+          <a href="backpacks-logged.html">Balo &amp; Cặp sách</a>
+          <a href="school-supplies-logged.html">Dụng cụ học tập</a>
+          <a href="art-logged.html">Dụng cụ mỹ thuật</a>
+          <a href="computers-logged.html">Máy tính &amp; thiết bị</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Hỗ Trợ</h4>
+        <div class="footer-links">
+          <a href="#">Chính sách giao hàng</a>
+          <a href="#">Đổi trả trong 30 ngày</a>
+          <a href="#">Bảo hành sản phẩm</a>
+          <a href="#">Trung tâm trợ giúp</a>
+        </div>
+      </div>
+      <div class="footer-col footer-newsletter">
+        <h4>Bản Tin Khuyến Mãi</h4>
+        <p>Nhận thông báo ưu đãi và sản phẩm mới sớm nhất.</p>
+        <form class="newsletter-form" novalidate onsubmit="event.preventDefault(); this.reset(); window.showSiteToast && window.showSiteToast('Đăng ký nhận tin thành công!');">
+          <input type="email" placeholder="Email của bạn...">
+          <button type="submit" class="btn btn-primary btn-sm">Gửi</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Học Đường Store. Chuẩn mực phong cách tối giản học đường.</p>
+      <div class="payment-methods">
+        <span class="payment-badge">COD</span>
+        <span class="payment-badge">VNPAY</span>
+        <span class="payment-badge">MOMO</span>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

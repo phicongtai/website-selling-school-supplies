@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let page = 1;
   const perPage = 6;
 
+  const loggedSuffix = /-logged\.html$/i.test(window.location.pathname.replace(/\\/g, '/')) || document.body?.dataset?.authState === 'logged' ? '-logged' : '';
   const money = value =>
     new Intl.NumberFormat("vi-VN").format(value) + "đ";
 
@@ -111,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
     grid.innerHTML = shown.map(p => `
       <article class="store-product-card">
         <a class="store-product-image-link"
-           href="product-${String(p.code).toLowerCase()}.html">
+           href="product-${String(p.code).toLowerCase()}${loggedSuffix}.html">
           <div class="store-product-visual">
             <span class="store-product-tag">Dụng cụ học tập</span>
             <img
@@ -126,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="store-product-code">Mã: ${p.code}</div>
 
         <a class="store-product-name"
-           href="product-${String(p.code).toLowerCase()}.html">
+           href="product-${String(p.code).toLowerCase()}${loggedSuffix}.html">
           ${p.name}
         </a>
 

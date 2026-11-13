@@ -249,7 +249,7 @@
     return `<div class="c-order-item">
       <div class="c-item-thumb"><img src="${product.image}" alt="${escapeHTML(product.title)}" loading="lazy"></div>
       <div class="c-item-main">
-        <a href="../products/product-${String(product.code).toLowerCase()}.html">${escapeHTML(product.title)}</a>
+        <a href="../products/product-${String(product.code).toLowerCase()}${isUserLoggedIn() ? '-logged' : ''}.html">${escapeHTML(product.title)}</a>
         <div class="c-item-meta"><span>Mã: ${product.code}</span><span>${escapeHTML(product.pack || '1 sản phẩm')}</span></div>
       </div>
       ${qtyMarkup}
@@ -421,7 +421,7 @@
           <p>${emptyText}</p>
           <div style="display:flex; gap:10px; justify-content:center; margin-top:14px;">
             ${!isUserLoggedIn() ? `<a class="c-btn c-btn--primary" href="${loginHref}">Đăng nhập ngay</a>` : ''}
-            <a class="c-btn ${!isUserLoggedIn() ? 'c-btn--secondary' : 'c-btn--primary'}" href="../homepage/main.html#view-category">Khám phá sản phẩm</a>
+            <a class="c-btn ${!isUserLoggedIn() ? 'c-btn--secondary' : 'c-btn--primary'}" href="../homepage/main${isUserLoggedIn() ? '-logged' : ''}.html#view-category">Khám phá sản phẩm</a>
           </div>
         </div>`;
         return;
@@ -617,7 +617,7 @@
       if (!items.length) {
         itemsContainer.innerHTML = `<div class="c-empty-note">
           <strong>Giỏ hàng đang trống</strong>
-          Thêm sản phẩm để tiếp tục thanh toán. <a href="../homepage/main.html#view-category">Mua sắm ngay</a>
+          Thêm sản phẩm để tiếp tục thanh toán. <a href="../homepage/main${isUserLoggedIn() ? '-logged' : ''}.html#view-category">Mua sắm ngay</a>
         </div>`;
         if (submitButton) submitButton.disabled = true;
       } else {
@@ -847,7 +847,7 @@
       return `<div class="c-order-item">
         <div class="c-item-thumb"><img src="${item.image || (product && product.image) || ''}" alt="${escapeHTML(item.title)}" loading="lazy"></div>
         <div class="c-item-main">
-          <a href="../products/product-${String(item.code || '').toLowerCase()}.html">${escapeHTML(item.title)}</a>
+          <a href="../products/product-${String(item.code || '').toLowerCase()}${isUserLoggedIn() ? '-logged' : ''}.html">${escapeHTML(item.title)}</a>
           <div class="c-item-meta"><span>Mã: ${escapeHTML(item.code || '')}</span><span>${escapeHTML(item.pack || '1 sản phẩm')}</span></div>
         </div>
         <span class="c-item-qty-static">SL: ${item.quantity}</span>

@@ -43,11 +43,13 @@
     const path = window.location.pathname.replace(/\\/g, '/');
     const inCustomer = /\/page\/customer\//.test(path);
     const inProducts = /\/page\/products\//.test(path);
+    const loggedIn = isLoggedStorefrontPage() || (inCustomer && AuthManager.isLoggedIn());
+    const loggedSuffix = loggedIn ? '-logged' : '';
     const cartHref = inCustomer ? 'cart.html' : '../customer/cart.html';
     const checkoutHref = inCustomer ? 'checkout.html' : '../customer/checkout.html';
-    const shopHref = '../homepage/main.html#view-category';
+    const shopHref = `../homepage/main${loggedSuffix}.html#view-category`;
     const detailPrefix = inProducts ? '' : '../products/';
-    const loginHref = inCustomer || inProducts ? '../auth/login.html' : 'page/auth/login.html';
+    const loginHref = '../auth/login.html';
 
     const overlay = document.createElement('div');
     overlay.className = 'cart-drawer-overlay';
@@ -104,7 +106,7 @@
             <div class="cart-drawer-item" data-cart-item="${product.id}">
               <img class="cart-drawer-thumb" src="${product.image}" alt="${escapeHTML(product.title)}" loading="lazy">
               <div class="cart-drawer-info">
-                <a class="cart-drawer-name" href="${detailPrefix}product-${String(product.code).toLowerCase()}.html">${escapeHTML(product.title)}</a>
+                <a class="cart-drawer-name" href="${detailPrefix}product-${String(product.code).toLowerCase()}${loggedSuffix}.html">${escapeHTML(product.title)}</a>
                 <div class="cart-drawer-unit">${money(product.price)} / sản phẩm</div>
                 <div class="cart-drawer-controls">
                   <div class="cart-drawer-qty" role="group" aria-label="Số lượng ${escapeHTML(product.title)}">
@@ -190,9 +192,6 @@
     });
   }
 
-  // Immediate call to sync header auth on script execution
-  try { initHeaderAuth(); } catch (e) {}
-
   if (document.readyState === 'complete') {
     initCartDrawer();
   } else {
@@ -222,9 +221,65 @@
     avatar: (window.location.pathname.replace(/\\/g, '/').includes('/page/') ? '../../assets/img/avatar.jpg' : 'assets/img/avatar.jpg')
   };
 
+  function isLoggedStorefrontPage() {
+    const p = window.location.pathname.replace(/\\/g, '/');
+    return /-logged\.html$/i.test(p) || Boolean(document.body && document.body.dataset && document.body.dataset.authState === 'logged');
+  }
+
+  function isCustomerAreaPage() {
+    return window.location.pathname.replace(/\\/g, '/').includes('/page/customer/');
+  }
+
+  function getGuestCounterpartUrl() {
+    try {
+      const url = new URL(window.location.href);
+      url.pathname = url.pathname.replace(/-logged(\.html)$/i, '$1');
+      return url.toString();
+    } catch (e) {
+      return '../homepage/main.html';
+    }
+  }
+
+  function syncCustomerStorefrontLinks() {
+    if (!isCustomerAreaPage() || !AuthManager.isLoggedIn()) return;
+    document.querySelectorAll('a[href], button[onclick]').forEach(function (el) {
+      if (el.hasAttribute('href')) {
+        const href = el.getAttribute('href');
+        if (href && /^(\.\.\/(homepage|products)\/)[A-Za-z0-9_-]+\.html([?#].*)?$/i.test(href) && !/-logged\.html/i.test(href)) {
+          el.setAttribute('href', href.replace(/\.html(?=[?#]|$)/i, '-logged.html'));
+        }
+      }
+      if (el.hasAttribute('onclick')) {
+        const oc = el.getAttribute('onclick');
+        if (oc && oc.includes('../homepage/main.html') && !oc.includes('main-logged.html')) {
+          el.setAttribute('onclick', oc.replace('../homepage/main.html', '../homepage/main-logged.html'));
+        }
+      }
+    });
+  }
+
+  // Nếu đang mở trực tiếp trang -logged.html, đồng bộ session để sang trang customer/* vẫn giữ trạng thái đăng nhập.
+  if (isLoggedStorefrontPage()) {
+    try {
+      sessionStorage.removeItem(LOGGED_OUT_KEY);
+      if (!sessionStorage.getItem(AUTH_STORAGE_KEY)) {
+        sessionStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(Object.assign({}, HARDCODED_USER, {
+          loginTime: new Date().toISOString()
+        })));
+      }
+    } catch (e) {}
+  }
+
   const AuthManager = {
     getUser: function () {
       try {
+        if (isLoggedStorefrontPage()) {
+          return Object.assign({}, HARDCODED_USER);
+        }
+        if (!isCustomerAreaPage()) {
+          // Trang storefront gốc (chưa đăng nhập) luôn ở trạng thái khách.
+          return null;
+        }
         if (sessionStorage.getItem(LOGGED_OUT_KEY) === 'true') {
           return null;
         }
@@ -270,9 +325,6 @@
       } catch (e) {}
       if (window.StoreCart && typeof window.StoreCart.updateBadges === 'function') { window.StoreCart.updateBadges(); }
       document.dispatchEvent(new CustomEvent('cart:changed', { detail: [] }));
-      if (typeof initHeaderAuth === 'function') {
-        initHeaderAuth();
-      }
       if (typeof syncProfileLabels === 'function') {
         syncProfileLabels();
       }
@@ -280,11 +332,10 @@
         window.showSiteToast('Đã đăng xuất tài khoản.');
       }
       setTimeout(function () {
-        const path = window.location.pathname.replace(/\\/g, '/');
-        if (path.includes('/page/customer/profile.html') || path.includes('/page/customer/checkout.html')) {
-          window.location.href = '../homepage/main.html';
+        if (isLoggedStorefrontPage()) {
+          window.location.href = getGuestCounterpartUrl();
         } else {
-          window.location.reload();
+          window.location.href = '../homepage/main.html';
         }
       }, 400);
     }
@@ -322,9 +373,49 @@
     }
   }
 
+  function bindUserDropdownEvents(container) {
+    const userWrapper = container.querySelector('.header-user-wrapper');
+    const userLink = container.querySelector('.header-user-link');
+    if (userLink && userWrapper && !userLink.dataset.authBound) {
+      userLink.dataset.authBound = 'true';
+      userLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        userWrapper.classList.toggle('is-open');
+      });
+    }
+
+    const logoutBtn = container.querySelector('[data-action="logout"]');
+    if (logoutBtn && !logoutBtn.dataset.authBound) {
+      logoutBtn.dataset.authBound = 'true';
+      logoutBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        AuthManager.logout();
+      });
+    }
+  }
+
   function initHeaderAuth() {
     const slots = document.querySelectorAll('.header-auth-slot, .homepage-user');
     if (!slots.length) return;
+
+    // Trang storefront đã tách riêng thành bản gốc (chưa đăng nhập) và bản -logged.html (đã đăng nhập):
+    // không ghi đè HTML ở 2 bộ trang này, chỉ gắn sự kiện cho dropdown đã có sẵn trên bản -logged.html.
+    if (!isCustomerAreaPage()) {
+      if (isLoggedStorefrontPage()) {
+        slots.forEach(bindUserDropdownEvents);
+      }
+      if (!document.body?.dataset?.authOutsideClickBound) {
+        if (document.body) document.body.dataset.authOutsideClickBound = 'true';
+        document.addEventListener('click', function (e) {
+          if (!e.target.closest('.header-user-wrapper')) {
+            document.querySelectorAll('.header-user-wrapper.is-open').forEach(function (el) {
+              el.classList.remove('is-open');
+            });
+          }
+        });
+      }
+      return;
+    }
 
     const paths = getAuthPaths();
     const rawUser = AuthManager.getUser();
@@ -369,22 +460,7 @@
             </div>
           </div>
         `;
-        const userWrapper = container.querySelector('.header-user-wrapper');
-        const userLink = container.querySelector('.header-user-link');
-        if (userLink && userWrapper) {
-          userLink.addEventListener('click', function (e) {
-            e.preventDefault();
-            userWrapper.classList.toggle('is-open');
-          });
-        }
-
-        const logoutBtn = container.querySelector('[data-action="logout"]');
-        if (logoutBtn) {
-          logoutBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            AuthManager.logout();
-          });
-        }
+        bindUserDropdownEvents(container);
       } else {
         container.innerHTML = `
           <div class="header-auth-group">
@@ -400,16 +476,21 @@
       }
     });
 
-    document.addEventListener('click', function (e) {
-      if (!e.target.closest('.header-user-wrapper')) {
-        document.querySelectorAll('.header-user-wrapper.is-open').forEach(function (el) {
-          el.classList.remove('is-open');
-        });
-      }
-    });
+    syncCustomerStorefrontLinks();
+
+    if (!document.body?.dataset?.authOutsideClickBound) {
+      if (document.body) document.body.dataset.authOutsideClickBound = 'true';
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.header-user-wrapper')) {
+          document.querySelectorAll('.header-user-wrapper.is-open').forEach(function (el) {
+            el.classList.remove('is-open');
+          });
+        }
+      });
+    }
   }
 
-  if (document.readyState === 'complete') {
+  if (document.readyState !== 'loading') {
     initHeaderAuth();
   } else {
     document.addEventListener('DOMContentLoaded', initHeaderAuth);

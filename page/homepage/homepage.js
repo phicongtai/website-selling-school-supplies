@@ -4,6 +4,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   const products = window.StoreCatalog.products;
   const featuredProducts = products.filter(product => product.featured);
+  const isLoggedPage = /-logged\.html$/i.test(window.location.pathname.replace(/\\/g, '/')) || document.body?.dataset?.authState === 'logged';
+  const loggedSuffix = isLoggedPage ? '-logged' : '';
 
   let wishlist = [1, 4];
 
@@ -438,7 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p>${(window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) ? 'Bạn chưa đăng nhập. Vui lòng đăng nhập để bắt đầu chọn mua sản phẩm.' : 'Thêm vài dụng cụ học tập xinh xắn để bắt đầu đơn hàng của bạn nhé.'}</p>
           <div style="display: flex; gap: 8px; justify-content: center; margin-top: 12px;">
             ${(window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) ? '<a class="btn btn-primary" href="../auth/login.html">Đăng nhập ngay</a>' : ''}
-            <a class="btn ${(window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) ? 'btn-outlined' : 'btn-primary'}" href="../homepage/main.html#view-category" onclick="closeCartDrawer()">Mua sắm ngay</a>
+            <a class="btn ${(window.StoreCart.isLoggedIn && !window.StoreCart.isLoggedIn()) ? 'btn-outlined' : 'btn-primary'}" href="../homepage/main${loggedSuffix}.html#view-category" onclick="closeCartDrawer()">Mua sắm ngay</a>
           </div>
         </div>
       `;
@@ -453,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="cart-drawer-item" data-cart-item="${p.id}">
             <img class="cart-drawer-thumb" src="${p.image}" alt="${p.title}" loading="lazy">
             <div class="cart-drawer-info">
-              <a class="cart-drawer-name" href="../products/product-${String(p.code).toLowerCase()}.html">${p.title}</a>
+              <a class="cart-drawer-name" href="../products/product-${String(p.code).toLowerCase()}${loggedSuffix}.html">${p.title}</a>
               <div class="cart-drawer-unit">${formatMoney(p.price)} / sản phẩm</div>
               <div class="cart-drawer-controls">
                 <div class="cart-drawer-qty" role="group" aria-label="Số lượng ${p.title}">
@@ -552,7 +554,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     el.innerHTML = list.map(p => `
       <article class="store-product-card">
-        <a class="store-product-image-link" href="../products/product-${String(p.code).toLowerCase()}.html">
+        <a class="store-product-image-link" href="../products/product-${String(p.code).toLowerCase()}${loggedSuffix}.html">
           <div class="store-product-visual">
             <span class="store-product-tag">${window.StoreCatalog.categories[p.category]}</span>
             ${p.hot ? '<span class="store-product-tag store-product-hot">Hot</span>' : ''}
@@ -560,7 +562,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </a>
         <div class="store-product-code">Mã: ${p.code}</div>
-        <a class="store-product-name" href="../products/product-${String(p.code).toLowerCase()}.html">${p.title}</a>
+        <a class="store-product-name" href="../products/product-${String(p.code).toLowerCase()}${loggedSuffix}.html">${p.title}</a>
         <div class="store-product-meta">
           <strong class="store-product-price">${formatMoney(p.price)}</strong>
           ${p.oldPrice
