@@ -15,8 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
       code: 'SP01',
       name: 'Set 10 Bút Gel Morandi Vintage Tone Pastel 0.5mm',
       category: 'Bút viết',
-      price: 65000,
-      discount: 18,
+      price: 85000,
+      discount: 24,
+      storefrontPrice: 65000,
       status: 'active',
       sold: 342,
       stock: 450,
@@ -33,8 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
       code: 'SP02',
       name: 'Bút Máy Pilot Kakuno Ngòi F Nhật Bản',
       category: 'Bút viết',
-      price: 195000,
-      discount: 10,
+      price: 230000,
+      discount: 15,
+      storefrontPrice: 195000,
       status: 'active',
       sold: 156,
       stock: 120,
@@ -51,8 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
       code: 'SP03',
       name: 'Sổ Còng Binder A5 Bìa Da Pastel Kèm Ruột Caro',
       category: 'Sổ & vở',
-      price: 89000,
-      discount: 15,
+      price: 120000,
+      discount: 26,
+      storefrontPrice: 89000,
       status: 'active',
       sold: 240,
       stock: 200,
@@ -87,8 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
       code: 'SP05',
       name: 'Balo Chống Gù Lưng Học Sinh Công Thái Học',
       category: 'Cặp & balo',
-      price: 389000,
-      discount: 20,
+      price: 480000,
+      discount: 19,
+      storefrontPrice: 389000,
       status: 'active',
       sold: 65,
       stock: 45,
@@ -123,8 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
       code: 'SP07',
       name: 'Hộp Bút Vải Canvas Mở Rộng 3 Tầng Ngăn Lớn',
       category: 'Hộp bút',
-      price: 58000,
-      discount: 10,
+      price: 85000,
+      discount: 32,
+      storefrontPrice: 58000,
       status: 'active',
       sold: 175,
       stock: 110,
@@ -141,8 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
       code: 'SP08',
       name: 'Bộ Màu Nước 36 Màu Kèm Cọ Bút Nước & Khay Pha Hộp Thiếc',
       category: 'Dụng cụ mỹ thuật',
-      price: 175000,
-      discount: 0,
+      price: 240000,
+      discount: 27,
+      storefrontPrice: 175000,
       status: 'active',
       sold: 0,
       stock: 60,
@@ -225,7 +231,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('product-form');
   const breadcrumbCode = document.getElementById('breadcrumb-current-code');
   const headingProductName = document.getElementById('heading-product-name');
-  const badgeCode = document.getElementById('product-badge-code');
   const badgeStatus = document.getElementById('product-badge-status');
   const badgeStatusText = document.getElementById('badge-status-text');
 
@@ -445,8 +450,16 @@ document.addEventListener('DOMContentLoaded', () => {
       discountInput.value = discountPct;
     }
 
-    const discountAmount = Math.round((rawPrice * discountPct) / 100);
-    const finalPrice = Math.max(0, rawPrice - discountAmount);
+    const useExactStorefrontPrice =
+      product &&
+      product.storefrontPrice != null &&
+      rawPrice === Number(product.price) &&
+      discountPct === Number(product.discount);
+
+    const finalPrice = useExactStorefrontPrice
+      ? Number(product.storefrontPrice)
+      : Math.max(0, rawPrice - Math.round((rawPrice * discountPct) / 100));
+    const discountAmount = Math.max(0, rawPrice - finalPrice);
 
     if (pricePreviewText) {
       if (rawPrice > 0) {
