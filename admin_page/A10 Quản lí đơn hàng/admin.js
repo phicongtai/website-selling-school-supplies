@@ -89,14 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : date;
   };
 
-  /* Biểu tượng nhỏ đi kèm nhãn trạng thái, giống các pill trong thiết kế. */
-  const STATUS_ICONS = {
-    pending: '<svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.5v2.8l1.8 1.1"/></svg>',
-    confirmed: '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.4h8v5.3H2z"/><path d="M1.3 2.5h9.4v1.9H1.3z"/><path d="M4.8 7.7h2.4"/></svg>',
-    delivered: '<svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="m3.9 6.2 1.5 1.5 2.8-3"/></svg>',
-    cancelled: '<svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.4"/><path d="m4.3 4.3 3.4 3.4m0-3.4L4.3 7.7"/></svg>'
-  };
-
   function showToast(message) {
     const toast = document.getElementById('orders-toast');
     if (!toast) return;
@@ -107,31 +99,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateCounts() {
-    // Cố định cứng số liệu thống kê chuẩn
-    const elAll = document.getElementById('count-all');
-    if (elAll) elAll.textContent = '10';
-    const elPending = document.getElementById('count-pending');
-    if (elPending) elPending.textContent = '4';
-    const elProcessing = document.getElementById('count-processing');
-    if (elProcessing) elProcessing.textContent = '2';
-    const elFinished = document.getElementById('count-finished');
-    if (elFinished) elFinished.textContent = '4';
-    const elDelivered = document.getElementById('count-delivered');
-    if (elDelivered) elDelivered.textContent = '3 đã giao';
-    const elCancelled = document.getElementById('count-cancelled');
-    if (elCancelled) elCancelled.textContent = '1 huỷ';
-    const elTabAll = document.getElementById('tab-count-all');
-    if (elTabAll) elTabAll.textContent = '10';
-    const elTabPending = document.getElementById('tab-count-pending');
-    if (elTabPending) elTabPending.textContent = '4';
-    const elTabProcessing = document.getElementById('tab-count-processing');
-    if (elTabProcessing) elTabProcessing.textContent = '2';
-    const elTabFinished = document.getElementById('tab-count-finished');
-    if (elTabFinished) elTabFinished.textContent = '4';
-    const subtitle = document.getElementById('orders-subtitle');
-    if (subtitle) {
-      subtitle.textContent = 'Theo dõi, xử lý và điều phối 10 đơn hàng trên hệ thống thương mại Học Đường Store';
-    }
+    const count = (status) => orders.filter((order) => order.status === status).length;
+    const pending = count('pending');
+    const processing = count('confirmed');
+    const delivered = count('delivered');
+    const cancelled = count('cancelled');
+    const finished = delivered + cancelled;
+    const setText = (id, value) => {
+      const element = document.getElementById(id);
+      if (element) element.textContent = value;
+    };
+
+    setText('count-all', orders.length);
+    setText('count-pending', pending);
+    setText('count-processing', processing);
+    setText('count-finished', finished);
+    setText('count-delivered', `${delivered} đã giao`);
+    setText('count-cancelled', `${cancelled} huỷ`);
+    setText('tab-count-all', orders.length);
+    setText('tab-count-pending', pending);
+    setText('tab-count-processing', processing);
+    setText('tab-count-finished', finished);
+    setText('orders-subtitle', `Theo dõi, xử lý và điều phối ${orders.length} đơn hàng trên hệ thống thương mại Học Đường Store`);
   }
 
   /* Trang demo: bộ lọc và tab chỉ tạo hiệu ứng, luôn hiển thị đủ danh sách
@@ -142,21 +131,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function actionMarkup(order) {
     if (['delivered', 'cancelled'].includes(order.status)) {
-      return `<button class="order-action-toggle is-locked" type="button" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.2" y="7" width="9.6" height="6.6" rx="1.4"/><path d="M5.4 7V5.2a2.6 2.6 0 0 1 5.2 0V7"/></svg><span>${order.status === 'delivered' ? 'Đã hoàn tất' : 'Đơn đã huỷ'}</span></button>`;
+      const isDelivered = order.status === 'delivered';
+      const lockedLabel = isDelivered ? 'Đã chốt hoàn' : 'Đơn đã huỷ';
+      const lockedIcon = isDelivered
+        ? '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.2" y="7" width="9.6" height="6.6" rx="1.4"/><path d="M5.4 7V5.2a2.6 2.6 0 0 1 5.2 0V7"/></svg>'
+        : '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.6"/><path d="m5.8 5.8 4.4 4.4m0-4.4-4.4 4.4"/></svg>';
+      return `<button class="order-action-toggle is-locked" type="button" disabled>${lockedIcon}<span>${lockedLabel}</span></button>`;
     }
     const isPending = order.status === 'pending';
-    const toggleLabel = isPending ? 'Chưa xác nhận' : 'Chuyển: Đã giao';
+    const toggleLabel = isPending ? 'Chuyển: Đã xác nhận' : 'Đã xác nhận';
     const nextLabel = isPending ? 'Đã xác nhận' : 'Đã giao – Thành công';
+    /* Với đơn đã xác nhận, trạng thái lùi về "Chưa xác nhận" bị khoá để
+       đảm bảo quy tắc luồng trạng thái chỉ tiến một chiều. */
+    const lockedPrevious = isPending ? '' : `
+        <button class="order-action-option is-blocked" type="button" disabled title="Không thể quay lui trạng thái" aria-disabled="true">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.2" y="7" width="9.6" height="6.6" rx="1.4"/><path d="M5.4 7V5.2a2.6 2.6 0 0 1 5.2 0V7"/></svg><s>Chưa xác nhận</s>
+        </button>`;
     return `<button class="order-action-toggle" type="button" data-action-toggle="${order.code}" aria-expanded="false" aria-haspopup="true"><span>${toggleLabel}</span><span class="order-action-caret" aria-hidden="true">⌄</span></button>
-      <div class="order-action-menu" data-action-menu="${order.code}" hidden>
+      <div class="order-action-menu" data-action-menu="${order.code}" hidden>${lockedPrevious}
         <button class="order-action-option deliver" type="button" data-next-status="${order.code}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.2 8.2 1.9 1.9 3.7-4"/></svg>${escapeHTML(nextLabel)}</button>
-        <button class="order-action-option cancel" type="button" data-cancel-order="${order.code}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.8 5.8 4.4 4.4m0-4.4-4.4 4.4"/></svg>Đã huỷ</button>
+        <button class="order-action-option cancel" type="button" data-cancel-order="${order.code}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="m5.8 5.8 4.4 4.4m0-4.4-4.4 4.4"/></svg>Huỷ đơn hàng</button>
       </div>`;
   }
 
   function statusMarkup(order) {
-    const icon = STATUS_ICONS[order.status] || '';
-    return `<span class="order-status ${order.status}">${icon}${labels[order.status]}</span>`;
+    /* Nhãn huỷ hiển thị gọn đúng như thiết kế ("Huỷ đơn"). */
+    const label = order.status === 'cancelled' ? 'Huỷ đơn' : labels[order.status];
+    return `<span class="order-status ${order.status}">${label}</span>`;
   }
 
   function renderOrders() {

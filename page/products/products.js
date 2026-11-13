@@ -39,6 +39,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Cập nhật số lượng cho nhóm "Ưu đãi" trong sidebar
+  const offerCounts = {
+    sale: cards.filter(card => Number(card.dataset.oldPrice) > Number(card.dataset.price)).length,
+    hot: cards.filter(card => card.dataset.hot === "1").length
+  };
+  Object.entries(offerCounts).forEach(([key, value]) => {
+    const el = document.querySelector(`[data-offer-count="${key}"]`);
+    if (el) el.textContent = String(value);
+  });
+
   // Khởi tạo dòng kết quả
   if (resultCount) {
     resultCount.textContent = `Hiển thị ${cards.length} / ${total} sản phẩm (Trang ${isPageTwo ? "2" : "1"}/2)`;
@@ -91,74 +101,51 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Hàm lọc sản phẩm danh mục
-  window.filterCategoryProducts = (options = {}) => {
+  // YÊU CẦU: bộ lọc và sắp xếp trên trang chỉ để minh họa (showcasing),
+  // KHÔNG lọc/sắp xếp thật. Mọi thao tác chỉ hiện hiệu ứng tải lại (skeleton)
+  // rồi hiển thị lại toàn bộ sản phẩm tĩnh của trang.
+  const revealAllProducts = () => {
     if (!grid) return;
 
-    const checkedCategories = Array.from(
-      document.querySelectorAll(".filter-categories input[type='checkbox']:checked")
-    ).map(cb => cb.dataset.category);
-
-    const minPriceInput = document.getElementById("filterMinPrice");
-    const maxPriceInput = document.getElementById("filterMaxPrice");
-    const minPrice = minPriceInput && minPriceInput.value ? Number(minPriceInput.value.replace(/\D/g, "")) : 0;
-    const maxPrice = maxPriceInput && maxPriceInput.value ? Number(maxPriceInput.value.replace(/\D/g, "")) : Infinity;
-
-    const saleOnly = Boolean(document.querySelector(".filter-offers input[data-filter='sale']:checked"));
-    const hotOnly = Boolean(document.querySelector(".filter-offers input[data-filter='hot']:checked"));
-
-    let visibleCount = 0;
     cards.forEach(card => {
-      const cat = card.dataset.category;
-      const price = Number(card.dataset.price) || 0;
-      const oldPrice = Number(card.dataset.oldPrice) || 0;
-
-      let match = true;
-      if (checkedCategories.length > 0 && !checkedCategories.includes(cat)) {
-        match = false;
-      }
-      if (price < minPrice || price > maxPrice) {
-        match = false;
-      }
-      if (saleOnly && !(oldPrice > price)) {
-        match = false;
-      }
-
-      if (match) {
-        card.style.display = "";
-        card.classList.remove("is-hidden");
-        visibleCount++;
-      } else {
-        card.style.display = "none";
-        card.classList.add("is-hidden");
-      }
+      card.classList.remove("is-hidden");
+      card.style.display = "";
     });
 
-    // Cập nhật nhãn đếm
     if (resultCount) {
-      resultCount.textContent = `Hiển thị ${visibleCount} / ${cards.length} sản phẩm (Trang ${isPageTwo ? "2" : "1"}/2)`;
+      resultCount.textContent = `Hiển thị ${cards.length} / ${total} sản phẩm (Trang ${isPageTwo ? "2" : "1"}/2)`;
     }
 
     if (emptyState) {
-      if (visibleCount === 0) {
-        emptyState.hidden = false;
-        emptyState.style.display = "block";
-      } else {
-        emptyState.hidden = true;
-        emptyState.style.display = "none";
-      }
+      emptyState.hidden = true;
+      emptyState.style.display = "none";
     }
 
     if (filterSummary) {
-      if (checkedCategories.length > 0) {
-        filterSummary.textContent = `Đang lọc theo ${checkedCategories.length} nhóm danh mục.`;
-      } else {
-        filterSummary.textContent = "Đang hiển thị tất cả sản phẩm.";
-      }
+      filterSummary.textContent = "Đang hiển thị tất cả sản phẩm.";
     }
 
     if (categoryHint) {
-      categoryHint.textContent = checkedCategories.length > 0 ? `${checkedCategories.length} đã chọn` : "Tất cả";
+      categoryHint.textContent = "Tất cả";
+    }
+  };
+
+  // Hàm lọc sản phẩm danh mục: chỉ tạo hiệu ứng reload, không lọc thật.
+  window.filterCategoryProducts = (options = {}) => {
+    if (!grid) return;
+
+    const silent = Boolean(options && options.silent === true);
+    if (silent) {
+      revealAllProducts();
+      return;
+    }
+
+    // Hiệu ứng "đang tải lại": skeleton shimmer ~0.9s rồi bật lại danh sách.
+    if (resultCount) resultCount.textContent = "Đang tải lại sản phẩm...";
+    if (typeof window.showFakeLoading === "function") {
+      window.showFakeLoading(grid, revealAllProducts);
+    } else {
+      revealAllProducts();
     }
   };
 
