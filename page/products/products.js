@@ -166,4 +166,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     window.filterCategoryProducts();
   };
+
+  // Tìm kiếm từ thanh header: hiển thị loading giả rồi giữ nguyên danh sách sản phẩm tĩnh của trang.
+  window.headerSearch = () => {
+    const searchInput = document.getElementById("headerSearchInput");
+    if (typeof window.filterCategoryProducts === "function") {
+      window.filterCategoryProducts();
+    }
+    if (searchInput) searchInput.focus();
+  };
+
+  // Chuyển sang màn hình Tìm kiếm nâng cao (hoặc quay lại danh mục) theo đúng trạng thái đăng nhập/khách.
+  window.navigateToView = (viewId) => {
+    const p = window.location.pathname.replace(/\\/g, "/");
+    const isLogged = /-logged\.html$/i.test(p) || document.body?.dataset?.authState === "logged";
+    const mainFile = isLogged ? "../homepage/main-logged.html" : "../homepage/main.html";
+
+    if (viewId === "view-category") {
+      window.filterCategoryProducts();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    const term = document.getElementById("headerSearchInput")?.value.trim() || "";
+    if (viewId === "view-advanced-search") {
+      const query = term ? `?search=${encodeURIComponent(term)}` : "";
+      window.location.href = `${mainFile}${query}#view-advanced-search`;
+      return;
+    }
+
+    window.location.href = viewId ? `${mainFile}#${viewId}` : mainFile;
+  };
 });

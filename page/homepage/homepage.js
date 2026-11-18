@@ -58,6 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // 3. TÌM KIẾM CƠ BẢN ĐÃ VÔ HIỆU HÓA: chỉ đóng gợi ý, không lọc gì cả.
+  const headerSearchInput = document.getElementById('headerSearchInput');
+  const liveSearchDropdown = document.getElementById('liveSearchDropdown');
   if (headerSearchInput) {
     headerSearchInput.addEventListener('input', () => {
       if (liveSearchDropdown) liveSearchDropdown.classList.remove('open');
