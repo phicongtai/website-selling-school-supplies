@@ -323,12 +323,10 @@
     const list = document.getElementById('cartOrderList');
     if (!list) return;
 
-    const searchInput = document.getElementById('orderSearch');
     const tabs = Array.from(document.querySelectorAll('[data-order-filter]'));
     const expandedOrders = new Set();
     const isOrdersPage = document.body.dataset.customerPage === 'orders';
     let activeFilter = 'all';
-    let keyword = '';
 
     const getOrders = () => {
       if (!isUserLoggedIn()) {
@@ -395,25 +393,20 @@
       updateCounts(orders);
 
       const filtered = orders.filter(order => {
-        const matchStatus = activeFilter === 'all'
+        return activeFilter === 'all'
           || (activeFilter === 'processing' && (order.status === 'processing' || order.status === 'shipping'))
           || (activeFilter === 'completed' && order.status === 'completed');
-        const text = `${order.code} ${(order.type === 'draft' ? order.cartItems : demoOrderItems(order)).map(item => item.product.title).join(' ')}`.toLowerCase();
-        const matchKeyword = !keyword || text.includes(keyword);
-        return matchStatus && matchKeyword;
       });
 
       if (!filtered.length) {
         const emptyTitle = !isUserLoggedIn()
           ? 'Bạn chưa đăng nhập'
-          : (keyword ? 'Không tìm thấy đơn hàng' : (isOrdersPage ? 'Chưa có đơn hàng nào' : 'Chưa có đơn hàng phù hợp'));
+          : (isOrdersPage ? 'Chưa có đơn hàng nào' : 'Chưa có đơn hàng phù hợp');
         const emptyText = !isUserLoggedIn()
           ? 'Vui lòng đăng nhập để theo dõi đơn hàng của bạn.'
-          : (keyword
-            ? 'Thử tìm bằng mã đơn hàng hoặc tên sản phẩm khác.'
-            : (isOrdersPage
-              ? 'Bạn chưa có đơn hàng nào. Hãy khám phá sản phẩm và đặt đơn đầu tiên nhé!'
-              : 'Giỏ hàng của bạn đang trống. Khám phá thêm dụng cụ học tập mới nhé!'));
+          : (isOrdersPage
+            ? 'Bạn chưa có đơn hàng nào. Hãy khám phá sản phẩm và đặt đơn đầu tiên nhé!'
+            : 'Giỏ hàng của bạn đang trống. Khám phá thêm dụng cụ học tập mới nhé!');
         const loginHref = isOrdersPage ? '../auth/login.html?redirect=orders' : '../auth/login.html?redirect=cart';
         list.innerHTML = `<div class="c-orders-empty">
           <span class="c-icon-circle">${ICONS.cart}</span>
@@ -441,13 +434,6 @@
         render();
       });
     });
-
-    if (searchInput) {
-      searchInput.addEventListener('input', event => {
-        keyword = event.target.value.trim().toLowerCase();
-        render();
-      });
-    }
 
     list.addEventListener('click', event => {
       const qtyButton = event.target.closest('[data-qty]');
