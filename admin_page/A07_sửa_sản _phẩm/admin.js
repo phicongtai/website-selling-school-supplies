@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ordersCount: 42,
       image: '../../assets/img/product-1.jpg',
       iconType: 'pen',
-      sku: 'HD-PEN-001',
+      sku: 'HP01',
       description: '- Bút gel màu Morandi thanh lịch, ngòi 0.5mm êm ái, mau khô không lem giấy.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Morandi Stationery',
       unit: 'Hộp / Set',
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ordersCount: 28,
       image: '../../assets/img/product-2.jpg',
       iconType: 'pen',
-      sku: 'HD-PEN-002',
+      sku: 'HP02',
       description: '- Bút máy học sinh Nhật Bản ngòi thép định hình tay cầm chuẩn.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Pilot Pen Japan',
       unit: 'Cây / Chiếc',
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ordersCount: 35,
       image: '../../assets/img/product-3.jpg',
       iconType: 'book',
-      sku: 'HD-BOOK-003',
+      sku: 'HP03',
       description: '- Sổ còng 6 lỗ tháo lắp dễ dàng, giấy 100gsm chống thấm mực.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Klong',
       unit: 'Quyển / Tập',
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ordersCount: 62,
       image: '../../assets/img/product-3.jpg',
       iconType: 'book',
-      sku: 'HD-BOOK-004',
+      sku: 'VG09',
       description: '- Vở B5 kẻ ngang 120 trang giấy định lượng 100gsm không lem khi viết bút máy hay bút dạ highlight.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Klong',
       unit: 'Quyển / Tập',
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ordersCount: 19,
       image: '../../assets/img/product-4.jpg',
       iconType: 'backpack',
-      sku: 'HD-BAG-005',
+      sku: 'HP04',
       description: '- Đệm lưng thoáng khí chống gù, vải Oxford trượt nước.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Học Đường Ergonomics',
       unit: 'Cái',
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ordersCount: 24,
       image: '../../assets/img/product-5.jpg',
       iconType: 'backpack',
-      sku: 'HD-BAG-006',
+      sku: 'CB09',
       description: '- Balo canvas Hàn Quốc phong cách tối giản, ngăn chống sốc laptop 15.6 inch.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Korean Style',
       unit: 'Cái',
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ordersCount: 31,
       image: '../../assets/img/product-6.jpg',
       iconType: 'palette',
-      sku: 'HD-CASE-007',
+      sku: 'HP05',
       description: '- Sức chứa hơn 40 cây bút cùng thước kẻ và máy tính bỏ túi.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Deli',
       unit: 'Cái',
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ordersCount: 0,
       image: '../../assets/img/product-7.jpg',
       iconType: 'palette',
-      sku: 'HD-ART-008',
+      sku: 'HP06',
       description: '- Bột màu nén cao cấp hạt siêu mịn trong hộp thiếc cao cấp.\n- Sản phẩm chính hãng, phù hợp nhu cầu học tập.\n- Được đóng gói cẩn thận trước khi giao hàng.',
       brand: 'Deli Art',
       unit: 'Bộ',
@@ -348,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   updatePricingCalculation();
   if (skuInput && !skuInput.value) {
-    skuInput.value = product.sku || `HD-${product.code}`;
+    skuInput.value = product.sku || product.code;
   }
   if (descriptionInput && !descriptionInput.value) {
     descriptionInput.value = product.description || `Sản phẩm ${product.name} chính hãng chất lượng cao, an toàn cho học sinh.`;
@@ -572,7 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const category = categorySelect.value;
       const stock = parseInt(stockInput.value, 10);
       const price = parseInt(priceInput.value.replace(/\./g, ''), 10);
-      const sku = skuInput.value.trim() || `HD-${product.code}`;
+      const sku = skuInput.value.trim() || product.sku || product.code;
       const description = descriptionInput ? descriptionInput.value.trim() : '';
       const brand = brandInput ? brandInput.value.trim() : 'Học Đường';
       const unit = unitSelect ? unitSelect.value : 'Cây / Chiếc';

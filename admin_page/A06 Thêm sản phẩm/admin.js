@@ -242,22 +242,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5. GỢI Ý MÃ SKU TỰ ĐỘNG THEO DANH MỤC
-  function updateSkuRecommendation() {
-    const cat = categorySelect.value || '';
-    let prefix = 'GEN';
-    if (cat.includes('Bút')) prefix = 'PEN';
-    else if (cat.includes('Sổ') || cat.includes('vở')) prefix = 'BOOK';
-    else if (cat.includes('balo') || cat.includes('Cặp')) prefix = 'BAG';
-    else if (cat.includes('Hộp bút')) prefix = 'CASE';
-    else if (cat.includes('mỹ thuật')) prefix = 'ART';
-    else if (cat.includes('thiết bị') || cat.includes('Máy tính')) prefix = 'TECH';
-
-    skuInput.value = `HD-${prefix}-${String(nextCodeNum).padStart(3, '0')}`;
-  }
-
-  if (categorySelect) {
-    categorySelect.addEventListener('change', updateSkuRecommendation);
+  // 5. ĐIỀN SẴN MÃ SẢN PHẨM (DÙNG CHUNG HỆ MÃ VỚI STOREFRONT/HOMEPAGE)
+  if (skuInput) {
+    skuInput.value = proposedCode;
   }
 
   // 6. XEM TRƯỚC GIÁ BÁN VÀ % GIẢM GIÁ THỜI GIAN THỰC
@@ -404,7 +391,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const category = categorySelect.value;
       const stock = parseInt(stockInput.value, 10);
       const price = parseInt(priceInput.value.replace(/\./g, ''), 10);
-      const sku = skuInput.value.trim() || `HD-SP${nextCodeNum}`;
+      const sku = skuInput.value.trim() || proposedCode;
       const description = descriptionInput ? descriptionInput.value.trim() : '';
       const brand = brandInput ? brandInput.value.trim() : 'Học Đường';
       const unit = unitSelect ? unitSelect.value : 'Cây / Chiếc';
