@@ -119,12 +119,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   search.addEventListener("input", render);
   document.getElementById("searchButton")?.addEventListener("click", () => {
-    // Người dùng bấm "Tìm kiếm": hiện hiệu ứng loading giả rồi bật lại toàn bộ danh sách.
-    count.textContent = "Đang tải sản phẩm...";
-    window.showFakeLoading(grid, () => {
-      render();
-      search.focus();
-    });
+    // Người dùng bấm "Tìm kiếm": luôn chuyển về trang Tìm kiếm nâng cao theo đúng trạng thái đăng nhập.
+    const p = window.location.pathname.replace(/\\/g, "/");
+    const isLogged = /-logged\.html$/i.test(p) || document.body?.dataset?.authState === "logged";
+    const mainFile = isLogged ? "../homepage/main-logged.html" : "../homepage/main.html";
+    const term = search ? search.value.trim() : "";
+    const query = term ? `?search=${encodeURIComponent(term)}` : "";
+    window.location.href = `${mainFile}${query}#view-advanced-search`;
   });
 
   // Thêm giỏ hàng (delegation): giỏ hàng đang ở chế độ CỐ ĐỊNH nên mọi lần

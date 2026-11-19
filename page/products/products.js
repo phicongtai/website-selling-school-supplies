@@ -167,13 +167,9 @@ document.addEventListener("DOMContentLoaded", () => {
     window.filterCategoryProducts();
   };
 
-  // Tìm kiếm từ thanh header: hiển thị loading giả rồi giữ nguyên danh sách sản phẩm tĩnh của trang.
+  // Tìm kiếm từ thanh header: luôn chuyển về trang Tìm kiếm nâng cao theo trạng thái đăng nhập.
   window.headerSearch = () => {
-    const searchInput = document.getElementById("headerSearchInput");
-    if (typeof window.filterCategoryProducts === "function") {
-      window.filterCategoryProducts();
-    }
-    if (searchInput) searchInput.focus();
+    window.navigateToView("view-advanced-search");
   };
 
   // Chuyển sang màn hình Tìm kiếm nâng cao (hoặc quay lại danh mục) theo đúng trạng thái đăng nhập/khách.
