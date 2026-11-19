@@ -120,7 +120,7 @@ confirmButton.addEventListener("click", () => {
   // Chức năng giả lập: Đóng hộp thoại và thông báo, không đổi trạng thái
   backdrop.hidden = true;
   toast.hidden = false;
-  pageMessage.textContent = "Sản phẩm SP01 đã được ẩn khỏi storefront. Lịch sử 42 đơn hàng vẫn được bảo toàn.";
+  pageMessage.textContent = "Sản phẩm HP01 đã được ẩn khỏi storefront. Lịch sử 42 đơn hàng vẫn được bảo toàn.";
 });
 
 mobileMenu.addEventListener("click", () => {

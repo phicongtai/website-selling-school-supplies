@@ -32,6 +32,10 @@
     pencilCase: '../../assets/img/products/adminpencilcase.jpg',
     ruler: '../../assets/img/products/adminruler.jpg',
     paper: '../../assets/img/products/mt03.jpg',
+    cb01: '../../assets/img/products/cb01.jpg',
+    cb08: '../../assets/img/products/cb08.jpg',
+    mt01: '../../assets/img/products/sp03.jpg',
+    dc02: '../../assets/img/products/dc02.jpg',
   };
 
   const CUSTOMERS = {
@@ -79,9 +83,9 @@
       payment: 'Tiền mặt khi nhận hàng (COD)', note: 'Giao giờ hành chính, gọi trước khi đến.',
       channel: 'Storefront Học Sinh',
       items: [
-        item('CB01', 'Balo học sinh chống thấm', 'Cặp & balo', 289000, 1, IMAGES.backpack),
-        item('MT01', 'Bộ bút chì màu 48 màu cao cấp', 'Dụng cụ vẽ & mỹ thuật', 145000, 1, IMAGES.art),
-        item('DC02', 'Hộp bút học sinh đa năng', 'Dụng cụ học tập', 45000, 1, IMAGES.pen)
+        item('CB01', 'Balo học sinh chống thấm', 'Cặp & balo', 289000, 1, IMAGES.cb01),
+        item('MT01', 'Bộ bút chì màu 48 màu cao cấp', 'Dụng cụ vẽ & mỹ thuật', 145000, 1, IMAGES.mt01),
+        item('DC02', 'Hộp bút học sinh đa năng', 'Dụng cụ học tập', 45000, 1, IMAGES.dc02)
       ]
     },
     {
@@ -114,8 +118,8 @@
       payment: 'Chuyển khoản ngân hàng', note: 'Giao tại sảnh chung cư.',
       channel: 'Storefront Học Sinh',
       items: [
-        item('CB08', 'Cặp đeo chéo đựng tài liệu', 'Cặp & balo', 159000, 1, IMAGES.backpack),
-        item('MT01', 'Bộ bút chì màu 48 màu cao cấp', 'Dụng cụ vẽ & mỹ thuật', 145000, 1, IMAGES.art)
+        item('CB08', 'Cặp đeo chéo đựng tài liệu', 'Cặp & balo', 159000, 1, IMAGES.cb08),
+        item('MT01', 'Bộ bút chì màu 48 màu cao cấp', 'Dụng cụ vẽ & mỹ thuật', 145000, 1, IMAGES.mt01)
       ]
     },
     {

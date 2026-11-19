@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. DỮ LIỆU GỐC DỰ PHÒNG (ĐỒNG BỘ VỚI A05)
   const DEFAULT_PRODUCTS = [
     {
-      code: 'SP01',
+      code: 'HP01',
+      editPage: 'sp01.html',
       name: 'Set 10 Bút Gel Morandi Vintage Tone Pastel 0.5mm',
       category: 'Bút viết',
       price: 65000,
@@ -19,11 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
       sold: 342,
       stock: 450,
       ordersCount: 42,
-      image: '../../assets/img/product-1.jpg',
+      image: '../../assets/img/products/hp01.jpg',
       iconType: 'pen'
     },
     {
-      code: 'SP02',
+      code: 'HP02',
+      editPage: 'sp02.html',
       name: 'Bút Máy Pilot Kakuno Ngòi F Nhật Bản',
       category: 'Bút viết',
       price: 195000,
@@ -31,25 +33,27 @@ document.addEventListener('DOMContentLoaded', () => {
       sold: 156,
       stock: 120,
       ordersCount: 28,
-      image: '../../assets/img/product-2.jpg',
+      image: '../../assets/img/products/hp02.jpg',
       iconType: 'pen'
     },
     {
-      code: 'SP03',
+      code: 'HP03',
+      editPage: 'sp03.html',
       name: 'Sổ Còng Binder A5 Bìa Da Pastel Kèm Ruột Caro',
-      category: 'Sổ & vở',
+      category: 'Vở & giấy',
       price: 89000,
       status: 'active',
       sold: 240,
       stock: 200,
       ordersCount: 35,
-      image: '../../assets/img/product-3.jpg',
+      image: '../../assets/img/products/hp03.jpg',
       iconType: 'book'
     },
     {
       code: 'SP04',
+      editPage: 'sp04.html',
       name: 'Vở Kẻ Ngang B5 Klong 120 Trang Giấy Dày Chống Lem',
-      category: 'Sổ & vở',
+      category: 'Vở & giấy',
       price: 28000,
       status: 'active',
       sold: 480,
@@ -59,7 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
       iconType: 'book'
     },
     {
-      code: 'SP05',
+      code: 'HP04',
+      editPage: 'sp05.html',
       name: 'Balo Chống Gù Lưng Học Sinh Công Thái Học',
       category: 'Cặp & balo',
       price: 389000,
@@ -67,11 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
       sold: 65,
       stock: 45,
       ordersCount: 19,
-      image: '../../assets/img/product-4.jpg',
+      image: '../../assets/img/products/hp04.jpg',
       iconType: 'backpack'
     },
     {
       code: 'SP06',
+      editPage: 'sp06.html',
       name: 'Balo Đi Học Canvas Hàn Quốc Trơn Unisex',
       category: 'Cặp & balo',
       price: 215000,
@@ -83,7 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
       iconType: 'backpack'
     },
     {
-      code: 'SP07',
+      code: 'HP05',
+      editPage: 'sp07.html',
       name: 'Hộp Bút Vải Canvas Mở Rộng 3 Tầng Ngăn Lớn',
       category: 'Hộp bút',
       price: 58000,
@@ -91,24 +98,25 @@ document.addEventListener('DOMContentLoaded', () => {
       sold: 175,
       stock: 110,
       ordersCount: 31,
-      image: '../../assets/img/product-6.jpg',
+      image: '../../assets/img/products/hp05.jpg',
       iconType: 'palette'
     },
     {
-      code: 'SP08',
+      code: 'HP06',
+      editPage: 'sp08.html',
       name: 'Bộ Màu Nước 36 Màu Kèm Cọ Bút Nước & Khay Pha Hộp Thiếc',
-      category: 'Dụng cụ mỹ thuật',
+      category: 'Dụng cụ vẽ & mỹ thuật',
       price: 175000,
       status: 'active',
       sold: 0,
       stock: 60,
       ordersCount: 0,
-      image: '../../assets/img/product-7.jpg',
+      image: '../../assets/img/products/hp06.jpg',
       iconType: 'palette'
     }
   ];
 
-  const STORAGE_KEY = 'hocduong_admin_products_session_v2';
+  const STORAGE_KEY = 'hocduong_admin_products_session_v3';
 
   // Kiểm tra nếu trang được Reload (F5 / Refresh) - Khôi phục về dữ liệu gốc cố định
   function isPageReload() {
@@ -318,8 +326,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   updatePricingCalculation();
 
-  // 7. XỬ LÝ CHỌN ẢNH TỪ BỘ MẪU SẴN (HOMEPAGE ASSETS)
-  let selectedImageUrl = '../../assets/img/product-1.jpg';
+  // 7. XỬ LÝ CHỌN ẢNH TỪ BỘ MẪU SẴN (STOREFRONT ASSETS)
+  let selectedImageUrl = '../../assets/img/products/hp01.jpg';
 
   sampleThumbs.forEach(thumb => {
     thumb.addEventListener('click', () => {
@@ -405,11 +413,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Xác định iconType tương ứng theo danh mục
       let iconType = 'pen';
-      if (category.includes('Sổ') || category.includes('vở')) {
+      if (category.includes('Vở') || category.includes('vở') || category.includes('Sổ') || category.includes('giấy')) {
         iconType = 'book';
       } else if (category.includes('Cặp') || category.includes('balo')) {
         iconType = 'backpack';
-      } else if (category.includes('Hộp') || category.includes('mỹ thuật')) {
+      } else if (category.includes('Hộp') || category.includes('mỹ thuật') || category.includes('vẽ')) {
         iconType = 'palette';
       }
 
